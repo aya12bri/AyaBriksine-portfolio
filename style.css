@@ -788,18 +788,15 @@ span{
     .heading{
         margin: 3rem 0;
     }
+  
    .services h2{
         margin-bottom: 3rem;
    }
    .services-container{
     grid-template-columns: repeat(1,1fr);
    }
-   .projects-box{
-    grid-template-columns: repeat(1,1fr);
-   }
-   .projects-box img{
-    min-width: 42rem;
-   }
+  
+   
    .contact-info-upper-container,
    .btn-container {
     flex-wrap: wrap;
@@ -816,4 +813,18 @@ span{
   .contact-info-upper-container {
    max-width: 600px;
   }
+ .slider{
+   height: 700px;
+   width: 400px;
+   position: absolute;
+   top:50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+  }
+
+
 }
+
