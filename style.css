@@ -794,13 +794,20 @@ span{
    }
    .services-container{
     grid-template-columns: repeat(1,1fr);
+    margin: auto;
    }
   
    
    .contact-info-upper-container,
    .btn-container {
     flex-wrap: wrap;
+    align-items: center;
   }
+  .contact-info-upper-container{
+    margin:auto ;
+
+  }
+
   .contact-info-container {
     margin: 1rem 4rem;
     max-width: 400px;
@@ -814,8 +821,11 @@ span{
    max-width: 600px;
   }
  .slider{
-   height: 700px;
-   width: 400px;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px;
+    height: 500px;
    position: absolute;
    top:50%;
    left: 50%;
