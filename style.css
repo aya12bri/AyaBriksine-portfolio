@@ -834,7 +834,9 @@ span{
    align-items: center;
    justify-content: center;
   }
-
+.buttons{
+    margin-bottom: 10px;
+}
 
 }
 
