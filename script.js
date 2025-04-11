@@ -2,6 +2,9 @@ let menuIcon = document.querySelector('#menu-icon');
 let navbar = document.querySelector('.navbar');
 let sections = document.querySelectorAll('sections');
 let navLinks = document.querySelectorAll('header nav a');
+const skillsLists = document.querySelectorAll('.skills-list');
+const skillsBoxs = document.querySelectorAll('.resume-box');
+
 
 window.onscroll = () => {
     sections.forEach(sec => {
@@ -38,4 +41,13 @@ prev.addEventListener('click', function(){
     slider.prepend(slides[slides.length -1]);
 })
 
+skillsLists.forEach((list, idx) => {
+    list.addEventListener('click', () => {
+        document.querySelector('.skills-list.active').classList.remove('active');
+        list.classList.add('active'); 
+      
+        document.querySelector('.resume-box.active').classList.remove('active');
+        skillsBoxs[idx].classList.add('active');
+    });
+});
 

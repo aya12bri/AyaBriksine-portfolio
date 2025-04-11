@@ -36,10 +36,10 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 5;
+    z-index: 1000;
 }
 .logo{
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: var(--text-color);
     font-weight: 800;
     cursor: pointer;
@@ -52,7 +52,7 @@ body{
     text-shadow:0 0 25px var(--main-color);
 }
 .navbar a{
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: var(--text-color);
     margin-left: 4rem;
     font-weight: 500;
@@ -62,6 +62,20 @@ body{
 .navbar a:hover{
     color: var(--main-color);
     border-bottom:3px solid var(--main-color);
+}
+.gradient-btn{
+    font-size: 1.5rem;
+    font-weight: 800;
+    padding: 1rem 2rem;
+    border-radius: 3rem;
+    background: linear-gradient(270deg,
+    #ff00dd 10% , #ff05ffd7 100%);
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    color: white;
+    border: none;
+    text-wrap: nowrap;
 }
 #menu-icon{
     font-size: 3.6rem;
@@ -112,8 +126,7 @@ span{
     top: 3rem;
     width: 32vw;
     border-radius: 50%;
-    background-color: #ff00dd;
-    box-shadow: 0 0 25px var(--main-color);
+    background: var(--main-color);
     cursor: pointer;
     transition: 0.4s ease-in-out;
 }
@@ -212,7 +225,7 @@ span{
 @keyframes words {
     0%,
     20%{
-        content: "Frontend Designer";
+        content: "Digital Specialist";
     }
     21%,
     40%{
@@ -220,11 +233,11 @@ span{
     }
     41%,
     60%{
-        content:"UI / UX Designer ";
+        content:"Industrial Engineer";
     }
     61%,
     80%{
-        content: "Web Developer";
+        content: "Salesforce Developer";
     }
     81%,
     100%{
@@ -265,7 +278,7 @@ span{
     margin: 5rem 0;
 }
 .education{
-    padding: 100px 15px;
+    padding: 25x 15px;
     background: var(--second-bg-color);
 }
 .education h2{
@@ -343,6 +356,152 @@ span{
     font-weight: 300;
     line-height: 22px;
 }
+.skills{
+    padding: 25px 240px;
+    background-color: var(--second-bg-color);
+} 
+.tab-box{
+    display: flex;
+    width: 100%;
+    height: 5rem;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+}
+.tab-list{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: .4rem solid rgba(94, 94, 94, 0.8);
+    color: rgba(94, 94, 94, 0.8);
+    cursor: pointer;
+    transition: .5s;
+}
+.skills-list:nth-child(2){
+    justify-content: center;
+}
+.skills-list:nth-child(3){
+    justify-content: flex-end;
+}
+.tab-list h3 {
+    font-size: 2.4rem;
+}
+.tab-list.skills-list.active {
+    border-color: var(--main-color);
+    color: var(--main-color);
+}
+.tab-wrapper{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+.tab-grid{
+    position: absolute;
+    width: 100%;
+    height: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem,1fr));
+    gap: 2.5rem ;
+    overflow-x:hidden;
+    overflow-y: auto;
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(.8);  
+}
+
+.tab-grid.resume-box.active{
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+    transition: .5s;
+}
+.tab-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: .8rem;
+    padding: 3rem;
+}
+.tab-item h4 {
+    font-size: 2.3rem;
+}
+.resume-box.technical .resume-item h4 {
+    font-size: 2.2rem;
+    margin: 1rem 0;
+    font-weight: 700;
+    align-items: center;
+    text-align: center;
+}
+.resume-box.technical .tab-item{
+    display: flex;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3rem;
+    cursor: pointer;
+    transition: 0.4s ease-in-out;
+}
+.resume-box.technical .tab-item:hover{
+    background-color: var(--main-color);
+    color: var(--second-bg-color);
+    border: 5px solid var(--main-color);
+    transform: scale(1.03);
+}
+.resume-box.technical{
+    padding-top: 50px;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.resume-box.interpersonal{
+    padding-top: 50px;
+    grid-template-columns: repeat(5, 1fr);
+}
+.resume-box.interpersonal .resume-item {
+    align-items: center;
+    height: 200px;
+}
+.resume-box.interpersonal .resume-item img {
+    font-size: 7rem;
+    max-width: 100%;
+    transition: .3s;
+    padding-bottom: 10px;
+    height: 150px;
+}
+
+.resume-box.interpersonal .resume-item p {
+    font-size: 1.6rem;
+    margin: 2rem 0;
+    font-weight: 700;
+    margin-top: 0;
+}
+.resume-box.languages{
+    padding-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 2rem;
+}
+.resume-box.resume-box.languages .resume-item {
+    align-items: center;
+    background-color: var(--bg-color);
+    height: 500px;
+    border-radius: 3rem;
+    cursor: pointer;
+    border: 3px solid var(--main-color);
+
+    }
+    .resume-box.resume-box.languages .resume-item h4 {
+        font-size: 5rem;
+        margin: 2rem 0;
+        font-weight: 800;
+        color: var(--main-color);
+    }
+
+    .resume-box.resume-box.languages .resume-item p {
+        font-size: 2rem;
+        margin: 2rem 0;
+        font-weight: 500;
+    }
 ::-webkit-scrollbar{
     width: 15px;
 }
@@ -354,6 +513,7 @@ span{
     width: 50px;
 }  
 .services{
+    padding-top: 25px;
     background-color: var(--bg-color);
     color: var(--main-color);
 }
@@ -415,11 +575,12 @@ span{
 }
   
 .projects{
-    padding: 100px 15px  800px;
-    background: var(--second-bg-color);
+    padding: 25px 15px  50px;
+    background: var(--bg-color);
 }
 .slider-container {
-    position: absolute;
+    position: relative;
+    margin-bottom: 100px;
     width: 100vw;
     height: 80vh;
     overflow: hidden;
@@ -429,7 +590,8 @@ span{
 }
 .slider{
     position: absolute;
-    inset:0px 200px 0px 80px;
+    inset:0px 200px 200px 80px;
+    height: 80vh;
     background: var(--second-bg-color);
 }
 .slider .slides{
@@ -454,7 +616,7 @@ span{
     top: 0;
     left: 0;
     width: 100%;
-    height: 90%;
+    height: 100%;
     transform: translateY(0);
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0);
     background-size: cover;
@@ -480,9 +642,9 @@ span{
 }
 .buttons{
     position: absolute;
-    bottom: 0px;
     display: flex;
     gap: 20px;
+    bottom: 20px;
 }
 .buttons span{
     position: relative;
@@ -555,23 +717,22 @@ span{
 }
 
 
-
 .contact{
-    padding: 100px 15px;
-    background: var(--bg-color);
+    padding: 25px 15px;
+    background: var(--second-bg-color);
     min-height: auto;
 }
 .contact-info-upper-container {
   display: flex;
   place-items: center;
-  max-width: 900px;
+  max-width: 1200px;
   justify-content: center;
   align-items: center;
   border-radius: 2rem;
   border: var(--main-color) 0.4rem solid;
   margin: 5rem auto ;
   text-align: center;
-  background-color: var(--second-bg-color);
+  background-color: var(--bg-color);
 }
 .contact-info-upper-container:hover{
     box-shadow: 0 0 25px var(--main-color),
@@ -741,12 +902,14 @@ span{
         position: absolute;
         top: 100%;
         right: 0;
-        width: 50%;
+        width: 100%;
         padding: 1rem 3%;
         background: rgba(0, 0, 0, 0.8);
         backdrop-filter:blur(20px);
         border-bottom-left-radius: 2rem;
+        border-bottom-right-radius: 2rem;
         border-left: 2px solid var(--main-color);
+        border-right:2px solid var(--main-color);
         border-bottom: 2px solid var(--main-color);
         display: none;
     }
@@ -772,7 +935,8 @@ span{
         text-align: center;
     }
     .home-content h3{
-        font-size: 2.6rem;
+        font-size: 2.6rem;n+
+        
     }
     .home-content h1{
         font-size: 8rem;
