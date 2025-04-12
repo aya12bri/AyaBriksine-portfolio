@@ -4,6 +4,7 @@ let sections = document.querySelectorAll('sections');
 let navLinks = document.querySelectorAll('header nav a');
 const skillsLists = document.querySelectorAll('.skills-list');
 const skillsBoxs = document.querySelectorAll('.resume-box');
+const cvBtns = document.querySelectorAll('.cv-btn');
 
 
 window.onscroll = () => {
@@ -51,3 +52,21 @@ skillsLists.forEach((list, idx) => {
     });
 });
 
+
+cvBtns.forEach((btn, idx) => {
+    btn.addEventListener('click', () => {
+        const cvDetails = document.querySelectorAll('.cv-detail');
+        
+        cvBtns.forEach(btn => {
+            btn.classList.remove('active');
+        });
+        btn.classList.add('active');
+
+        cvDetails.forEach(detail => {
+            detail.classList.remove('active');
+        });
+        cvDetails[idx].classList.add('active');
+    });
+});
+
+        
