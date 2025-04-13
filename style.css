@@ -112,7 +112,7 @@ section{
     align-items: baseline;
     text-align: left;
     justify-content: center;
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 span{
     color: var(--main-color);
@@ -122,9 +122,9 @@ span{
 }
 
 .home-content h3{
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     margin-top: 1rem;
-    font-size: 3.5rem;
+    font-size: 3.2rem;
 }
 .home-content h1{
     font-size: 7rem;
@@ -140,7 +140,7 @@ span{
     top: 3rem;
     width: 38vw;
     border-radius: 50%;
-    background: var(--main-color);
+    background: linear-gradient(to bottom, #ff00ea 0%, #d68fff 100%);
     cursor: pointer;
     transition: 0.4s ease-in-out;
 }
@@ -154,6 +154,7 @@ span{
     font-weight: 500;
     line-height: 1.8;
     max-width:1000px ;
+    padding-top: 2.5rem;
 }
 .social-icons a {
     display: inline-flex;
@@ -304,7 +305,7 @@ span{
 .cv-container{
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 5rem;
+    gap: 4rem;
     width: 100%;
     max-width: 100%;
 }
@@ -441,9 +442,10 @@ span{
 .timeline-content{
     background-color: var(--bg-color);
     border: 3px solid var(--main-color);
-    padding: 30px 50px ;
+    padding: 30px 30px ;
+    margin-right: 30px;
     border-radius: 4rem;
-    box-shadow: 0 0 10px var(--main-color);
+    box-shadow: 0 0 25px var(--main-color);
     cursor: pointer;
     transition: 0.3s ease-in-out;
 }
@@ -453,15 +455,22 @@ span{
 }
 .timeline-content h3{
     font-size: 20px;
-    color: white;
+    color: var;
     margin: 0 0 10px;
     font-weight: 500;
 }
-.timeline-content p{
+.timeline-content h4{
+    font-size: 15px;
+    color: var(--main-color);
+    margin: 0 0 10px;
+    font-weight: 500;
+}
+.timeline-content ul{
     color: white;
-    font-size: 16px;
+    font-size: 11px;
     font-weight: 300;
     line-height: 22px;
+    padding-left: 3rem;
 }
 .skills{
     padding: 25px 240px;
@@ -971,54 +980,6 @@ span{
     }
 }
 
-@media (max-width: 768px) {
-    .contact {
-        padding: 4rem 5%;
-    }
-    
-    .contact-info-upper-container {
-        flex-direction: column;
-        gap: 1.5rem;
-        padding: 1.5rem;
-    }
-    
-    .contact-info-container {
-        flex-direction: row;
-        min-width: auto;
-        width: 100%;
-        justify-content: flex-start;
-        margin: 0.5rem 0;
-    }
-    
-    .contact-info-container i {
-        width: 6rem;
-        height: 6rem;
-        font-size: 3rem;
-        margin: 0 1rem 0 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .contact {
-        padding: 3rem 5%;
-    }
-    
-    .contact-info-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .contact-info-container i {
-        width: 5rem;
-        height: 5rem;
-        font-size: 2.5rem;
-        margin: 0;
-    }
-    
-    .contact-info-container a {
-        font-size: 1.4rem;
-    }
-}
 .footer {
     position: relative;
     width: 100%;
@@ -1128,7 +1089,7 @@ span{
     }
     
     .timeline-dot {
-        left: 24px;
+        left: 23px;
     }
     
     .edu-list {
@@ -1187,6 +1148,8 @@ span{
     .home-img {
         order: 1; /* Image comes first */
         margin-bottom: 3rem;
+        
+
     }
     
     .home-img img {
@@ -1397,7 +1360,7 @@ span{
     }
 
     .btn {
-        width: 60%;
+        width: 100%;
         text-align: center;
         margin-bottom: 1rem;
     }
@@ -1413,7 +1376,7 @@ span{
     margin: auto;
    }
   .education {
-        padding: 2rem 3%;
+        padding: 2rem 5%;
     }
     
     .cv-box .heading {
@@ -1445,7 +1408,6 @@ span{
     margin:auto ;
 
   }
-
   .contact-info-container {
     margin: 1rem 4rem;
     max-width: 400px;
@@ -1476,7 +1438,7 @@ span{
     margin-bottom: 10px;
 }
 .skills {
-    padding: 2.5rem 3%;
+    padding: 2.5rem ;
 }
 
 .tab-list h3 {
@@ -1531,8 +1493,34 @@ span{
     
     .cv-btn {
         font-size: 1.4rem;
+       
         height: 5rem;
     }
+    .contact {
+        padding: 4rem 5%;
+    }
+    
+    .contact-info-upper-container {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+    
+    .contact-info-container {
+        flex-direction: row;
+        min-width: auto;
+        width: 100%;
+        justify-content: flex-start;
+        margin: 0.5rem 0;
+    }
+    
+    .contact-info-container i {
+        width: 6rem;
+        height: 6rem;
+        font-size: 3rem;
+        margin: 0 1rem 0 0;
+    }
+
     .footer {
         padding: 30px 0;
     }
