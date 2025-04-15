@@ -48,6 +48,7 @@ skillsLists.forEach((list, idx) => {
 });
 
 
+
 cvBtns.forEach((btn, idx) => {
     btn.addEventListener('click', () => {
         const cvDetails = document.querySelectorAll('.cv-detail');
