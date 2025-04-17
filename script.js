@@ -60,14 +60,21 @@ cvBtns.forEach((btn, idx) => {
           el.style.transform = 'translateY(20px)';
           setTimeout(() => {
             el.classList.remove('active');
-          }, 300); // Match CSS transition duration
+          }, 100); // Match CSS transition duration
         } else {
           // Immediately deactivate button
           el.classList.remove('active');
         }
       });
   
-      
+      // 2. Add active classes with animation
+      setTimeout(() => {
+        btn.classList.add('active');
+        cvDetails[idx].classList.add('active');
+        // Reset styles in case they were animated out previously
+        cvDetails[idx].style.opacity = '';
+        cvDetails[idx].style.transform = '';
+      }, 350); // Slightly longer than the out animation
     });
   });
 
