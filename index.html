@@ -59,10 +59,7 @@
           <div class="cv-container">
             <div class="cv-box">
               <h2>Discover My professional <span>Background</span></h2>
-              <p class="desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint 
-                amet vero voluptates expedita exercitationem deserunt dolorum libero maxime 
-                asperiores quaerat iure, voluptatum sequi quasi. Deleniti eum perspiciatis 
-                molestiae officiis debitis!</p>
+              <p class="desc">Explore my professional journey by selecting a category below:</p>
               <button class="cv-btn active">Experience</button>
               <button class="cv-btn">Education</button>
               <button class="cv-btn">Certification</button>
@@ -192,23 +189,67 @@
                       </div>
 
                       <div class="cv-detail certif">
-                        <h2 class="heading">Certification</h2>
-                        <p class="desc">Lorem ipsum dolor sit
-                           amet consectetur adipisicing elit. Delectus iure quidem amet magnam quia eaque, velit
-                            laudantium. Vero voluptas adipisci, corrupti officia, illum eum ipsa veritatis repellendus
-                             voluptatum voluptatem tempora!</p>
-                             <div class="certif-item">
-                              <p class="year">2023 - Present</p>
-                              <h3>Frontend Developer</h3>
-                              <p class="company">Abc Corp.</p>
-                              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem repellat, non quibusdam aperiam 
-                                dolores harum magni qui quo, fugiat maxime neque voluptatum nemo iste odio eius.
-                                Voluptatibus repudiandae corporis doloremque!</p>
-                             </div>
+                        <h2 class="heading">Certifications</h2>
+                        
+                        <div class="certification-container">
+                          <!-- Certification Item 1 -->
+                          <div class="certification-item">
+                            <div class="certification-image-container">
+                              <img src="72-virtual-assistant-certificate-aya-briksine.png" alt="Project Management Professional (PMP) Certification" class="certification-image">
+                              <div class="certification-overlay">
+                                <button class="view-btn">View Full Size</button>
+                              </div>
+                            </div>
+                            <div class="certification-info">
+                              <h3>virtual assistant</h3>
+                              <p>Issued by: ALX Africa</p>
+                              <p>Date: 26 JNovember 2024</p>
+                            </div>
+                          </div>
+                      
+                          <!-- Certification Item 2 -->
+                          <div class="certification-item">
+                            <div class="certification-image-container">
+                              <img src="89-professional-foundations-certificate-aya-briksine.png" alt="Salesforce Administrator Certification" class="certification-image">
+                              <div class="certification-overlay">
+                                <button class="view-btn">View Full Size</button>
+                              </div>
+                            </div>
+                            <div class="certification-info">
+                              <h3>Professional Foundations</h3>
+                              <p>Issued by: Salesforce</p>
+                              <p>Date: March 2023 | Credential ID: SFDC789012</p>
+                            </div>
+                          </div>
+                      
+                          <!-- Upload New Certification -->
+                          <div class="upload-certification">
+                            <h3>Add New Certification</h3>
+                            <form id="certification-upload">
+                              <div class="form-group">
+                                <label for="cert-name">Certification Name:</label>
+                                <input type="text" id="cert-name" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="cert-issuer">Issuing Organization:</label>
+                                <input type="text" id="cert-issuer" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="cert-date">Date Earned:</label>
+                                <input type="month" id="cert-date" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="cert-image">Upload Certificate Image:</label>
+                                <input type="file" id="cert-image" accept="image/*" required>
+                              </div>
+                              <button type="submit" class="upload-btn">Add Certification</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
             </div>
           </div>
-        </section>   
-
+        </section>
         <section class="services" id="services">
 
           <h2 class="heading">Services</h2>
@@ -216,13 +257,10 @@
             <div class="service-box">
               <div class="service-info">
                 <i class='bx bx-bot'></i>
-                <h4>Digital Transormation</h4>
-                <P>Lorem ipsum dolor sit amet 
-                  consectetur adipisicing elit. 
-                  Vitae laboriosam laborum velit 
-                  ex quisquam? Ullam blanditiis 
-                  adipisci quae obcaecati molestiae 
-                  aliquam ad.</P>
+                <h4>Automation & Integration</h4>
+                <P>I design smart workflows using Node-RED, Zapier, and n8n.io to connect systems and eliminate manual work. 
+                  By automating data flows between IoT devices, ERPs, and CRMs, I help businesses reduce errors and save time. 
+                  My solutions deliver real-time insights while cutting repetitive tasks, driving efficiency across operations.</P>
                   <a href="#" class="btn">Learn More</a>
               </div>
             </div>
@@ -232,14 +270,25 @@
             <div class="service-box">
               <div class="service-info">
                 <i class='bx bx-code-alt'></i>                
-                <h4>Digital Transormation</h4>
-                <P>Lorem ipsum dolor sit amet 
-                  consectetur adipisicing elit. 
-                  Vitae laboriosam laborum velit 
-                  ex quisquam? Ullam blanditiis 
-                  adipisci quae obcaecati molestiae 
-                  aliquam ad. Facere, at. Omnis 
-                  nobis illo porro nostrum ratione.</P>
+                <h4>Code & Data Analysis</h4>
+                <P>I build systems using VS Code/GitHub and extract insights through data analysis. Experienced in 
+                  Firebase prototyping and dataset analysis, I solve problems with maintainable code while 
+                  emphasizing version control and documentation. My approach combines technical implementation with data-driven decision making for robust solutions. </P>
+                  <a href="#" class="btn">Learn More</a>
+              </div>
+            </div>
+          
+            <div class="service-box">
+              <div class="service-info">
+                <i class='bx bx-chalkboard'></i>               
+                <h4>Project Management</h4>
+                <P>I've managed projects using tools like ClickUp, Notion, 
+                  and Trello to coordinate teams and streamline workflows. 
+                  Through organizing tasks, maintaining documentation, and 
+                  implementing Agile methods, I've helped keep projects on track while 
+                  improving collaboration between technical and non-functional stakeholders. 
+                  These experiences have strengthened my ability to adapt tools to different 
+                  team needs and project requirements.</P>
                   <a href="#" class="btn">Learn More</a>
               </div>
             </div>
@@ -247,15 +296,15 @@
 
             <div class="service-box">
               <div class="service-info">
-                <i class='bx bx-server'></i> 
-                <h4>Digital Transormation</h4>
-                <P>Lorem ipsum dolor sit amet 
-                  consectetur adipisicing elit. 
-                  Vitae laboriosam laborum velit 
-                  ex quisquam? Ullam blanditiis 
-                  adipisci quae obcaecati molestiae 
-                  aliquam ad. Facere, at. Omnis 
-                  nobis illo porro nostrum ratione.</P>
+                <i class='bx bx-check-shield'></i>
+                <h4>ERP & CRM Systems</h4>
+                <P>I specialize in implementing cost-effective ERP and CRM solutions 
+                  that transform business operations. Using Odoo, I've streamlined inventory 
+                  and accounting for SMEs, while ERPNext migrations delivered 3x faster reporting 
+                  for retail clients. For nonprofits, I've customized SuiteCRM to deliver 90% of 
+                  Salesforce functionality at fraction of the cost, proving enterprise-grade systems 
+                  can be affordable and powerful.
+                </P>
                   <a href="#" class="btn">Learn More</a>
               </div>
             </div>
@@ -328,39 +377,55 @@
                         <div class="tab-item resume-item inter">
                           <div class="skill-inter">
 
-                          <img src="2.png" alt="SAP">
-                          <p>SAP</p>
+                          <img src="PowerBI.png" alt="SAP">
+                          <p>POWER BI</p>
                         </div>
                         </div>
                         <div class="tab-item resume-item inter">
                           <div class="skill-inter">
-                            <img src=".png" alt="PLM Centric">
-                          <p>PLM Centric</p>
+                            <img src="Google-Analytics-Logo.png" alt="PLM Centric">
+                          <p>GOOGLE ANALYTICS</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="Microsoft_Excel.png" alt="PLM Centric">
+                          <p>MS EXCEL</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="Python-Logo-Free-Download-PNG.png" alt="Python">
+                          <p>PYTHON</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="R.png" alt="Python">
+                          <p>R</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="Matlab.png" alt="Python">
+                          <p>MATLAB</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="TIA-PORTAL.png" alt="Python">
+                          <p>TIA PORTAL</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="SIMATIC STEP7.png" alt="Python">
+                          <p>SIMATIC STEP 7</p>
                         </div>
                         </div>
                       </div>
                     </div>
-                  
-                    <!-- Data & Analytics Category -->
-                    <div class="category-group">
-                      <h3 class="category-title"> Design & CAD Tools</h3>
-                      <div class="skills-subgrid">
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-
-                          <img src="2.png" alt="SAP">
-                          <p>SAP</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src=".png" alt="PLM Centric">
-                          <p>PLM Centric</p>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-                  
+                      
                     <!-- Design & Development Category -->
                     <div class="category-group">
                       <h3 class="category-title">Digital Transformation & Project Management</h3>
@@ -368,32 +433,106 @@
                         <div class="tab-item resume-item inter">
                           <div class="skill-inter">
 
-                          <img src="optitex.png" alt="Optitex">
-                          <p>Optitex</p>
+                          <img src="JIRA.png" alt="Optitex">
+                          <p>JIRA</p>
                         </div>
                         </div>
                         <div class="tab-item resume-item inter">
                           <div class="skill-inter">
-                          <img src="clo.png" alt="CLO 3D">
-                          <p>CLO 3D</p>
+                          <img src="MS_Project_Logo.png" alt="CLO 3D">
+                          <p>MS PROJECT</p>
                         </div>
                         </div>
                         <div class="tab-item resume-item inter">
                           <div class="skill-inter">
 
-                          <img src="WebDesign.png" alt="Web Design">
-                          <p>WebDesign</p>
+                          <img src="SMARTSHEET.jpg" alt="Web Design">
+                          <p>SMART SHEET</p>
                         </div>
                         </div>
                         <div class="tab-item resume-item inter">
                           <div class="skill-inter">
-                          <img src="photoshop.png" alt="Photoshop">
-                          <p>Photoshop</p>
+                          <img src="Notion_app_logo.png" alt="Photoshop">
+                          <p>NOTION</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                          <img src="salesforce-logo.png" alt="Photoshop">
+                          <p>SALESFORCE</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                          <img src="Ui path-02.png" alt="Photoshop">
+                          <p>UIPATH</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                          <img src="node-red-icon.png" alt="Photoshop">
+                          <p>NODERED</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                          <img src="kissflow-logo.png" alt="Photoshop">
+                          <p>KISSFLOW</p>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Data & Analytics Category -->
+                    <div class="category-group">
+                      <h3 class="category-title"> Design & CAD Tools</h3>
+                      <div class="skills-subgrid">
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+
+                          <img src="autocad.png" alt="SAP">
+                          <p>AUTOCAD</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="download.png" alt="PLM Centric">
+                          <p>SOLIDWORKS</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="Photoshop-logo.png" alt="PLM Centric">
+                          <p>PHOTOSHOP</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="Adobe-Illustrator.png" alt="PLM Centric">
+                          <p>ILLUSTRATOR</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="AE.png" alt="PLM Centric">
+                          <p>AFTEREFFECT</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="premiere.png" alt="PLM Centric">
+                          <p>PREMIEREPRO</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="FIGMA.png" alt="PLM Centric">
+                          <p>FIGMA</p>
                         </div>
                         </div>
                       </div>
                     </div>
                   
+                    
                     <!-- Office & AI Tools Category -->
                     <div class="category-group">
                       <h3 class="category-title">ERP & Business Systems</h3>
@@ -401,14 +540,20 @@
                         <div class="tab-item resume-item inter">
                           <div class="skill-inter">
 
-                          <img src="2.png" alt="SAP">
+                          <img src="SAP.png" alt="SAP">
                           <p>SAP</p>
                         </div>
                         </div>
                         <div class="tab-item resume-item inter">
                           <div class="skill-inter">
-                            <img src=".png" alt="PLM Centric">
-                          <p>PLM Centric</p>
+                            <img src="Microsoft-Dynamics-365-logo.png" alt="PLM Centric">
+                          <p>Microsoft Dynamics</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="SHOPYFY.jpg" alt="PLM Centric">
+                          <p>SHOPIFY</p>
                         </div>
                         </div>
                       </div>
@@ -417,25 +562,49 @@
 
                      <!-- Office & AI Tools Category -->
                      <div class="category-group">
-                      <h3 class="category-title">Emerging Technologies</h3>
+                      <h3 class="category-title"> Web & Mobile Development</h3>
                       <div class="skills-subgrid">
                         <div class="tab-item resume-item inter">
                           <div class="skill-inter">
 
-                          <img src="2.png" alt="SAP">
-                          <p>SAP</p>
+                          <img src="HTML.png" alt="SAP">
+                          <p>HTML5</p>
                         </div>
                         </div>
                         <div class="tab-item resume-item inter">
                           <div class="skill-inter">
-                            <img src=".png" alt="PLM Centric">
-                          <p>PLM Centric</p>
+                            <img src="css3.png" alt="PLM Centric">
+                          <p>CSS3</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="JS.png" alt="PLM Centric">
+                          <p>JAVASCRIPT</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="REACTJS.png" alt="PLM Centric">
+                          <p>REACT.JS</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="Tailwind CSS.png" alt="PLM Centric">
+                          <p>Tailwind CSS</p>
+                        </div>
+                        </div>
+                        <div class="tab-item resume-item inter">
+                          <div class="skill-inter">
+                            <img src="NODEJS.jpg" alt="PLM Centric">
+                          <p>NODE JS</p>
                         </div>
                         </div>
                       </div>
                     </div>
 
-                  </div>
+                </div>
             </div>
           </div>
              

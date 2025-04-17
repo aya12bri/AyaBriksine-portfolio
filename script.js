@@ -6,6 +6,7 @@ let navLinks = document.querySelectorAll('header nav a');
 const skillsLists = document.querySelectorAll('.skills-list');
 const skillsBoxs = document.querySelectorAll('.resume-box');
 const cvBtns = document.querySelectorAll('.cv-btn');
+const cvDetails = document.querySelectorAll('.cv-detail');
 
 
 navLinks.forEach((link, index) => {
@@ -51,20 +52,81 @@ skillsLists.forEach((list, idx) => {
 
 cvBtns.forEach((btn, idx) => {
     btn.addEventListener('click', () => {
-        const cvDetails = document.querySelectorAll('.cv-detail');
-        
-        cvBtns.forEach(btn => {
-            btn.classList.remove('active');
-        });
+      // 1. Remove active classes with animation
+      document.querySelectorAll('.cv-btn.active, .cv-detail.active').forEach(el => {
+        if (el.classList.contains('cv-detail')) {
+          // Animate out current detail
+          el.style.opacity = 0;
+          el.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            el.classList.remove('active');
+          }, 300); // Match CSS transition duration
+        } else {
+          // Immediately deactivate button
+          el.classList.remove('active');
+        }
+      });
+  
+      // 2. Add active classes with animation
+      setTimeout(() => {
         btn.classList.add('active');
-
-        cvDetails.forEach(detail => {
-            detail.classList.remove('active');
-        });
         cvDetails[idx].classList.add('active');
+        // Reset styles in case they were animated out previously
+        cvDetails[idx].style.opacity = '';
+        cvDetails[idx].style.transform = '';
+      }, 350); // Slightly longer than the out animation
     });
+  });
+
+  document.getElementById('certification-upload').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Get form values
+  const name = document.getElementById('cert-name').value;
+  const issuer = document.getElementById('cert-issuer').value;
+  const date = document.getElementById('cert-date').value;
+  const imageFile = document.getElementById('cert-image').files[0];
+  
+  if (imageFile) {
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+      // Create new certification item
+      const newCert = document.createElement('div');
+      newCert.className = 'certification-item';
+      newCert.innerHTML = `
+        <div class="certification-image-container">
+          <img src="${e.target.result}" alt="${name}" class="certification-image">
+          <div class="certification-overlay">
+            <button class="view-btn">View Full Size</button>
+          </div>
+        </div>
+        <div class="certification-info">
+          <h3>${name}</h3>
+          <p>Issued by: ${issuer}</p>
+          <p>Date: ${new Date(date).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+        </div>
+      `;
+      
+      // Insert before upload form
+      document.querySelector('.certification-container').insertBefore(newCert, document.querySelector('.upload-certification'));
+      
+      // Reset form
+      e.target.reset();
+    };
+    
+    reader.readAsDataURL(imageFile);
+  }
 });
 
+// View full size functionality
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('view-btn')) {
+    const imgSrc = e.target.closest('.certification-image-container').querySelector('img').src;
+    // Create modal or open in new tab
+    window.open(imgSrc, '_blank');
+  }
+});
 document.addEventListener('DOMContentLoaded', function() {
     const arrowRight = document.querySelector('.arrow-right');
     const arrowLeft = document.querySelector('.arrow-left');
