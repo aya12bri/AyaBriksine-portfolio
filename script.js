@@ -67,14 +67,7 @@ cvBtns.forEach((btn, idx) => {
         }
       });
   
-      // 2. Add active classes with animation
-      setTimeout(() => {
-        btn.classList.add('active');
-        cvDetails[idx].classList.add('active');
-        // Reset styles in case they were animated out previously
-        cvDetails[idx].style.opacity = '';
-        cvDetails[idx].style.transform = '';
-      }, 350); // Slightly longer than the out animation
+      
     });
   });
 
