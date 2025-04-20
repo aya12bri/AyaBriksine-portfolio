@@ -138,9 +138,9 @@ span{
 .home-img img{
     position:relative;
     top: 3rem;
-    width: 38vw;
+    width: 35vw;
     border-radius: 50%;
-    background: linear-gradient(to bottom, #ff00ea 0%, #d68fff 100%);
+    background: var(--main-color);
     cursor: pointer;
     transition: 0.4s ease-in-out;
 }
@@ -1479,7 +1479,6 @@ span{
     .tab-item.resume-item.inter p {
         font-size: 1.1rem;
         font-weight: 850;
-       
       }
 
 }  
