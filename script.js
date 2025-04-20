@@ -197,3 +197,50 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const slideTrack = document.querySelector('.img-slide');
+    const slides = document.querySelectorAll('.img-item');
+    const arrowLeft = document.querySelector('.arrow-left');
+    const arrowRight = document.querySelector('.arrow-right');
+    
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    
+    // Initialize
+    updateCarousel();
+    
+    // Navigation functions
+    function moveToSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+    }
+    
+    function updateCarousel() {
+        // Update slide position
+        slideTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Update button states
+        arrowLeft.classList.toggle('disabled', currentIndex === 0);
+        arrowRight.classList.toggle('disabled', currentIndex === totalSlides - 1);
+    }
+    
+    // Event listeners
+    arrowRight.addEventListener('click', function() {
+        if (currentIndex < totalSlides - 1) {
+            moveToSlide(currentIndex + 1);
+        }
+    });
+    
+    arrowLeft.addEventListener('click', function() {
+        if (currentIndex > 0) {
+            moveToSlide(currentIndex - 1);
+        }
+    });
+    
+    // Optional: Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') arrowRight.click();
+        if (e.key === 'ArrowLeft') arrowLeft.click();
+    });
+});
