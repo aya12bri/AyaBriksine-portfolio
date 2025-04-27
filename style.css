@@ -14,7 +14,7 @@
     --bg-color:#080808;
     --second-bg-color:#131313;
     --text-color:white;
-    --main-color:#ff00ea;
+    --main-color:#ff00dd;
 }
 
 html{
@@ -138,7 +138,7 @@ span{
 .home-img img{
     position:relative;
     top: 3rem;
-    width: 35vw;
+    width: 32vw;
     border-radius: 50%;
     background: var(--main-color);
     cursor: pointer;
