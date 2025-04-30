@@ -714,13 +714,14 @@ span{
       font-size: 1.6rem;
     }
   }
-.skills{
+  .skills {
     padding: 25px 240px;
     background-color: var(--second-bg-color);
     width: 100%;
-    max-width: 100vw; /* Never exceed viewport width */
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    box-sizing: border-box; 
+    max-width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    min-height: fit-content; /* Adjust height to fit content */
 } 
 .tab-box{
     display: flex;
@@ -754,21 +755,33 @@ span{
 .tab-wrapper{
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: auto; /* Reduced from 100vh */
+        overflow: hidden; /* Try adding this */
+
 }
 .tab-grid{
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30rem,1fr));
-    gap: 2.5rem ;
-    overflow-x:hidden;
-    overflow-y: auto;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 2.5rem;
+    overflow: hidden;
     visibility: hidden;
     opacity: 0;
-    transform: scale(.8);  
+    transform: scale(.8);
+    transition: all 0.5s ease;
 }
+    .tab-grid.active {
+        position: relative; /* Changed to relative when active */
+        visibility: visible;
+        opacity: 1;
+        transform: scale(1);
+        height: auto; /* Height based on content */
+        margin-bottom: 3rem; /* Add space between sections */
+    }
+
 
 .tab-grid.resume-box.active{
     visibility: visible;
@@ -786,6 +799,13 @@ span{
 }
 .tab-item h4 {
     font-size: 2.3rem;
+}
+.resume-box.technical{
+    padding-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: auto; /* Allow grid to shrink */
+    overflow: visible;
 }
 .resume-box.technical .resume-item h4 {
     font-size: 2rem;
@@ -809,13 +829,7 @@ span{
     border: 5px solid var(--main-color);
     transform: scale(1.03);
 }
-.resume-box.technical{
-    padding-top: 50px;
-    height: auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
- 
+
 .resume-box.languages{
     padding-top: 50px;
     height: auto;
@@ -823,14 +837,16 @@ span{
     grid-template-columns: repeat(3,1fr);
     gap: 2rem;
 }
-.resume-box.resume-box.languages .resume-item {
-    align-items: center;
-    background-color: var(--bg-color);
+.resume-box.languages .resume-item {
     height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-radius: 3rem;
     cursor: pointer;
+    background-color: var(--bg-color);
     border: 3px solid var(--main-color);
-
     }
  .resume-box.resume-box.languages .resume-item h4 {
         font-size: 3rem;
@@ -843,21 +859,25 @@ span{
         margin-bottom: 1.5rem ;
         font-weight: 500;
     }
-.tab-grid::-webkit-scrollbar{
-    width: .7rem;
-}
-.tab-grid::-webkit-scrollbar-thumb{
-    background-color: transparent;
-    border-radius: 1rem;
-}
-.tab-grid:hover::-webkit-scrollbar-thumb{
-    background-color: var(--main-color);
-    border-radius: 1rem;
-}
-::-webkit-scrollbar-track{
-    background-color: var(--bg-color);
-    width: 50px;
-}  
+    .tab-grid.languages.active::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Remove scrollbar for Technical Skills when active */
+    .tab-grid.technical.active::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Keep scrollbar for Interpersonal Skills (and any other .tab-grid) */
+    .tab-grid::-webkit-scrollbar {
+        width: .7rem;
+    }
+    
+    .tab-grid::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        border-radius: 1rem;
+    }
+
 /* Main Skills Container */
 .tab-grid.resume-box.interpersonal {
     padding-top: 50px;
@@ -974,9 +994,6 @@ span{
   .tab-item.resume-item.inter:hover p {
     opacity: 0;
   }
-  
- 
- 
 .services{
     padding-top: 25px;
     background-color: var(--bg-color);
@@ -1949,7 +1966,7 @@ span{
       }
       
     .skills-subgrid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
       }
       
     .resume-box.technical {
