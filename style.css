@@ -1726,7 +1726,7 @@ span{
     }
 
     .home-img img {
-        width: 70vw;
+        width: 65vw;
         max-width: 200px;
         margin-top: 0;
     }
@@ -1751,12 +1751,13 @@ span{
     }
 
     .btn-group {
-        flex-direction: column;
+        flex-direction: grid;
+        gap: 1rem;
         width: 100%;
     }
 
     .btn {
-        width: 100%;
+        width: 90%;
         text-align: center;
         margin-bottom: 1rem;
     }
