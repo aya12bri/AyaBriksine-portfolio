@@ -1615,7 +1615,7 @@ span{
   @media (max-width:895px){
     :root {
         /* Reduce saturation and brightness */
-        --main-color: hsl(315, 100%, 32%); /* Less saturated */
+        --main-color: hsl(320, 100%, 41%); /* Less saturated */
         --bg-color: hsl(0, 0%, 5%);
         --second-bg-color: hsl(0, 0%, 11%); /* Softer white */
         
@@ -1723,8 +1723,9 @@ span{
     }
 
     .home-img img {
-        width: 75vw;
-        max-width: 280px;
+        content: url('aya.png');
+        width: 70vw;
+        max-width: 240px;
         margin-top: 0;
     }
 
