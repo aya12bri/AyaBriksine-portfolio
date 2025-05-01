@@ -1612,14 +1612,11 @@ span{
     }
 
 
-
-
-
   @media (max-width:895px){
     :root {
         /* Reduce saturation and brightness */
-        --main-color: hsla(305, 100%, 50%, 0.74); /* Less saturated */
-        --bg-color: hsl(0, 0%, 7%); 
+        --main-color: hsl(315, 100%, 32%); /* Less saturated */
+        --bg-color: hsl(0, 0%, 5%); 
         --second-bg-color: hsl(0, 0%, 11%); /* Softer white */
         
         /* Make text slightly darker for better contrast */
@@ -1726,8 +1723,8 @@ span{
     }
 
     .home-img img {
-        width: 65vw;
-        max-width: 200px;
+        width: 70vw;
+        max-width: 250px;
         margin-top: 0;
     }
 
