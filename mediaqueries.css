@@ -1,0 +1,167 @@
+/* =========================================================
+   Mobile & tablet fixes
+   Loaded after style.css, so these rules override it.
+   ========================================================= */
+
+/* Stop images from ever being wider than the screen */
+img {
+    max-width: 100%;
+}
+
+/* ---------- Tablets & phones (menu icon visible) ---------- */
+@media (max-width: 895px) {
+    /* The header "Contact ME" button was invisible but still took up space
+       (and could still be tapped). The menu already has a Contact link. */
+    .header .gradient-btn {
+        display: none;
+    }
+
+    /* Big section titles were ~70px tall and "Contact Me" wrapped */
+    .heading {
+        font-size: 5rem;
+        margin: 2rem 0 4rem;
+    }
+
+    /* Home: easier-to-read intro text */
+    .home-content p {
+        font-size: 1.5rem;
+        line-height: 1.7;
+        padding-top: 1.5rem;
+    }
+
+    .home-content .social-icons a {
+        margin: 2.5rem 0.75rem;
+    }
+
+    .btn-group .btn {
+        flex: 1;
+        width: auto;
+        margin-bottom: 0;
+    }
+
+    /* Experience timeline: text was too small to read */
+    .timeline-content ul {
+        font-size: 1.4rem;
+        line-height: 1.6;
+    }
+
+    .timeline-content:hover {
+        transform: none;
+    }
+
+    /* Services: cards had a fixed 600px height, leaving big empty gaps */
+    .service-box {
+        height: auto;
+    }
+
+    .service-box:hover {
+        transform: none;
+    }
+
+    .service-info {
+        padding: 4rem 2.5rem;
+    }
+
+    .service-info i {
+        font-size: 6rem;
+    }
+
+    .service-info h4 {
+        font-size: 3rem;
+        margin: 1rem 0;
+    }
+
+    .service-info p {
+        font-size: 1.5rem;
+        margin: 1rem 0 2.5rem;
+    }
+
+    .service-box .btn {
+        align-self: center;
+        width: auto;
+    }
+
+    /* Contact: keep the long email address inside its box */
+    .contact-info-container a {
+        font-size: 1.6rem;
+        overflow-wrap: anywhere;
+    }
+
+    .contact-info-upper-container:hover {
+        transform: none;
+    }
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 768px) {
+    section {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .skills {
+        padding: 25px 5%;
+    }
+
+    /* Projects: one column, smaller number, shorter image carousel */
+    .portfolio-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .portfolio-detail {
+        padding: 1rem 0;
+    }
+
+    .portfolio-box .numb {
+        font-size: 7rem;
+        margin-top: 0;
+    }
+
+    .portfolio-box h3 {
+        margin: 2rem 0 1rem;
+    }
+
+    .portfolio-box p {
+        font-size: 1.5rem;
+    }
+
+    /* Leave room so the "Live Project" hover label isn't cut off */
+    .live-github {
+        padding-left: 2.5rem;
+    }
+
+    .portfolio-carousel {
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+    }
+
+    /* Certifications: cards were too narrow for small phones */
+    .certification-container {
+        grid-template-columns: 1fr;
+    }
+
+    .upload-certification {
+        padding: 2rem 1.5rem;
+    }
+}
+
+/* ---------- Small phones ---------- */
+@media (max-width: 480px) {
+    .heading {
+        font-size: 4.2rem;
+    }
+
+    .home-content h1 {
+        font-size: 4rem;
+    }
+
+    .text-animation {
+        min-width: 0;
+    }
+
+    .contact-info-container i {
+        flex-shrink: 0;
+    }
+}
