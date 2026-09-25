@@ -265,6 +265,32 @@ span{
     }
 
 }
+/* French version of the typing words (used when the page is switched to FR) */
+html[lang="fr"] .text-animation span::before {
+    animation-name: words-fr;
+}
+@keyframes words-fr {
+    0%,
+    20%{
+        content: "Spécialiste digitale";
+    }
+    21%,
+    40%{
+        content: "Web designer";
+    }
+    41%,
+    60%{
+        content: "Ingénieure industrielle";
+    }
+    61%,
+    80%{
+        content: "Développeuse Salesforce";
+    }
+    81%,
+    100%{
+        content: "Testeuse logiciel";
+    }
+}
 @keyframes typing{
     10%,
     15%,
@@ -1428,12 +1454,133 @@ span{
     color: var(--text-color);
     opacity: 0.8;
 }
+/* ---------- Header buttons: language + light/dark ---------- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.lang-toggle,
+.theme-toggle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 3.8rem;
+    height: 3.8rem;
+    border-radius: 50%;
+    border: 2px solid var(--main-color);
+    background: transparent;
+    color: var(--main-color);
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.theme-toggle i {
+    font-size: 2rem;
+}
+
+.lang-toggle:hover,
+.theme-toggle:hover {
+    background: var(--main-color);
+    color: white;
+    box-shadow: 0 0 15px var(--main-color);
+}
+
+/* ---------- Light mode ---------- */
+.light-mode {
+    --bg-color: #ffffff;
+    --second-bg-color: #f4eff6;
+    --text-color: #1c1c1f;
+    /* a slightly deeper pink so pink text stays readable on white */
+    --main-color: #c800cf;
+}
+
 .light-mode .header {
-    background: rgba(212, 212, 212, 0.8); /* Semi-transparent light */
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
 }
 
 .light-mode .footer {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .btn-group a:nth-of-type(2) {
+    background-color: var(--bg-color);
+}
+
+.light-mode .cv-box .cv-btn {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+}
+
+.light-mode .cv-box .cv-btn.active {
+    border-color: var(--main-color);
+    color: var(--main-color);
+}
+
+.light-mode .edu-list .edu-item,
+.light-mode .tab-item,
+.light-mode .certification-item,
+.light-mode .upload-certification,
+.light-mode .form-group input,
+.light-mode .live-github a,
+.light-mode .navigation button {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.light-mode .form-group input {
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.light-mode .timeline-date,
+.light-mode .timeline-content ul,
+.light-mode .live-github a {
+    color: var(--text-color);
+}
+
+.light-mode .resume-box.languages .resume-item {
+    background-color: var(--bg-color);
+}
+
+/* Skill logos: soft and faded instead of almost black */
+.light-mode .tab-item.resume-item.inter img {
+    filter: grayscale(1) opacity(0.15);
+}
+
+.light-mode .tab-item.resume-item.inter:hover img {
+    filter: none;
+}
+
+.light-mode .tab-item.resume-item.inter p {
+    color: var(--text-color);
+    text-shadow: none;
+}
+
+.light-mode .portfolio-box .numb {
+    -webkit-text-stroke-color: var(--text-color);
+}
+
+.light-mode .portfolio-box .tech {
+    border-bottom-color: var(--text-color);
+}
+
+.light-mode .live-github a span {
+    background: var(--text-color);
+    color: var(--bg-color);
+}
+
+.light-mode .navigation button.disabled,
+.light-mode .navigation button.disabled:hover {
+    border-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.35);
+}
+
+.light-mode .contact-info-container a:hover {
+    color: var(--text-color);
 }
 
 
@@ -1613,14 +1760,6 @@ span{
 
 
   @media (max-width:895px){
-    :root {
-        /* Reduce saturation and brightness */
-        --main-color: hsl(320, 100%, 41%); /* Less saturated */
-        --bg-color: hsl(0, 0%, 5%);
-        --second-bg-color: hsl(0, 0%, 11%); /* Softer white */
-        
-        /* Make text slightly darker for better contrast */
-      }
     .header {
         padding: 1.5rem 5%;
         justify-content: space-between;
