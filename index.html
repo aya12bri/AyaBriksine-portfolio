@@ -3,823 +3,464 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My portfolio</title>
-    <link rel="stylesheet"  href="style.css"   />
-    <link rel="stylesheet" href="mediaqueries.css"   />
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>
+    <title>Aya Briksine | Digital Transformation Specialist</title>
+    <meta name="description" content="Aya Briksine – Digital Transformation Specialist based in Morocco. CRM & ERP implementation, process automation, data dashboards and project management.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <script>
-        // Apply the saved light/dark choice before the page shows, so it doesn't flash
+        // Runs before the page shows: apply the saved light/dark choice so it doesn't flash
+        document.documentElement.classList.add('js');
         try { if (localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode'); } catch (e) {}
     </script>
 </head>
 <body>
-    <header class="header">
-        <a href="#home"  class="logo">Briksine
-        <span>Aya</span></a>
 
-        <i class='bx bx-menu' id="menu-icon"></i>
+    <!-- ================= HEADER ================= -->
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="#home" class="logo">Aya<span>.</span>Briksine</a>
 
-        <nav class="navbar">
-            <a href="#home"  class="active">Home</a>
-            <a href="#education">Background</a>
-            <a href="#skills">Skills</a>
-            <a href="#services">Services</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-        </nav>
+            <nav class="navbar" id="navbar">
+                <a href="#home" class="active">Home</a>
+                <a href="#background">Background</a>
+                <a href="#services">Services</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </nav>
 
-        <div class="header-actions">
-            <button class="lang-toggle" id="lang-toggle" aria-label="Passer en français">FR</button>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode"><i class='bx bx-sun'></i></button>
-            <button onclick="window.location.href='mailto:briksenaya@gmail.com '" class="gradient-btn">Contact ME</button>
+            <div class="header-actions">
+                <button class="icon-btn lang-toggle" id="lang-toggle" aria-label="Passer en français">FR</button>
+                <button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Switch to light mode"><i class='bx bx-sun'></i></button>
+                <a href="#contact" class="btn btn-primary btn-sm header-cta">Hire me</a>
+                <button class="icon-btn menu-toggle" id="menu-icon" aria-label="Open menu" aria-expanded="false" aria-controls="navbar"><i class='bx bx-menu'></i></button>
+            </div>
         </div>
-
     </header>
 
-    <section class="home" id="home">
-        <div class="home-content">
-            <h1>Hi, it's <span>Aya</span></h1>
-            <h3 class="text-animation">I'm a <span>
-            </span></h3>
-            <p>Aya Briksine is a digital transformation specialist at DB Growth, passionate about using technology to drive innovation 
-              and positive change. With experience in SAP, ERP, CRM, and web design, she has led impactful projects like a real-time
-               environmental monitoring system. Aya aims to grow in digital transformation, 
-               focusing on sustainability and inclusive tech solutions.</p>
+    <main>
 
-            <div class="social-icons">
-                <a href="https://www.linkedin.com/in/aya-briksine/"> <i class='bx bxl-linkedin' ></i></a>
-                <a href="https://github.com/aya12bri"><i class='bx bxl-github'></i></a>
-                <a href="https://www.instagram.com/ayabriksine/"><i class='bx bxl-instagram-alt'></i></a>
-                <a href="#"><i class='bx bxl-twitter'></i></a>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="home">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <p class="badge"><i class='bx bx-map'></i> Benguerir, Morocco</p>
+                <h1>Hi, I'm <span class="accent">Aya Briksine</span></h1>
+                <p class="hero-role"><span class="typed" id="typed" aria-hidden="true"></span><span class="caret" aria-hidden="true"></span></p>
+                <p class="hero-intro">I help companies modernise the way they work: rolling out CRM and ERP systems, automating repetitive processes and turning data into clear dashboards. I combine an industrial engineering background from UM6P with hands-on digital transformation experience, and I care about technology that is sustainable and inclusive.</p>
+
+                <div class="hero-buttons">
+                    <a href="CV-BRIKSINEAYA.pdf" target="_blank" rel="noopener" class="btn btn-primary"><i class='bx bx-download'></i> Download CV</a>
+                    <a href="#contact" class="btn btn-outline">Get in touch</a>
+                </div>
+
+                <div class="socials">
+                    <a href="https://www.linkedin.com/in/aya-briksine/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+                    <a href="https://github.com/aya12bri" target="_blank" rel="noopener" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+                    <a href="https://www.instagram.com/ayabriksine/" target="_blank" rel="noopener" aria-label="Instagram"><i class='bx bxl-instagram-alt'></i></a>
+                    <a href="mailto:briksenaya@gmail.com" aria-label="Email"><i class='bx bx-envelope'></i></a>
+                </div>
             </div>
 
-            <div class="btn-group">
-                <a href="#" class="btn" onclick="window.open('CV-BRIKSINEAYA.pdf')">Download CV</a>
-                <a href="#contact" class="btn">Contact</a>
+            <div class="hero-photo">
+                <div class="photo-frame">
+                    <img src="aya.png" alt="Portrait of Aya Briksine" width="1000" height="1000">
+                </div>
             </div>
         </div>
-            <div class="home-img">
-                <img src="aya1.png" alt="">
-            </div>
-      </section>
 
-        <section class="education" id="education">
-          <div class="cv-container">
-            <div class="cv-box">
-              <h2>Discover My professional <span>Background</span></h2>
-              <p class="desc">Explore my professional journey by selecting a category below:</p>
-              <button class="cv-btn active">Experience</button>
-              <button class="cv-btn">Education</button>
-              <button class="cv-btn">Certification</button>
-              </div>
-            
-            <div class="cv-box">
-              <div class="cv-detail experience active">
-                  <h2 class="heading">Experience</h2>
-                  <div class="timeline-items">
-                    <div class="timeline-item">
-                      <div class="timeline-dot"></div>
-                        <div class="timeline-date">Mai 2023 -  Present</div>
-                          <div class="timeline-content">
-                            <h3>Digital Transformation Project Manager</h3>
-                            <h4>BROS-COM</h4> 
-                            <ul>
-                              <li>Lead implementation of digital solutions (CRM/ERP, RPA, AI tools) across departments</li>
-                              <li>Manage project timelines, budgets, and vendor relationships</li>
-                              <li>Ensured GDPR compliance for all tools (OneTrust for compliance tracking)</li>                            </li>
-                              <li>Generated monthly progress reports with PowerPoint + Excel PivotTables</li>
-                            </ul>
-                            </div>
-                        </div> 
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                      <div class="timeline-date">Sep 2023- Present</div>
-                        <div class="timeline-content">
-                          <h3>Digital Transformation Project Manager</h3>
-                          <h4>DB Growth</h4> 
-                          <ul>
-                            <li>Created standardized reports and workflows for clients ( monthly KPI dashboards in Google Data Studio).</li>
-                            <li>Automated client reporting using Power BI, cutting manual work</li>
-                            <li>Designed process maps in Lucidchart for 5 key workflows</li>
-                            <li>Set up Google Alerts for tracking competitors' digital movesS</li>
-                          </ul>
-                          </div>
-                   
-                 </div> 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                        <div class="timeline-date">Dec 2022 - Mai 2023</div>
-                        <div class="timeline-content">
-                            <h3>Digital Transformation Project Manager (Internship)</h3>
-                            <h4>BROS-COM</h4> 
-                            <ul>
-                              <li>Researched emerging tech (AI, RPA) for process improvement proposals.</li>
-                              <li>Automated client reporting using Power BI, cutting manual work</li>
-                              <li>Conduct process analysis to identify automation opportunities </li>
-                              <li>Train employees quarterly on new digital tools and workflows</li>
-                              <li>Report directly to CIO/COO with monthly progress updates and ROI analysis</li>
-                            </ul>
-                        </div>
-                    
-                </div> 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                        <div class="timeline-date">Mar 2022 - Jul 2022</div>
-                        <div class="timeline-content">
-                            <h3> Final Year Engineering Internship </h3>
-                            <h4>Green Energy Park</h4> 
-                            <ul>
-                              <li>Designed and built a web/mobile application to track sludge-heating greenhouse parameters (temperature, humidity, pH)</li>
-                              <li>Connected IoT sensors to a custom dashboard using React.js frontend + Node.js/Express backend</li>
-                              <li>Reduced manual data collection time by 70% through real-time monitoring</li>
-                            </ul>
-                         </div>
-                 </div>
-               </div>
-              </div>
-                <div class="cv-detail edu">
-                    <h2 class="heading">Education</h2>
-                   
-                         <div class="edu-list">
-                         <div class="edu-item">
-                          <p class="year">Jan 2025 – present</p>
-                          <h3>Sales force administrator</h3>
-                          <p class="company">ALX Africa</p>
-                          <p>Certified Salesforce Administrator by ALX Africa, skilled in CRM configuration, 
-                            user management, and automation. Expert in streamlining business processes, data analytics, 
-                            and customizing Salesforce solutions to enhance organizational efficiency and customer engagement</p>
-                         </div>
-                         <div class="edu-item">
-                          <p class="year">Sep 2024 – Dec 2024</p>
-                          <h3>Virtual assistance training</h3>
-                          <p class="company">ALX Africa</p>
-                          <p>Developing skills in remote administrative support, email management, and client communication
-                            Learning tools like Google Workspace, Calendly, and Trello for task organization
-                            
-                            Training in customer service best practices for digital environments</p>
-                         </div>
-                         <div class="edu-item">
-                          <p class="year">2019 – 2022</p>
-                          <h3>Professional Bachelor’s Degree in Industrial Operations 
-                            Engineering and Digitalization</h3>
-                          <p class="company">Mohammed VI Polytechnic University (UM6P)</p>
-                          <p>Bachelor’s in Industrial Engineering & Digitalization from UM6P, 
-                            specializing in Industry 4.0 solutions. 
-                            Gained expertise in industrial automation, ERP systems, and data-driven 
-                            process optimization
-                            for smart manufacturing environments</p>
-                         </div>
-                       
-                         <div class="edu-item">
-                          <p class="year">2017 – 2019</p>
-                          <h3>DEUG in Physical Matter Science</h3>
-                          <p class="company">Université Cadi Ayyad.</p>
-                          <p>Core studies in fundamental physics and material properties ,
-
-                            Laboratory techniques in experimental physics,
-                            
-                            Quantitative analysis and scientific problem-solving.
-                            
-                            </p>
-                         </div>
-                        </div>
-                      </div>
-
-                      <div class="cv-detail certif">
-                        <h2 class="heading">Certifications</h2>
-                        
-                        <div class="certification-container">
-                          <!-- Certification Item 1 -->
-                          <div class="certification-item">
-                            <div class="certification-image-container">
-                              <img src="72-virtual-assistant-certificate-aya-briksine.png" alt="Project Management Professional (PMP) Certification" class="certification-image">
-                              <div class="certification-overlay">
-                                <button class="view-btn">View Full Size</button>
-                              </div>
-                            </div>
-                            <div class="certification-info">
-                              <h3>virtual assistant</h3>
-                              <p>Issued by: ALX Africa</p>
-                              <p>Date: 26 JNovember 2024</p>
-                            </div>
-                          </div>
-                      
-                          <!-- Certification Item 2 -->
-                          <div class="certification-item">
-                            <div class="certification-image-container">
-                              <img src="89-professional-foundations-certificate-aya-briksine.png" alt="Salesforce Administrator Certification" class="certification-image">
-                              <div class="certification-overlay">
-                                <button class="view-btn">View Full Size</button>
-                              </div>
-                            </div>
-                            <div class="certification-info">
-                              <h3>Professional Foundations</h3>
-                              <p>Issued by: Salesforce</p>
-                              <p>Date: March 2023 | Credential ID: SFDC789012</p>
-                            </div>
-                          </div>
-                      
-                          <!-- Upload New Certification -->
-                          <div class="upload-certification">
-                            <h3>Add New Certification</h3>
-                            <form id="certification-upload">
-                              <div class="form-group">
-                                <label for="cert-name">Certification Name:</label>
-                                <input type="text" id="cert-name" required>
-                              </div>
-                              <div class="form-group">
-                                <label for="cert-issuer">Issuing Organization:</label>
-                                <input type="text" id="cert-issuer" required>
-                              </div>
-                              <div class="form-group">
-                                <label for="cert-date">Date Earned:</label>
-                                <input type="month" id="cert-date" required>
-                              </div>
-                              <div class="form-group">
-                                <label for="cert-image">Upload Certificate Image:</label>
-                                <input type="file" id="cert-image" accept="image/*" required>
-                              </div>
-                              <button type="submit" class="upload-btn">Add Certification</button>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-            </div>
-          </div>
-        </section>
-        <section class="services" id="services">
-
-          <h2 class="heading">Services</h2>
-          <div class="services-container">
-            <div class="service-box">
-              <div class="service-info">
-                <i class='bx bx-bot'></i>
-                <h4>Automation & Integration</h4>
-                <P>I design smart workflows using Node-RED, Zapier, and n8n.io to connect systems and eliminate manual work. 
-                  By automating data flows between IoT devices, ERPs, and CRMs, I help businesses reduce errors and save time. 
-                  My solutions deliver real-time insights while cutting repetitive tasks, driving efficiency across operations.</P>
-                  <a href="#" class="btn">Learn More</a>
-              </div>
-            </div>
-          
-
-        
-            <div class="service-box">
-              <div class="service-info">
-                <i class='bx bx-code-alt'></i>                
-                <h4>Code & Data Analysis</h4>
-                <P>I build systems using VS Code/GitHub and extract insights through data analysis. Experienced in 
-                  Firebase prototyping and dataset analysis, I solve problems with maintainable code while 
-                  emphasizing version control and documentation. My approach combines technical implementation with data-driven decision making for robust solutions. </P>
-                  <a href="#" class="btn">Learn More</a>
-              </div>
-            </div>
-          
-            <div class="service-box">
-              <div class="service-info">
-                <i class='bx bx-chalkboard'></i>               
-                <h4>Project Management</h4>
-                <P>I've managed projects using tools like ClickUp, Notion, 
-                  and Trello to coordinate teams and streamline workflows. 
-                  Through organizing tasks, maintaining documentation, and 
-                  implementing Agile methods, I've helped keep projects on track while 
-                  improving collaboration between technical and non-functional stakeholders. 
-                  These experiences have strengthened my ability to adapt tools to different 
-                  team needs and project requirements.</P>
-                  <a href="#" class="btn">Learn More</a>
-              </div>
-            </div>
-          
-
-            <div class="service-box">
-              <div class="service-info">
-                <i class='bx bx-check-shield'></i>
-                <h4>ERP & CRM Systems</h4>
-                <P>I specialize in implementing cost-effective ERP and CRM solutions 
-                  that transform business operations. Using Odoo, I've streamlined inventory 
-                  and accounting for SMEs, while ERPNext migrations delivered 3x faster reporting 
-                  for retail clients. For nonprofits, I've customized SuiteCRM to deliver 90% of 
-                  Salesforce functionality at fraction of the cost, proving enterprise-grade systems 
-                  can be affordable and powerful.
-                </P>
-                  <a href="#" class="btn">Learn More</a>
-              </div>
-            </div>
-          </div>
-        </section>
-        
-        <section id="skills" class="skills">
-          <h2 class="heading">Skills</h2>
-  
-          <div class="tab-box">
-              <div class="tab-list skills-list active">
-                  <h3>Interpersonal Skills</h3>
-              </div>
-              <div class="tab-list skills-list">
-                  <h3>Languages</h3>
-              </div>
-              <div class="tab-list skills-list">
-                  <h3>Technical Skills</h3>
-              </div>
-          </div>
-          <div class="skills-box">
-          <div class="tab-wrapper">
-  
-             <div class="tab-grid resume-box technical active">
-              <div class="tab-item resume-item">
-                  <h4>Communication Skills</h4>
-              </div>
-              <div class="tab-item resume-item">
-                  <h4>Team Collaboration</h4>
-              </div>
-              <div class="tab-item resume-item">
-                  <h4>Leadership and Team Management</h4>
-              </div>
-              <div class="tab-item resume-item">
-                  <h4>Problem Solving</h4>
-              </div>
-              <div class="tab-item resume-item">
-                  <h4>Client Relationship Management</h4>
-              </div>
-              <div class="tab-item resume-item">
-                  <h4>Cultural Sensitivity</h4>
-              </div>
-              <div class="tab-item resume-item">
-                  <h4>Adaptability</h4>
-              </div>
-              <div class="tab-item resume-item">
-                  <h4>Attention to Detail</h4>
-              </div>
-             </div>
-             <div class="tab-grid resume-box languages">
-              <div class="tab-item resume-item">
-                  <h4>English</h4>
-                  <p>Fluent</p>
-              </div>
-              <div class="tab-item resume-item">
-                  <h4>Arabic</h4>
-                  <p>Fluent</p>
-              </div>
-              <div class="tab-item resume-item">
-                  <h4>French</h4>
-                  <p>Fluent</p>
-              </div>
-             </div>
-           
-                  <div class="tab-grid resume-box interpersonal">
-                    <!-- Enterprise Systems Category -->
-                    <div class="category-group">
-                      <h3 class="category-title">Data Analytics & Industrial Digitalization</h3>
-                      <div class="skills-subgrid">
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-
-                          <img src="PowerBI.png" alt="SAP">
-                          <p>POWER BI</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="Google-Analytics-Logo.png" alt="PLM Centric">
-                          <p>GOOGLE ANALYTICS</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="Microsoft_Excel.png" alt="PLM Centric">
-                          <p>MS EXCEL</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="Python-Logo-Free-Download-PNG.png" alt="Python">
-                          <p>PYTHON</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="R.png" alt="Python">
-                          <p>R</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="Matlab.png" alt="Python">
-                          <p>MATLAB</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="TIA-PORTAL.png" alt="Python">
-                          <p>TIA PORTAL</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="SIMATIC STEP7.png" alt="Python">
-                          <p>SIMATIC STEP 7</p>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-                      
-                    <!-- Design & Development Category -->
-                    <div class="category-group">
-                      <h3 class="category-title">Digital Transformation & Project Management</h3>
-                      <div class="skills-subgrid">
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-
-                          <img src="JIRA.png" alt="Optitex">
-                          <p>JIRA</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                          <img src="MS_Project_Logo.png" alt="CLO 3D">
-                          <p>MS PROJECT</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-
-                          <img src="SMARTSHEET.jpg" alt="Web Design">
-                          <p>SMART SHEET</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                          <img src="Notion_app_logo.png" alt="Photoshop">
-                          <p>NOTION</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                          <img src="salesforce-logo.png" alt="Photoshop">
-                          <p>SALESFORCE</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                          <img src="Ui path-02.png" alt="Photoshop">
-                          <p>UIPATH</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                          <img src="node-red-icon.png" alt="Photoshop">
-                          <p>NODERED</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                          <img src="kissflow-logo.png" alt="Photoshop">
-                          <p>KISSFLOW</p>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Data & Analytics Category -->
-                    <div class="category-group">
-                      <h3 class="category-title"> Design & CAD Tools</h3>
-                      <div class="skills-subgrid">
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-
-                          <img src="autocad.png" alt="SAP">
-                          <p>AUTOCAD</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="download.png" alt="PLM Centric">
-                          <p>SOLIDWORKS</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="Photoshop-logo.png" alt="PLM Centric">
-                          <p>PHOTOSHOP</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="Adobe-Illustrator.png" alt="PLM Centric">
-                          <p>ILLUSTRATOR</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="AE.png" alt="PLM Centric">
-                          <p>AFTEREFFECT</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="premiere.png" alt="PLM Centric">
-                          <p>PREMIEREPRO</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="FIGMA.png" alt="PLM Centric">
-                          <p>FIGMA</p>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-                  
-                    
-                    <!-- Office & AI Tools Category -->
-                    <div class="category-group">
-                      <h3 class="category-title">ERP & Business Systems</h3>
-                      <div class="skills-subgrid">
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-
-                          <img src="SAP.png" alt="SAP">
-                          <p>SAP</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="Microsoft-Dynamics-365-logo.png" alt="PLM Centric">
-                          <p>Microsoft Dynamics</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="SHOPYFY.jpg" alt="PLM Centric">
-                          <p>SHOPIFY</p>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-
-
-                     <!-- Office & AI Tools Category -->
-                     <div class="category-group">
-                      <h3 class="category-title"> Web & Mobile Development</h3>
-                      <div class="skills-subgrid">
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-
-                          <img src="HTML.png" alt="SAP">
-                          <p>HTML5</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="css3.png" alt="PLM Centric">
-                          <p>CSS3</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="JS.png" alt="PLM Centric">
-                          <p>JAVASCRIPT</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="REACTJS.png" alt="PLM Centric">
-                          <p>REACT.JS</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="Tailwind CSS.png" alt="PLM Centric">
-                          <p>Tailwind CSS</p>
-                        </div>
-                        </div>
-                        <div class="tab-item resume-item inter">
-                          <div class="skill-inter">
-                            <img src="NODEJS.jpg" alt="PLM Centric">
-                          <p>NODE JS</p>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-
-                </div>
-            </div>
-          </div>
-             
-      </section>
-
-     <section class="projects" id="projects">
-        <h2 class="heading">Projects</h2>
-        <div class="portfolio-container">
-          <div class="portfolio-box">
-            <div class="portfolio-detail active">
-              <p class="numb">01</p>
-              <h3>Frontend Project</h3>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio nulla suscipit alias totam 
-                natus voluptates fuga delectus voluptatum dolorum.Veritatis repudiandae reprehenderit 
-                nobis soluta ipsa sapiente at, delectus eligendi culpa?</p>
-                <div class="tech">
-                  <p>HTML5, CSS3, JavaScript</p>
-                </div>
-                <div class="live-github">
-                  <a href="#"><i class='bx bx-arrow-back'></i><span>Live Project</span></a>
-                  <a href="#"><i class='bx bxl-github'></i><span>Github Repository</span></a>
-                </div>
-            </div>
-
-            <div class="portfolio-detail">
-              <p class="numb">02</p>
-              <h3>Frontend Project</h3>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio nulla suscipit alias totam 
-                natus voluptates fuga delectus voluptatum dolorum.Veritatis repudiandae reprehenderit 
-                nobis soluta ipsa sapiente at, delectus eligendi culpa?</p>
-                <div class="tech">
-                  <p>MongoDB, Express.js, Vue.js, Node.js</p>
-                </div>
-                <div class="live-github">
-                  <a href="#"><i class='bx bx-arrow-back'></i><span>Live Project</span></a>
-                  <a href="#"><i class='bx bxl-github'></i><span>Github Repository</span></a>
-                </div>
-            </div>
-
-            <div class="portfolio-detail">
-              <p class="numb">03</p>
-              <h3>Frontend Project</h3>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio nulla suscipit alias totam 
-                natus voluptates fuga delectus voluptatum dolorum.Veritatis repudiandae reprehenderit 
-                nobis soluta ipsa sapiente at, delectus eligendi culpa?</p>
-                <div class="tech">
-                  <p>MongoDB, Angular.js, Vue.js, Node.js</p>
-                </div>
-                <div class="live-github">
-                  <a href="#"><i class='bx bx-arrow-back'></i><span>Live Project</span></a>
-                  <a href="#"><i class='bx bxl-github'></i><span>Github Repository</span></a>
-                </div>
-            </div>
-
-            <div class="portfolio-detail">
-              <p class="numb">04</p>
-              <h3>Frontend Project</h3>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio nulla suscipit alias totam 
-                natus voluptates fuga delectus voluptatum dolorum.Veritatis repudiandae reprehenderit 
-                nobis soluta ipsa sapiente at, delectus eligendi culpa?</p>
-                <div class="tech">
-                  <p>HTML5, CSS3, JavaScript</p>
-                </div>
-                <div class="live-github">
-                  <a href="#"><i class='bx bx-arrow-back'></i><span>Live Project</span></a>
-                  <a href="#"><i class='bx bxl-github'></i><span>Github Repository</span></a>
-                </div>
-            </div>
-
-            <div class="portfolio-detail">
-              <p class="numb">05</p>
-              <h3>Frontend Project</h3>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio nulla suscipit alias totam 
-                natus voluptates fuga delectus voluptatum dolorum.Veritatis repudiandae reprehenderit 
-                nobis soluta ipsa sapiente at, delectus eligendi culpa?</p>
-                <div class="tech">
-                  <p>HTML5, CSS3, JavaScript</p>
-                </div>
-                <div class="live-github">
-                  <a href="#"><i class='bx bx-arrow-back'></i><span>Live Project</span></a>
-                  <a href="#"><i class='bx bxl-github'></i><span>Github Repository</span></a>
-                </div>
-            </div>
-
-            <div class="portfolio-detail">
-              <p class="numb">06</p>
-              <h3>Frontend Project</h3>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio nulla suscipit alias totam 
-                natus voluptates fuga delectus voluptatum dolorum.Veritatis repudiandae reprehenderit 
-                nobis soluta ipsa sapiente at, delectus eligendi culpa?</p>
-                <div class="tech">
-                  <p>HTML5, CSS3, JavaScript</p>
-                </div>
-                <div class="live-github">
-                  <a href="#"><i class='bx bx-arrow-back'></i><span>Live Project</span></a>
-                  <a href="#"><i class='bx bxl-github'></i><span>Github Repository</span></a>
-                </div>
-            </div>
-
-            <div class="portfolio-detail">
-              <p class="numb">07</p>
-              <h3>Frontend Project</h3>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio nulla suscipit alias totam 
-                natus voluptates fuga delectus voluptatum dolorum.Veritatis repudiandae reprehenderit 
-                nobis soluta ipsa sapiente at, delectus eligendi culpa?</p>
-                <div class="tech">
-                  <p>HTML5, CSS3, JavaScript</p>
-                </div>
-                <div class="live-github">
-                  <a href="#"><i class='bx bx-arrow-back'></i><span>Live Project</span></a>
-                  <a href="#"><i class='bx bxl-github'></i><span>Github Repository</span></a>
-                </div>
-            </div>
-
-            <div class="portfolio-detail">
-              <p class="numb">08</p>
-              <h3>Frontend Project</h3>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio nulla suscipit alias totam 
-                natus voluptates fuga delectus voluptatum dolorum.Veritatis repudiandae reprehenderit 
-                nobis soluta ipsa sapiente at, delectus eligendi culpa?</p>
-                <div class="tech">
-                  <p>HTML5, CSS3, JavaScript</p>
-                </div>
-                <div class="live-github">
-                  <a href="#"><i class='bx bx-arrow-back'></i><span>Live Project</span></a>
-                  <a href="#"><i class='bx bxl-github'></i><span>Github Repository</span></a>
-                </div>
-            </div>
-          </div>
-
-          <div class="portfolio-box">
-            <div class="portfolio-carousel">
-              <div class="img-slide">
-                <div class="img-item">
-                  <img src="12.jpg" alt="" class="full-size-img">
-                </div>
-                <div class="img-item">
-                  <img src="12.jpeg" alt=""class="full-size-img">
-                </div>
-                <div class="img-item">
-                  <img src="12.jpeg" alt=""class="full-size-img">
-                </div>
-                <div class="img-item">
-                  <img src="12.jpeg" alt=""class="full-size-img">
-                </div>
-                <div class="img-item">
-                  <img src="12.jpeg" alt=""class="full-size-img">
-                </div>
-                <div class="img-item">
-                  <img src="12.jpeg" alt=""class="full-size-img">
-                </div>
-                <div class="img-item">
-                  <img src="12.jpeg" alt=""class="full-size-img">
-                </div>
-                <div class="img-item">
-                  <img src="12.jpeg" alt=""class="full-size-img">
-                </div>
-            </div>
-          </div>
-            <div class="navigation">
-              <button class="arrow-left disabled"><i class='bx bx-chevron-left' ></i></button>
-              <button class="arrow-right"><i class='bx bx-chevron-right' ></i></button>
-            </div>
-          </div>
+        <div class="container">
+            <ul class="stats">
+                <li><strong>70%</strong><span>less manual data collection with real-time IoT monitoring</span></li>
+                <li><strong>3×</strong><span>faster reporting delivered for retail clients</span></li>
+                <li><strong>3</strong><span>languages: Arabic, English and French</span></li>
+            </ul>
         </div>
-     </section>
-    
-    
-    <section class="contact" id="contact">
-      <h2 class="heading" data-fr="Contactez-<span>moi</span>">Contact <span>Me</span></h2>
-      <p class="contact-sub">Get in Touch</p>
-      <div class="contact-info-upper-container">
-        <div class="contact-info-container">
-          <i class='bx bxs-envelope'></i>
-          <p><a href="mailto:briksenaya@gmail.com" target="_blank">briksenaya@gmail.com</a></p>
-        </div>
-        <div class="contact-info-container">
-          <i class='bx bxl-linkedin' ></i>
-          <p><a href="https://www.linkedin.com" target="_blank">LinkedIn</a></p>
-        </div>
-        <div class="contact-info-container">
-          <i class='bx bxs-phone-call'></i>
-          <p><a href="tel:+212648277001" target="_blank">+212648277001</a></p>
-        </div>
-
-      </div>
     </section>
 
+    <!-- ================= BACKGROUND ================= -->
+    <section class="section section-alt" id="background">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">My journey</p>
+                <h2 class="section-title">Professional background</h2>
+                <p class="section-sub">Where I've worked, what I've studied and the certifications I've earned.</p>
+            </div>
 
+            <div class="tabs reveal" role="tablist">
+                <button class="tab active" role="tab" aria-selected="true" data-tab="experience">Experience</button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="education">Education</button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="certifications">Certifications</button>
+            </div>
 
+            <!-- Experience -->
+            <div class="tab-panel active" id="experience" role="tabpanel">
+                <ol class="timeline">
+                    <li class="timeline-item reveal">
+                        <div class="timeline-card">
+                            <div class="timeline-top">
+                                <div>
+                                    <h3>Digital Transformation Project Manager</h3>
+                                    <p class="org">DB Growth</p>
+                                </div>
+                                <span class="date">Sep 2023 – Present</span>
+                            </div>
+                            <ul>
+                                <li>Created standardised reports and workflows for clients, including monthly KPI dashboards in Google Data Studio</li>
+                                <li>Automated client reporting with Power BI, cutting manual work</li>
+                                <li>Designed process maps in Lucidchart for 5 key workflows</li>
+                                <li>Set up Google Alerts to track competitors' digital moves</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="timeline-item reveal">
+                        <div class="timeline-card">
+                            <div class="timeline-top">
+                                <div>
+                                    <h3>Digital Transformation Project Manager</h3>
+                                    <p class="org">BROS-COM</p>
+                                </div>
+                                <span class="date">May 2023 – Present</span>
+                            </div>
+                            <ul>
+                                <li>Lead the implementation of digital solutions (CRM/ERP, RPA, AI tools) across departments</li>
+                                <li>Manage project timelines, budgets and vendor relationships</li>
+                                <li>Ensure GDPR compliance for all tools, tracked with OneTrust</li>
+                                <li>Produce monthly progress reports with PowerPoint and Excel PivotTables</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="timeline-item reveal">
+                        <div class="timeline-card">
+                            <div class="timeline-top">
+                                <div>
+                                    <h3>Digital Transformation Intern</h3>
+                                    <p class="org">BROS-COM</p>
+                                </div>
+                                <span class="date">Dec 2022 – May 2023</span>
+                            </div>
+                            <ul>
+                                <li>Researched emerging technologies (AI, RPA) to propose process improvements</li>
+                                <li>Analysed processes to identify automation opportunities</li>
+                                <li>Trained employees on new digital tools and workflows</li>
+                                <li>Reported directly to the CIO/COO with monthly progress updates and ROI analysis</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="timeline-item reveal">
+                        <div class="timeline-card">
+                            <div class="timeline-top">
+                                <div>
+                                    <h3>Final Year Engineering Internship</h3>
+                                    <p class="org">Green Energy Park</p>
+                                </div>
+                                <span class="date">Mar 2022 – Jul 2022</span>
+                            </div>
+                            <ul>
+                                <li>Designed and built a web/mobile application to track greenhouse parameters (temperature, humidity, pH)</li>
+                                <li>Connected IoT sensors to a custom dashboard using React.js and Node.js/Express</li>
+                                <li>Reduced manual data collection time by 70% through real-time monitoring</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ol>
+            </div>
 
+            <!-- Education -->
+            <div class="tab-panel" id="education" role="tabpanel">
+                <div class="card-grid">
+                    <article class="card edu-card">
+                        <span class="date">Jan 2025 – Present</span>
+                        <h3>Salesforce Administrator</h3>
+                        <p class="org">ALX Africa</p>
+                        <p>CRM configuration, user management and automation, customising Salesforce to improve efficiency and customer engagement.</p>
+                    </article>
+                    <article class="card edu-card">
+                        <span class="date">Sep 2024 – Dec 2024</span>
+                        <h3>Virtual Assistance Training</h3>
+                        <p class="org">ALX Africa</p>
+                        <p>Remote administrative support, email management and client communication with Google Workspace, Calendly and Trello.</p>
+                    </article>
+                    <article class="card edu-card">
+                        <span class="date">2019 – 2022</span>
+                        <h3>Professional Bachelor's in Industrial Operations Engineering &amp; Digitalization</h3>
+                        <p class="org">Mohammed VI Polytechnic University (UM6P)</p>
+                        <p>Industry 4.0 solutions, industrial automation, ERP systems and data-driven process optimisation for smart manufacturing.</p>
+                    </article>
+                    <article class="card edu-card">
+                        <span class="date">2017 – 2019</span>
+                        <h3>DEUG in Physical Matter Science</h3>
+                        <p class="org">Cadi Ayyad University</p>
+                        <p>Fundamental physics and material properties, experimental laboratory techniques and quantitative problem-solving.</p>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="tab-panel" id="certifications" role="tabpanel">
+                <div class="card-grid">
+                    <article class="card cert-card">
+                        <a href="89-professional-foundations-certificate-aya-briksine.png" target="_blank" rel="noopener" class="cert-image">
+                            <img src="89-professional-foundations-certificate-aya-briksine.png" alt="ALX Professional Foundations certificate" loading="lazy">
+                        </a>
+                        <div class="cert-body">
+                            <h3>Professional Foundations</h3>
+                            <p class="org">ALX Africa · April 2025</p>
+                            <div class="cert-links">
+                                <a href="89-professional-foundations-certificate-aya-briksine.png" target="_blank" rel="noopener"><i class='bx bx-show'></i> View certificate</a>
+                                <a href="https://savanna.alxafrica.com/certificates/HfJ6sRNBZS" target="_blank" rel="noopener"><i class='bx bx-check-shield'></i> Verify</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card cert-card">
+                        <a href="72-virtual-assistant-certificate-aya-briksine.png" target="_blank" rel="noopener" class="cert-image">
+                            <img src="72-virtual-assistant-certificate-aya-briksine.png" alt="ALX Virtual Assistant certificate" loading="lazy">
+                        </a>
+                        <div class="cert-body">
+                            <h3>Virtual Assistant</h3>
+                            <p class="org">ALX Africa · November 2024</p>
+                            <div class="cert-links">
+                                <a href="72-virtual-assistant-certificate-aya-briksine.png" target="_blank" rel="noopener"><i class='bx bx-show'></i> View certificate</a>
+                                <a href="https://intranet.alxswe.com/certificates/EnNf2C3GM6" target="_blank" rel="noopener"><i class='bx bx-check-shield'></i> Verify</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">What I do</p>
+                <h2 class="section-title">Services</h2>
+                <p class="section-sub">How I can help your team work smarter.</p>
+            </div>
+
+            <div class="services-grid">
+                <article class="card service-card reveal">
+                    <div class="icon-box"><i class='bx bx-bot'></i></div>
+                    <h3>Automation &amp; Integration</h3>
+                    <p>I design smart workflows with Node-RED, Zapier and n8n that connect IoT devices, ERPs and CRMs, removing manual work, reducing errors and giving teams real-time insight.</p>
+                </article>
+                <article class="card service-card reveal">
+                    <div class="icon-box"><i class='bx bx-bar-chart-alt-2'></i></div>
+                    <h3>Code &amp; Data Analysis</h3>
+                    <p>I build maintainable tools with VS Code, GitHub and Firebase, and analyse data to support better decisions, with version control and clear documentation in every project.</p>
+                </article>
+                <article class="card service-card reveal">
+                    <div class="icon-box"><i class='bx bx-task'></i></div>
+                    <h3>Project Management</h3>
+                    <p>I run projects with Agile methods and tools like Jira, ClickUp, Notion and Trello, organising tasks, keeping documentation up to date and bridging technical and business teams.</p>
+                </article>
+                <article class="card service-card reveal">
+                    <div class="icon-box"><i class='bx bx-server'></i></div>
+                    <h3>ERP &amp; CRM Systems</h3>
+                    <p>I implement cost-effective ERP and CRM solutions such as Odoo, ERPNext, SuiteCRM and Salesforce, from streamlining inventory and accounting for SMEs to faster reporting for retail clients.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SKILLS ================= -->
+    <section class="section section-alt" id="skills">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">Toolbox</p>
+                <h2 class="section-title">Skills &amp; tools</h2>
+                <p class="section-sub">The technologies I use every day, and the strengths I bring to a team.</p>
+            </div>
+
+            <div class="skills-grid">
+                <div class="card skill-group reveal">
+                    <h3>Data Analytics &amp; Industrial Digitalization</h3>
+                    <ul class="tool-list">
+                        <li><img src="PowerBI.png" alt="" loading="lazy">Power BI</li>
+                        <li><img src="Google-Analytics-Logo.png" alt="" loading="lazy">Google Analytics</li>
+                        <li><img src="Microsoft_Excel.png" alt="" loading="lazy">Excel</li>
+                        <li><img src="Python-Logo-Free-Download-PNG.png" alt="" loading="lazy">Python</li>
+                        <li><img src="R.png" alt="" loading="lazy">R</li>
+                        <li><img src="Matlab.png" alt="" loading="lazy">MATLAB</li>
+                        <li><img src="TIA-PORTAL.png" alt="" loading="lazy">TIA Portal</li>
+                        <li><img src="SIMATIC%20STEP7.png" alt="" loading="lazy">SIMATIC STEP 7</li>
+                    </ul>
+                </div>
+                <div class="card skill-group reveal">
+                    <h3>Digital Transformation &amp; Project Management</h3>
+                    <ul class="tool-list">
+                        <li><img src="JIRA.png" alt="" loading="lazy">Jira</li>
+                        <li><img src="MS_Project_Logo.png" alt="" loading="lazy">MS Project</li>
+                        <li><img src="SMARTSHEET.jpg" alt="" loading="lazy">Smartsheet</li>
+                        <li><img src="Notion_app_logo.png" alt="" loading="lazy">Notion</li>
+                        <li><img src="salesforce-logo.png" alt="" loading="lazy">Salesforce</li>
+                        <li><img src="Ui%20path-02.png" alt="" loading="lazy">UiPath</li>
+                        <li><img src="node-red-icon.png" alt="" loading="lazy">Node-RED</li>
+                        <li><img src="kissflow-logo.png" alt="" loading="lazy">Kissflow</li>
+                    </ul>
+                </div>
+                <div class="card skill-group reveal">
+                    <h3>ERP &amp; Business Systems</h3>
+                    <ul class="tool-list">
+                        <li><img src="SAP.png" alt="" loading="lazy">SAP</li>
+                        <li><img src="Microsoft-Dynamics-365-logo.png" alt="" loading="lazy">Microsoft Dynamics</li>
+                        <li><img src="SHOPYFY.jpg" alt="" loading="lazy">Shopify</li>
+                    </ul>
+                </div>
+                <div class="card skill-group reveal">
+                    <h3>Web &amp; Mobile Development</h3>
+                    <ul class="tool-list">
+                        <li><img src="HTML.png" alt="" loading="lazy">HTML5</li>
+                        <li><img src="css3.png" alt="" loading="lazy">CSS3</li>
+                        <li><img src="JS.png" alt="" loading="lazy">JavaScript</li>
+                        <li><img src="REACTJS.png" alt="" loading="lazy">React.js</li>
+                        <li><img src="Tailwind%20CSS.png" alt="" loading="lazy">Tailwind CSS</li>
+                        <li><img src="NODEJS.jpg" alt="" loading="lazy">Node.js</li>
+                    </ul>
+                </div>
+                <div class="card skill-group reveal">
+                    <h3>Design &amp; CAD Tools</h3>
+                    <ul class="tool-list">
+                        <li><img src="autocad.png" alt="" loading="lazy">AutoCAD</li>
+                        <li><img src="download.png" alt="" loading="lazy">SolidWorks</li>
+                        <li><img src="Photoshop-logo.png" alt="" loading="lazy">Photoshop</li>
+                        <li><img src="Adobe-Illustrator.png" alt="" loading="lazy">Illustrator</li>
+                        <li><img src="AE.png" alt="" loading="lazy">After Effects</li>
+                        <li><img src="premiere.png" alt="" loading="lazy">Premiere Pro</li>
+                        <li><img src="FIGMA.png" alt="" loading="lazy">Figma</li>
+                    </ul>
+                </div>
+                <div class="card skill-group reveal">
+                    <h3>Soft skills</h3>
+                    <ul class="chip-list">
+                        <li>Communication</li>
+                        <li>Team Collaboration</li>
+                        <li>Leadership</li>
+                        <li>Problem Solving</li>
+                        <li>Client Relationships</li>
+                        <li>Cultural Sensitivity</li>
+                        <li>Adaptability</li>
+                        <li>Attention to Detail</li>
+                    </ul>
+                    <h3 class="sub-heading">Languages</h3>
+                    <ul class="lang-list">
+                        <li><span>Arabic</span><small>Fluent</small></li>
+                        <li><span>English</span><small>Fluent</small></li>
+                        <li><span>French</span><small>Fluent</small></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PROJECTS ================= -->
+    <section class="section" id="projects">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">Selected work</p>
+                <h2 class="section-title">Projects</h2>
+                <p class="section-sub">A few projects I've delivered and the results they achieved.</p>
+            </div>
+
+            <div class="projects-grid">
+                <article class="card project-card reveal">
+                    <div class="project-top">
+                        <div class="icon-box"><i class='bx bx-leaf'></i></div>
+                        <span class="project-meta">Green Energy Park · 2022</span>
+                    </div>
+                    <h3>Real-Time Greenhouse Monitoring</h3>
+                    <p>A web and mobile app that tracks temperature, humidity and pH in a sludge-heating greenhouse. IoT sensors feed a custom dashboard, cutting manual data collection time by 70%.</p>
+                    <ul class="tags"><li>IoT</li><li>React.js</li><li>Node.js</li><li>Express</li></ul>
+                </article>
+                <article class="card project-card reveal">
+                    <div class="project-top">
+                        <div class="icon-box"><i class='bx bx-line-chart'></i></div>
+                        <span class="project-meta">DB Growth</span>
+                    </div>
+                    <h3>Automated Client Reporting</h3>
+                    <p>Standardised reporting for clients with monthly KPI dashboards and automated Power BI reports, replacing hours of manual spreadsheet work every month.</p>
+                    <ul class="tags"><li>Power BI</li><li>Google Data Studio</li><li>Excel</li></ul>
+                </article>
+                <article class="card project-card reveal">
+                    <div class="project-top">
+                        <div class="icon-box"><i class='bx bx-group'></i></div>
+                        <span class="project-meta">BROS-COM</span>
+                    </div>
+                    <h3>CRM Implementation</h3>
+                    <p>Rolled out a CRM system that significantly increased sales productivity, and connected the business to online marketplaces through SAP Ariba.</p>
+                    <ul class="tags"><li>CRM</li><li>SAP Ariba</li><li>Change management</li></ul>
+                </article>
+                <article class="card project-card reveal">
+                    <div class="project-top">
+                        <div class="icon-box"><i class='bx bx-git-branch'></i></div>
+                        <span class="project-meta">BROS-COM · DB Growth</span>
+                    </div>
+                    <h3>Process Mapping &amp; Automation</h3>
+                    <p>Mapped key business workflows, identified where RPA and AI tools could remove repetitive work, and trained teams on the new processes.</p>
+                    <ul class="tags"><li>Lucidchart</li><li>RPA</li><li>Training</li></ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="section section-alt" id="contact">
+        <div class="container">
+            <div class="contact-panel reveal">
+                <div class="contact-text">
+                    <p class="eyebrow">Contact</p>
+                    <h2 class="section-title">Let's work together</h2>
+                    <p class="section-sub">Have a project in mind or an opportunity to discuss? I'd love to hear from you.</p>
+                    <a href="mailto:briksenaya@gmail.com" class="btn btn-primary"><i class='bx bx-send'></i> Send me an email</a>
+                </div>
+
+                <ul class="contact-list">
+                    <li>
+                        <a href="mailto:briksenaya@gmail.com">
+                            <span class="icon-box"><i class='bx bx-envelope'></i></span>
+                            <span><small>Email</small>briksenaya@gmail.com</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tel:+212648277001">
+                            <span class="icon-box"><i class='bx bx-phone'></i></span>
+                            <span><small>Phone</small>+212 648 277 001</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/aya-briksine/" target="_blank" rel="noopener">
+                            <span class="icon-box"><i class='bx bxl-linkedin'></i></span>
+                            <span><small>LinkedIn</small>linkedin.com/in/aya-briksine</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div>
+                            <span class="icon-box"><i class='bx bx-map'></i></span>
+                            <span><small>Location</small>Benguerir, Morocco</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
     <footer class="footer">
-    <div class="social">
-                <a href="#" target="_blank"><i class='bx bxl-linkedin' ></i></a>
-                <a href="#" target="_blank"><i class='bx bxl-github'></i></a>
-                <a href="#" target="_blank"><i class='bx bxl-instagram-alt'></i></a>
-                <a href="#" target="_blank"><i class='bx bxl-twitter'></i></a>
-    </div>
-    <ul class="list">
-      <li>
-        <a href="#">FAQ</a>
-      </li>
-      <li>
-        <a href="#services">services</a>
-      </li>
-      <li>
-        <a href="#home">About ME</a>
-      </li>
-      <li>
-        <a href="#projects">Projects</a>
-      </li>
-      <li>
-        <a href="#contact">Contact</a>
-      </li>
-    </ul>
-    <p class="copyright">
-      Aya Briksine | All Rights Reserved </p>
+        <div class="container footer-inner">
+            <p>© <span id="year">2026</span> Aya Briksine. All rights reserved.</p>
+            <div class="socials socials-sm">
+                <a href="https://www.linkedin.com/in/aya-briksine/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+                <a href="https://github.com/aya12bri" target="_blank" rel="noopener" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+                <a href="https://www.instagram.com/ayabriksine/" target="_blank" rel="noopener" aria-label="Instagram"><i class='bx bxl-instagram-alt'></i></a>
+            </div>
+            <a href="#home" class="back-top" aria-label="Back to top"><i class='bx bx-up-arrow-alt'></i></a>
+        </div>
     </footer>
 
     <script src="script.js"></script>

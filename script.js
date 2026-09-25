@@ -1,204 +1,68 @@
-let menuIcon = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
-let contactBtn = document.querySelector('.navbar .gradient-btn');
-let sections = document.querySelectorAll('sections');
-let navLinks = document.querySelectorAll('header nav a');
-const skillsLists = document.querySelectorAll('.skills-list');
-const skillsBoxs = document.querySelectorAll('.resume-box');
-const cvBtns = document.querySelectorAll('.cv-btn');
-const cvDetails = document.querySelectorAll('.cv-detail');
+const header = document.querySelector('#header');
+const navbar = document.querySelector('#navbar');
+const menuBtn = document.querySelector('#menu-icon');
+const navLinks = document.querySelectorAll('#navbar a');
 
+/* ---------- Phone menu ---------- */
+function setMenu(open) {
+    navbar.classList.toggle('open', open);
+    header.classList.toggle('menu-open', open);
+    menuBtn.setAttribute('aria-expanded', open);
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menuBtn.querySelector('i').className = open ? 'bx bx-x' : 'bx bx-menu';
+}
 
-navLinks.forEach((link, index) => {
-    link.style.setProperty('--i', index);
-});
-
-menuIcon.addEventListener('click', (e) => {
+menuBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    menuIcon.classList.toggle('bx-x');
-    navbar.classList.toggle('active');
-    document.body.style.overflow = navbar.classList.contains('active') ? 'hidden' : '';
+    setMenu(!navbar.classList.contains('open'));
 });
 
-// Close menu when clicking on links or button
-[...navLinks, contactBtn].forEach(item => {
-    item?.addEventListener('click', () => {
-        menuIcon.classList.remove('bx-x');
-        navbar.classList.remove('active');
-        document.body.style.overflow = '';
-    });
-});
+navLinks.forEach(link => link.addEventListener('click', () => setMenu(false)));
 
-// Close menu when clicking outside
 document.addEventListener('click', (e) => {
-    if (!navbar.contains(e.target) && e.target !== menuIcon) {
-        menuIcon.classList.remove('bx-x');
-        navbar.classList.remove('active');
-        document.body.style.overflow = '';
-    }
+    if (navbar.classList.contains('open') && !navbar.contains(e.target)) setMenu(false);
 });
 
-skillsLists.forEach((list, idx) => {
-    list.addEventListener('click', () => {
-        document.querySelector('.skills-list.active').classList.remove('active');
-        list.classList.add('active'); 
-      
-        document.querySelector('.resume-box.active').classList.remove('active');
-        skillsBoxs[idx].classList.add('active');
-    });
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setMenu(false);
 });
 
+/* ---------- Header background after scrolling ---------- */
+function updateHeader() {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+}
+window.addEventListener('scroll', updateHeader, { passive: true });
+updateHeader();
 
-
-cvBtns.forEach((btn, idx) => {
-    btn.addEventListener('click', () => {
-      // 1. Remove active classes with animation
-      document.querySelectorAll('.cv-btn.active, .cv-detail.active').forEach(el => {
-        if (el.classList.contains('cv-detail')) {
-          // Animate out current detail
-          el.style.opacity = 0;
-          el.style.transform = 'translateY(20px)';
-          setTimeout(() => {
-            el.classList.remove('active');
-          }, 100); // Match CSS transition duration
-        } else {
-          // Immediately deactivate button
-          el.classList.remove('active');
-        }
-      });
-  
-      // 2. Add active classes with animation
-      setTimeout(() => {
-        btn.classList.add('active');
-        cvDetails[idx].classList.add('active');
-        // Reset styles in case they were animated out previously
-        cvDetails[idx].style.opacity = '';
-        cvDetails[idx].style.transform = '';
-      }, 350); // Slightly longer than the out animation
-    });
-  });
-
-  document.getElementById('certification-upload').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  // Get form values
-  const name = document.getElementById('cert-name').value;
-  const issuer = document.getElementById('cert-issuer').value;
-  const date = document.getElementById('cert-date').value;
-  const imageFile = document.getElementById('cert-image').files[0];
-  
-  if (imageFile) {
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-      // Create new certification item
-      const newCert = document.createElement('div');
-      newCert.className = 'certification-item';
-      newCert.innerHTML = `
-        <div class="certification-image-container">
-          <img src="${e.target.result}" alt="${name}" class="certification-image">
-          <div class="certification-overlay">
-            <button class="view-btn">View Full Size</button>
-          </div>
-        </div>
-        <div class="certification-info">
-          <h3>${name}</h3>
-          <p>Issued by: ${issuer}</p>
-          <p>Date: ${new Date(date).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
-        </div>
-      `;
-      
-      // Insert before upload form
-      document.querySelector('.certification-container').insertBefore(newCert, document.querySelector('.upload-certification'));
-      
-      // Reset form
-      e.target.reset();
-    };
-    
-    reader.readAsDataURL(imageFile);
-  }
-});
-
-// View full size functionality
-document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('view-btn')) {
-    const imgSrc = e.target.closest('.certification-image-container').querySelector('img').src;
-    // Create modal or open in new tab
-    window.open(imgSrc, '_blank');
-  }
-});
-document.addEventListener('DOMContentLoaded', function() {
-    const arrowRight = document.querySelector('.arrow-right');
-    const arrowLeft = document.querySelector('.arrow-left');
-    const imgSlide = document.querySelector('.img-slide');
-    const portfolioDetails = document.querySelectorAll('.portfolio-detail');
-    const totalItems = portfolioDetails.length;
-    let currentIndex = 0;
-
-    function updateCarousel() {
-        // Update carousel position
-        imgSlide.style.transform = `translateX(-${currentIndex * 100}%)`;
-        
-        // Update active project detail
-        portfolioDetails.forEach((detail, index) => {
-            detail.classList.toggle('active', index === currentIndex);
+/* ---------- Highlight the menu link of the section on screen ---------- */
+const sections = document.querySelectorAll('main section[id]');
+const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
         });
-        
-        // Update button states
-        arrowLeft.classList.toggle('disabled', currentIndex === 0);
-        arrowRight.classList.toggle('disabled', currentIndex === totalItems - 1);
-    }
-
-    arrowRight.addEventListener('click', () => {
-        if (currentIndex < totalItems - 1) {
-            currentIndex++;
-            updateCarousel();
-        }
     });
+}, { rootMargin: '-45% 0px -50% 0px' });
+sections.forEach(section => sectionObserver.observe(section));
 
-    arrowLeft.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateCarousel();
-        }
+/* ---------- Background tabs (Experience / Education / Certifications) ---------- */
+const tabs = document.querySelectorAll('.tab');
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+            t.classList.toggle('active', t === tab);
+            t.setAttribute('aria-selected', t === tab);
+        });
+        document.querySelectorAll('.tab-panel').forEach(panel => {
+            panel.classList.toggle('active', panel.id === tab.dataset.tab);
+        });
+        // make sure cards inside the newly shown tab are visible
+        document.querySelectorAll('#' + tab.dataset.tab + ' .reveal').forEach(el => el.classList.add('visible'));
     });
-
-    // Initialize
-    updateCarousel();
-
-    // Optional: Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight') {
-            arrowRight.click();
-        } else if (e.key === 'ArrowLeft') {
-            arrowLeft.click();
-        }
-    });
-
-    // Optional: Touch support for mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    imgSlide.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, {passive: true});
-
-    imgSlide.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, {passive: true});
-
-    function handleSwipe() {
-        const threshold = 50;
-        if (touchStartX - touchEndX > threshold) {
-            arrowRight.click();
-        } else if (touchEndX - touchStartX > threshold) {
-            arrowLeft.click();
-        }
-    }
 });
 
-// Light / dark mode
+/* ---------- Light / dark mode ---------- */
 const themeBtn = document.querySelector('#theme-toggle');
 
 function updateThemeButton() {
@@ -214,3 +78,60 @@ themeBtn.addEventListener('click', () => {
 });
 
 updateThemeButton();
+
+/* ---------- Typing effect under the name ---------- */
+const roles = {
+    en: ['Digital Transformation Specialist', 'Project Manager', 'CRM & ERP Consultant', 'Industrial Engineer', 'Salesforce Administrator'],
+    fr: ['Spécialiste en transformation digitale', 'Cheffe de projet', 'Consultante CRM & ERP', 'Ingénieure industrielle', 'Administratrice Salesforce']
+};
+const typed = document.querySelector('#typed');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let roleIndex = 0;
+let charIndex = 0;
+let deleting = false;
+let typingLang = document.documentElement.lang;
+
+function typeLoop() {
+    const lang = document.documentElement.lang === 'fr' ? 'fr' : 'en';
+    if (lang !== typingLang) {          // language switched: start over in the new language
+        typingLang = lang;
+        roleIndex = 0;
+        charIndex = 0;
+        deleting = false;
+    }
+    const word = roles[lang][roleIndex];
+
+    if (reduceMotion) {
+        typed.textContent = word;
+        return setTimeout(typeLoop, 500);
+    }
+
+    charIndex += deleting ? -1 : 1;
+    typed.textContent = word.slice(0, charIndex);
+
+    let delay = deleting ? 35 : 70;
+    if (!deleting && charIndex === word.length) {
+        deleting = true;
+        delay = 1800;
+    } else if (deleting && charIndex === 0) {
+        deleting = false;
+        roleIndex = (roleIndex + 1) % roles[lang].length;
+        delay = 350;
+    }
+    setTimeout(typeLoop, delay);
+}
+typeLoop();
+
+/* ---------- Fade sections in while scrolling ---------- */
+const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ---------- Current year in the footer ---------- */
+document.querySelector('#year').textContent = new Date().getFullYear();
