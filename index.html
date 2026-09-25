@@ -7,6 +7,10 @@
     <link rel="stylesheet"  href="style.css"   />
     <link rel="stylesheet" href="mediaqueries.css"   />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>
+    <script>
+        // Apply the saved light/dark choice before the page shows, so it doesn't flash
+        try { if (localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode'); } catch (e) {}
+    </script>
 </head>
 <body>
     <header class="header">
@@ -24,7 +28,11 @@
             <a href="#contact">Contact</a>
         </nav>
 
-        <button onclick="window.location.href='mailto:briksenaya@gmail.com '" class="gradient-btn">Contact ME</button>
+        <div class="header-actions">
+            <button class="lang-toggle" id="lang-toggle" aria-label="Passer en français">FR</button>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode"><i class='bx bx-sun'></i></button>
+            <button onclick="window.location.href='mailto:briksenaya@gmail.com '" class="gradient-btn">Contact ME</button>
+        </div>
 
     </header>
 
@@ -764,7 +772,7 @@
     
     
     <section class="contact" id="contact">
-      <h2 class="heading">Contact <span>Me</span></h2>
+      <h2 class="heading" data-fr="Contactez-<span>moi</span>">Contact <span>Me</span></h2>
       <p class="contact-sub">Get in Touch</p>
       <div class="contact-info-upper-container">
         <div class="contact-info-container">
@@ -815,5 +823,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="translations.js"></script>
 </body>
 </html>

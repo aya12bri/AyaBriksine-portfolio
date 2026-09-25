@@ -8,12 +8,56 @@ img {
     max-width: 100%;
 }
 
+.logo,
+.navbar a {
+    white-space: nowrap;
+}
+
+/* ---------- Small laptops: keep the menu on one line ---------- */
+@media (min-width: 896px) and (max-width: 1285px) {
+    .header {
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+
+    .navbar a {
+        margin-left: 2rem;
+    }
+
+    .header-actions {
+        gap: 0.8rem;
+    }
+
+    .gradient-btn {
+        padding: 1rem 1.6rem;
+    }
+}
+
 /* ---------- Tablets & phones (menu icon visible) ---------- */
 @media (max-width: 895px) {
     /* The header "Contact ME" button was invisible but still took up space
        (and could still be tapped). The menu already has a Contact link. */
     .header .gradient-btn {
         display: none;
+    }
+
+    /* Header order on phones: logo ... FR, light/dark, menu */
+    .header-actions {
+        order: 2;
+        margin-left: auto;
+    }
+
+    #menu-icon {
+        order: 3;
+        margin-left: 1.5rem;
+    }
+
+    .light-mode .navbar {
+        background: rgba(255, 255, 255, 0.95);
+    }
+
+    .light-mode .navbar a:hover {
+        background: rgba(0, 0, 0, 0.05);
     }
 
     /* Big section titles were ~70px tall and "Contact Me" wrapped */
@@ -159,6 +203,11 @@ img {
 
     .text-animation {
         min-width: 0;
+    }
+
+    .btn-group .btn {
+        padding: 1rem 1.2rem;
+        white-space: nowrap;
     }
 
     .contact-info-container i {

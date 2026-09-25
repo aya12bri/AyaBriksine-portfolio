@@ -197,3 +197,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+// Light / dark mode
+const themeBtn = document.querySelector('#theme-toggle');
+
+function updateThemeButton() {
+    const isLight = document.documentElement.classList.contains('light-mode');
+    themeBtn.querySelector('i').className = isLight ? 'bx bx-moon' : 'bx bx-sun';
+    themeBtn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+}
+
+themeBtn.addEventListener('click', () => {
+    const isLight = document.documentElement.classList.toggle('light-mode');
+    try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch (e) {}
+    updateThemeButton();
+});
+
+updateThemeButton();
