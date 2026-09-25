@@ -460,8 +460,6 @@ button {
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    object-position: center 20%;
-    background: radial-gradient(circle at 50% 35%, #f7d9f8, #e3a8e6 60%, #c77ccb);
 }
 
 .stats {
