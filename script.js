@@ -120,7 +120,6 @@ const roles = {
 const typed = document.querySelector('#typed');
 
 if (typed) {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let roleIndex = 0;
     let charIndex = 0;
     let deleting = false;
@@ -135,11 +134,6 @@ if (typed) {
             deleting = false;
         }
         const word = roles[lang][roleIndex];
-
-        if (reduceMotion) {
-            typed.textContent = word;
-            return setTimeout(typeLoop, 500);
-        }
 
         charIndex += deleting ? -1 : 1;
         typed.textContent = word.slice(0, charIndex);
