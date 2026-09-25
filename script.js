@@ -93,9 +93,29 @@ if (themeBtn) {
 }
 
 /* ---------- Typing effect under the name ---------- */
+// The titles that type out under the name, one after the other.
+// Add, remove or reorder them freely (keep the English and French lists in the same order).
 const roles = {
-    en: ['Mechatronics & Robotics Student', 'Robot Programmer', 'Automation & Control Engineer', 'Python Developer', 'Technical Project Manager'],
-    fr: ['Étudiante en mécatronique & robotique', 'Programmeuse de robots', 'Future ingénieure en automatique', 'Développeuse Python', 'Cheffe de projet technique']
+    en: [
+        'Mechatronics & Robotics Student',
+        'Industrial Engineer',
+        'Robot Programmer',
+        'Digital Transformation Specialist',
+        'Automation & Control Engineer',
+        'Web Designer',
+        'Python Developer',
+        'Technical Project Manager'
+    ],
+    fr: [
+        'Étudiante en mécatronique & robotique',
+        'Ingénieure industrielle',
+        'Programmeuse de robots',
+        'Spécialiste en transformation digitale',
+        'Future ingénieure en automatique',
+        'Web designer',
+        'Développeuse Python',
+        'Cheffe de projet technique'
+    ]
 };
 const typed = document.querySelector('#typed');
 

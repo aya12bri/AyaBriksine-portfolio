@@ -1829,6 +1829,12 @@ html:not(.light-mode) .back-top {
         flex: 1;
     }
 
+    /* long titles take two lines on small phones: keep the space so the page doesn't jump */
+    .hero-role {
+        min-height: 3.3em;
+        line-height: 1.65;
+    }
+
     .tabs {
         width: 100%;
     }
