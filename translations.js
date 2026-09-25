@@ -150,6 +150,83 @@ const frenchText = {
     "Phone": "Téléphone",
     "Location": "Localisation",
 
+    // ----- Robotics update -----
+    "Expertise": "Expertise",
+    "Open to a 6-month robotics / AI internship from Feb 2027": "Disponible pour un stage de 6 mois en robotique / IA dès février 2027",
+    "Orléans, France · Willing to relocate": "Orléans, France · Mobilité géographique",
+    "I'm a second-year MSc student in Mechatronics, Robotics and Automation at Polytech Orléans. I program industrial and mobile robots, PLCs and control systems, I code mainly in Python, and I bring 3 years of professional experience in application development and technical project management. I'm driven by intervention robotics, teleoperation and AI for robot control.":
+        "Je suis en deuxième année de master Mécatronique, Robotique et Automatique à Polytech Orléans. Je programme des robots industriels et mobiles, des automates et des systèmes asservis, je code principalement en Python, et j'apporte 3 ans d'expérience professionnelle en développement d'applications et en gestion de projets techniques. Je suis passionnée par la robotique d'intervention, la téléopération et l'IA pour la commande des robots.",
+    "View my projects": "Voir mes projets",
+    "6-axis": "6 axes",
+    "Stäubli TX60 industrial robot programmed in VAL3": "robot industriel Stäubli TX60 programmé en VAL3",
+    "3 yrs": "3 ans",
+    "of professional experience in development & project management": "d'expérience professionnelle en développement et gestion de projet",
+    "languages: French, English and Arabic": "langues : français, anglais et arabe",
+
+    "Member – Robotek Orléans": "Membre – Robotek Orléans",
+    "Robotics club · Student association": "Club de robotique · Association étudiante",
+    "Since Sep 2026": "Depuis sept. 2026",
+    "Taking part in the design, programming and testing of mobile robots as part of a team": "Participation à la conception, la programmation et les tests de robots mobiles en équipe",
+    "BROS-COM · Laâyoune, Morocco (hybrid)": "BROS-COM · Laâyoune, Maroc (hybride)",
+    "Dec 2022 – Apr 2025": "Déc 2022 – Avr 2025",
+    "6-month internship, then a 2-year fixed-term contract": "Stage de 6 mois, puis CDD de 2 ans",
+    "Led digitalisation projects: requirements gathering, specifications, planning and follow-up": "Pilotage de projets de digitalisation : recueil des besoins, cahier des charges, planification et suivi",
+    "Rolled out digital solutions (CRM/ERP, RPA, AI tools) across departments": "Déploiement de solutions digitales (CRM/ERP, RPA, outils d'IA) dans tous les services",
+    "Coordinated technical and business teams and reported progress regularly to management": "Coordination des équipes techniques et métiers, reporting régulier à la direction",
+    "Ensured GDPR compliance for all tools, tracked with OneTrust": "Conformité RGPD de tous les outils, suivie avec OneTrust",
+    "Digital Transformation Consultant": "Consultante en transformation digitale",
+    "DB Growth · Remote": "DB Growth · Télétravail",
+    "Sep 2023 – Sep 2024": "Sep 2023 – Sep 2024",
+    "Analysed client processes, selected digital solutions and trained end users": "Analyse des processus clients, choix des solutions digitales et formation des utilisateurs",
+    "Designed KPI dashboards and automated client reporting with Power BI and Google Data Studio": "Conception de tableaux de bord KPI et automatisation du reporting client avec Power BI et Google Data Studio",
+    "Mapped 5 key workflows in Lucidchart": "Cartographie de 5 processus clés dans Lucidchart",
+    "Final-Year Internship – Monitoring Application Development": "Stage de fin d'études – Développement d'une application de supervision",
+    "Green Energy Park (IRESEN / UM6P) · Benguerir, Morocco": "Green Energy Park (IRESEN / UM6P) · Benguerir, Maroc",
+    "Designed and developed a web/mobile application to monitor, control and log greenhouse sensor data": "Conception et développement d'une application web/mobile pour superviser, piloter et enregistrer les données des capteurs d'une serre",
+    "Data acquisition and storage, real-time visualisation and operator interface": "Acquisition et stockage des données, visualisation en temps réel et interface opérateur",
+    "On-site testing and validation, cutting manual data collection time by 70%": "Tests et validation sur site, avec 70 % de temps de collecte manuelle en moins",
+
+    "Sep 2025 – 2027": "Sep 2025 – 2027",
+    "MSc in Mechatronics, Robotics and Automation (M1 – M2)": "Master Mécatronique, Robotique et Automatique (M1 – M2)",
+    "Polytech Orléans – University of Orléans · France": "Polytech Orléans – Université d'Orléans · France",
+    "Robot modelling and control, automatic control, computer vision and industrial computing.": "Modélisation et commande des robots, automatique, vision par ordinateur et informatique industrielle.",
+    "Sep 2019 – Nov 2022": "Sep 2019 – Nov 2022",
+    "Professional Bachelor's in Industrial Operations Engineering & Digitalisation": "Licence professionnelle en ingénierie des opérations industrielles et digitalisation",
+    "Industry 4.0, industrial automation, ERP systems and data-driven process optimisation.": "Industrie 4.0, automatisation industrielle, systèmes ERP et optimisation des processus par les données.",
+    "CRM configuration, user management and automation in Salesforce.": "Configuration CRM, gestion des utilisateurs et automatisation dans Salesforce.",
+    "Remote administrative support, email management and client communication.": "Support administratif à distance, gestion des e-mails et communication client.",
+
+    "From robot programming to control systems and software.": "De la programmation de robots aux systèmes asservis et au logiciel.",
+    "Robotics & Robot Programming": "Robotique & programmation de robots",
+    "Programming industrial and mobile robots: the Stäubli TX60 in VAL3 with the teach pendant and Stäubli Robotics Suite, trajectories, pick-and-place and autonomous obstacle avoidance.":
+        "Programmation de robots industriels et mobiles : le Stäubli TX60 en VAL3 avec le pupitre et Stäubli Robotics Suite, trajectoires, pick-and-place et évitement d'obstacles autonome.",
+    "Automatic Control & PLCs": "Automatique & automates",
+    "Modelling and simulating systems in MATLAB/Simulink, tuning controllers and validating them experimentally, and programming PLCs with PL7 Pro in Grafcet (SFC) and Ladder.":
+        "Modélisation et simulation de systèmes sous MATLAB/Simulink, réglage de correcteurs et validation expérimentale, et programmation d'automates avec PL7 Pro en Grafcet (SFC) et Ladder.",
+    "Python & Software": "Python & logiciel",
+    "Building applications and interfaces in Python, plus C/C++, Java and web/mobile development, including data acquisition, real-time visualisation and 3D point clouds with Open3D and PyVista.":
+        "Développement d'applications et d'interfaces en Python, ainsi qu'en C/C++, Java et web/mobile : acquisition de données, visualisation en temps réel et nuages de points 3D avec Open3D et PyVista.",
+    "Technical Project Management": "Gestion de projets techniques",
+    "Three years leading digitalisation projects: requirements, specifications, planning, reporting and change management, coordinating technical and business teams.":
+        "Trois ans à piloter des projets de digitalisation : besoins, cahier des charges, planification, reporting et conduite du changement, en coordonnant équipes techniques et métiers.",
+
+    "The technologies I work with, and the strengths I bring to a team.": "Les technologies que j'utilise et les qualités que j'apporte à une équipe.",
+    "Robotics & Control": "Robotique & automatique",
+    "Feedback control": "Asservissement",
+    "Mobile robotics": "Robotique mobile",
+    "Programming": "Programmation",
+    "3D, Vision & AI": "3D, vision & IA",
+    "Computer vision": "Vision par ordinateur",
+    "Machine learning fundamentals": "Bases du machine learning",
+    "Data & Business Tools": "Données & outils métiers",
+    "Teamwork": "Travail en équipe",
+    "Professional": "Professionnel",
+    "Native": "Langue maternelle",
+
+    "Robotics, control and software projects. Open one to see the details, or find the code on GitHub.": "Projets de robotique, d'automatique et de logiciel. Ouvrez-en un pour voir les détails, ou retrouvez le code sur GitHub.",
+    "Looking for a robotics intern?": "Vous cherchez une stagiaire en robotique ?",
+    "I'm looking for a 6-month end-of-studies internship in robotics / AI from February 2027. I'd love to hear from you.": "Je recherche un stage de fin d'études de 6 mois en robotique / IA à partir de février 2027. Je serais ravie d'échanger avec vous.",
+
     // Footer
     "Aya Briksine. All rights reserved.": "Aya Briksine. Tous droits réservés."
 };
@@ -157,9 +234,11 @@ const frenchText = {
 /* ---------- Language switch (no need to edit below) ---------- */
 (function () {
     const langBtn = document.getElementById('lang-toggle');
+    // pages that build their own title (project.html) set data-own-title on <body>
+    const ownTitle = document.body.hasAttribute('data-own-title');
     const titles = {
         en: document.title,
-        fr: 'Aya Briksine | Spécialiste en transformation digitale'
+        fr: 'Aya Briksine | Mécatronique, robotique & automatique'
     };
     const textNodes = [];
 
@@ -167,7 +246,8 @@ const frenchText = {
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     let node;
     while ((node = walker.nextNode())) {
-        if (node.parentElement.closest('script')) continue;
+        // parts built by JavaScript (projects) translate themselves
+        if (node.parentElement.closest('script, [data-no-translate]')) continue;
         const key = node.nodeValue.replace(/\s+/g, ' ').trim();
         if (!frenchText[key]) continue;
         const english = node.nodeValue;
@@ -185,10 +265,12 @@ const frenchText = {
             t.node.nodeValue = fr ? t.french : t.english;
         });
         document.documentElement.lang = lang;
-        document.title = titles[lang];
+        if (!ownTitle) document.title = titles[lang];
         langBtn.textContent = fr ? 'EN' : 'FR';
         langBtn.setAttribute('aria-label', fr ? 'Switch to English' : 'Passer en français');
         try { localStorage.setItem('lang', lang); } catch (e) {}
+        // tell the project cards / project page to redraw in the new language
+        document.dispatchEvent(new Event('langchange'));
     }
 
     langBtn.addEventListener('click', () => {

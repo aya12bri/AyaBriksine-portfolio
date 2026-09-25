@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project | Aya Briksine</title>
+    <meta name="description" content="Project by Aya Briksine – Mechatronics, Robotics & Automation.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        document.documentElement.classList.add('js');
+        try { if (localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode'); } catch (e) {}
+    </script>
+</head>
+<body class="project-page" data-own-title>
+
+    <!-- ================= HEADER ================= -->
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="index.html#home" class="logo">Aya<span>.</span>Briksine</a>
+
+            <nav class="navbar" id="navbar">
+                <a href="index.html#home">Home</a>
+                <a href="index.html#background">Background</a>
+                <a href="index.html#services">Expertise</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="index.html#projects" class="active">Projects</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="icon-btn lang-toggle" id="lang-toggle" aria-label="Passer en français">FR</button>
+                <button class="icon-btn theme-toggle" id="theme-toggle" aria-label="Switch to light mode"><i class='bx bx-sun'></i></button>
+                <a href="index.html#contact" class="btn btn-primary btn-sm header-cta">Hire me</a>
+                <button class="icon-btn menu-toggle" id="menu-icon" aria-label="Open menu" aria-expanded="false" aria-controls="navbar"><i class='bx bx-menu'></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- The whole project is filled in by project-page.js from projects.js -->
+    <main id="project-root" data-no-translate></main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <p>© <span id="year">2026</span> Aya Briksine. All rights reserved.</p>
+            <div class="socials socials-sm">
+                <a href="https://www.linkedin.com/in/aya-briksine/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+                <a href="https://github.com/aya12bri" target="_blank" rel="noopener" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+                <a href="https://www.instagram.com/ayabriksine/" target="_blank" rel="noopener" aria-label="Instagram"><i class='bx bxl-instagram-alt'></i></a>
+            </div>
+            <a href="#" class="back-top" aria-label="Back to top"><i class='bx bx-up-arrow-alt'></i></a>
+        </div>
+    </footer>
+
+    <script src="projects.js"></script>
+    <script src="script.js"></script>
+    <script src="project-page.js"></script>
+    <script src="translations.js"></script>
+</body>
+</html>
