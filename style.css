@@ -26,18 +26,20 @@
     --border: rgba(255, 255, 255, 0.08);
     --text: #ededf2;
     --muted: #a4a4b3;
-    --accent: #f700ff;            /* brand pink */
-    --accent-strong: #c900d1;     /* pink for buttons (white text stays readable) */
-    --accent-soft: rgba(247, 0, 255, 0.12);
+    --accent: #dfe2e8;            /* brand color: silver gray */
+    --accent-rgb: 223, 226, 232;  /* same color, used for glows */
+    --accent-strong: #e4e6eb;     /* buttons */
+    --on-accent: #111217;         /* text on buttons */
+    --accent-soft: rgba(223, 226, 232, 0.1);
     --header-bg: rgba(11, 11, 16, 0.78);
     --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
     --logo-tile: #ffffff;
 
     /* neon "lights" used in dark mode */
-    --glow: 0 0 25px rgba(247, 0, 255, 0.55);
-    --glow-strong: 0 0 25px #f700ff, 0 0 50px rgba(247, 0, 255, 0.6);
-    --glow-photo: 0 0 25px #f700ff, 0 0 50px rgba(247, 0, 255, 0.55), 0 0 100px rgba(247, 0, 255, 0.35);
-    --text-glow: 0 0 25px rgba(247, 0, 255, 0.7);
+    --glow: 0 0 22px rgba(223, 226, 232, 0.3);
+    --glow-strong: 0 0 22px rgba(223, 226, 232, 0.55), 0 0 44px rgba(223, 226, 232, 0.25);
+    --glow-photo: 0 0 25px rgba(223, 226, 232, 0.45), 0 0 60px rgba(223, 226, 232, 0.22), 0 0 110px rgba(223, 226, 232, 0.12);
+    --text-glow: 0 0 22px rgba(223, 226, 232, 0.35);
 
     --radius: 18px;
     --radius-sm: 12px;
@@ -54,17 +56,19 @@
     --border: rgba(20, 20, 40, 0.1);
     --text: #17171e;
     --muted: #545766;
-    --accent: #b000b8;            /* deeper pink so it's readable on gray */
-    --accent-strong: #b000b8;
-    --accent-soft: rgba(176, 0, 184, 0.1);
+    --accent: #3a3e47;            /* charcoal gray, readable on the light gray */
+    --accent-rgb: 58, 62, 71;
+    --accent-strong: #2e3139;
+    --on-accent: #ffffff;
+    --accent-soft: rgba(58, 62, 71, 0.08);
     --header-bg: rgba(232, 233, 237, 0.85);
     --shadow: 0 18px 40px rgba(30, 30, 60, 0.1);
     --logo-tile: #ffffff;
 
     /* no neon in light mode: soft pink shadows instead */
-    --glow: 0 8px 22px rgba(176, 0, 184, 0.18);
-    --glow-strong: 0 10px 28px rgba(176, 0, 184, 0.28);
-    --glow-photo: 0 20px 50px rgba(176, 0, 184, 0.2);
+    --glow: 0 8px 22px rgba(30, 32, 40, 0.14);
+    --glow-strong: 0 10px 28px rgba(30, 32, 40, 0.22);
+    --glow-photo: 0 20px 50px rgba(30, 32, 40, 0.18);
     --text-glow: none;
 }
 
@@ -124,7 +128,7 @@ button {
 
 ::selection {
     background: var(--accent);
-    color: #fff;
+    color: var(--on-accent);
 }
 
 ::-webkit-scrollbar {
@@ -173,13 +177,13 @@ button {
 
 .btn-primary {
     background: var(--accent-strong);
-    color: #fff;
+    color: var(--on-accent);
     box-shadow: 0 8px 24px var(--accent-soft);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(201, 0, 209, 0.35);
+    box-shadow: 0 12px 30px rgba(var(--accent-rgb), 0.35);
 }
 
 .btn-outline {
@@ -261,7 +265,7 @@ button {
 }
 
 .socials a:hover {
-    color: #fff;
+    color: var(--on-accent);
     background: var(--accent-strong);
     border-color: var(--accent-strong);
     transform: translateY(-3px);
@@ -471,7 +475,7 @@ button {
 .light-mode .photo-frame {
     padding: 8px;
     background: var(--accent);
-    box-shadow: 0 20px 50px rgba(176, 0, 184, 0.2);
+    box-shadow: 0 20px 50px rgba(var(--accent-rgb), 0.2);
 }
 
 .photo-frame img {
@@ -597,7 +601,7 @@ button {
 
 .tab.active {
     background: var(--accent-strong);
-    color: #fff;
+    color: var(--on-accent);
 }
 
 .tab-panel {
@@ -955,12 +959,12 @@ button {
 .filter.active {
     background: var(--accent-strong);
     border-color: var(--accent-strong);
-    color: #fff;
+    color: var(--on-accent);
     box-shadow: var(--glow);
 }
 
 .filter.active span {
-    background: rgba(255, 255, 255, 0.22);
+    background: rgba(127, 127, 127, 0.28);
 }
 
 .projects-grid {
@@ -1040,15 +1044,15 @@ button {
 }
 
 /* one color per category */
-.cat-robotics { --cat: #f700ff; --cat-soft: rgba(247, 0, 255, 0.22); }
-.cat-control  { --cat: #00d4ff; --cat-soft: rgba(0, 212, 255, 0.2); }
-.cat-software { --cat: #7c5cff; --cat-soft: rgba(124, 92, 255, 0.22); }
-.cat-digital  { --cat: #ffb020; --cat-soft: rgba(255, 176, 32, 0.2); }
+.cat-robotics { --cat: #f2f3f6; --cat-soft: rgba(242, 243, 246, 0.2); }
+.cat-control  { --cat: #c6cbd4; --cat-soft: rgba(198, 203, 212, 0.18); }
+.cat-software { --cat: #a4aab5; --cat-soft: rgba(164, 170, 181, 0.18); }
+.cat-digital  { --cat: #878e9a; --cat-soft: rgba(135, 142, 154, 0.18); }
 
-.light-mode .cat-robotics { --cat: #b000b8; }
-.light-mode .cat-control  { --cat: #0077a8; }
-.light-mode .cat-software { --cat: #5a3ee0; }
-.light-mode .cat-digital  { --cat: #a86400; }
+.light-mode .cat-robotics { --cat: #1b1d22; --cat-soft: rgba(27, 29, 34, 0.12); }
+.light-mode .cat-control  { --cat: #3d424c; --cat-soft: rgba(61, 66, 76, 0.12); }
+.light-mode .cat-software { --cat: #5a606b; --cat-soft: rgba(90, 96, 107, 0.12); }
+.light-mode .cat-digital  { --cat: #767c87; --cat-soft: rgba(118, 124, 135, 0.12); }
 
 .project-body {
     display: flex;
@@ -1446,7 +1450,7 @@ button {
     height: 40px;
     border-radius: 50%;
     background: var(--accent-strong);
-    color: #fff;
+    color: var(--on-accent);
     font-size: 22px;
     transition: transform 0.2s ease;
 }
@@ -1566,20 +1570,20 @@ html:not(.light-mode) .hero::after {
     width: 560px;
     height: 560px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(247, 0, 255, 0.1), transparent 65%);
+    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.1), transparent 65%);
     pointer-events: none;
 }
 
 html:not(.light-mode) .photo-frame {
     padding: 6px;
-    background: #f700ff;
+    background: var(--accent);
     box-shadow: var(--glow-photo);
     transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 
 html:not(.light-mode) .photo-frame:hover {
     transform: scale(1.02);
-    box-shadow: 0 0 35px #f700ff, 0 0 70px rgba(247, 0, 255, 0.7), 0 0 140px rgba(247, 0, 255, 0.45);
+    box-shadow: 0 0 35px var(--accent), 0 0 70px rgba(var(--accent-rgb), 0.7), 0 0 140px rgba(var(--accent-rgb), 0.45);
 }
 
 html:not(.light-mode) .btn-primary {
@@ -1601,7 +1605,7 @@ html:not(.light-mode) .hero .socials a {
 }
 
 html:not(.light-mode) .socials a:hover {
-    color: #fff;
+    color: var(--on-accent);
     background: var(--accent);
     box-shadow: var(--glow-strong);
     transform: scale(1.15) translateY(-3px);
@@ -1612,23 +1616,23 @@ html:not(.light-mode) .tab.active {
 }
 
 html:not(.light-mode) .timeline::before {
-    background: #f700ff;
+    background: var(--accent);
     box-shadow: var(--glow);
 }
 
 html:not(.light-mode) .timeline-item::before {
-    background: #f700ff;
-    border-color: #f700ff;
+    background: var(--accent);
+    border-color: var(--accent);
     box-shadow: var(--glow-strong);
 }
 
 html:not(.light-mode) .timeline-card {
-    border-color: rgba(247, 0, 255, 0.35);
-    box-shadow: 0 0 18px rgba(247, 0, 255, 0.12);
+    border-color: rgba(var(--accent-rgb), 0.35);
+    box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.12);
 }
 
 html:not(.light-mode) .timeline-card:hover {
-    border-color: #f700ff;
+    border-color: var(--accent);
     box-shadow: var(--glow);
 }
 
@@ -1637,20 +1641,20 @@ html:not(.light-mode) .service-card:hover,
 html:not(.light-mode) .project-card:hover,
 html:not(.light-mode) .cert-card:hover,
 html:not(.light-mode) .skill-group:hover {
-    border-color: rgba(247, 0, 255, 0.6);
+    border-color: rgba(var(--accent-rgb), 0.6);
     box-shadow: var(--glow);
 }
 
 html:not(.light-mode) .service-card:hover .icon-box,
 html:not(.light-mode) .contact-list a:hover .icon-box {
     background: var(--accent);
-    color: #fff;
+    color: var(--on-accent);
     box-shadow: var(--glow-strong);
 }
 
 html:not(.light-mode) .contact-panel {
-    border-color: rgba(247, 0, 255, 0.45);
-    box-shadow: 0 0 30px rgba(247, 0, 255, 0.15);
+    border-color: rgba(var(--accent-rgb), 0.45);
+    box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.15);
 }
 
 html:not(.light-mode) .back-top {
