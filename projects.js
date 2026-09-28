@@ -37,48 +37,138 @@ const projectCategories = {
 
 const projects = [
     {
-        id: 'industrial-collaborative-robots',
+        id: 'doosan-m0617',
         category: 'robotics',
         icon: 'bx-bot',
         year: '2026',
         github: '',
         demo: '',
         image: '',
-        tags: ['Robotique industrielle', 'Cobots', 'Programmation robot', 'Pick & Place', 'Denavit-Hartenberg', 'Cinématique', 'Singularités', 'E/S numériques', 'Universal Robots', 'Fanuc', 'Doosan', 'Travail en équipe'],
+        tags: ['Doosan M0617', 'Teach pendant Doosan', 'Cobots', 'Programmation robot', 'Pick & Place', 'E/S numériques', 'Denavit-Hartenberg', 'Cinématique', 'Travail en équipe'],
         title: {
-            en: 'Industrial & Collaborative Robot Programming and Modelling',
-            fr: 'Programmation et modélisation de robots industriels et collaboratifs'
+            en: 'Doosan M0617 Cobot Programming and Modelling',
+            fr: 'Programmation et modélisation du cobot Doosan M0617'
         },
         context: {
             en: 'IUT de Bourges – Advanced Robotics course, lab work in pairs/groups of three',
             fr: 'IUT de Bourges – UE Robotique Avancée, travaux pratiques en binôme/trinôme'
         },
         summary: {
-            en: 'Programming and modelling 5 robots (Doosan M0617, UR3, UR5, Fanuc CRX-10iA, Fanuc Delta): joint and Cartesian JOG, hand guiding, MoveJ/MoveL trajectories, a suction-cup pick & place application, kinematic diagrams and modified DH parameters.',
-            fr: 'Programmation et modélisation de 5 robots (Doosan M0617, UR3, UR5, Fanuc CRX-10iA, Fanuc Delta) : pilotage JOG articulaire et cartésien, co-manipulation, trajectoires MoveJ/MoveL, application pick & place avec ventouse, schémas cinématiques et paramètres DH modifiés.'
+            en: 'Programming the Doosan M0617 6-axis cobot with its teach pendant: JOG, hand guiding, MoveJ/MoveL trajectories and a pick & place application with a suction-cup gripper driven by digital outputs.',
+            fr: 'Programmation du cobot 6 axes Doosan M0617 sur son teach pendant : pilotage JOG, co-manipulation, trajectoires MoveJ/MoveL et application pick & place avec une ventouse pilotée par sorties numériques.'
         },
         highlights: {
             en: [
-                'Worked on 5 robots: Doosan M0617, Universal Robots UR3 and UR5 and Fanuc CRX-10iA (6-axis cobots), and a Fanuc Delta parallel pick & place robot',
+                'Robot: Doosan M0617 6-axis cobot with a suction-cup gripper',
+                'Software and tools: Doosan teach pendant, digital I/O, manufacturer documentation',
+                'Manual JOG control in joint and Cartesian mode (base frame and tool frame)',
+                'Identified and physically marked out the robot frames',
+                'Hand-guided the cobot to identify configurations and singularities',
+                'Programmed back-and-forth trajectories with MoveJ (joint) and MoveL (linear)',
+                'Programmed a pick & place application with the suction cup driven by digital outputs',
+                'Kinematic diagram and modified DH parameter table (Craig convention)',
+                'Wrote a technical lab report'
+            ],
+            fr: [
+                'Robot : cobot 6 axes Doosan M0617 équipé d’une ventouse',
+                'Logiciels et outils : teach pendant Doosan, E/S numériques, documentation constructeur',
+                'Pilotage manuel (JOG) en mode articulaire et opérationnel (repère base et repère outil)',
+                'Identification et matérialisation des repères du robot',
+                'Co-manipulation : guidage à la main, identification des configurations et singularités',
+                'Programmation de trajectoires : aller-retour MoveJ (articulaire) / MoveL (linéaire)',
+                "Programmation d'une application pick & place avec ventouse pilotée par sorties numériques",
+                'Schéma cinématique et tableau des paramètres DH modifiés (convention de Craig)',
+                'Rédaction du compte rendu technique'
+            ]
+        }
+    },
+    {
+        id: 'universal-robots-ur3-ur5',
+        category: 'robotics',
+        icon: 'bx-joystick',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        tags: ['Universal Robots', 'UR3', 'UR5', 'PolyScope', 'Cobots', 'Programmation robot', 'Singularités', 'Denavit-Hartenberg', 'Cinématique', 'Travail en équipe'],
+        title: {
+            en: 'Universal Robots UR3 & UR5 Cobot Programming and Modelling',
+            fr: 'Programmation et modélisation des cobots Universal Robots UR3 et UR5'
+        },
+        context: {
+            en: 'IUT de Bourges – Advanced Robotics course, lab work in pairs/groups of three',
+            fr: 'IUT de Bourges – UE Robotique Avancée, travaux pratiques en binôme/trinôme'
+        },
+        summary: {
+            en: 'Programming the UR3 and UR5 6-axis cobots in PolyScope: joint and Cartesian JOG, hand guiding, singularities, MoveJ/MoveL trajectories, kinematic diagrams and modified DH parameters.',
+            fr: 'Programmation des cobots 6 axes UR3 et UR5 sous PolyScope : pilotage JOG articulaire et cartésien, co-manipulation, singularités, trajectoires MoveJ/MoveL, schémas cinématiques et paramètres DH modifiés.'
+        },
+        highlights: {
+            en: [
+                'Robots: Universal Robots UR3 and UR5 6-axis cobots',
+                'Software and tools: PolyScope (Universal Robots teach pendant), manufacturer documentation',
                 'Manual JOG control in joint and Cartesian mode (base frame and tool frame)',
                 'Identified and physically marked out the robot frames',
                 'Hand-guided the cobots to identify configurations and singularities',
                 'Programmed back-and-forth trajectories with MoveJ (joint) and MoveL (linear)',
-                'Programmed a pick & place application with a suction-cup gripper driven by digital outputs',
-                'Kinematic modelling: kinematic diagrams and modified DH parameter tables (Craig convention)',
-                'Used the Doosan teach pendant, PolyScope (Universal Robots), the Fanuc tablet/iPendant and manufacturer documentation',
-                'Wrote technical lab reports'
+                'Kinematic diagrams and modified DH parameter tables (Craig convention)',
+                'Wrote a technical lab report'
             ],
             fr: [
-                'Travail sur 5 robots : Doosan M0617, Universal Robots UR3 et UR5 et Fanuc CRX-10iA (cobots 6 axes), et Fanuc Delta (robot parallèle de pick & place)',
+                'Robots : cobots 6 axes Universal Robots UR3 et UR5',
+                'Logiciels et outils : PolyScope (pupitre Universal Robots), documentation constructeur',
                 'Pilotage manuel (JOG) en mode articulaire et opérationnel (repère base et repère outil)',
                 'Identification et matérialisation des repères du robot',
-                'Co-manipulation des cobots : guidage à la main, identification des configurations et singularités',
+                'Co-manipulation : guidage à la main, identification des configurations et singularités',
                 'Programmation de trajectoires : aller-retour MoveJ (articulaire) / MoveL (linéaire)',
-                "Programmation d'une application pick & place avec ventouse pilotée par sorties numériques",
-                'Modélisation cinématique : schémas cinématiques et tableaux des paramètres DH modifiés (convention de Craig)',
-                'Utilisation du teach pendant Doosan, de PolyScope (Universal Robots), de la tablette/iPendant Fanuc et de la documentation constructeur',
-                'Rédaction de comptes rendus techniques'
+                'Schémas cinématiques et tableaux des paramètres DH modifiés (convention de Craig)',
+                'Rédaction du compte rendu technique'
+            ]
+        }
+    },
+    {
+        id: 'fanuc-crx-delta',
+        category: 'robotics',
+        icon: 'bx-target-lock',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        tags: ['Fanuc', 'CRX-10iA', 'Robot Delta', 'iPendant Fanuc', 'Robotique industrielle', 'Cobots', 'Programmation robot', 'Pick & Place', 'Cinématique', 'Travail en équipe'],
+        title: {
+            en: 'Fanuc CRX-10iA & Delta Robot Programming and Modelling',
+            fr: 'Programmation et modélisation des robots Fanuc CRX-10iA et Delta'
+        },
+        context: {
+            en: 'IUT de Bourges – Advanced Robotics course, lab work in pairs/groups of three',
+            fr: 'IUT de Bourges – UE Robotique Avancée, travaux pratiques en binôme/trinôme'
+        },
+        summary: {
+            en: 'Programming Fanuc robots on the tablet/iPendant: the CRX-10iA 6-axis cobot (JOG, hand guiding, MoveJ/MoveL trajectories) and a Delta parallel robot built for pick & place.',
+            fr: 'Programmation de robots Fanuc sur tablette/iPendant : le cobot 6 axes CRX-10iA (pilotage JOG, co-manipulation, trajectoires MoveJ/MoveL) et un robot parallèle Delta dédié au pick & place.'
+        },
+        highlights: {
+            en: [
+                'Robots: Fanuc CRX-10iA 6-axis cobot and Fanuc Delta parallel pick & place robot',
+                'Software and tools: Fanuc tablet/iPendant, manufacturer documentation',
+                'Manual JOG control in joint and Cartesian mode (base frame and tool frame)',
+                'Identified and physically marked out the robot frames',
+                'Hand-guided the CRX-10iA to identify configurations and singularities',
+                'Programmed back-and-forth trajectories with MoveJ (joint) and MoveL (linear)',
+                'Worked with the Delta parallel robot for pick & place',
+                'Kinematic diagrams and modified DH parameters (Craig convention)',
+                'Wrote a technical lab report'
+            ],
+            fr: [
+                'Robots : cobot 6 axes Fanuc CRX-10iA et robot parallèle Fanuc Delta de pick & place',
+                'Logiciels et outils : tablette/iPendant Fanuc, documentation constructeur',
+                'Pilotage manuel (JOG) en mode articulaire et opérationnel (repère base et repère outil)',
+                'Identification et matérialisation des repères du robot',
+                'Co-manipulation du CRX-10iA : guidage à la main, identification des configurations et singularités',
+                'Programmation de trajectoires : aller-retour MoveJ (articulaire) / MoveL (linéaire)',
+                'Prise en main du robot parallèle Delta pour le pick & place',
+                'Schémas cinématiques et paramètres DH modifiés (convention de Craig)',
+                'Rédaction du compte rendu technique'
             ]
         }
     },
