@@ -37,6 +37,52 @@ const projectCategories = {
 
 const projects = [
     {
+        id: 'industrial-collaborative-robots',
+        category: 'robotics',
+        icon: 'bx-bot',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        tags: ['Robotique industrielle', 'Cobots', 'Programmation robot', 'Pick & Place', 'Denavit-Hartenberg', 'Cinématique', 'Singularités', 'E/S numériques', 'Universal Robots', 'Fanuc', 'Doosan', 'Travail en équipe'],
+        title: {
+            en: 'Industrial & Collaborative Robot Programming and Modelling',
+            fr: 'Programmation et modélisation de robots industriels et collaboratifs'
+        },
+        context: {
+            en: 'IUT de Bourges – Advanced Robotics course, lab work in pairs/groups of three',
+            fr: 'IUT de Bourges – UE Robotique Avancée, travaux pratiques en binôme/trinôme'
+        },
+        summary: {
+            en: 'Programming and modelling 5 robots (Doosan M0617, UR3, UR5, Fanuc CRX-10iA, Fanuc Delta): joint and Cartesian JOG, hand guiding, MoveJ/MoveL trajectories, a suction-cup pick & place application, kinematic diagrams and modified DH parameters.',
+            fr: 'Programmation et modélisation de 5 robots (Doosan M0617, UR3, UR5, Fanuc CRX-10iA, Fanuc Delta) : pilotage JOG articulaire et cartésien, co-manipulation, trajectoires MoveJ/MoveL, application pick & place avec ventouse, schémas cinématiques et paramètres DH modifiés.'
+        },
+        highlights: {
+            en: [
+                'Worked on 5 robots: Doosan M0617, Universal Robots UR3 and UR5 and Fanuc CRX-10iA (6-axis cobots), and a Fanuc Delta parallel pick & place robot',
+                'Manual JOG control in joint and Cartesian mode (base frame and tool frame)',
+                'Identified and physically marked out the robot frames',
+                'Hand-guided the cobots to identify configurations and singularities',
+                'Programmed back-and-forth trajectories with MoveJ (joint) and MoveL (linear)',
+                'Programmed a pick & place application with a suction-cup gripper driven by digital outputs',
+                'Kinematic modelling: kinematic diagrams and modified DH parameter tables (Craig convention)',
+                'Used the Doosan teach pendant, PolyScope (Universal Robots), the Fanuc tablet/iPendant and manufacturer documentation',
+                'Wrote technical lab reports'
+            ],
+            fr: [
+                'Travail sur 5 robots : Doosan M0617, Universal Robots UR3 et UR5 et Fanuc CRX-10iA (cobots 6 axes), et Fanuc Delta (robot parallèle de pick & place)',
+                'Pilotage manuel (JOG) en mode articulaire et opérationnel (repère base et repère outil)',
+                'Identification et matérialisation des repères du robot',
+                'Co-manipulation des cobots : guidage à la main, identification des configurations et singularités',
+                'Programmation de trajectoires : aller-retour MoveJ (articulaire) / MoveL (linéaire)',
+                "Programmation d'une application pick & place avec ventouse pilotée par sorties numériques",
+                'Modélisation cinématique : schémas cinématiques et tableaux des paramètres DH modifiés (convention de Craig)',
+                'Utilisation du teach pendant Doosan, de PolyScope (Universal Robots), de la tablette/iPendant Fanuc et de la documentation constructeur',
+                'Rédaction de comptes rendus techniques'
+            ]
+        }
+    },
+    {
         id: 'obstacle-avoidance-robot',
         category: 'robotics',
         icon: 'bx-radar',
