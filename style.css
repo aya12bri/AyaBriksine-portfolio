@@ -1282,7 +1282,8 @@ h3 {
 .gallery img {
     width: 100%;
     aspect-ratio: 4 / 3;
-    object-fit: cover;
+    object-fit: contain;
+    background: #fff;
     border-radius: var(--radius-sm);
     border: 1px solid var(--border);
 }

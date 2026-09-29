@@ -156,33 +156,115 @@ const projects = [
         github: '',
         demo: '',
         image: '',
-        tags: ['Systèmes embarqués', 'Volant d’inertie', 'Algorithmes de contrôle', 'Simulation', 'Mécatronique'],
+        tags: ['MATLAB', 'Simulink', 'Simscape', 'Stateflow', 'CAO', 'Contrôleur PD', 'IMU BNO055', 'Volant d’inertie', 'Travail en binôme'],
         title: {
-            en: 'Self-Balancing Motorcycle',
-            fr: 'Moto auto-équilibrée'
+            en: 'Self-Balancing Motorcycle with an Inertia Wheel',
+            fr: 'Moto auto-équilibrée à volant d’inertie'
         },
         context: {
-            en: 'Polytech Orléans – Mechatronics lab work',
-            fr: 'Polytech Orléans – TP de Mécatronique'
+            en: 'Polytech Orléans – Advanced Control project, in pairs, supervised by Mr. Dominique Nelson-Gruel',
+            fr: 'Polytech Orléans – Projet d’Automatique Avancée, en binôme, encadré par M. Dominique Nelson-Gruel'
         },
         summary: {
-            en: 'Building and programming a motorcycle that balances and steers itself using an inertia wheel, combining embedded systems, control algorithms and vehicle simulation.',
-            fr: 'Construction et programmation d’une moto qui s’équilibre et se manœuvre d’elle-même à l’aide d’un volant d’inertie : systèmes embarqués, algorithmes de contrôle et simulation du comportement du véhicule.'
+            en: 'Modelling, simulating and controlling a motorcycle that keeps itself upright with an inertia wheel: a naturally unstable inverted pendulum stabilised by a PD controller, validated on Simulink, Simscape and CAD models.',
+            fr: 'Modélisation, simulation et commande d’une moto qui reste droite grâce à un volant d’inertie : un pendule inversé naturellement instable, stabilisé par un correcteur PD et validé sur des modèles Simulink, Simscape et CAO.'
         },
         highlights: {
             en: [
-                'Built the motorcycle and its inertia-wheel balancing system',
-                'Programmed the embedded controller',
-                'Implemented control algorithms to keep the bike upright and steer it',
-                'Simulated the global behaviour of the vehicle'
+                'Modelled the bike as an inverted pendulum with an inertia wheel (state: angle, angular speed, wheel speed) and linearised it around θ = 0',
+                'Built the non-linear model in Simulink: open loop, the bike falls (θ drifts to −40° in 10 s)',
+                'Tuned a PD controller (Kp = 10, Kd = 0.1) that brings θ back to 0° in under 0.5 s',
+                'Cross-checked the Simulink model against a Simscape multibody model (curves within 2°), then ran the same controller on a 3D CAD model',
+                'Selected the hardware: BNO055 IMU (angle and angular speed), wheel encoder, DC motor with inertia wheel driven by PWM, battery monitoring',
+                'Designed a Stateflow state machine (fall detection, IMU calibration, battery check) tested on both simulation models',
+                'Could not validate the real bike; planned next steps: in-situ gain tuning, Wi-Fi telemetry, straight-line motion and steering'
             ],
             fr: [
-                'Construction de la moto et de son système d’équilibrage par volant d’inertie',
-                'Programmation du système embarqué',
-                'Mise en œuvre d’algorithmes de contrôle pour maintenir la moto droite et la manœuvrer',
-                'Simulation du comportement global du véhicule'
+                'Modélisation de la moto en pendule inversé à roue d’inertie (état : angle, vitesse angulaire, vitesse de la roue) et linéarisation autour de θ = 0',
+                'Modèle non linéaire sous Simulink : en boucle ouverte la moto tombe (θ dérive jusqu’à −40° en 10 s)',
+                'Réglage d’un correcteur PD (Kp = 10, Kd = 0,1) qui ramène θ à 0° en moins de 0,5 s',
+                'Comparaison du modèle Simulink à un modèle multi-corps Simscape (courbes à moins de 2° près), puis même contrôleur sur un modèle CAO 3D',
+                'Choix du matériel : centrale inertielle BNO055 (angle et vitesse angulaire), encodeur de roue, moteur DC avec volant d’inertie piloté en PWM, surveillance de la batterie',
+                'Machine à états Stateflow (détection de chute, calibration IMU, batterie) testée sur les deux modèles de simulation',
+                'Moto réelle non validée ; suites prévues : réglage des gains in situ, télémétrie Wi-Fi, mouvement rectiligne et direction'
             ]
-        }
+        },
+        results: {
+            en: 'Five of the six objectives were reached: full mathematical model, working PD controller, Simulink and CAD simulations, and a state machine validated on both models. The real motorcycle could not be balanced yet.',
+            fr: 'Cinq objectifs sur six atteints : modèle mathématique complet, contrôleur PD fonctionnel, simulations Simulink et CAO, et machine à états validée sur les deux modèles. La moto réelle n’a pas encore pu être équilibrée.'
+        },
+        gallery: [
+            'moto-schema-pendule.png',
+            'moto-simulink-modele.png',
+            'moto-boucle-ouverte.png',
+            'moto-boucle-fermee-pd.png',
+            'moto-simulink-vs-simscape.png',
+            'moto-perturbation-pulse.png',
+            'moto-modele-cao.png',
+            'moto-arduino-moto.jpeg',
+            'moto-machine-etats.png',
+            'moto-resultats-scope.png'
+        ]
+    },
+    {
+        id: 'turbofan-imc-pid',
+        category: 'control',
+        icon: 'bx-wind',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        tags: ['MATLAB', 'Simulink', 'IMC', 'PID', 'Identification', 'Anti-windup', 'Placement de pôles'],
+        title: {
+            en: 'Turbofan Speed Control: PID and Internal Model Control',
+            fr: 'Commande en vitesse d’un turboréacteur : PID et commande à modèle interne (IMC)'
+        },
+        context: {
+            en: 'Polytech Orléans – Advanced Control mini-project (Internal Model Control, March 2026), in pairs, supervised by Mr. Guillaume Colin',
+            fr: 'Polytech Orléans – Mini-projet d’Automatique Avancée (commande à modèle interne, mars 2026), en binôme, encadré par M. Guillaume Colin'
+        },
+        summary: {
+            en: 'Controlling the high-pressure turbine speed (NH) of a turbofan through the kerosene fuel flow, comparing open-loop, PID and Internal Model Control (IMC) strategies on a Simulink model.',
+            fr: 'Régulation de la vitesse de la turbine haute pression (NH) d’un turboréacteur par le débit de kérosène, en comparant commande en boucle ouverte, PID et commande à modèle interne (IMC) sur un modèle Simulink.'
+        },
+        highlights: {
+            en: [
+                'System: input = kerosene fuel flow (%), output = high-pressure turbine speed NH (rpm)',
+                'Analysis of the problem and closed-loop block diagram (set point, disturbances, units)',
+                'Open-loop simulation with fuel-flow steps and identification of a simple representative model',
+                'Static input/output characteristic and open-loop control with a look-up table',
+                'PID design with the Broïda method and by pole placement, with anti-reset-windup, measurement noise and a set-point pre-filter',
+                'IMC design with three filter settings (λ = 1, 0.5 and 0.2), plus anti-reset-windup',
+                'Compared PID and IMC on set-point changes and disturbances'
+            ],
+            fr: [
+                'Système : entrée = débit de kérosène (%), sortie = vitesse de la turbine haute pression NH (tr/min)',
+                'Analyse du problème et schéma-bloc en boucle fermée (consigne, perturbations, unités)',
+                'Simulation en boucle ouverte avec échelons de débit et identification d’un modèle représentatif simple',
+                'Caractéristique statique entrée/sortie et commande en boucle ouverte par table de correspondance',
+                'Synthèse de PID par la méthode de Broïda et par placement de pôles, avec anti-emballement, bruit de mesure et pré-filtre de consigne',
+                'Synthèse d’une commande IMC avec trois réglages de filtre (λ = 1, 0,5 et 0,2), et anti-emballement',
+                'Comparaison du PID et de l’IMC face aux changements de consigne et aux perturbations'
+            ]
+        },
+        results: {
+            en: 'Internal Model Control delivered better performance and stability against disturbances, provided the filter is well chosen.',
+            fr: 'La commande par modèle interne offre plus de performance et de stabilité face aux perturbations, à condition de bien choisir le filtre.'
+        },
+        gallery: [
+            'turbofan-schema-boucle-ouverte.png',
+            'turbofan-echelon-identification.png',
+            'turbofan-courbe-statique.png',
+            'turbofan-pid-broida.jpg',
+            'turbofan-placement-poles.jpg',
+            'turbofan-antiwindup-1.jpg',
+            'turbofan-antiwindup-2.jpg',
+            'turbofan-prefiltre.jpg',
+            'turbofan-schema-imc.jpg',
+            'turbofan-imc-filtre-1.jpg',
+            'turbofan-imc-filtre-3.jpg',
+            'turbofan-imc-windup.jpg'
+        ]
     },
     {
         id: 'doosan-m0617',
