@@ -310,7 +310,14 @@ const projects = [
                 'Schéma cinématique et tableau des paramètres DH modifiés (convention de Craig)',
                 'Rédaction du compte rendu technique'
             ]
-        }
+        },
+        gallery: [
+            'doosan-cellule.jpg',
+            'doosan-pendant-movej.jpg',
+            'doosan-pendant-movel.jpg',
+            'doosan-pendant-set-sortie.jpg',
+            'doosan-variateur-convoyeur.jpg'
+        ]
     },
     {
         id: 'universal-robots-ur3-ur5',
