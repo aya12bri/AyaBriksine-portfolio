@@ -220,8 +220,8 @@ const projects = [
             fr: 'Commande en vitesse d’un turboréacteur : PID et commande à modèle interne (IMC)'
         },
         context: {
-            en: 'Polytech Orléans – Advanced Control mini-project (Internal Model Control, March 2026)',
-            fr: 'Polytech Orléans – Mini-projet d’Automatique Avancée (commande à modèle interne, mars 2026)'
+            en: 'Polytech Orléans – Advanced Control mini-project (Internal Model Control, March 2026), in pairs, supervised by Mr. Guillaume Colin',
+            fr: 'Polytech Orléans – Mini-projet d’Automatique Avancée (commande à modèle interne, mars 2026), en binôme, encadré par M. Guillaume Colin'
         },
         summary: {
             en: 'Controlling the high-pressure turbine speed (NH) of a turbofan through the kerosene fuel flow, comparing open-loop, PID and Internal Model Control (IMC) strategies on a Simulink model.',
@@ -233,20 +233,38 @@ const projects = [
                 'Analysis of the problem and closed-loop block diagram (set point, disturbances, units)',
                 'Open-loop simulation with fuel-flow steps and identification of a simple representative model',
                 'Static input/output characteristic and open-loop control with a look-up table',
-                'PID design (Ziegler-Nichols, Broïda or Cohen-Coon) and by pole placement, with anti-reset-windup, measurement noise and a set-point pre-filter',
-                'IMC design with different filters, plus anti-reset-windup',
-                'Comparison of the methods (response time, average error, fuel consumption) to choose the best controller'
+                'PID design with the Broïda method and by pole placement, with anti-reset-windup, measurement noise and a set-point pre-filter',
+                'IMC design with three filter settings (λ = 1, 0.5 and 0.2), plus anti-reset-windup',
+                'Compared PID and IMC on set-point changes and disturbances'
             ],
             fr: [
                 'Système : entrée = débit de kérosène (%), sortie = vitesse de la turbine haute pression NH (tr/min)',
                 'Analyse du problème et schéma-bloc en boucle fermée (consigne, perturbations, unités)',
                 'Simulation en boucle ouverte avec échelons de débit et identification d’un modèle représentatif simple',
                 'Caractéristique statique entrée/sortie et commande en boucle ouverte par table de correspondance',
-                'Synthèse de PID (Ziegler-Nichols, Broïda ou Cohen-Coon) et par placement de pôles, avec anti-emballement, bruit de mesure et pré-filtre de consigne',
-                'Synthèse d’une commande IMC avec différents filtres, et anti-emballement',
-                'Comparaison des méthodes (temps de réponse, erreur moyenne, consommation de carburant) pour choisir le meilleur correcteur'
+                'Synthèse de PID par la méthode de Broïda et par placement de pôles, avec anti-emballement, bruit de mesure et pré-filtre de consigne',
+                'Synthèse d’une commande IMC avec trois réglages de filtre (λ = 1, 0,5 et 0,2), et anti-emballement',
+                'Comparaison du PID et de l’IMC face aux changements de consigne et aux perturbations'
             ]
-        }
+        },
+        results: {
+            en: 'Internal Model Control delivered better performance and stability against disturbances, provided the filter is well chosen.',
+            fr: 'La commande par modèle interne offre plus de performance et de stabilité face aux perturbations, à condition de bien choisir le filtre.'
+        },
+        gallery: [
+            'turbofan-schema-boucle-ouverte.png',
+            'turbofan-echelon-identification.png',
+            'turbofan-courbe-statique.png',
+            'turbofan-pid-broida.jpg',
+            'turbofan-placement-poles.jpg',
+            'turbofan-antiwindup-1.jpg',
+            'turbofan-antiwindup-2.jpg',
+            'turbofan-prefiltre.jpg',
+            'turbofan-schema-imc.jpg',
+            'turbofan-imc-filtre-1.jpg',
+            'turbofan-imc-filtre-3.jpg',
+            'turbofan-imc-windup.jpg'
+        ]
     },
     {
         id: 'doosan-m0617',
