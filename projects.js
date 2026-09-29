@@ -37,6 +37,154 @@ const projectCategories = {
 
 const projects = [
     {
+        id: 'mini-superviseur',
+        category: 'software',
+        icon: 'bx-broadcast',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        tags: ['Python', 'SQLite', 'SQL', 'pytest', 'Supervision', 'SCADA'],
+        title: {
+            en: 'Mini Motorway Supervisor',
+            fr: 'Mini-superviseur autoroutier'
+        },
+        context: {
+            en: 'Personal project – Master 2 Mechatronics, Robotics and Automation, Polytech Orléans',
+            fr: 'Projet personnel – Master 2 Mécatronique, Robotique et Automatique, Polytech Orléans'
+        },
+        summary: {
+            en: 'A simplified operations-support tool for a motorway network, inspired by the SCADA supervision systems used by operators around the clock.',
+            fr: "Outil simplifié d'aide à l'exploitation d'un réseau autoroutier, inspiré des systèmes de supervision (SCADA) utilisés par les opérateurs 24h/24."
+        },
+        highlights: {
+            en: [
+                'Managed network equipment (signs, barriers, fans, lighting, emergency call points) and their status',
+                'Action plans depending on the event type (accident, failure, snow…) and the location (tunnel, slip road, lane)',
+                'SQL database designed with SQLite',
+                'Automated tests written with pytest'
+            ],
+            fr: [
+                'Gestion des équipements du réseau (panneaux, barrières, ventilateurs, éclairage, bornes d’appel) et de leur état',
+                "Plans d'action selon le type d'événement (accident, panne, neige…) et le lieu (tunnel, bretelle, voie)",
+                'Base de données SQL (SQLite)',
+                'Tests automatisés avec pytest'
+            ]
+        }
+    },
+    {
+        id: 'drone-modelling-control',
+        category: 'control',
+        icon: 'bx-navigation',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        tags: ['MATLAB', 'Simulink', 'Linearisation', 'Observateur', 'Retour d’état', 'Commandabilité'],
+        title: {
+            en: 'Quadcopter Modelling, Observer and State-Feedback Control',
+            fr: 'Modélisation, observateur et commande par retour d’état d’un drone quadricoptère'
+        },
+        context: {
+            en: 'Polytech Orléans – Advanced Control lab work',
+            fr: 'Polytech Orléans – TP d’Automatique Avancée'
+        },
+        summary: {
+            en: 'Modelling a quadcopter moving in a vertical plane (an under-actuated system), then designing an observer and a state-feedback controller in MATLAB/Simulink.',
+            fr: 'Modélisation d’un quadricoptère évoluant dans un plan vertical (système sous-actionné), puis conception d’un observateur et d’une commande par retour d’état sous MATLAB/Simulink.'
+        },
+        highlights: {
+            en: [
+                'Identified the state variables, inputs and outputs, and derived the simplified non-linear model',
+                'Built the non-linear model in Simulink and computed its equilibrium points',
+                'Tangent linearisation around θ = 0°, 10° and 20°, compared with the non-linear system (frequency responses) and analysed stability (poles)',
+                'Studied controllability and observability, and chose the cheapest sensor able to reconstruct the state',
+                'Designed and tested a linear observer and a non-linear observer',
+                'State-feedback control to stabilise the angle, completed to get zero steady-state error'
+            ],
+            fr: [
+                'Identification des variables d’état, entrées et sorties, et obtention du modèle non linéaire simplifié',
+                'Construction du modèle non linéaire sous Simulink et calcul des points d’équilibre',
+                'Linéarisé tangent autour de θ = 0°, 10° et 20°, comparaison au système non linéaire (réponses fréquentielles) et analyse de stabilité (pôles)',
+                'Étude de la commandabilité et de l’observabilité, choix du capteur le moins coûteux permettant de reconstruire l’état',
+                'Conception et test d’un observateur linéaire et d’un observateur non linéaire',
+                'Retour d’état pour stabiliser l’angle, complété pour obtenir une erreur statique nulle'
+            ]
+        }
+    },
+    {
+        id: 'reservoirs-s7-1200',
+        category: 'control',
+        icon: 'bx-water',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        tags: ['Siemens S7-1200', 'TIA Portal', 'Grafcet', 'Automates programmables', 'Câblage'],
+        title: {
+            en: 'Tank Mixing Process – Siemens S7-1200 PLC',
+            fr: 'Automatisation d’une station de réservoirs – automate Siemens S7-1200'
+        },
+        context: {
+            en: 'Polytech Orléans – Industrial Automation lab work',
+            fr: 'Polytech Orléans – TP d’Automatisme industriel'
+        },
+        summary: {
+            en: 'Automating a tank station (three measuring tanks and a mixing tank with an agitator) with a Siemens S7-1200 PLC: wiring, Grafcet design, programming and testing.',
+            fr: 'Automatisation d’une station de réservoirs (trois réservoirs de mesure et un réservoir de mélange avec agitateur) avec un automate Siemens S7-1200 : câblage, Grafcet, programmation et tests.'
+        },
+        highlights: {
+            en: [
+                'Wired the control panel from the inputs/outputs table (level sensors, solenoid valves, pump, agitator, indicator lamps)',
+                'Designed, programmed and tested the Grafcet for the filling and initialisation sequence',
+                'Managed the mixing tank consumption, with alternating valves and 5-second minimum-opening timers',
+                'Sequenced the chlorinated product pour with the agitator kept running for 10 seconds'
+            ],
+            fr: [
+                'Câblage de la platine de contrôle à partir du tableau des entrées/sorties (capteurs de niveau, électrovannes, pompe, agitateur, voyants)',
+                'Élaboration, programmation et test du Grafcet de remplissage et d’initialisation',
+                'Gestion de la consommation du réservoir de mélange, avec alternance des électrovannes et temporisations de 5 secondes minimum',
+                'Séquencement du versement du produit chloré avec agitateur maintenu 10 secondes'
+            ]
+        }
+    },
+    {
+        id: 'self-balancing-motorcycle',
+        category: 'robotics',
+        icon: 'bx-cycling',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        tags: ['Systèmes embarqués', 'Volant d’inertie', 'Algorithmes de contrôle', 'Simulation', 'Mécatronique'],
+        title: {
+            en: 'Self-Balancing Motorcycle',
+            fr: 'Moto auto-équilibrée'
+        },
+        context: {
+            en: 'Polytech Orléans – Mechatronics lab work',
+            fr: 'Polytech Orléans – TP de Mécatronique'
+        },
+        summary: {
+            en: 'Building and programming a motorcycle that balances and steers itself using an inertia wheel, combining embedded systems, control algorithms and vehicle simulation.',
+            fr: 'Construction et programmation d’une moto qui s’équilibre et se manœuvre d’elle-même à l’aide d’un volant d’inertie : systèmes embarqués, algorithmes de contrôle et simulation du comportement du véhicule.'
+        },
+        highlights: {
+            en: [
+                'Built the motorcycle and its inertia-wheel balancing system',
+                'Programmed the embedded controller',
+                'Implemented control algorithms to keep the bike upright and steer it',
+                'Simulated the global behaviour of the vehicle'
+            ],
+            fr: [
+                'Construction de la moto et de son système d’équilibrage par volant d’inertie',
+                'Programmation du système embarqué',
+                'Mise en œuvre d’algorithmes de contrôle pour maintenir la moto droite et la manœuvrer',
+                'Simulation du comportement global du véhicule'
+            ]
+        }
+    },
+    {
         id: 'doosan-m0617',
         category: 'robotics',
         icon: 'bx-bot',
