@@ -207,6 +207,48 @@ const projects = [
         ]
     },
     {
+        id: 'turbofan-imc-pid',
+        category: 'control',
+        icon: 'bx-wind',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        tags: ['MATLAB', 'Simulink', 'IMC', 'PID', 'Identification', 'Anti-windup', 'Placement de pôles'],
+        title: {
+            en: 'Turbofan Speed Control: PID and Internal Model Control',
+            fr: 'Commande en vitesse d’un turboréacteur : PID et commande à modèle interne (IMC)'
+        },
+        context: {
+            en: 'Polytech Orléans – Advanced Control mini-project (Internal Model Control, March 2026)',
+            fr: 'Polytech Orléans – Mini-projet d’Automatique Avancée (commande à modèle interne, mars 2026)'
+        },
+        summary: {
+            en: 'Controlling the high-pressure turbine speed (NH) of a turbofan through the kerosene fuel flow, comparing open-loop, PID and Internal Model Control (IMC) strategies on a Simulink model.',
+            fr: 'Régulation de la vitesse de la turbine haute pression (NH) d’un turboréacteur par le débit de kérosène, en comparant commande en boucle ouverte, PID et commande à modèle interne (IMC) sur un modèle Simulink.'
+        },
+        highlights: {
+            en: [
+                'System: input = kerosene fuel flow (%), output = high-pressure turbine speed NH (rpm)',
+                'Analysis of the problem and closed-loop block diagram (set point, disturbances, units)',
+                'Open-loop simulation with fuel-flow steps and identification of a simple representative model',
+                'Static input/output characteristic and open-loop control with a look-up table',
+                'PID design (Ziegler-Nichols, Broïda or Cohen-Coon) and by pole placement, with anti-reset-windup, measurement noise and a set-point pre-filter',
+                'IMC design with different filters, plus anti-reset-windup',
+                'Comparison of the methods (response time, average error, fuel consumption) to choose the best controller'
+            ],
+            fr: [
+                'Système : entrée = débit de kérosène (%), sortie = vitesse de la turbine haute pression NH (tr/min)',
+                'Analyse du problème et schéma-bloc en boucle fermée (consigne, perturbations, unités)',
+                'Simulation en boucle ouverte avec échelons de débit et identification d’un modèle représentatif simple',
+                'Caractéristique statique entrée/sortie et commande en boucle ouverte par table de correspondance',
+                'Synthèse de PID (Ziegler-Nichols, Broïda ou Cohen-Coon) et par placement de pôles, avec anti-emballement, bruit de mesure et pré-filtre de consigne',
+                'Synthèse d’une commande IMC avec différents filtres, et anti-emballement',
+                'Comparaison des méthodes (temps de réponse, erreur moyenne, consommation de carburant) pour choisir le meilleur correcteur'
+            ]
+        }
+    },
+    {
         id: 'doosan-m0617',
         category: 'robotics',
         icon: 'bx-bot',
