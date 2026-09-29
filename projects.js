@@ -192,7 +192,19 @@ const projects = [
         results: {
             en: 'Five of the six objectives were reached: full mathematical model, working PD controller, Simulink and CAD simulations, and a state machine validated on both models. The real motorcycle could not be balanced yet.',
             fr: 'Cinq objectifs sur six atteints : modèle mathématique complet, contrôleur PD fonctionnel, simulations Simulink et CAO, et machine à états validée sur les deux modèles. La moto réelle n’a pas encore pu être équilibrée.'
-        }
+        },
+        gallery: [
+            'moto-schema-pendule.png',
+            'moto-simulink-modele.png',
+            'moto-boucle-ouverte.png',
+            'moto-boucle-fermee-pd.png',
+            'moto-simulink-vs-simscape.png',
+            'moto-perturbation-pulse.png',
+            'moto-modele-cao.png',
+            'moto-arduino-moto.jpeg',
+            'moto-machine-etats.png',
+            'moto-resultats-scope.png'
+        ]
     },
     {
         id: 'doosan-m0617',
