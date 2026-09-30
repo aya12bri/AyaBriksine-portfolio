@@ -180,6 +180,7 @@ function projectVisual(p, lang) {
 }
 
 function githubButton(p, lang) {
+    if (!p.github && !p.code) return '';
     return p.github
         ? `<a href="${escapeHTML(p.github)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline"><i class='bx bxl-github'></i> ${projectLabels.github[lang]}</a>`
         : `<span class="btn btn-sm btn-ghost" title="${lang === 'fr' ? 'Code bientôt sur GitHub' : 'Code coming soon on GitHub'}"><i class='bx bxl-github'></i> ${projectLabels.soon[lang]}</span>`;

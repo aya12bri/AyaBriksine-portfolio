@@ -17,6 +17,9 @@
      year        e.g. "2026"
      context     where / with whom (school, company, club…)
      github      link to the GitHub repository, or "" if not online yet
+     code        true if the project has code to put on GitHub (shows a "Coming soon"
+                 button until the link is added). Leave it out for projects with no
+                 code: then no GitHub button is shown.
      demo        optional link to a video or live demo, or ""
      image       optional picture file for the card, e.g. "robot.jpg", or ""
      tags        tools and skills used
@@ -42,6 +45,7 @@ const projects = [
         icon: 'bx-navigation',
         year: '2026',
         github: '',
+        code: true,
         demo: '',
         image: '',
         tags: ['MATLAB', 'Simulink', 'Linearisation', 'Observateur', 'Retour d’état', 'Commandabilité'],
@@ -118,6 +122,7 @@ const projects = [
         icon: 'bx-cycling',
         year: '2026',
         github: '',
+        code: true,
         demo: '',
         image: '',
         tags: ['MATLAB', 'Simulink', 'Simscape', 'Stateflow', 'CAO', 'Contrôleur PD', 'IMU BNO055', 'Volant d’inertie', 'Travail en binôme'],
@@ -176,6 +181,7 @@ const projects = [
         icon: 'bx-wind',
         year: '2026',
         github: '',
+        code: true,
         demo: '',
         image: '',
         tags: ['MATLAB', 'Simulink', 'IMC', 'PID', 'Identification', 'Anti-windup', 'Placement de pôles'],
@@ -449,6 +455,7 @@ const projects = [
         icon: 'bx-tachometer',
         year: '2026',
         github: '',
+        code: true,
         demo: '',
         image: '',
         tags: ['MATLAB', 'Simulink', 'Modelling', 'PID tuning'],
@@ -555,6 +562,7 @@ const projects = [
         icon: 'bx-cube-alt',
         year: '2026',
         github: '',
+        code: true,
         demo: '',
         image: '',
         tags: ['Python', 'Open3D', 'PyVista', 'Tkinter'],

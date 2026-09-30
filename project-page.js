@@ -50,7 +50,9 @@
         const next = projects[(index + 1) % projects.length];
         document.title = p.title[lang] + ' | Aya Briksine';
 
-        const githubLink = p.github
+        const githubLink = !p.github && !p.code
+            ? ''
+            : p.github
             ? `<a href="${escapeHTML(p.github)}" target="_blank" rel="noopener" class="btn btn-primary"><i class='bx bxl-github'></i> ${t.github[lang]}</a>`
             : `<span class="btn btn-ghost"><i class='bx bxl-github'></i> ${t.soon[lang]}</span>`;
         const demoLink = p.demo
