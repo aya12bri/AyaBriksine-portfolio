@@ -37,42 +37,6 @@ const projectCategories = {
 
 const projects = [
     {
-        id: 'mini-superviseur',
-        category: 'software',
-        icon: 'bx-broadcast',
-        year: '2026',
-        github: '',
-        demo: '',
-        image: '',
-        tags: ['Python', 'SQLite', 'SQL', 'pytest', 'Supervision', 'SCADA'],
-        title: {
-            en: 'Mini Motorway Supervisor',
-            fr: 'Mini-superviseur autoroutier'
-        },
-        context: {
-            en: 'Personal project – Master 2 Mechatronics, Robotics and Automation, Polytech Orléans',
-            fr: 'Projet personnel – Master 2 Mécatronique, Robotique et Automatique, Polytech Orléans'
-        },
-        summary: {
-            en: 'A simplified operations-support tool for a motorway network, inspired by the SCADA supervision systems used by operators around the clock.',
-            fr: "Outil simplifié d'aide à l'exploitation d'un réseau autoroutier, inspiré des systèmes de supervision (SCADA) utilisés par les opérateurs 24h/24."
-        },
-        highlights: {
-            en: [
-                'Managed network equipment (signs, barriers, fans, lighting, emergency call points) and their status',
-                'Action plans depending on the event type (accident, failure, snow…) and the location (tunnel, slip road, lane)',
-                'SQL database designed with SQLite',
-                'Automated tests written with pytest'
-            ],
-            fr: [
-                'Gestion des équipements du réseau (panneaux, barrières, ventilateurs, éclairage, bornes d’appel) et de leur état',
-                "Plans d'action selon le type d'événement (accident, panne, neige…) et le lieu (tunnel, bretelle, voie)",
-                'Base de données SQL (SQLite)',
-                'Tests automatisés avec pytest'
-            ]
-        }
-    },
-    {
         id: 'drone-modelling-control',
         category: 'control',
         icon: 'bx-navigation',
