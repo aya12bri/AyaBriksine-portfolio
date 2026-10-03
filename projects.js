@@ -40,6 +40,107 @@ const projectCategories = {
 
 const projects = [
     {
+        id: 'signal-processing-matlab',
+        category: 'control',
+        icon: 'bx-pulse',
+        year: '2026',
+        github: '',
+        code: true,
+        demo: '',
+        image: '',
+        tags: ['MATLAB', 'Traitement du signal', 'Convolution', 'Filtrage', 'DFT', 'Travail en binôme'],
+        title: {
+            en: 'Signal Processing in MATLAB: Filters, Convolution and DFT',
+            fr: 'Traitement du signal sous MATLAB : filtres, convolution et DFT'
+        },
+        context: {
+            en: 'Polytech Orléans – Signal processing lab work, in pairs, supervised by Mrs. Meryem Jabloun',
+            fr: 'Polytech Orléans – TP de traitement du signal, en binôme, encadré par Mme Meryem Jabloun'
+        },
+        summary: {
+            en: 'Hands-on study of linear filters, convolution and the discrete Fourier transform in MATLAB: moving-average and sinc filters, chirp sampling, spectral translation, difference equations and the resolution of the DFT.',
+            fr: 'Étude pratique des filtres linéaires, de la convolution et de la transformée de Fourier discrète sous MATLAB : filtres moyenneur et sinc, signal chirp, translation spectrale, équations aux différences et résolution de la DFT.'
+        },
+        highlights: {
+            en: [
+                'Convolution: two rectangular signals give a triangle (peak 10 over 19 samples); convolving with δ(n − n0) just delays the signal',
+                'Moving-average filter on a Gaussian noise signal (mean 1, std 5, 10,000 samples): N0 = 4 smooths a little, N0 = 100 keeps only the slow variations, proving it is a low-pass filter',
+                'Spectrum of a sum of two sinusoids (10 Hz and 30 Hz), then filtering with a sinc low-pass filter (fc = 20 Hz) that keeps 10 Hz and removes 30 Hz',
+                'Generated and listened to a chirp to understand instantaneous frequency',
+                'Frequency gain of h(n) = sinc(n/8) for N0 = 10 and 100 (ripples and the Gibbs phenomenon), and spectral translation by multiplying h(n) by exp(j2πf0n), turning a low-pass into a band-pass filter',
+                'Solved the difference equation y(n) − 5/6 y(n−1) + 1/6 y(n−2) = x(n) + x(n−1) by recurrence for a unit-step input: stable system with a transient response',
+                'DFT resolution: two close sinusoids (50 and 60 Hz) are barely separated with N = 100 (Δf = 10 Hz) and clearly resolved with N = 1000 (Δf = 1 Hz)',
+                'Spectral masking: with an amplitude ratio of 100, the weaker 50 Hz component is hidden by the 150 Hz one'
+            ],
+            fr: [
+                'Convolution : deux rectangles identiques donnent un triangle (pic de 10 sur 19 échantillons) ; la convolution par δ(n − n0) ne fait que décaler le signal',
+                'Filtre moyenneur sur un bruit gaussien (moyenne 1, écart-type 5, 10 000 échantillons) : N0 = 4 lisse un peu, N0 = 100 ne garde que les variations lentes, ce qui confirme un filtre passe-bas',
+                'Spectre d’une somme de deux sinusoïdes (10 Hz et 30 Hz), puis filtrage par un passe-bas sinc (fc = 20 Hz) qui conserve le 10 Hz et supprime le 30 Hz',
+                'Génération et écoute d’un signal chirp pour comprendre la fréquence instantanée',
+                'Gain fréquentiel de h(n) = sinc(n/8) pour N0 = 10 et 100 (ondulations et phénomène de Gibbs), et translation spectrale en multipliant h(n) par exp(j2πf0n), qui transforme un passe-bas en passe-bande',
+                'Résolution par récurrence de l’équation aux différences y(n) − 5/6 y(n−1) + 1/6 y(n−2) = x(n) + x(n−1) pour un échelon : système stable avec un régime transitoire',
+                'Résolution de la DFT : deux sinusoïdes proches (50 et 60 Hz) à peine séparées avec N = 100 (Δf = 10 Hz) et nettement distinguées avec N = 1000 (Δf = 1 Hz)',
+                'Masquage spectral : avec un rapport d’amplitude de 100, la composante faible à 50 Hz est noyée par celle à 150 Hz'
+            ]
+        },
+        results: {
+            en: 'The lab confirmed that convolution models a filter, that a moving average is a low-pass filter whose smoothing grows with N0, that the DFT resolution is Δf = fe/N, and that a strong amplitude imbalance can hide a weak component.',
+            fr: 'Le TP a confirmé que la convolution modélise un filtre, que le filtre moyenneur est un passe-bas dont le lissage augmente avec N0, que la résolution de la DFT vaut Δf = fe/N, et qu’un fort déséquilibre d’amplitude peut masquer une composante faible.'
+        },
+        gallery: [
+            'signaux-convolution.png',
+            'signaux-filtrage-passe-bas.png',
+            'signaux-spectres-filtre.png',
+            'signaux-translation-spectrale.png',
+            'signaux-dft-resolution.png',
+            'signaux-masquage-spectral.png'
+        ]
+    },
+    {
+        id: 'grafcet-sequential-systems',
+        category: 'control',
+        icon: 'bx-sitemap',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        tags: ['Grafcet (SFC)', 'Automatismes', 'Temporisations', 'Compteurs', 'Séquences parallèles'],
+        title: {
+            en: 'Grafcet Design for Industrial Sequential Systems',
+            fr: 'Conception de Grafcets pour des systèmes séquentiels industriels'
+        },
+        context: {
+            en: 'Polytech Orléans – Industrial automation course exercises',
+            fr: 'Polytech Orléans – Exercices d’automatisme industriel'
+        },
+        summary: {
+            en: 'Designing Grafcets for four typical automated systems: a manipulator arm, an overhead crane, an elevator and a machining station.',
+            fr: 'Conception de Grafcets pour quatre systèmes automatisés typiques : un bras manipulateur, un pont roulant, un ascenseur et un poste d’usinage.'
+        },
+        highlights: {
+            en: [
+                'Manipulator arm: pick-and-place of a cup (close gripper, up, move, down, open, back) and a separate Grafcet to bring the arm to its initial position',
+                'Overhead crane: cycle across four stations with turn counters and 2 s processing timers',
+                'Elevator: calls from floors 1 to 3, going up and down with cabin lamp, 5 s waits and floor indicators; a second version handles all the possible calls with parallel branches',
+                'Machining station: parallel sequences (clamping, machining, ejection) with timers and synchronisation',
+                'Used the main Grafcet building blocks: initial step, transitions, actions, timers (T/xs), counters, parallel branches and loops'
+            ],
+            fr: [
+                'Bras manipulateur : prise et dépose d’un gobelet (fermer la pince, monter, déplacer, descendre, ouvrir, revenir) et Grafcet séparé de mise en position initiale',
+                'Pont roulant : cycle sur quatre postes avec comptage de tours et temporisations de traitement de 2 s',
+                'Ascenseur : appels aux étages 1 à 3, montée et descente avec lampe cabine, attentes de 5 s et témoins d’étage ; une seconde version gère tous les appels possibles avec des branches parallèles',
+                'Poste d’usinage : séquences parallèles (serrage, usinage, éjection) avec temporisations et synchronisation',
+                'Utilisation des éléments clés du Grafcet : étape initiale, transitions, actions, temporisations (T/xs), compteurs, branches parallèles et boucles'
+            ]
+        },
+        gallery: [
+            'grafcet-bras-manipulateur.jpg',
+            'grafcet-pont-roulant.jpg',
+            'grafcet-ascenseur.jpg',
+            'grafcet-poste-usinage.jpg'
+        ]
+    },
+    {
         id: 'drone-modelling-control',
         category: 'control',
         icon: 'bx-navigation',
@@ -114,7 +215,10 @@ const projects = [
                 'Gestion de la consommation du réservoir de mélange, avec alternance des électrovannes et temporisations de 5 secondes minimum',
                 'Séquencement du versement du produit chloré avec agitateur maintenu 10 secondes'
             ]
-        }
+        },
+        gallery: [
+            'reservoirs-grafcet.jpg'
+        ]
     },
     {
         id: 'self-balancing-motorcycle',
@@ -495,31 +599,47 @@ const projects = [
         github: '',
         demo: '',
         image: '',
-        tags: ['PLC', 'PL7 Pro', 'Grafcet (SFC)', 'Ladder'],
+        tags: ['PLC', 'TSX 3705', 'PL7-Pro', 'Grafcet (SFC)', 'Ladder', 'Temporisateurs', 'Compteurs', 'Travail en équipe'],
         title: {
             en: 'Robotic Arm Control with a PLC (CLIMAX)',
             fr: 'Commande d’un bras robotique par automate (CLIMAX)'
         },
         context: {
-            en: 'Polytech Orléans – Industrial computing lab (M1)',
-            fr: 'Polytech Orléans – TP d’informatique industrielle (M1)'
+            en: 'Polytech Orléans – Industrial automation lab (M1), group of four, supervised by Mr. Mustafa Elahres',
+            fr: 'Polytech Orléans – TP d’automatisme (M1), en groupe de quatre, encadré par M. Mustafa Elahres'
         },
         summary: {
-            en: 'Controlling a robotic arm with a programmable logic controller, written in Grafcet (SFC) and Ladder.',
-            fr: 'Commande d’un bras robotique par un automate programmable, en Grafcet (SFC) et en Ladder.'
+            en: 'Programming a TSX 3705 PLC with PL7-Pro to drive the CLIMAX manipulator arm (8 movements, 3 double-acting and 2 single-acting cylinders): a free 8-step Grafcet, then an industrial “french-fry factory” cycle with timers and a counter.',
+            fr: 'Programmation d’un automate TSX 3705 sous PL7-Pro pour piloter le bras manipulateur CLIMAX (8 mouvements, 3 vérins double effet et 2 simple effet) : un Grafcet libre de 8 étapes, puis un cycle industriel « usine de frites » avec temporisateurs et compteur.'
         },
         highlights: {
             en: [
-                'Programmed the PLC with PL7 Pro',
-                'Described the operating sequence in Grafcet (SFC)',
-                'Implemented the logic in Ladder and tested it on the arm'
+                'Built the I/O mnemonic tables (limit switches, start/auto/service/emergency stop inputs, cylinder outputs and indicator lamps)',
+                'Part 1: designed a free 8-step Grafcet (arm out, up, in, down, rotate right, close gripper, rotate left, open gripper) starting from the initial conditions',
+                'Implemented it in PL7-Pro: Grafcet chart, one Ladder page per transition (%X(n)→%X(n+1)) and a POST section linking each step bit to its physical output',
+                'Part 2: “french-fry factory” cycle: grab the basket, lift, 5 s draining timer (Temp1, TON), rotate, 5 s salting timer (Temp2)',
+                'Programmed the shaking loop (down + up, repeated 3 times) with an up-counter Ca (CP = 3), a COMPARE block (Ca.P < 3) and automatic reset at the start of each cycle',
+                'Tested and validated the complete cycle on the real CLIMAX arm with the teacher'
             ],
             fr: [
-                "Programmation de l'automate avec PL7 Pro",
-                'Description du cycle de fonctionnement en Grafcet (SFC)',
-                'Implémentation de la logique en Ladder et tests sur le bras'
+                'Construction des tables de mnémoniques des entrées/sorties (fins de course, marche/auto/mise en service/arrêt d’urgence, vérins, voyants)',
+                'Partie 1 : Grafcet libre de 8 étapes (sortie du bras, montée, rentrée, descente, rotation droite, fermeture de la pince, rotation gauche, ouverture de la pince) à partir des conditions initiales',
+                'Implémentation sous PL7-Pro : chart Grafcet, une page Ladder par transition (%X(n)→%X(n+1)) et section POST associant chaque bit d’étape à sa sortie physique',
+                'Partie 2 : cycle « usine de frites » : saisie du panier, montée, temporisation d’égouttage de 5 s (Temp1, TON), rotation, temporisation d’ajout du sel de 5 s (Temp2)',
+                'Boucle de secouage (descente + montée, répétée 3 fois) avec un compteur ascendant Ca (CP = 3), un bloc COMPARE (Ca.P < 3) et remise à zéro automatique en début de cycle',
+                'Test et validation du cycle complet sur le bras CLIMAX réel en présence de l’enseignant'
             ]
-        }
+        },
+        results: {
+            en: 'The complete french-fry cycle was tested and validated on the real CLIMAX arm. The lab showed that Grafcet and Ladder map directly onto each other, and introduced timers and counters.',
+            fr: 'Le cycle complet de l’usine de frites a été testé et validé sur le bras CLIMAX réel. Ce TP a montré la correspondance directe entre Grafcet et Ladder, et introduit les temporisateurs et les compteurs.'
+        },
+        gallery: [
+            'climax-grafcet-partie1.png',
+            'climax-ladder-transitions.png',
+            'climax-temporisateur-compteur.png',
+            'climax-post-partie2.png'
+        ]
     },
     {
         id: 'greenhouse-monitoring',
