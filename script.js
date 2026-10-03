@@ -382,60 +382,79 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 })();
 
 
-/* ---------- Keep the equations off the curves, robot drawings, titles and text ---------- */
+/* ---------- Background layout: no robot, curve or equation ever overlaps another ---------- */
 (function () {
-    const GAP = 18;                       // breathing room, also covers the slow floating motion
+    const GAP = 24;                       // clear space between two drawings (also covers the slow floating motion)
     const HEADER = 96;                    // fixed header height + margin
-    const inflate = (r, g) => ({ l: r.left - g, t: r.top - g, r: r.right + g, b: r.bottom + g });
+    const SCALES = [1, 0.8, 0.62];        // an item that does not fit is shrunk before being hidden
+    const rank = el => el.classList.contains('sym') ? 0 : el.classList.contains('curve') ? 1 : 2;
     const hit = (a, b) => a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
+    const grow = (r, g) => ({ l: r.l - g, t: r.t - g, r: r.r + g, b: r.b + g });
 
     function arrange() {
         document.querySelectorAll('.bg-symbols').forEach(box => {
-            const eqs = [...box.querySelectorAll('.eq')];
-            if (!eqs.length) return;
-            eqs.forEach(el => { el.style.cssText = el.dataset.css || (el.dataset.css = el.style.cssText); el.style.visibility = ''; });
-
             const section = box.parentElement;
-            const boxRect = box.getBoundingClientRect();
-            const visible = el => el.offsetParent !== null;
-            // everything an equation must stay away from: curves, robot drawings, titles and text, equations already placed
-            const obstacles = [...box.querySelectorAll('.curve, .sym')].filter(visible).map(el => inflate(el.getBoundingClientRect(), GAP));
-            section.querySelectorAll('.section-head, .hero-text, .hero-photo, .stats').forEach(el => obstacles.push(inflate(el.getBoundingClientRect(), 10)));
-            // the fixed header only covers the very top of the page
-            const headerZone = section.id === 'home' ? [{ l: -1e5, t: boxRect.top - 1e5, r: 1e5, b: boxRect.top + HEADER }] : [];
+            const items = [...box.querySelectorAll('.sym, .curve, .eq')];
+            items.forEach(el => {
+                if (el.dataset.css === undefined) el.dataset.css = el.style.cssText;
+                el.style.cssText = el.dataset.css;
+            });
+            const shown = items.filter(el => el.offsetParent !== null);
+            if (!shown.length) return;
 
-            eqs.filter(visible).forEach(el => {
-                const blocked = [...obstacles, ...headerZone];
-                const free = r => !blocked.some(o => hit({ l: r.left, t: r.top, r: r.right, b: r.bottom }, o));
-                const rect = el.getBoundingClientRect();
-                let ok = free(rect);
-                if (!ok) {
-                    // look for a free spot along the left and right margins, top to bottom
-                    const w = rect.width, h = rect.height;
-                    const xs = [12, Math.max(12, boxRect.width - w - 12)];
-                    outer: for (let y = 10; y < boxRect.height - h; y += 30) {
-                        for (const x of xs) {
-                            const cand = { left: boxRect.left + x, top: boxRect.top + y, right: boxRect.left + x + w, bottom: boxRect.top + y + h };
-                            if (free(cand)) {
-                                el.style.left = x + 'px'; el.style.top = y + 'px';
-                                el.style.right = 'auto'; el.style.bottom = 'auto';
-                                ok = true;
-                                break outer;
-                            }
+            const B = box.getBoundingClientRect();
+            const rel = r => ({ l: r.left - B.left, t: r.top - B.top, r: r.right - B.left, b: r.bottom - B.top });
+            // text that curves and equations must not cover (robots are pure decoration and may sit beside it)
+            const textBlocks = [...section.querySelectorAll('.section-head, .hero-text, .hero-photo, .stats')].map(el => grow(rel(el.getBoundingClientRect()), 10));
+            if (section.id === 'home') textBlocks.push({ l: -1e5, t: -1e5, r: 1e5, b: HEADER - (B.top < 0 ? 0 : 0) });
+
+            const placed = [];
+            const free = (r, avoidText) => !placed.some(p => hit(r, p)) && !(avoidText && textBlocks.some(t => hit(r, t)));
+
+            shown.sort((x, y) => rank(x) - rank(y)).forEach(el => {
+                const avoidText = rank(el) > 0;
+                const prop = el.classList.contains('sym') ? '--s' : el.classList.contains('curve') ? '--w' : '--fs';
+                const base = parseFloat(el.style.getPropertyValue(prop));
+                for (const k of SCALES) {
+                    if (k !== 1) el.style.setProperty(prop, (base * k) + 'px');
+                    const cur = rel(el.getBoundingClientRect());
+                    if (free(grow(cur, GAP / 2), avoidText)) { placed.push(grow(cur, GAP / 2)); return; }
+                    // measure the offset between the left/top we set and the drawn box (rotation changes it)
+                    el.style.left = '0px'; el.style.top = '0px'; el.style.right = 'auto'; el.style.bottom = 'auto';
+                    const o = rel(el.getBoundingClientRect());
+                    const w = o.r - o.l, h = o.b - o.t;
+                    let best = null;
+                    for (let y = 0; y <= B.height - h; y += 30) {
+                        for (let x = 0; x <= B.width - w; x += 50) {
+                            const cand = { l: x, t: y, r: x + w, b: y + h };
+                            if (!free(grow(cand, GAP / 2), avoidText)) continue;
+                            const d = Math.abs(x - cur.l) + Math.abs(y - cur.t);
+                            if (!best || d < best.d) best = { x, y, d, cand };
                         }
                     }
+                    if (best) {
+                        el.style.left = (best.x - o.l) + 'px';
+                        el.style.top = (best.y - o.t) + 'px';
+                        placed.push(grow(best.cand, GAP / 2));
+                        return;
+                    }
+                    el.style.cssText = el.dataset.css;       // restore before trying a smaller size
                 }
-                if (!ok) { el.style.visibility = 'hidden'; return; }
-                obstacles.push(inflate(el.getBoundingClientRect(), GAP));
+                el.style.visibility = 'hidden';
             });
         });
     }
 
     let timer;
-    const later = () => { clearTimeout(timer); timer = setTimeout(arrange, 150); };
+    const later = () => { clearTimeout(timer); timer = setTimeout(arrange, 200); };
     window.addEventListener('load', arrange);
     window.addEventListener('resize', later);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(arrange);
     document.addEventListener('langchange', later);
+    // sections can change height (tabs, filters, language): lay out again
+    if (window.ResizeObserver) {
+        const ro = new ResizeObserver(later);
+        document.querySelectorAll('.hero, .section').forEach(s => ro.observe(s));
+    }
     arrange();
 })();
