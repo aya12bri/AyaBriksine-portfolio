@@ -199,6 +199,11 @@ function renderProjects() {
         const icon = key === 'all' ? 'bx-grid-alt' : projectCategories[key].icon;
         return `<button class="filter${key === activeFilter ? ' active' : ''}" data-filter="${key}"><i class='bx ${icon}'></i>${escapeHTML(label)}<span>${counts[key]}</span></button>`;
     }).join('');
+    // keep the chosen filter visible when the row scrolls sideways (mobile)
+    const activeBtn = projectFilters.querySelector('.filter.active');
+    if (activeBtn && activeFilter !== 'all') {
+        projectFilters.scrollLeft = activeBtn.offsetLeft - (projectFilters.clientWidth - activeBtn.offsetWidth) / 2;
+    }
 
     const card = (p, i) => `
         <article class="card project-card">
