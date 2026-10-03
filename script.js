@@ -280,12 +280,12 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 (function () {
     // symbol, size, position, rotation, delay, hide on phones?
     const layout = {
-        home:       [['arm',   440, 'right:-40px;bottom:6%',  '0deg',   '0s', 0], ['gear', 230, 'left:-70px;top:14%', '12deg', '-6s', 1]],
-        background: [['rover', 320, 'right:2%;top:5%',        '0deg',   '-3s', 0], ['chip', 270, 'left:-40px;bottom:4%', '0deg', '-9s', 1]],
-        services:   [['drone', 290, 'right:3%;top:8%',        '8deg',   '-5s', 0], ['gear', 200, 'left:2%;bottom:6%', '-10deg', '-2s', 1]],
-        skills:     [['head',  250, 'left:1%;top:7%',         '-6deg',  '-7s', 0], ['chip', 280, 'right:-30px;bottom:5%', '0deg', '-4s', 1]],
-        projects:   [['arm',   360, 'right:-30px;top:4%',     '0deg',   '-8s', 1], ['rover', 260, 'left:-20px;bottom:3%', '0deg', '-1s', 1]],
-        contact:    [['drone', 260, 'left:3%;top:10%',        '-8deg',  '-6s', 1], ['head', 240, 'right:3%;bottom:8%', '6deg', '-3s', 0]]
+        home:       [['arm',   480, 'right:-50px;bottom:4%',   '0deg',   '0s', 0], ['gear', 240, 'left:-70px;top:12%',     '12deg', '-6s', 1], ['cobot', 270, 'left:44%;bottom:-60px', '0deg', '-4s', 1]],
+        background: [['rover', 340, 'right:2%;top:4%',         '0deg',   '-3s', 0], ['chip', 290, 'left:-40px;bottom:3%',  '0deg',  '-9s', 1], ['lidar', 250, 'left:44%;top:-30px',   '0deg', '-7s', 1]],
+        services:   [['drone', 300, 'right:3%;top:6%',         '8deg',   '-5s', 0], ['gear', 210, 'left:2%;bottom:5%',     '-10deg','-2s', 1], ['delta', 270, 'left:-30px;top:8%',   '0deg', '-8s', 1]],
+        skills:     [['head',  260, 'left:1%;top:6%',          '-6deg',  '-7s', 0], ['chip', 290, 'right:-30px;bottom:4%', '0deg',  '-4s', 1], ['loop', 290, 'right:5%;top:2%',       '0deg', '-1s', 1]],
+        projects:   [['arm',   390, 'right:-30px;top:3%',      '0deg',   '-8s', 1], ['rover', 290, 'left:-20px;bottom:2%', '0deg',  '-1s', 1], ['cobot', 260, 'left:2%;top:2%',       '0deg', '-5s', 1], ['motor', 230, 'right:30%;bottom:1%', '0deg', '-3s', 1]],
+        contact:    [['drone', 280, 'left:3%;top:8%',          '-8deg',  '-6s', 1], ['head', 260, 'right:3%;bottom:6%',    '6deg',  '-3s', 0], ['lidar', 240, 'right:32%;top:3%',     '0deg', '-9s', 1], ['motor', 210, 'left:34%;bottom:2%', '0deg', '-2s', 1]]
     };
     Object.keys(layout).forEach(id => {
         const section = document.getElementById(id);
