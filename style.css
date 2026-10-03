@@ -2356,3 +2356,23 @@ html:not(.light-mode) .back-top {
         padding-right: 64px;
     }
 }
+
+
+/* ===== Project video player ===== */
+.project-video {
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+
+.project-video video {
+    display: block;
+    width: 100%;
+    max-height: 72vh;
+    border-radius: var(--radius-sm);
+    background: #000;
+    object-fit: contain;
+}
