@@ -3557,3 +3557,15 @@ html:not(.light-mode) .back-top {
 #projects .project-actions .btn-ghost {
     display: none;
 }
+
+/* category buttons: wrap on two centred lines on desktop so no label is cut off
+   (the single scrolling line is kept for phones) */
+@media (min-width: 701px) {
+    #projects .filters {
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow: visible;
+        gap: 8px;
+        padding: 2px 0 6px;
+    }
+}
