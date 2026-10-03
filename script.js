@@ -380,3 +380,62 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
             : `<svg class="curve${hide ? ' hide-mobile' : ''}" viewBox="0 0 ${W} ${H}" style="--w:${size}px;--d:${delay}s;${pos}" aria-hidden="true">${curves[key]}</svg>`).join(''));
     });
 })();
+
+
+/* ---------- Keep the equations off the curves, robot drawings, titles and text ---------- */
+(function () {
+    const GAP = 18;                       // breathing room, also covers the slow floating motion
+    const HEADER = 96;                    // fixed header height + margin
+    const inflate = (r, g) => ({ l: r.left - g, t: r.top - g, r: r.right + g, b: r.bottom + g });
+    const hit = (a, b) => a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
+
+    function arrange() {
+        document.querySelectorAll('.bg-symbols').forEach(box => {
+            const eqs = [...box.querySelectorAll('.eq')];
+            if (!eqs.length) return;
+            eqs.forEach(el => { el.style.cssText = el.dataset.css || (el.dataset.css = el.style.cssText); el.style.visibility = ''; });
+
+            const section = box.parentElement;
+            const boxRect = box.getBoundingClientRect();
+            const visible = el => el.offsetParent !== null;
+            // everything an equation must stay away from: curves, robot drawings, titles and text, equations already placed
+            const obstacles = [...box.querySelectorAll('.curve, .sym')].filter(visible).map(el => inflate(el.getBoundingClientRect(), GAP));
+            section.querySelectorAll('.section-head, .hero-text, .hero-photo, .stats').forEach(el => obstacles.push(inflate(el.getBoundingClientRect(), 10)));
+            // the fixed header only covers the very top of the page
+            const headerZone = section.id === 'home' ? [{ l: -1e5, t: boxRect.top - 1e5, r: 1e5, b: boxRect.top + HEADER }] : [];
+
+            eqs.filter(visible).forEach(el => {
+                const blocked = [...obstacles, ...headerZone];
+                const free = r => !blocked.some(o => hit({ l: r.left, t: r.top, r: r.right, b: r.bottom }, o));
+                const rect = el.getBoundingClientRect();
+                let ok = free(rect);
+                if (!ok) {
+                    // look for a free spot along the left and right margins, top to bottom
+                    const w = rect.width, h = rect.height;
+                    const xs = [12, Math.max(12, boxRect.width - w - 12)];
+                    outer: for (let y = 10; y < boxRect.height - h; y += 30) {
+                        for (const x of xs) {
+                            const cand = { left: boxRect.left + x, top: boxRect.top + y, right: boxRect.left + x + w, bottom: boxRect.top + y + h };
+                            if (free(cand)) {
+                                el.style.left = x + 'px'; el.style.top = y + 'px';
+                                el.style.right = 'auto'; el.style.bottom = 'auto';
+                                ok = true;
+                                break outer;
+                            }
+                        }
+                    }
+                }
+                if (!ok) { el.style.visibility = 'hidden'; return; }
+                obstacles.push(inflate(el.getBoundingClientRect(), GAP));
+            });
+        });
+    }
+
+    let timer;
+    const later = () => { clearTimeout(timer); timer = setTimeout(arrange, 150); };
+    window.addEventListener('load', arrange);
+    window.addEventListener('resize', later);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(arrange);
+    document.addEventListener('langchange', later);
+    arrange();
+})();
