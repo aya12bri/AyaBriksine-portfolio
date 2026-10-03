@@ -23,6 +23,7 @@
     --bg-alt: #101017;
     --surface: #16161f;
     --surface-2: #1e1e29;
+    --surface-rgb: 22, 22, 31;
     --border: rgba(255, 255, 255, 0.08);
     --text: #ededf2;
     --heading: #c4c8d0;           /* titles: light gray */
@@ -56,6 +57,7 @@
     --bg-alt: #dfe1e6;
     --surface: #f3f4f6;
     --surface-2: #e9eaee;
+    --surface-rgb: 243, 244, 246;
     --border: rgba(20, 20, 40, 0.1);
     --text: #17171e;
     --heading: #17171e;
@@ -1587,9 +1589,12 @@ h3 {
     padding: 56px;
     border-radius: 28px;
     border: 1px solid var(--border);
+    /* slightly see-through, so the robots and equations behind it show softly */
     background:
         radial-gradient(circle at 0% 0%, var(--accent-soft), transparent 55%),
-        var(--surface);
+        rgba(var(--surface-rgb), 0.5);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
 }
 
 .contact-text .section-sub {
