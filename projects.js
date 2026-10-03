@@ -32,6 +32,8 @@
      results     { en: "...", fr: "..." }  – a short paragraph about the results
      gallery     [ "photo1.jpg", { src: "fig.png", caption: { en: "...", fr: "..." } } ] – pictures shown on the project page
                  (a plain file name or a picture with a caption)
+     art         optional line-art cover when there is no photo: arm, cobot, rover, drone, chip, head, gear,
+                 lidar, delta, loop, motor, tank, grafcet, dashboard, network
      imageFit    "contain" to show the card/page picture whole on white (for figures and diagrams)
    ========================================================= */
 
@@ -119,6 +121,7 @@ const projects = [
         github: '',
         demo: '',
         image: '',
+        art: 'grafcet',
         tags: ['Grafcet (SFC)', 'Automatismes', 'Temporisations', 'Compteurs', 'Séquences parallèles'],
         title: {
             en: 'Grafcet Design for Industrial Sequential Systems',
@@ -164,6 +167,7 @@ const projects = [
         code: true,
         demo: '',
         image: '',
+        art: 'drone',
         tags: ['MATLAB', 'Simulink', 'Linearisation', 'Observateur', 'Retour d’état', 'Commandabilité'],
         title: {
             en: 'Quadcopter Modelling, Observer and State-Feedback Control',
@@ -204,6 +208,7 @@ const projects = [
         github: '',
         demo: '',
         image: '',
+        art: 'tank',
         tags: ['Siemens S7-1200', 'TIA Portal', 'Grafcet', 'Automates programmables', 'Câblage'],
         title: {
             en: 'Tank Mixing Process – Siemens S7-1200 PLC',
@@ -243,7 +248,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: '',
+        image: 'moto-modele-cao.png',
+        imageFit: 'contain',
         tags: ['MATLAB', 'Simulink', 'Simscape', 'Stateflow', 'CAO', 'Contrôleur PD', 'IMU BNO055', 'Volant d’inertie', 'Travail en binôme'],
         title: {
             en: 'Self-Balancing Motorcycle with an Inertia Wheel',
@@ -303,6 +309,7 @@ const projects = [
         code: true,
         demo: '',
         image: '',
+        art: 'loop',
         tags: ['MATLAB', 'Simulink', 'IMC', 'PID', 'Identification', 'Anti-windup', 'Placement de pôles'],
         title: {
             en: 'Turbofan Speed Control: PID and Internal Model Control',
@@ -547,6 +554,7 @@ const projects = [
         github: '',
         demo: '',
         image: '',
+        art: 'arm',
         tags: ['Stäubli TX60', 'VAL3', 'Stäubli Robotics Suite', 'Pick-and-place'],
         title: {
             en: 'Stäubli TX60 Industrial Robot Programming',
@@ -582,6 +590,7 @@ const projects = [
         code: true,
         demo: '',
         image: '',
+        art: 'motor',
         tags: ['MATLAB', 'Simulink', 'Modelling', 'PID tuning'],
         title: {
             en: 'DC Motor Speed Control',
@@ -617,7 +626,8 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: 'climax-mnemoniques.png',
+        image: '',
+        art: 'cobot',
         imageFit: 'contain',
         tags: ['PLC', 'TSX 3705', 'PL7-Pro', 'Grafcet (SFC)', 'Ladder', 'Temporisateurs', 'Compteurs', 'Travail en équipe'],
         title: {
@@ -671,6 +681,7 @@ const projects = [
         code: true,
         demo: '',
         image: '',
+        art: 'chip',
         tags: ['IoT', 'Web/mobile app', 'Data acquisition', 'Real-time dashboard'],
         title: {
             en: 'Greenhouse Monitoring Application',
@@ -708,6 +719,7 @@ const projects = [
         code: true,
         demo: '',
         image: '',
+        art: 'lidar',
         tags: ['Python', 'Open3D', 'PyVista', 'Tkinter'],
         title: {
             en: 'Point Clouds & 3D Visualisation',
@@ -743,6 +755,7 @@ const projects = [
         code: true,
         demo: '',
         image: '',
+        art: 'dashboard',
         tags: ['Power BI', 'Google Data Studio', 'Dashboards', 'Training'],
         title: {
             en: 'Client Dashboards & Automated Reporting',
@@ -778,6 +791,7 @@ const projects = [
         code: true,
         demo: '',
         image: '',
+        art: 'network',
         tags: ['CRM / ERP', 'Specifications', 'Change management', 'SAP Ariba'],
         title: {
             en: 'CRM Rollout & Digitalisation Projects',

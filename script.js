@@ -160,22 +160,33 @@ const projectLabels = {
     soon: { en: 'Coming soon', fr: 'Bientôt' },
     moreTitle: { en: 'More projects on the way', fr: "D'autres projets arrivent" },
     moreText: { en: 'I keep adding new robotics and control projects. Follow my work on GitHub.', fr: 'J’ajoute régulièrement de nouveaux projets de robotique et d’automatique. Suivez mon travail sur GitHub.' },
-    moreBtn: { en: 'My GitHub', fr: 'Mon GitHub' }
+    moreBtn: { en: 'My GitHub', fr: 'Mon GitHub' },
+    search: { en: 'Search a project, tool or skill…', fr: 'Rechercher un projet, un outil ou une compétence…' },
+    count: { en: n => `${n} project${n > 1 ? 's' : ''}`, fr: n => `${n} projet${n > 1 ? 's' : ''}` },
+    none: { en: 'No project matches your search.', fr: 'Aucun projet ne correspond à votre recherche.' },
+    reset: { en: 'Clear search', fr: 'Effacer la recherche' },
+    video: { en: 'Video', fr: 'Vidéo' },
+    more: { en: n => `+${n} more`, fr: n => `+${n} autres` }
 };
 
 const projectsGrid = document.querySelector('#projects-grid');
 const projectFilters = document.querySelector('#project-filters');
 let activeFilter = 'all';
+let searchQuery = '';
 
 function projectVisual(p, lang) {
     const cat = projectCategories[p.category];
     const inner = p.image
         ? `<img src="${escapeHTML(p.image)}" alt="" loading="lazy">`
+        : p.art
+        ? `<span class="cover-art art-${escapeHTML(p.art)}"></span>`
         : `<i class='bx ${escapeHTML(p.icon || cat.icon)}'></i>`;
+    const video = p.video ? `<span class="project-badge"><i class='bx bx-play'></i>${projectLabels.video[lang]}</span>` : '';
     return `
         <a href="project.html?id=${encodeURIComponent(p.id)}" class="project-visual cat-${p.category}${p.image ? ' has-image fit-' + (p.imageFit || 'cover') : ''}" tabindex="-1" aria-hidden="true">
             ${inner}
             <span class="project-cat"><i class='bx ${cat.icon}'></i>${escapeHTML(cat[lang])}</span>
+            ${video}
         </a>`;
 }
 
@@ -213,7 +224,7 @@ function renderProjects() {
                 <p class="project-meta"><span>${escapeHTML(p.context[lang])}</span><span>${escapeHTML(p.year)}</span></p>
                 <h3><a href="project.html?id=${encodeURIComponent(p.id)}">${escapeHTML(p.title[lang])}</a></h3>
                 <p class="project-summary">${escapeHTML(p.summary[lang])}</p>
-                <ul class="tags">${p.tags.map(t => `<li>${escapeHTML(t)}</li>`).join('')}</ul>
+                <ul class="tags">${p.tags.slice(0, 4).map(t => `<li>${escapeHTML(t)}</li>`).join('')}${p.tags.length > 4 ? `<li class="tag-more">${projectLabels.more[lang](p.tags.length - 4)}</li>` : ''}</ul>
                 <div class="project-actions">
                     <a href="project.html?id=${encodeURIComponent(p.id)}" class="btn btn-sm btn-primary">${projectLabels.details[lang]} <i class='bx bx-right-arrow-alt'></i></a>
                     ${githubButton(p, lang)}
@@ -221,9 +232,18 @@ function renderProjects() {
             </div>
         </article>`;
 
+    // text search over title, summary, tools and context (both languages)
+    const q = searchQuery.trim().toLowerCase();
+    const matches = p => !q || [p.title, p.summary, p.context].some(o => Object.values(o).some(t => t.toLowerCase().includes(q))) || p.tags.some(t => t.toLowerCase().includes(q));
+    const found = projects.filter(p => matches(p) && (activeFilter === 'all' || p.category === activeFilter));
+    const searchBox = document.querySelector('#project-search');
+    if (searchBox) searchBox.placeholder = projectLabels.search[lang];
+    const countEl = document.querySelector('#project-count');
+    if (countEl) countEl.textContent = projectLabels.count[lang](found.length);
+
     // one block per category, with its own heading
     let html = Object.keys(projectCategories)
-        .filter(key => counts[key] && (activeFilter === 'all' || activeFilter === key))
+        .filter(key => found.some(p => p.category === key))
         .map(key => {
             const cat = projectCategories[key];
             return `
@@ -231,12 +251,15 @@ function renderProjects() {
             <header class="group-head">
                 <i class='bx ${cat.icon}'></i>
                 <h3>${escapeHTML(cat[lang])}</h3>
-                <span>${counts[key]}</span>
+                <span>${found.filter(p => p.category === key).length}</span>
             </header>
-            <div class="projects-grid">${projects.filter(p => p.category === key).map(card).join('')}</div>
+            <div class="projects-grid">${found.filter(p => p.category === key).map(card).join('')}</div>
         </section>`;
         }).join('');
 
+    if (!found.length) {
+        html = `<div class="project-empty"><i class='bx bx-search-alt'></i><p>${projectLabels.none[lang]}</p><button type="button" class="btn btn-sm btn-outline" id="project-reset">${projectLabels.reset[lang]}</button></div>`;
+    }
     html += `
         <div class="projects-grid"><article class="card project-card project-more">
             <div class="icon-box"><i class='bx bx-rocket'></i></div>
@@ -253,6 +276,17 @@ if (projectFilters) {
         const btn = e.target.closest('.filter');
         if (!btn) return;
         activeFilter = btn.dataset.filter;
+        renderProjects();
+    });
+    const searchInput = document.querySelector('#project-search');
+    if (searchInput) searchInput.addEventListener('input', () => {
+        searchQuery = searchInput.value;
+        renderProjects();
+    });
+    projectsGrid.addEventListener('click', (e) => {
+        if (!e.target.closest('#project-reset')) return;
+        searchQuery = ''; activeFilter = 'all';
+        if (searchInput) searchInput.value = '';
         renderProjects();
     });
 }
@@ -457,4 +491,36 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
         document.querySelectorAll('.hero, .section').forEach(s => ro.observe(s));
     }
     arrange();
+})();
+
+
+/* ---------- Little robot that rides along the scrollbar ---------- */
+(function () {
+    const bot = document.getElementById('scroll-bot');
+    const fill = document.querySelector('.scroll-fill');
+    if (!bot) return;
+    const rail = document.querySelector('.scroll-rail');
+    let lastY = window.scrollY, dir = 1, idle;
+    function update() {
+        const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+        const y = window.scrollY, p = Math.min(1, Math.max(0, y / max));
+        const top = 84, track = Math.max(0, innerHeight - top - 90);
+        bot.style.setProperty('--y', (top + p * track) + 'px');
+        bot.style.setProperty('--spin', (y * 0.6) + 'deg');
+        if (fill) fill.style.height = (p * 100) + '%';
+        if (y !== lastY) { dir = y > lastY ? 1 : -1; bot.style.setProperty('--dir', dir); bot.classList.add('moving'); }
+        lastY = y;
+        clearTimeout(idle);
+        idle = setTimeout(() => bot.classList.remove('moving'), 160);
+        bot.classList.toggle('visible', y > 120);
+        if (rail) rail.classList.toggle('visible', y > 120);
+    }
+    window.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    window.addEventListener('resize', update);
+    bot.addEventListener('click', () => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
+    document.addEventListener('langchange', () => {
+        const t = currentLang() === 'fr' ? 'Retour en haut' : 'Back to top';
+        bot.setAttribute('aria-label', t); bot.title = t;
+    });
+    update();
 })();
