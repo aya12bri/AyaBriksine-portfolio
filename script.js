@@ -163,6 +163,8 @@ const projectLabels = {
     moreBtn: { en: 'My GitHub', fr: 'Mon GitHub' },
     search: { en: 'Search a project, tool or skill…', fr: 'Rechercher un projet, un outil ou une compétence…' },
     count: { en: n => `${n} project${n > 1 ? 's' : ''}`, fr: n => `${n} projet${n > 1 ? 's' : ''}` },
+    prev: { en: 'Previous projects', fr: 'Projets précédents' },
+    next: { en: 'Next projects', fr: 'Projets suivants' },
     none: { en: 'No project matches your search.', fr: 'Aucun projet ne correspond à votre recherche.' },
     reset: { en: 'Clear search', fr: 'Effacer la recherche' },
     video: { en: 'Video', fr: 'Vidéo' },
@@ -195,6 +197,62 @@ function githubButton(p, lang) {
     return p.github
         ? `<a href="${escapeHTML(p.github)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline"><i class='bx bxl-github'></i> ${projectLabels.github[lang]}</a>`
         : `<span class="btn btn-sm btn-ghost" title="${lang === 'fr' ? 'Code bientôt sur GitHub' : 'Code coming soon on GitHub'}"><i class='bx bxl-github'></i> ${projectLabels.soon[lang]}</span>`;
+}
+
+/* ---------- Carousel: one swipeable row per category ---------- */
+function carouselStep(track) {
+    const card = track.querySelector('.project-card');
+    return card ? card.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0) : track.clientWidth;
+}
+
+function updateCarousel(car) {
+    const track = car.querySelector('.carousel-track');
+    const max = track.scrollWidth - track.clientWidth;
+    const x = track.scrollLeft;
+    const section = car.closest('.project-group');
+    const buttons = section.querySelectorAll('.car-btn');
+    buttons[0].disabled = x <= 2;
+    buttons[1].disabled = x >= max - 2;
+    section.classList.toggle('no-scroll', max <= 2);
+    car.style.setProperty('--fl', x > 2 ? '36px' : '0px');
+    car.style.setProperty('--fr', x < max - 2 ? '36px' : '0px');
+    // dots: one per "page" of visible cards
+    const step = carouselStep(track), pages = max > 2 ? Math.round(max / step) + 1 : 1;
+    const dots = car.querySelector('.car-dots');
+    if (dots.children.length !== pages) dots.innerHTML = Array.from({ length: pages }, (_, i) => `<button type="button" data-page="${i}" tabindex="-1"></button>`).join('');
+    const current = Math.min(pages - 1, Math.round(x / step));
+    [...dots.children].forEach((d, i) => d.classList.toggle('on', i === current));
+}
+
+function setupCarousel(car) {
+    const track = car.querySelector('.carousel-track');
+    let raf;
+    track.addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => updateCarousel(car)); }, { passive: true });
+    new ResizeObserver(() => updateCarousel(car)).observe(track);
+
+    // mouse drag (touch screens already scroll natively)
+    let down = null, moved = false;
+    track.addEventListener('pointerdown', e => {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        down = { x: e.clientX, left: track.scrollLeft }; moved = false;
+    });
+    window.addEventListener('pointermove', e => {
+        if (!down || !track.isConnected) return;
+        const dx = e.clientX - down.x;
+        if (!moved && Math.abs(dx) > 6) { moved = true; track.classList.add('dragging'); }
+        if (moved) track.scrollLeft = down.left - dx;
+    });
+    window.addEventListener('pointerup', () => {
+        if (!down) return;
+        down = null;
+        track.classList.remove('dragging');
+    });
+    track.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    track.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') { track.scrollBy({ left: carouselStep(track), behavior: 'smooth' }); e.preventDefault(); }
+        if (e.key === 'ArrowLeft') { track.scrollBy({ left: -carouselStep(track), behavior: 'smooth' }); e.preventDefault(); }
+    });
+    updateCarousel(car);
 }
 
 function renderProjects() {
@@ -241,21 +299,26 @@ function renderProjects() {
     const countEl = document.querySelector('#project-count');
     if (countEl) countEl.textContent = projectLabels.count[lang](found.length);
 
-    // one block per category, with its own heading
-    let html = Object.keys(projectCategories)
-        .filter(key => found.some(p => p.category === key))
-        .map(key => {
-            const cat = projectCategories[key];
-            return `
-        <section class="project-group cat-${key}">
+    // one single carousel; the category buttons above filter it (projects stay ordered by category)
+    const order = Object.keys(projectCategories);
+    const sorted = [...found].sort((x, y) => order.indexOf(x.category) - order.indexOf(y.category));
+    const current = activeFilter === 'all' ? null : projectCategories[activeFilter];
+    let html = `
+        <section class="project-group${current ? ' cat-' + activeFilter : ''}">
             <header class="group-head">
-                <i class='bx ${cat.icon}'></i>
-                <h3>${escapeHTML(cat[lang])}</h3>
-                <span>${found.filter(p => p.category === key).length}</span>
+                <i class='bx ${current ? current.icon : 'bx-grid-alt'}'></i>
+                <h3>${escapeHTML(current ? current[lang] : projectLabels.all[lang])}</h3>
+                <span class="group-count">${sorted.length}</span>
+                <div class="car-controls">
+                    <button type="button" class="car-btn" data-dir="-1" aria-label="${projectLabels.prev[lang]}"><i class='bx bx-chevron-left'></i></button>
+                    <button type="button" class="car-btn" data-dir="1" aria-label="${projectLabels.next[lang]}"><i class='bx bx-chevron-right'></i></button>
+                </div>
             </header>
-            <div class="projects-grid">${found.filter(p => p.category === key).map(card).join('')}</div>
+            <div class="carousel">
+                <div class="carousel-track" tabindex="0" role="region" aria-label="${escapeHTML(current ? current[lang] : projectLabels.all[lang])}">${sorted.map(card).join('')}</div>
+                <div class="car-dots" aria-hidden="true"></div>
+            </div>
         </section>`;
-        }).join('');
 
     if (!found.length) {
         html = `<div class="project-empty"><i class='bx bx-search-alt'></i><p>${projectLabels.none[lang]}</p><button type="button" class="btn btn-sm btn-outline" id="project-reset">${projectLabels.reset[lang]}</button></div>`;
@@ -269,6 +332,7 @@ function renderProjects() {
         </article></div>`;
 
     projectsGrid.innerHTML = html;
+    projectsGrid.querySelectorAll('.carousel').forEach(setupCarousel);
 }
 
 if (projectFilters) {
@@ -284,6 +348,16 @@ if (projectFilters) {
         renderProjects();
     });
     projectsGrid.addEventListener('click', (e) => {
+        const btn = e.target.closest('.car-btn');
+        const dot = e.target.closest('.car-dots button');
+        if (btn || dot) {
+            const group = e.target.closest('.project-group');
+            const track = group.querySelector('.carousel-track');
+            const smooth = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+            if (btn) track.scrollBy({ left: Number(btn.dataset.dir) * carouselStep(track) * (window.innerWidth > 1000 ? 2 : 1), behavior: smooth });
+            else track.scrollTo({ left: Number(dot.dataset.page) * carouselStep(track), behavior: smooth });
+            return;
+        }
         if (!e.target.closest('#project-reset')) return;
         searchQuery = ''; activeFilter = 'all';
         if (searchInput) searchInput.value = '';

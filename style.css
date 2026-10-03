@@ -23,6 +23,7 @@
     --bg-alt: #101017;
     --surface: #16161f;
     --surface-2: #1e1e29;
+    --surface-rgb: 22, 22, 31;
     --border: rgba(255, 255, 255, 0.08);
     --text: #ededf2;
     --heading: #c4c8d0;           /* titles: light gray */
@@ -56,6 +57,7 @@
     --bg-alt: #dfe1e6;
     --surface: #f3f4f6;
     --surface-2: #e9eaee;
+    --surface-rgb: 243, 244, 246;
     --border: rgba(20, 20, 40, 0.1);
     --text: #17171e;
     --heading: #17171e;
@@ -1587,9 +1589,12 @@ h3 {
     padding: 56px;
     border-radius: 28px;
     border: 1px solid var(--border);
+    /* slightly see-through, so the robots and equations behind it show softly */
     background:
         radial-gradient(circle at 0% 0%, var(--accent-soft), transparent 55%),
-        var(--surface);
+        rgba(var(--surface-rgb), 0.5);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
 }
 
 .contact-text .section-sub {
@@ -3174,4 +3179,162 @@ html:not(.light-mode) .back-top {
 
 @media (prefers-reduced-motion: reduce) {
     .scroll-bot .bot-led { animation: none; }
+}
+
+
+/* =========================================================
+   Projects carousel: one swipeable row per category
+   ========================================================= */
+.group-head .group-count {
+    margin-left: auto;
+}
+
+.car-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.project-group.no-scroll .car-controls {
+    display: none;
+}
+
+.car-btn {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 22px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+}
+
+.car-btn:hover:not(:disabled) {
+    border-color: var(--signal);
+    background: var(--surface-2);
+    transform: translateY(-1px);
+}
+
+.car-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.carousel {
+    --fl: 0px;
+    --fr: 0px;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 22px;
+    margin: 0 -6px;
+    padding: 10px 6px 18px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 6px;
+    scrollbar-width: none;
+    outline: none;
+    cursor: grab;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fl), #000 calc(100% - var(--fr)), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 var(--fl), #000 calc(100% - var(--fr)), transparent);
+}
+
+.carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-track:focus-visible {
+    box-shadow: 0 0 0 2px rgba(var(--signal-rgb), 0.5);
+    border-radius: var(--radius);
+}
+
+.carousel-track.dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+}
+
+.carousel-track.dragging a {
+    pointer-events: none;
+}
+
+.carousel-track > .project-card {
+    flex: 0 0 calc((100% - 44px) / 3);
+    min-width: 290px;
+    scroll-snap-align: start;
+}
+
+.car-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    min-height: 8px;
+}
+
+.car-dots button {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: var(--border);
+    cursor: pointer;
+    transition: width 0.25s ease, background-color 0.25s ease;
+}
+
+.car-dots button.on {
+    width: 26px;
+    background: var(--signal);
+}
+
+.project-group.no-scroll .car-dots {
+    display: none;
+}
+
+@media (max-width: 1000px) {
+    .carousel-track > .project-card {
+        flex-basis: calc((100% - 22px) / 2);
+    }
+}
+
+@media (max-width: 700px) {
+    .carousel-track {
+        gap: 16px;
+        cursor: auto;
+    }
+
+    .carousel-track > .project-card {
+        flex-basis: 84%;
+        min-width: 0;
+    }
+
+    .car-controls {
+        display: none;
+    }
+
+    .project-groups {
+        gap: 36px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .carousel-track {
+        scroll-behavior: auto;
+    }
+}
+
+
+/* the carousel must scroll inside its box instead of widening the page */
+.project-groups {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.project-group,
+.carousel {
+    min-width: 0;
 }
