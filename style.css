@@ -2702,7 +2702,6 @@ html:not(.light-mode) .back-top {
 }
 
 /* --- radar / lidar sweep behind the portrait --- */
-.hero-photo::before,
 .hero-photo::after {
     content: "";
     position: absolute;
@@ -2716,21 +2715,11 @@ html:not(.light-mode) .back-top {
     transform: translate(-50%, -50%);
 }
 
-.hero-photo::before {
-    background: conic-gradient(from 0deg, transparent 0deg, transparent 296deg, rgba(var(--signal-rgb), 0.3) 358deg, transparent 360deg);
-    -webkit-mask-image: radial-gradient(circle, transparent 24%, #000 25%, #000 38%, transparent 70%);
-    mask-image: radial-gradient(circle, transparent 24%, #000 25%, #000 38%, transparent 70%);
-    animation: radar-spin 10s linear infinite;
-}
 
 .hero-photo::after {
     background: repeating-radial-gradient(circle, transparent 0 62px, rgba(var(--signal-rgb), 0.16) 62px 63px);
     -webkit-mask-image: radial-gradient(circle, transparent 24%, #000 28%, #000 40%, transparent 70%);
     mask-image: radial-gradient(circle, transparent 24%, #000 28%, #000 40%, transparent 70%);
-}
-
-@keyframes radar-spin {
-    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* --- circuit-trace divider at the top of every section, with a travelling pulse --- */
@@ -2755,7 +2744,6 @@ html:not(.light-mode) .back-top {
 }
 
 @media (max-width: 700px) {
-    .hero-photo::before,
     .hero-photo::after {
         width: 520px;
     }
@@ -2768,8 +2756,115 @@ html:not(.light-mode) .back-top {
 @media (prefers-reduced-motion: reduce) {
     .badge-live::before,
     .fx-blob,
-    .hero-photo::before,
     .section::before {
+        animation: none;
+    }
+}
+
+
+/* =========================================================
+   Faint maths: signal / control equations and curves
+   ========================================================= */
+.eq {
+    position: absolute;
+    z-index: 0;
+    font-family: "Cambria Math", "STIX Two Math", Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-size: var(--fs, 24px);
+    line-height: 1.3;
+    white-space: nowrap;
+    color: var(--signal);
+    opacity: 0.22;
+    transform: rotate(var(--r, 0deg));
+    animation: sym-float 18s ease-in-out infinite alternate;
+    animation-delay: var(--d, 0s);
+}
+
+.eq sub,
+.eq sup {
+    font-size: 0.65em;
+    line-height: 0;
+}
+
+.light-mode .eq {
+    opacity: 0.3;
+}
+
+.curve {
+    position: absolute;
+    z-index: 0;
+    width: var(--w, 320px);
+    height: auto;
+    overflow: visible;
+    opacity: 0.32;
+    animation: sym-float 20s ease-in-out infinite alternate;
+    animation-delay: var(--d, 0s);
+}
+
+.light-mode .curve {
+    opacity: 0.42;
+}
+
+.curve .axis {
+    fill: none;
+    stroke: var(--signal);
+    stroke-width: 1;
+    opacity: 0.55;
+}
+
+.curve .trace {
+    fill: none;
+    stroke: var(--signal);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: curve-draw 11s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+}
+
+.curve .ref {
+    fill: none;
+    stroke: var(--signal);
+    stroke-width: 1;
+    stroke-dasharray: 3 5;
+    opacity: 0.6;
+}
+
+.curve .stem {
+    stroke: var(--signal);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+}
+
+@keyframes curve-draw {
+    0%   { stroke-dashoffset: 1; }
+    45%, 80% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -1; }
+}
+
+@media (max-width: 700px) {
+    .eq {
+        font-size: calc(var(--fs, 24px) * 0.7);
+        opacity: 0.18;
+    }
+
+    .curve {
+        width: calc(var(--w, 320px) * 0.65);
+        opacity: 0.2;
+    }
+
+    .eq.hide-mobile,
+    .curve.hide-mobile {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .eq,
+    .curve,
+    .curve .trace {
         animation: none;
     }
 }
