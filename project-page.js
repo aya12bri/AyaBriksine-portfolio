@@ -86,7 +86,9 @@
 
             <section class="project-content">
                 <div class="container">
-                    ${p.image ? `<div class="project-banner project-visual cat-${p.category} has-image fit-${p.imageFit || 'cover'}"><img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}"></div>` : ''}
+                    ${p.video
+                        ? `<div class="project-video"><video controls playsinline preload="metadata" poster="${escapeHTML(p.image || '')}" src="${escapeHTML(p.video)}"></video></div>`
+                        : p.image ? `<div class="project-banner project-visual cat-${p.category} has-image fit-${p.imageFit || 'cover'}"><img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}"></div>` : ''}
 
                     <div class="project-layout">
                         <article class="project-main">

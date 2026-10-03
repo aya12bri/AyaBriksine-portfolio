@@ -21,6 +21,8 @@
                  button until the link is added). Leave it out for projects with no
                  code: then no GitHub button is shown.
      demo        optional link to a video or live demo, or ""
+     video       optional video file shown in a player on the project page, e.g. "robot.mp4"
+                 (use "image" for its picture on the card)
      image       optional picture file for the card, e.g. "robot.jpg", or ""
      tags        tools and skills used
      title, summary, context:  { en: "...", fr: "..." }  – English and French text
@@ -360,7 +362,8 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: '',
+        image: 'video-doosan-m0617.jpg',
+        video: 'video-doosan-m0617.mp4',
         tags: ['Doosan M0617', 'Teach pendant Doosan', 'Cobots', 'Programmation robot', 'Pick & Place', 'E/S numériques', 'Denavit-Hartenberg', 'Cinématique', 'Travail en équipe'],
         title: {
             en: 'Doosan M0617 Cobot Programming and Modelling',
@@ -413,7 +416,8 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: '',
+        image: 'video-universal-robots-ur5.jpg',
+        video: 'video-universal-robots-ur5.mp4',
         tags: ['Universal Robots', 'UR3', 'UR5', 'PolyScope', 'Cobots', 'Programmation robot', 'Singularités', 'Denavit-Hartenberg', 'Cinématique', 'Travail en équipe'],
         title: {
             en: 'Universal Robots UR3 & UR5 Cobot Programming and Modelling',
@@ -457,7 +461,8 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: '',
+        image: 'video-fanuc-crx.jpg',
+        video: 'video-fanuc-crx.mp4',
         tags: ['Fanuc', 'CRX-10iA', 'Robot Delta', 'iPendant Fanuc', 'Robotique industrielle', 'Cobots', 'Programmation robot', 'Pick & Place', 'Cinématique', 'Travail en équipe'],
         title: {
             en: 'Fanuc CRX-10iA & Delta Robot Programming and Modelling',
@@ -504,7 +509,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: '',
+        image: 'video-robot-evitement-obstacles.jpg',
+        video: 'video-robot-evitement-obstacles.mp4',
         tags: ['Mobile robotics', 'Sensors', 'Obstacle avoidance', 'Motor control'],
         title: {
             en: 'Autonomous Obstacle-Avoidance Mobile Robot',
