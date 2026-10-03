@@ -201,10 +201,11 @@ function renderProjects() {
     }).join('');
 
     const shown = projects.filter(p => activeFilter === 'all' || p.category === activeFilter);
-    let html = shown.map(p => `
-        <article class="card project-card">
+    let html = shown.map((p, i) => `
+        <article class="card project-card${i === 0 ? ' project-featured' : ''}">
             ${projectVisual(p, lang)}
             <div class="project-body">
+                <span class="project-index">${String(i + 1).padStart(2, '0')}</span>
                 <p class="project-meta"><span>${escapeHTML(p.context[lang])}</span><span>${escapeHTML(p.year)}</span></p>
                 <h3><a href="project.html?id=${encodeURIComponent(p.id)}">${escapeHTML(p.title[lang])}</a></h3>
                 <p class="project-summary">${escapeHTML(p.summary[lang])}</p>
