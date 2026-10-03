@@ -298,3 +298,27 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
         section.insertBefore(box, section.firstChild);
     });
 })();
+
+
+/* ---------- Hero background: aurora blobs + a robot end-effector following a trajectory ---------- */
+(function () {
+    const hero = document.getElementById('home');
+    if (!hero) return;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const d = 'M-20 640 C180 560 280 720 470 640 S760 430 930 500 S1230 330 1460 260';
+    const waypoints = [[470, 640, 'P1'], [930, 500, 'P2'], [1240, 340, 'P3']];
+    const motion = reduce ? '' : `
+        <circle class="tool-halo" r="13"><animateMotion dur="16s" repeatCount="indefinite" path="${d}" rotate="auto"/></circle>
+        <circle class="tool" r="4.5"><animateMotion dur="16s" repeatCount="indefinite" path="${d}"/></circle>`;
+    const fx = document.createElement('div');
+    fx.className = 'hero-fx';
+    fx.setAttribute('aria-hidden', 'true');
+    fx.innerHTML = `
+        <span class="fx-blob fx-blob-a"></span><span class="fx-blob fx-blob-b"></span>
+        <svg class="fx-trajectory" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+            <path class="path" d="${d}"/>
+            ${waypoints.map(([x, y, n]) => `<circle class="wp" cx="${x}" cy="${y}" r="9"/><circle class="wp-dot" cx="${x}" cy="${y}" r="2.5"/><text x="${x + 16}" y="${y - 14}">${n}</text>`).join('')}
+            ${motion}
+        </svg>`;
+    hero.insertBefore(fx, hero.firstChild);
+})();
