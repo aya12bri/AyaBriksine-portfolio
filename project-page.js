@@ -62,8 +62,11 @@
             ? `<h2>${t.results[lang]}</h2><p>${escapeHTML(p.results[lang])}</p>`
             : '';
         const gallery = p.gallery && p.gallery.length
-            ? `<h2>${t.gallery[lang]}</h2><div class="gallery">${p.gallery.map(src =>
-                `<a href="${escapeHTML(src)}" target="_blank" rel="noopener"><img src="${escapeHTML(src)}" alt="" loading="lazy"></a>`).join('')}</div>`
+            ? `<section class="project-gallery"><h2>${t.gallery[lang]}</h2><div class="gallery">${p.gallery.map(item => {
+                const src = typeof item === 'string' ? item : item.src;
+                const cap = item.caption && item.caption[lang] ? item.caption[lang] : '';
+                return `<figure><a href="${escapeHTML(src)}" target="_blank" rel="noopener"><img src="${escapeHTML(src)}" alt="${escapeHTML(cap)}" loading="lazy"></a>${cap ? `<figcaption>${escapeHTML(cap)}</figcaption>` : ''}</figure>`;
+            }).join('')}</div></section>`
             : '';
 
         root.innerHTML = `
@@ -79,9 +82,7 @@
 
             <section class="project-content">
                 <div class="container">
-                    <div class="project-banner project-visual cat-${p.category}${p.image ? ' has-image' : ''}">
-                        ${p.image ? `<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}">` : `<i class='bx ${escapeHTML(p.icon || cat.icon)}'></i>`}
-                    </div>
+                    ${p.image ? `<div class="project-banner project-visual cat-${p.category} has-image fit-${p.imageFit || 'cover'}"><img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}"></div>` : ''}
 
                     <div class="project-layout">
                         <article class="project-main">
@@ -90,7 +91,6 @@
                                 ${p.highlights[lang].map(h => `<li><i class='bx bx-check-circle'></i><span>${escapeHTML(h)}</span></li>`).join('')}
                             </ul>
                             ${results}
-                            ${gallery}
                         </article>
 
                         <aside class="card project-side">
@@ -104,6 +104,8 @@
                             <ul class="tags">${p.tags.map(tag => `<li>${escapeHTML(tag)}</li>`).join('')}</ul>
                         </aside>
                     </div>
+
+                    ${gallery}
 
                     <div class="project-cta card">
                         <p>${t.contact[lang]}</p>
