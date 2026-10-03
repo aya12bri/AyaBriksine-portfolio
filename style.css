@@ -2702,7 +2702,6 @@ html:not(.light-mode) .back-top {
 }
 
 /* --- radar / lidar sweep behind the portrait --- */
-.hero-photo::before,
 .hero-photo::after {
     content: "";
     position: absolute;
@@ -2716,21 +2715,11 @@ html:not(.light-mode) .back-top {
     transform: translate(-50%, -50%);
 }
 
-.hero-photo::before {
-    background: conic-gradient(from 0deg, transparent 0deg, transparent 296deg, rgba(var(--signal-rgb), 0.3) 358deg, transparent 360deg);
-    -webkit-mask-image: radial-gradient(circle, transparent 24%, #000 25%, #000 38%, transparent 70%);
-    mask-image: radial-gradient(circle, transparent 24%, #000 25%, #000 38%, transparent 70%);
-    animation: radar-spin 10s linear infinite;
-}
 
 .hero-photo::after {
     background: repeating-radial-gradient(circle, transparent 0 62px, rgba(var(--signal-rgb), 0.16) 62px 63px);
     -webkit-mask-image: radial-gradient(circle, transparent 24%, #000 28%, #000 40%, transparent 70%);
     mask-image: radial-gradient(circle, transparent 24%, #000 28%, #000 40%, transparent 70%);
-}
-
-@keyframes radar-spin {
-    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* --- circuit-trace divider at the top of every section, with a travelling pulse --- */
@@ -2755,7 +2744,6 @@ html:not(.light-mode) .back-top {
 }
 
 @media (max-width: 700px) {
-    .hero-photo::before,
     .hero-photo::after {
         width: 520px;
     }
@@ -2768,7 +2756,6 @@ html:not(.light-mode) .back-top {
 @media (prefers-reduced-motion: reduce) {
     .badge-live::before,
     .fx-blob,
-    .hero-photo::before,
     .section::before {
         animation: none;
     }
