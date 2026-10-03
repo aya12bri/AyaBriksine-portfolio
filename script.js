@@ -282,7 +282,7 @@ function renderProjects() {
                 <p class="project-meta"><span>${escapeHTML(p.context[lang])}</span><span>${escapeHTML(p.year)}</span></p>
                 <h3><a href="project.html?id=${encodeURIComponent(p.id)}">${escapeHTML(p.title[lang])}</a></h3>
                 <p class="project-summary">${escapeHTML(p.summary[lang])}</p>
-                <ul class="tags">${p.tags.slice(0, 4).map(t => `<li>${escapeHTML(t)}</li>`).join('')}${p.tags.length > 4 ? `<li class="tag-more">${projectLabels.more[lang](p.tags.length - 4)}</li>` : ''}</ul>
+                <ul class="tags">${p.tags.slice(0, 3).map(t => `<li>${escapeHTML(t)}</li>`).join('')}${p.tags.length > 3 ? `<li class="tag-more">${projectLabels.more[lang](p.tags.length - 3)}</li>` : ''}</ul>
                 <div class="project-actions">
                     <a href="project.html?id=${encodeURIComponent(p.id)}" class="btn btn-sm btn-primary">${projectLabels.details[lang]} <i class='bx bx-right-arrow-alt'></i></a>
                     ${githubButton(p, lang)}
@@ -299,6 +299,12 @@ function renderProjects() {
     const countEl = document.querySelector('#project-count');
     if (countEl) countEl.textContent = projectLabels.count[lang](found.length);
 
+    const moreCard = `<article class="card project-card project-more">
+            <div class="icon-box"><i class='bx bx-rocket'></i></div>
+            <h3>${projectLabels.moreTitle[lang]}</h3>
+            <p>${projectLabels.moreText[lang]}</p>
+            <a href="https://github.com/aya12bri" target="_blank" rel="noopener" class="btn btn-sm btn-outline"><i class='bx bxl-github'></i> ${projectLabels.moreBtn[lang]}</a>
+        </article>`;
     // one single carousel; the category buttons above filter it (projects stay ordered by category)
     const order = Object.keys(projectCategories);
     const sorted = [...found].sort((x, y) => order.indexOf(x.category) - order.indexOf(y.category));
@@ -315,7 +321,7 @@ function renderProjects() {
                 </div>
             </header>
             <div class="carousel">
-                <div class="carousel-track" tabindex="0" role="region" aria-label="${escapeHTML(current ? current[lang] : projectLabels.all[lang])}">${sorted.map(card).join('')}</div>
+                <div class="carousel-track" tabindex="0" role="region" aria-label="${escapeHTML(current ? current[lang] : projectLabels.all[lang])}">${sorted.map(card).join('')}${found.length ? moreCard : ''}</div>
                 <div class="car-dots" aria-hidden="true"></div>
             </div>
         </section>`;
@@ -323,13 +329,7 @@ function renderProjects() {
     if (!found.length) {
         html = `<div class="project-empty"><i class='bx bx-search-alt'></i><p>${projectLabels.none[lang]}</p><button type="button" class="btn btn-sm btn-outline" id="project-reset">${projectLabels.reset[lang]}</button></div>`;
     }
-    html += `
-        <div class="projects-grid"><article class="card project-card project-more">
-            <div class="icon-box"><i class='bx bx-rocket'></i></div>
-            <h3>${projectLabels.moreTitle[lang]}</h3>
-            <p>${projectLabels.moreText[lang]}</p>
-            <a href="https://github.com/aya12bri" target="_blank" rel="noopener" class="btn btn-sm btn-outline"><i class='bx bxl-github'></i> ${projectLabels.moreBtn[lang]}</a>
-        </article></div>`;
+
 
     projectsGrid.innerHTML = html;
     projectsGrid.querySelectorAll('.carousel').forEach(setupCarousel);
