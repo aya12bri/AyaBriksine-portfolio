@@ -2320,3 +2320,39 @@ html:not(.light-mode) .back-top {
     color: var(--muted);
     font-size: 13px;
 }
+
+
+/* ===== Mobile: one-line scrollable filters, smaller card number ===== */
+@media (max-width: 700px) {
+    .filters {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        gap: 8px;
+        margin: 0 -16px 32px;
+        padding: 4px 16px 8px;
+        scroll-snap-type: x proximity;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filters::-webkit-scrollbar {
+        display: none;
+    }
+
+    .filter {
+        flex-shrink: 0;
+        white-space: nowrap;
+        scroll-snap-align: center;
+    }
+
+    .project-index {
+        top: 12px;
+        right: 18px;
+        font-size: 32px;
+    }
+
+    .project-meta {
+        padding-right: 64px;
+    }
+}
