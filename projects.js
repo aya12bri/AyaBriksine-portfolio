@@ -12,7 +12,7 @@
 
    Fields:
      id          short name with no spaces, used in the page link
-     category    one of: "robotics", "control", "software", "digital"
+     category    one of: "robotics", "control", "automation", "signal", "iot", "programming", "digital"
      icon        a Boxicons name (https://boxicons.com), e.g. "bx-bot"
      year        e.g. "2026"
      context     where / with whom (school, company, club…)
@@ -34,16 +34,19 @@
    ========================================================= */
 
 const projectCategories = {
-    robotics: { en: 'Robotics', fr: 'Robotique', icon: 'bx-bot' },
-    control:  { en: 'Automatic Control', fr: 'Automatique', icon: 'bx-slider-alt' },
-    software: { en: 'Software & IoT', fr: 'Logiciel & IoT', icon: 'bx-code-alt' },
-    digital:  { en: 'Digital Transformation', fr: 'Transformation digitale', icon: 'bx-line-chart' }
+    robotics:    { en: 'Robotics', fr: 'Robotique', icon: 'bx-bot' },
+    control:     { en: 'Automatic Control', fr: 'Automatique', icon: 'bx-slider-alt' },
+    automation:  { en: 'Industrial Automation', fr: 'Automatisme', icon: 'bx-git-merge' },
+    signal:      { en: 'Signal Processing', fr: 'Traitement du signal', icon: 'bx-pulse' },
+    iot:         { en: 'IoT', fr: 'IoT', icon: 'bx-chip' },
+    programming: { en: 'Programming', fr: 'Programmation', icon: 'bx-code-alt' },
+    digital:     { en: 'Digital Transformation', fr: 'Transformation digitale', icon: 'bx-line-chart' }
 };
 
 const projects = [
     {
         id: 'signal-processing-matlab',
-        category: 'control',
+        category: 'signal',
         icon: 'bx-pulse',
         year: '2026',
         github: '',
@@ -108,7 +111,7 @@ const projects = [
     },
     {
         id: 'grafcet-sequential-systems',
-        category: 'control',
+        category: 'automation',
         icon: 'bx-sitemap',
         year: '2026',
         github: '',
@@ -193,7 +196,7 @@ const projects = [
     },
     {
         id: 'reservoirs-s7-1200',
-        category: 'control',
+        category: 'automation',
         icon: 'bx-water',
         year: '2026',
         github: '',
@@ -603,7 +606,7 @@ const projects = [
     },
     {
         id: 'climax-plc-robot-arm',
-        category: 'control',
+        category: 'automation',
         icon: 'bx-git-merge',
         year: '2026',
         github: '',
@@ -655,7 +658,7 @@ const projects = [
     },
     {
         id: 'greenhouse-monitoring',
-        category: 'software',
+        category: 'iot',
         icon: 'bx-leaf',
         year: '2022',
         github: '',
@@ -692,7 +695,7 @@ const projects = [
     },
     {
         id: 'point-cloud-3d',
-        category: 'software',
+        category: 'programming',
         icon: 'bx-cube-alt',
         year: '2026',
         github: '',
