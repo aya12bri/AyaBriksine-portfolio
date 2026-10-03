@@ -274,3 +274,27 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 /* ---------- Current year in the footer ---------- */
 const yearEl = document.querySelector('#year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+
+/* ---------- Faint robot symbols in the background of each section ---------- */
+(function () {
+    // symbol, size, position, rotation, delay, hide on phones?
+    const layout = {
+        home:       [['arm',   440, 'right:-40px;bottom:6%',  '0deg',   '0s', 0], ['gear', 230, 'left:-70px;top:14%', '12deg', '-6s', 1]],
+        background: [['rover', 320, 'right:2%;top:5%',        '0deg',   '-3s', 0], ['chip', 270, 'left:-40px;bottom:4%', '0deg', '-9s', 1]],
+        services:   [['drone', 290, 'right:3%;top:8%',        '8deg',   '-5s', 0], ['gear', 200, 'left:2%;bottom:6%', '-10deg', '-2s', 1]],
+        skills:     [['head',  250, 'left:1%;top:7%',         '-6deg',  '-7s', 0], ['chip', 280, 'right:-30px;bottom:5%', '0deg', '-4s', 1]],
+        projects:   [['arm',   360, 'right:-30px;top:4%',     '0deg',   '-8s', 1], ['rover', 260, 'left:-20px;bottom:3%', '0deg', '-1s', 1]],
+        contact:    [['drone', 260, 'left:3%;top:10%',        '-8deg',  '-6s', 1], ['head', 240, 'right:3%;bottom:8%', '6deg', '-3s', 0]]
+    };
+    Object.keys(layout).forEach(id => {
+        const section = document.getElementById(id);
+        if (!section) return;
+        const box = document.createElement('div');
+        box.className = 'bg-symbols';
+        box.setAttribute('aria-hidden', 'true');
+        box.innerHTML = layout[id].map(([name, size, pos, rot, delay, hide]) =>
+            `<span class="sym sym-${name}${hide ? ' hide-mobile' : ''}" style="--s:${size}px;--r:${rot};--d:${delay};${pos}"></span>`).join('');
+        section.insertBefore(box, section.firstChild);
+    });
+})();

@@ -2498,3 +2498,74 @@ html:not(.light-mode) .back-top {
         animation: none;
     }
 }
+
+
+/* =========================================================
+   Faint robot line-art in the background of each section
+   (SVG files in /bg, coloured by the theme through a mask)
+   ========================================================= */
+.hero,
+.section {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero > .container,
+.section > .container {
+    position: relative;
+    z-index: 1;
+}
+
+.bg-symbols {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.sym {
+    position: absolute;
+    width: var(--s, 260px);
+    aspect-ratio: 1;
+    background: var(--signal);
+    opacity: 0.075;
+    -webkit-mask: var(--img) center / contain no-repeat;
+    mask: var(--img) center / contain no-repeat;
+    transform: rotate(var(--r, 0deg));
+    animation: sym-float 16s ease-in-out infinite alternate;
+    animation-delay: var(--d, 0s);
+}
+
+.light-mode .sym {
+    opacity: 0.11;
+}
+
+.sym-arm    { --img: url("bg/robot-arm.svg"); }
+.sym-rover  { --img: url("bg/mobile-robot.svg"); }
+.sym-drone  { --img: url("bg/drone.svg"); }
+.sym-chip   { --img: url("bg/circuit.svg"); }
+.sym-head   { --img: url("bg/robot-head.svg"); }
+.sym-gear   { --img: url("bg/gear.svg"); }
+
+@keyframes sym-float {
+    from { translate: 0 -8px; }
+    to   { translate: 0 10px; }
+}
+
+@media (max-width: 700px) {
+    .sym {
+        width: calc(var(--s, 260px) * 0.6);
+        opacity: 0.06;
+    }
+
+    .sym.hide-mobile {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sym {
+        animation: none;
+    }
+}
