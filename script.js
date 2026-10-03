@@ -200,9 +200,8 @@ function renderProjects() {
         return `<button class="filter${key === activeFilter ? ' active' : ''}" data-filter="${key}"><i class='bx ${icon}'></i>${escapeHTML(label)}<span>${counts[key]}</span></button>`;
     }).join('');
 
-    const shown = projects.filter(p => activeFilter === 'all' || p.category === activeFilter);
-    let html = shown.map((p, i) => `
-        <article class="card project-card${i === 0 ? ' project-featured' : ''}">
+    const card = (p, i) => `
+        <article class="card project-card">
             ${projectVisual(p, lang)}
             <div class="project-body">
                 <span class="project-index">${String(i + 1).padStart(2, '0')}</span>
@@ -215,15 +214,31 @@ function renderProjects() {
                     ${githubButton(p, lang)}
                 </div>
             </div>
-        </article>`).join('');
+        </article>`;
+
+    // one block per category, with its own heading
+    let html = Object.keys(projectCategories)
+        .filter(key => counts[key] && (activeFilter === 'all' || activeFilter === key))
+        .map(key => {
+            const cat = projectCategories[key];
+            return `
+        <section class="project-group cat-${key}">
+            <header class="group-head">
+                <i class='bx ${cat.icon}'></i>
+                <h3>${escapeHTML(cat[lang])}</h3>
+                <span>${counts[key]}</span>
+            </header>
+            <div class="projects-grid">${projects.filter(p => p.category === key).map(card).join('')}</div>
+        </section>`;
+        }).join('');
 
     html += `
-        <article class="card project-card project-more">
+        <div class="projects-grid"><article class="card project-card project-more">
             <div class="icon-box"><i class='bx bx-rocket'></i></div>
             <h3>${projectLabels.moreTitle[lang]}</h3>
             <p>${projectLabels.moreText[lang]}</p>
             <a href="https://github.com/aya12bri" target="_blank" rel="noopener" class="btn btn-sm btn-outline"><i class='bx bxl-github'></i> ${projectLabels.moreBtn[lang]}</a>
-        </article>`;
+        </article></div>`;
 
     projectsGrid.innerHTML = html;
 }

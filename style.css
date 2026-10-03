@@ -1071,11 +1071,19 @@ h3 {
 .cat-robotics { --cat: #f2f3f6; --cat-soft: rgba(242, 243, 246, 0.2); }
 .cat-control  { --cat: #c6cbd4; --cat-soft: rgba(198, 203, 212, 0.18); }
 .cat-software { --cat: #a4aab5; --cat-soft: rgba(164, 170, 181, 0.18); }
+.cat-automation  { --cat: #d9dce3; --cat-soft: rgba(217, 220, 227, 0.18); }
+.cat-signal      { --cat: #b4bac5; --cat-soft: rgba(180, 186, 197, 0.18); }
+.cat-iot         { --cat: #9aa1ad; --cat-soft: rgba(154, 161, 173, 0.18); }
+.cat-programming { --cat: #c0c5ce; --cat-soft: rgba(192, 197, 206, 0.18); }
 .cat-digital  { --cat: #878e9a; --cat-soft: rgba(135, 142, 154, 0.18); }
 
 .light-mode .cat-robotics { --cat: #1b1d22; --cat-soft: rgba(27, 29, 34, 0.12); }
 .light-mode .cat-control  { --cat: #3d424c; --cat-soft: rgba(61, 66, 76, 0.12); }
 .light-mode .cat-software { --cat: #5a606b; --cat-soft: rgba(90, 96, 107, 0.12); }
+.light-mode .cat-automation  { --cat: #2b2f37; --cat-soft: rgba(43, 47, 55, 0.12); }
+.light-mode .cat-signal      { --cat: #4a505b; --cat-soft: rgba(74, 80, 91, 0.12); }
+.light-mode .cat-iot         { --cat: #646a75; --cat-soft: rgba(100, 106, 117, 0.12); }
+.light-mode .cat-programming { --cat: #3a3f48; --cat-soft: rgba(58, 63, 72, 0.12); }
 .light-mode .cat-digital  { --cat: #767c87; --cat-soft: rgba(118, 124, 135, 0.12); }
 
 .project-body {
@@ -2269,4 +2277,46 @@ html:not(.light-mode) .back-top {
     .project-side {
         position: static;
     }
+}
+
+
+/* ===== Projects grouped by category ===== */
+.project-groups {
+    display: grid;
+    gap: 56px;
+}
+
+.group-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+.group-head i {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--cat-soft);
+    color: var(--cat);
+    font-size: 22px;
+}
+
+.group-head h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.group-head span {
+    margin-left: auto;
+    padding: 3px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 13px;
 }
