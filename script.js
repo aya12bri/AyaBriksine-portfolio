@@ -322,3 +322,61 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
         </svg>`;
     hero.insertBefore(fx, hero.firstChild);
 })();
+
+
+/* ---------- Faint equations and signal curves in the background ---------- */
+(function () {
+    const W = 300, H = 120, mid = 60;
+    const pts = (fn, n = 120) => Array.from({ length: n + 1 }, (_, i) => {
+        const x = (i / n) * W;
+        return `${i ? 'L' : 'M'}${x.toFixed(1)} ${fn(i / n).toFixed(1)}`;
+    }).join('');
+    const axes = '<path class="axis" d="M0 112 H300 M8 6 V116"/>';
+    const curves = {
+        // two summed sinusoids (the 10 Hz + 30 Hz signal from the signal lab)
+        sine:   axes + `<path class="trace" pathLength="1" d="${pts(t => mid - 26 * Math.sin(t * 6 * Math.PI) - 14 * Math.sin(t * 18 * Math.PI))}"/>`,
+        // damped oscillation, e^(-t) cos(wt)
+        damped: axes + `<path class="trace" pathLength="1" d="${pts(t => mid - 46 * Math.exp(-3.2 * t) * Math.cos(t * 9 * Math.PI))}"/>`,
+        // second-order step response with overshoot
+        step:   axes + '<path class="ref" d="M8 28 H300"/>' + `<path class="trace" pathLength="1" d="${pts(t => 112 - 84 * (1 - Math.exp(-5 * t) * (Math.cos(t * 22) + 0.23 * Math.sin(t * 22))))}"/>`,
+        // spectrum: two pairs of lines, 10 Hz and 30 Hz
+        spectrum: axes + [[60, 52], [100, 28], [200, 28], [240, 52]].map(([x, h]) => `<line class="stem" x1="${x}" y1="112" x2="${x}" y2="${112 - h * 1.5}"/>`).join(''),
+        // Bode magnitude: flat then -20 dB/decade
+        bode:   axes + `<path class="trace" pathLength="1" d="${pts(t => 30 + 82 * Math.max(0, Math.log10(1 + Math.pow(t * 7, 2)) / 2.1))}"/>`,
+        // step of a first-order low-pass filter
+        lowpass: axes + '<path class="ref" d="M8 30 H300"/>' + `<path class="trace" pathLength="1" d="${pts(t => 112 - 82 * (1 - Math.exp(-4 * t)))}"/>`
+    };
+    const eqs = {
+        fourier:  'X(f) = ∫ x(t) e<sup>−j2πft</sup> dt',
+        conv:     'y[n] = Σ<sub>k</sub> h[k] · x[n − k]',
+        dft:      'X[k] = Σ<sub>n=0</sub><sup>N−1</sup> x[n] e<sup>−j2πkn/N</sup>',
+        tf:       'G(s) = K / (τs + 1)',
+        pid:      'u(t) = K<sub>p</sub>e + K<sub>i</sub>∫e dτ + K<sub>d</sub> de/dt',
+        state:    'ẋ = Ax + Bu ,   y = Cx',
+        step:     'y(t) = 1 − e<sup>−t/τ</sup>',
+        nyquist:  'f<sub>s</sub> ≥ 2 f<sub>max</sub>',
+        hz:       'H(z) = (1 + z<sup>−1</sup>) / (1 − ⁵⁄₆z<sup>−1</sup> + ⅙z<sup>−2</sup>)',
+        jacobian: 'v = J(q) · q̇',
+        dh:       'T = Rot<sub>x</sub>(α) Trans<sub>x</sub>(a) Rot<sub>z</sub>(θ) Trans<sub>z</sub>(d)',
+        pendulum: 'θ̈ = (g/ℓ) sin θ + u',
+        second:   'ω<sub>n</sub> = √(k/m) ,  ζ = c / 2√(km)',
+        sinc:     'h[n] = sin(2π f<sub>c</sub> n / f<sub>e</sub>) / (π n)',
+        res:      'Δf = f<sub>e</sub> / N'
+    };
+    // [kind, key, position, size (font px or width px), rotation, delay, hide on phones?]
+    const layout = {
+        home:       [['eq', 'fourier', 'left:3%;top:15%', 24, -3, 0, 0], ['eq', 'pid', 'left:38%;bottom:8%', 22, 0, -6, 1], ['curve', 'step', 'left:2%;bottom:3%', 300, 0, -2, 1], ['eq', 'nyquist', 'right:4%;top:11%', 24, 4, -9, 0]],
+        background: [['eq', 'conv', 'left:4%;top:12%', 26, -2, -3, 0], ['curve', 'sine', 'right:3%;bottom:4%', 360, 0, -5, 0], ['eq', 'tf', 'right:8%;top:6%', 28, 3, -8, 1], ['eq', 'dh', 'left:6%;bottom:6%', 22, 0, -1, 1]],
+        services:   [['eq', 'state', 'right:4%;bottom:6%', 28, -3, -4, 0], ['curve', 'damped', 'left:2%;top:4%', 340, 0, -7, 0], ['eq', 'jacobian', 'left:8%;bottom:4%', 26, 2, -2, 1], ['eq', 'second', 'right:22%;top:3%', 22, 0, -6, 1]],
+        skills:     [['eq', 'dft', 'right:3%;top:8%', 24, 3, -5, 0], ['curve', 'spectrum', 'left:3%;bottom:4%', 330, 0, -3, 0], ['eq', 'pendulum', 'left:6%;top:3%', 26, -3, -9, 1], ['eq', 'res', 'right:10%;bottom:3%', 28, 0, -1, 1]],
+        projects:   [['eq', 'hz', 'left:3%;top:2%', 22, 0, -4, 1], ['curve', 'bode', 'right:3%;top:3%', 340, 0, -8, 1], ['eq', 'sinc', 'right:6%;bottom:1%', 22, -2, -2, 1], ['curve', 'lowpass', 'left:30%;bottom:1%', 300, 0, -6, 1]],
+        contact:    [['eq', 'step', 'left:4%;bottom:8%', 28, -3, -3, 0], ['curve', 'sine', 'left:4%;top:5%', 330, 0, -7, 1], ['eq', 'fourier', 'right:5%;top:8%', 24, 3, -1, 1], ['eq', 'pid', 'right:6%;bottom:4%', 22, 0, -5, 1]]
+    };
+    Object.keys(layout).forEach(id => {
+        const box = document.querySelector('#' + id + ' .bg-symbols');
+        if (!box) return;
+        box.insertAdjacentHTML('beforeend', layout[id].map(([kind, key, pos, size, rot, delay, hide]) => kind === 'eq'
+            ? `<span class="eq${hide ? ' hide-mobile' : ''}" style="--fs:${size}px;--r:${rot}deg;--d:${delay}s;${pos}">${eqs[key]}</span>`
+            : `<svg class="curve${hide ? ' hide-mobile' : ''}" viewBox="0 0 ${W} ${H}" style="--w:${size}px;--d:${delay}s;${pos}" aria-hidden="true">${curves[key]}</svg>`).join(''));
+    });
+})();
