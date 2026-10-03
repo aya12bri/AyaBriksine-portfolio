@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<rect x="40" y="22" width="40" height="30"/>
+<rect x="46" y="28" width="28" height="18"/>
+<path d="M60.0 52.0 L60.0 70.0"/>
+<path d="M48.0 70.0 L72.0 70.0"/>
+<rect x="42" y="74" width="36" height="28"/>
+<path d="M60.0 102.0 L60.0 118.0"/>
+<path d="M48.0 118.0 L72.0 118.0"/>
+<path d="M78.0 88.0 L108.0 88.0"/>
+<rect x="108" y="77" width="96" height="22" rx="2"/>
+<path d="M118.0 88.0 L150.0 88.0"/>
+<rect x="42" y="126" width="36" height="28"/>
+<path d="M60.0 154.0 L60.0 170.0"/>
+<path d="M48.0 170.0 L72.0 170.0"/>
+<path d="M78.0 140.0 L108.0 140.0"/>
+<rect x="108" y="129" width="96" height="22" rx="2"/>
+<path d="M118.0 140.0 L150.0 140.0"/>
+<rect x="42" y="178" width="36" height="28"/>
+<path d="M60.0 206.0 L60.0 222.0"/>
+<path d="M48.0 222.0 L72.0 222.0"/>
+<path d="M78.0 192.0 L108.0 192.0"/>
+<rect x="108" y="181" width="96" height="22" rx="2"/>
+<path d="M118.0 192.0 L150.0 192.0"/>
+<path d="M60.0 206.0 L60.0 224.0 L22.0 224.0 L22.0 37.0 L40.0 37.0"/>
+<path d="M34.0 31.0 L40.0 37.0 L34.0 43.0"/>
+</svg>

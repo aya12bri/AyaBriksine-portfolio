@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M120.0 120.0 L54.0 66.0"/>
+<path d="M120.0 120.0 L186.0 66.0"/>
+<path d="M120.0 120.0 L40.0 150.0"/>
+<path d="M120.0 120.0 L200.0 152.0"/>
+<path d="M120.0 120.0 L100.0 208.0"/>
+<path d="M120.0 120.0 L150.0 200.0"/>
+<path d="M120.0 120.0 L120.0 40.0"/>
+<path d="M54.0 66.0 L120.0 40.0 L186.0 66.0"/>
+<path d="M40.0 150.0 L100.0 208.0"/>
+<path d="M200.0 152.0 L150.0 200.0"/>
+<path d="M100.0 208.0 L150.0 200.0"/>
+<circle cx="120" cy="120" r="16"/>
+<circle cx="120" cy="120" r="6"/>
+<circle cx="54" cy="66" r="9"/>
+<circle cx="54" cy="66" r="3"/>
+<circle cx="186" cy="66" r="9"/>
+<circle cx="186" cy="66" r="3"/>
+<circle cx="40" cy="150" r="9"/>
+<circle cx="40" cy="150" r="3"/>
+<circle cx="200" cy="152" r="9"/>
+<circle cx="200" cy="152" r="3"/>
+<circle cx="100" cy="208" r="9"/>
+<circle cx="100" cy="208" r="3"/>
+<circle cx="150" cy="200" r="9"/>
+<circle cx="150" cy="200" r="3"/>
+<circle cx="120" cy="40" r="9"/>
+<circle cx="120" cy="40" r="3"/>
+</svg>
