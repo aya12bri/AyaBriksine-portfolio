@@ -28,7 +28,9 @@
 
    Optional extras for the project's page (leave them out if you don't need them):
      results     { en: "...", fr: "..." }  – a short paragraph about the results
-     gallery     [ "photo1.jpg", "photo2.jpg" ] – pictures shown on the project page
+     gallery     [ "photo1.jpg", { src: "fig.png", caption: { en: "...", fr: "..." } } ] – pictures shown on the project page
+                 (a plain file name or a picture with a caption)
+     imageFit    "contain" to show the card/page picture whole on white (for figures and diagrams)
    ========================================================= */
 
 const projectCategories = {
@@ -47,7 +49,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: '',
+        image: 'signaux-fig6.png',
+        imageFit: 'contain',
         tags: ['MATLAB', 'Traitement du signal', 'Convolution', 'Filtrage', 'DFT', 'Travail en binôme'],
         title: {
             en: 'Signal Processing in MATLAB: Filters, Convolution and DFT',
@@ -88,12 +91,19 @@ const projects = [
             fr: 'Le TP a confirmé que la convolution modélise un filtre, que le filtre moyenneur est un passe-bas dont le lissage augmente avec N0, que la résolution de la DFT vaut Δf = fe/N, et qu’un fort déséquilibre d’amplitude peut masquer une composante faible.'
         },
         gallery: [
-            'signaux-convolution.png',
-            'signaux-filtrage-passe-bas.png',
-            'signaux-spectres-filtre.png',
-            'signaux-translation-spectrale.png',
-            'signaux-dft-resolution.png',
-            'signaux-masquage-spectral.png'
+            { src: 'signaux-fig1.png', caption: { en: 'Convolution of two rectangular signals gives a triangle', fr: 'La convolution de deux signaux rectangulaires donne un triangle' } },
+            { src: 'signaux-fig2.png', caption: { en: 'Convolution with δ(n − 5): the signal is simply delayed by 5 samples', fr: 'Convolution par δ(n − 5) : le signal est simplement décalé de 5 échantillons' } },
+            { src: 'signaux-fig3.png', caption: { en: 'Gaussian random signal (mean 1, standard deviation 5)', fr: 'Signal aléatoire gaussien (moyenne 1, écart-type 5)' } },
+            { src: 'signaux-fig4.png', caption: { en: 'Moving-average low-pass filter: original, N0 = 4 and N0 = 100', fr: 'Filtre moyenneur passe-bas : signal original, N0 = 4 et N0 = 100' } },
+            { src: 'signaux-fig5.png', caption: { en: 'Spectrum of the sum of two sinusoids (10 Hz and 30 Hz)', fr: 'Spectre de la somme de deux sinusoïdes (10 Hz et 30 Hz)' } },
+            { src: 'signaux-fig6.png', caption: { en: 'Spectra of the signal, the sinc filter and the filtered signal', fr: 'Spectres du signal, du filtre sinc et du signal filtré' } },
+            { src: 'signaux-fig7.png', caption: { en: 'Chirp signal: the frequency increases with time', fr: 'Signal chirp : la fréquence augmente avec le temps' } },
+            { src: 'signaux-fig8.png', caption: { en: 'Frequency gain of the sinc filter for N0 = 10 and N0 = 100', fr: 'Gain fréquentiel du filtre sinc pour N0 = 10 et N0 = 100' } },
+            { src: 'signaux-fig9.png', caption: { en: 'Spectral translation: a low-pass filter becomes a band-pass filter', fr: 'Translation spectrale : le passe-bas devient un passe-bande' } },
+            { src: 'signaux-fig10.png', caption: { en: 'Difference equation solved by recurrence (unit-step input)', fr: 'Équation aux différences résolue par récurrence (entrée échelon)' } },
+            { src: 'signaux-fig11.png', caption: { en: 'DFT of two sinusoids at 50 Hz and 150 Hz', fr: 'DFT de deux sinusoïdes à 50 Hz et 150 Hz' } },
+            { src: 'signaux-fig12.png', caption: { en: 'DFT resolution for two close frequencies (50 and 60 Hz): N = 100 vs N = 1000', fr: 'Résolution de la DFT pour deux fréquences proches (50 et 60 Hz) : N = 100 et N = 1000' } },
+            { src: 'signaux-fig13.png', caption: { en: 'Spectral masking: the 50 Hz component is hidden when A2/A1 = 100', fr: 'Masquage spectral : la composante à 50 Hz est cachée quand A2/A1 = 100' } }
         ]
     },
     {
@@ -134,10 +144,10 @@ const projects = [
             ]
         },
         gallery: [
-            'grafcet-bras-manipulateur.jpg',
-            'grafcet-pont-roulant.jpg',
-            'grafcet-ascenseur.jpg',
-            'grafcet-poste-usinage.jpg'
+            { src: 'grafcet-bras-manipulateur.jpg', caption: { en: 'Manipulator arm: cup pick-and-place and return to initial position', fr: 'Bras manipulateur : prise et dépose d’un gobelet, mise en position initiale' } },
+            { src: 'grafcet-pont-roulant.jpg', caption: { en: 'Overhead crane: cycle across four stations', fr: 'Pont roulant : cycle sur quatre postes' } },
+            { src: 'grafcet-ascenseur.jpg', caption: { en: 'Elevator: basic version and version with all calls', fr: 'Ascenseur : version simple et version avec tous les appels' } },
+            { src: 'grafcet-poste-usinage.jpg', caption: { en: 'Machining station: parallel sequences', fr: 'Poste d’usinage : séquences parallèles' } }
         ]
     },
     {
@@ -217,7 +227,7 @@ const projects = [
             ]
         },
         gallery: [
-            'reservoirs-grafcet.jpg'
+            { src: 'reservoirs-grafcet.jpg', caption: { en: 'Grafcets: tank filling and consumption', fr: 'Grafcets : remplissage et consommation des réservoirs' } }
         ]
     },
     {
@@ -598,7 +608,8 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: '',
+        image: 'climax-mnemoniques.png',
+        imageFit: 'contain',
         tags: ['PLC', 'TSX 3705', 'PL7-Pro', 'Grafcet (SFC)', 'Ladder', 'Temporisateurs', 'Compteurs', 'Travail en équipe'],
         title: {
             en: 'Robotic Arm Control with a PLC (CLIMAX)',
@@ -635,10 +646,11 @@ const projects = [
             fr: 'Le cycle complet de l’usine de frites a été testé et validé sur le bras CLIMAX réel. Ce TP a montré la correspondance directe entre Grafcet et Ladder, et introduit les temporisateurs et les compteurs.'
         },
         gallery: [
-            'climax-grafcet-partie1.png',
-            'climax-ladder-transitions.png',
-            'climax-temporisateur-compteur.png',
-            'climax-post-partie2.png'
+            { src: 'climax-mnemoniques.png', caption: { en: 'I/O mnemonic tables', fr: 'Tables des mnémoniques des entrées/sorties' } },
+            { src: 'climax-grafcet-partie1.png', caption: { en: 'Part 1: free 8-step Grafcet', fr: 'Partie 1 : Grafcet libre de 8 étapes' } },
+            { src: 'climax-ladder-transitions.png', caption: { en: 'Ladder: the 9 transitions of part 1', fr: 'Ladder : les 9 transitions de la partie 1' } },
+            { src: 'climax-temporisateur-compteur.png', caption: { en: 'Part 2: Temp1 timer (TON, 5 s) and Ca counter (CP = 3)', fr: 'Partie 2 : temporisateur Temp1 (TON, 5 s) et compteur Ca (CP = 3)' } },
+            { src: 'climax-post-partie2.png', caption: { en: 'POST section of part 2 and summary of the transitions', fr: 'Section POST de la partie 2 et résumé des transitions' } }
         ]
     },
     {

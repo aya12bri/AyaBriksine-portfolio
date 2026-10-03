@@ -59,11 +59,14 @@
             ? `<a href="${escapeHTML(p.demo)}" target="_blank" rel="noopener" class="btn btn-outline"><i class='bx bx-play-circle'></i> ${t.demo[lang]}</a>`
             : '';
         const results = p.results && p.results[lang]
-            ? `<h2>${t.results[lang]}</h2><p>${escapeHTML(p.results[lang])}</p>`
+            ? `<aside class="results-callout"><h2><i class='bx bx-trophy'></i> ${t.results[lang]}</h2><p>${escapeHTML(p.results[lang])}</p></aside>`
             : '';
         const gallery = p.gallery && p.gallery.length
-            ? `<h2>${t.gallery[lang]}</h2><div class="gallery">${p.gallery.map(src =>
-                `<a href="${escapeHTML(src)}" target="_blank" rel="noopener"><img src="${escapeHTML(src)}" alt="" loading="lazy"></a>`).join('')}</div>`
+            ? `<section class="project-gallery"><h2>${t.gallery[lang]}</h2><div class="gallery">${p.gallery.map(item => {
+                const src = typeof item === 'string' ? item : item.src;
+                const cap = item.caption && item.caption[lang] ? item.caption[lang] : '';
+                return `<figure><a href="${escapeHTML(src)}" target="_blank" rel="noopener"><img src="${escapeHTML(src)}" alt="${escapeHTML(cap)}" loading="lazy"></a>${cap ? `<figcaption>${escapeHTML(cap)}</figcaption>` : ''}</figure>`;
+            }).join('')}</div></section>`
             : '';
 
         root.innerHTML = `
@@ -73,24 +76,25 @@
                     <p class="project-cat-pill cat-${p.category}"><i class='bx ${cat.icon}'></i> ${escapeHTML(cat[lang])}</p>
                     <h1>${escapeHTML(p.title[lang])}</h1>
                     <p class="project-lead">${escapeHTML(p.summary[lang])}</p>
+                    <ul class="project-meta-chips">
+                        <li><i class='bx bx-calendar'></i> ${escapeHTML(p.year)}</li>
+                        <li><i class='bx bx-buildings'></i> ${escapeHTML(p.context[lang])}</li>
+                    </ul>
                     <div class="hero-buttons">${githubLink}${demoLink}</div>
                 </div>
             </section>
 
             <section class="project-content">
                 <div class="container">
-                    <div class="project-banner project-visual cat-${p.category}${p.image ? ' has-image' : ''}">
-                        ${p.image ? `<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}">` : `<i class='bx ${escapeHTML(p.icon || cat.icon)}'></i>`}
-                    </div>
+                    ${p.image ? `<div class="project-banner project-visual cat-${p.category} has-image fit-${p.imageFit || 'cover'}"><img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}"></div>` : ''}
 
                     <div class="project-layout">
                         <article class="project-main">
                             <h2>${t.did[lang]}</h2>
-                            <ul class="check-list">
-                                ${p.highlights[lang].map(h => `<li><i class='bx bx-check-circle'></i><span>${escapeHTML(h)}</span></li>`).join('')}
-                            </ul>
+                            <ol class="steps">
+                                ${p.highlights[lang].map(h => `<li><span>${escapeHTML(h)}</span></li>`).join('')}
+                            </ol>
                             ${results}
-                            ${gallery}
                         </article>
 
                         <aside class="card project-side">
@@ -104,6 +108,8 @@
                             <ul class="tags">${p.tags.map(tag => `<li>${escapeHTML(tag)}</li>`).join('')}</ul>
                         </aside>
                     </div>
+
+                    ${gallery}
 
                     <div class="project-cta card">
                         <p>${t.contact[lang]}</p>
@@ -123,6 +129,47 @@
                 </div>
             </section>`;
     }
+
+    /* lightbox: click a figure to see it large, arrows / Esc to navigate */
+    let box = null, shown = 0;
+    function showFigure(i) {
+        const links = [...document.querySelectorAll('.gallery figure a')];
+        if (!links.length) return;
+        shown = (i + links.length) % links.length;
+        const img = links[shown].querySelector('img');
+        const cap = links[shown].parentElement.querySelector('figcaption');
+        if (!box) {
+            box = document.createElement('div');
+            box.className = 'lightbox';
+            box.innerHTML = `<button class="lb-close" aria-label="Close"><i class='bx bx-x'></i></button>
+                <button class="lb-nav lb-prev" aria-label="Previous"><i class='bx bx-chevron-left'></i></button>
+                <figure><img alt=""><figcaption></figcaption></figure>
+                <button class="lb-nav lb-next" aria-label="Next"><i class='bx bx-chevron-right'></i></button>`;
+            box.addEventListener('click', e => {
+                if (e.target.closest('.lb-prev')) showFigure(shown - 1);
+                else if (e.target.closest('.lb-next')) showFigure(shown + 1);
+                else if (!e.target.closest('img')) closeFigure();
+            });
+            document.body.appendChild(box);
+        }
+        box.querySelector('img').src = links[shown].getAttribute('href');
+        box.querySelector('img').alt = img.alt;
+        box.querySelector('figcaption').textContent = cap ? cap.textContent : '';
+        box.classList.add('open');
+    }
+    function closeFigure() { if (box) box.classList.remove('open'); }
+    document.addEventListener('click', e => {
+        const a = e.target.closest('.gallery figure a');
+        if (!a) return;
+        e.preventDefault();
+        showFigure([...document.querySelectorAll('.gallery figure a')].indexOf(a));
+    });
+    document.addEventListener('keydown', e => {
+        if (!box || !box.classList.contains('open')) return;
+        if (e.key === 'Escape') closeFigure();
+        if (e.key === 'ArrowLeft') showFigure(shown - 1);
+        if (e.key === 'ArrowRight') showFigure(shown + 1);
+    });
 
     render();
     document.addEventListener('langchange', render);

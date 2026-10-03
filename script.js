@@ -173,7 +173,7 @@ function projectVisual(p, lang) {
         ? `<img src="${escapeHTML(p.image)}" alt="" loading="lazy">`
         : `<i class='bx ${escapeHTML(p.icon || cat.icon)}'></i>`;
     return `
-        <a href="project.html?id=${encodeURIComponent(p.id)}" class="project-visual cat-${p.category}${p.image ? ' has-image' : ''}" tabindex="-1" aria-hidden="true">
+        <a href="project.html?id=${encodeURIComponent(p.id)}" class="project-visual cat-${p.category}${p.image ? ' has-image fit-' + (p.imageFit || 'cover') : ''}" tabindex="-1" aria-hidden="true">
             ${inner}
             <span class="project-cat"><i class='bx ${cat.icon}'></i>${escapeHTML(cat[lang])}</span>
         </a>`;
