@@ -3338,3 +3338,222 @@ html:not(.light-mode) .back-top {
 .carousel {
     min-width: 0;
 }
+
+
+/* =========================================================
+   Contact: clearer frosted glass
+   ========================================================= */
+.contact-panel {
+    background:
+        radial-gradient(circle at 0% 0%, rgba(var(--accent-rgb), 0.12), transparent 55%),
+        rgba(var(--surface-rgb), 0.18);
+    -webkit-backdrop-filter: blur(16px) saturate(1.25);
+    backdrop-filter: blur(16px) saturate(1.25);
+    border-color: rgba(var(--accent-rgb), 0.28);
+}
+
+.contact-list a,
+.contact-list div {
+    background: rgba(var(--surface-rgb), 0.35);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+/* =========================================================
+   Projects section: compact, so the whole carousel fits on one screen
+   ========================================================= */
+#projects.section {
+    padding: 70px 0 54px;
+}
+
+#projects .section-head {
+    margin-bottom: 26px;
+}
+
+#projects .section-sub {
+    margin-top: 8px;
+    font-size: 15px;
+}
+
+#projects .section-head::after {
+    margin-top: 14px;
+}
+
+#projects .project-tools {
+    margin-bottom: 14px;
+}
+
+#projects .project-search input {
+    padding: 11px 0;
+}
+
+/* all the category buttons on one scrollable line */
+#projects .filters {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    gap: 8px;
+    margin: 0 0 18px;
+    padding: 4px 2px 8px;
+    scrollbar-width: none;
+}
+
+#projects .filters::-webkit-scrollbar {
+    display: none;
+}
+
+#projects .filter {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 7px 14px;
+    font-size: 13.5px;
+}
+
+@media (min-width: 701px) {
+    #project-filters {
+        position: static;
+        padding: 4px 2px 8px;
+        background: none;
+    }
+
+    #projects .filters {
+        justify-content: center;
+    }
+}
+
+#projects .group-head {
+    margin-bottom: 8px;
+    padding-bottom: 10px;
+}
+
+/* shorter cards */
+#projects .project-visual {
+    height: 132px;
+}
+
+#projects .project-body {
+    padding: 16px 18px 18px;
+}
+
+#projects .project-card h3 {
+    margin: 6px 0 6px;
+    font-size: 16.5px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#projects .project-summary {
+    font-size: 13.5px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#projects .project-meta {
+    font-size: 11.5px;
+    padding-right: 44px;
+}
+
+#projects .project-meta span:first-child {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#projects .project-index {
+    font-size: 30px;
+    top: 10px;
+    right: 16px;
+}
+
+#projects .project-card .tags {
+    margin-top: 10px;
+    gap: 6px;
+}
+
+#projects .project-card .tags li {
+    padding: 3px 9px;
+    font-size: 11.5px;
+}
+
+#projects .project-actions {
+    margin-top: 12px;
+}
+
+#projects .carousel-track {
+    padding-bottom: 12px;
+}
+
+/* four cards per view on wide screens */
+@media (min-width: 1100px) {
+    #projects .carousel-track > .project-card {
+        flex-basis: calc((100% - 66px) / 4);
+        min-width: 240px;
+    }
+}
+
+#projects .projects-grid .project-more {
+    padding: 14px 22px;
+}
+
+
+/* single-line tags, no subtitle: the section fits on one screen */
+#projects .section-sub {
+    display: none;
+}
+
+#projects .project-card .tags {
+    flex-wrap: nowrap;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent);
+    mask-image: linear-gradient(90deg, #000 85%, transparent);
+}
+
+#projects .project-card .tags li {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* the "more projects" slide at the end of the carousel */
+.carousel-track > .project-more {
+    grid-column: auto;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 12px;
+    padding: 22px;
+    border-style: dashed;
+}
+
+#projects .projects-grid .project-more,
+.carousel-track > .project-more {
+    padding: 22px;
+}
+
+.carousel-track > .project-more h3,
+.carousel-track > .project-more p {
+    margin: 0;
+}
+
+.carousel-track > .project-more p {
+    flex: 0 0 auto;
+}
+
+.carousel-track > .project-more {
+    align-self: center;
+}
+
+/* cards: a single action row (the "code coming soon" note stays on the project page) */
+#projects .project-actions {
+    flex-wrap: nowrap;
+}
+
+#projects .project-actions .btn-ghost {
+    display: none;
+}
