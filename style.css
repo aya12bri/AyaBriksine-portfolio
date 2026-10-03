@@ -2529,7 +2529,7 @@ html:not(.light-mode) .back-top {
     width: var(--s, 260px);
     aspect-ratio: 1;
     background: var(--signal);
-    opacity: 0.075;
+    opacity: 0.15;
     -webkit-mask: var(--img) center / contain no-repeat;
     mask: var(--img) center / contain no-repeat;
     transform: rotate(var(--r, 0deg));
@@ -2538,7 +2538,7 @@ html:not(.light-mode) .back-top {
 }
 
 .light-mode .sym {
-    opacity: 0.11;
+    opacity: 0.2;
 }
 
 .sym-arm    { --img: url("bg/robot-arm.svg"); }
@@ -2547,6 +2547,11 @@ html:not(.light-mode) .back-top {
 .sym-chip   { --img: url("bg/circuit.svg"); }
 .sym-head   { --img: url("bg/robot-head.svg"); }
 .sym-gear   { --img: url("bg/gear.svg"); }
+.sym-cobot  { --img: url("bg/cobot.svg"); }
+.sym-lidar  { --img: url("bg/lidar.svg"); }
+.sym-delta  { --img: url("bg/delta.svg"); }
+.sym-loop   { --img: url("bg/control-loop.svg"); }
+.sym-motor  { --img: url("bg/motor.svg"); }
 
 @keyframes sym-float {
     from { translate: 0 -8px; }
@@ -2556,7 +2561,7 @@ html:not(.light-mode) .back-top {
 @media (max-width: 700px) {
     .sym {
         width: calc(var(--s, 260px) * 0.6);
-        opacity: 0.06;
+        opacity: 0.1;
     }
 
     .sym.hide-mobile {
