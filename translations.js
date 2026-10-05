@@ -81,6 +81,12 @@ const frenchText = {
     "Virtual Assistant": "Assistante virtuelle",
     "ALX Africa · April 2025": "ALX Africa · Avril 2025",
     "ALX Africa · November 2024": "ALX Africa · Novembre 2024",
+    "Simulink Fundamentals": "Fondamentaux de Simulink",
+    "Core MATLAB Skills": "Compétences MATLAB de base",
+    "MATLAB Desktop Tools and Troubleshooting Scripts": "Outils MATLAB Desktop et résolution de problèmes dans les scripts",
+    "MATLAB Onramp": "MATLAB Onramp",
+    "MathWorks · October 2025": "MathWorks · Octobre 2025",
+    "MathWorks · September 2025": "MathWorks · Septembre 2025",
     "View certificate": "Voir le certificat",
     "Verify": "Vérifier",
 
