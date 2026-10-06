@@ -366,6 +366,7 @@ const projects = [
     },
     {
         id: 'doosan-m0617',
+        pdf: 'rapport-tp-doosan-m0617.pdf',
         category: 'robotics',
         icon: 'bx-bot',
         year: '2026',
@@ -420,6 +421,7 @@ const projects = [
     },
     {
         id: 'universal-robots-ur3-ur5',
+        pdf: 'rapport-tp-universal-robots-ur5.pdf',
         category: 'robotics',
         icon: 'bx-joystick',
         year: '2026',
