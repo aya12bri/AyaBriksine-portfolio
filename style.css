@@ -478,10 +478,11 @@ h3 {
 
 .photo-frame {
     position: relative;
-    width: min(400px, 100%);
+    width: min(470px, 100%);
     aspect-ratio: 1;
     border-radius: 50%;
     padding: 10px;
+    cursor: pointer;
     background: linear-gradient(145deg, var(--accent), transparent 55%, var(--accent-soft));
 }
 
@@ -1956,7 +1957,7 @@ html:not(.light-mode) .back-top {
     }
 
     .photo-frame {
-        width: min(260px, 70vw);
+        width: min(300px, 76vw);
     }
 
     .hero-intro {
@@ -3031,7 +3032,7 @@ html:not(.light-mode) .back-top {
     }
 
     .photo-frame {
-        width: min(400px, 100%, 44vh);
+        width: min(470px, 100%, 50vh);
     }
 
     .stats li {
@@ -3670,5 +3671,224 @@ html:not(.light-mode) .back-top {
 
     .roam-bot {
         width: 44px;
+    }
+}
+
+
+/* =========================================================
+   Kinematic-diagram robot arm, spinning gears, click effects
+   ========================================================= */
+.kin-host {
+    position: absolute;
+    pointer-events: none;
+    color: var(--signal);
+}
+
+.kin-hero {
+    right: -30px;
+    bottom: 2%;
+    z-index: 2;
+    width: min(520px, 45vw);
+}
+
+.kin-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    opacity: 0.6;
+}
+
+.light-mode .kin-svg {
+    opacity: 0.75;
+}
+
+.kin-svg path,
+.kin-svg line,
+.kin-svg circle,
+.kin-svg rect,
+.kin-svg polyline {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.kin-ground {
+    stroke-width: 2;
+    stroke-dasharray: 3 8;
+    opacity: 0.7;
+}
+
+.kin-base {
+    stroke-width: 2.4;
+}
+
+.kin-link {
+    stroke-width: 5;
+}
+
+.kin-joint {
+    stroke-width: 2.6;
+    fill: var(--bg) !important;
+}
+
+.kin-dot {
+    fill: currentColor !important;
+    stroke: none !important;
+}
+
+.kin-axis {
+    stroke-width: 1.8;
+    opacity: 0.85;
+}
+
+.kin-ext {
+    stroke-width: 1.4;
+    stroke-dasharray: 4 5;
+    opacity: 0.7;
+}
+
+.kin-arc {
+    stroke-width: 1.8;
+}
+
+.kin-trace {
+    stroke-width: 2;
+    stroke-dasharray: 2 6;
+    opacity: 0.8;
+}
+
+.kin-g {
+    stroke-width: 3;
+}
+
+.kin-t {
+    fill: currentColor;
+    font: 600 13px ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    letter-spacing: 0.5px;
+}
+
+/* gears turn, the drone tilts */
+.sym-gear {
+    animation: sym-float 16s ease-in-out infinite alternate, sym-spin 38s linear infinite;
+    animation-delay: var(--d, 0s), 0s;
+}
+
+.sym-drone {
+    animation: sym-float 16s ease-in-out infinite alternate, sym-tilt 6s ease-in-out infinite alternate;
+    animation-delay: var(--d, 0s), var(--d, 0s);
+}
+
+@keyframes sym-spin {
+    to { rotate: 360deg; }
+}
+
+@keyframes sym-tilt {
+    from { rotate: -5deg; }
+    to   { rotate: 5deg; }
+}
+
+/* click effects: a ripple wherever you click, and a burst on the portrait */
+.click-ripple {
+    position: fixed;
+    z-index: 9999;
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border: 2px solid var(--signal);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: ripple-out 0.7s ease-out forwards;
+}
+
+@keyframes ripple-out {
+    from { transform: scale(0.4); opacity: 0.9; }
+    to   { transform: scale(7); opacity: 0; }
+}
+
+.photo-ring,
+.photo-spark {
+    position: absolute;
+    pointer-events: none;
+}
+
+.photo-ring {
+    inset: 0;
+    border: 2px solid var(--signal);
+    border-radius: 50%;
+    animation: photo-ring 1.1s ease-out forwards;
+    animation-delay: var(--rd, 0s);
+}
+
+@keyframes photo-ring {
+    from { transform: scale(1); opacity: 0.9; }
+    to   { transform: scale(1.5); opacity: 0; }
+}
+
+.photo-spark {
+    left: 50%;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    margin: -3.5px 0 0 -3.5px;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 10px var(--signal);
+    animation: photo-spark 0.9s ease-out forwards;
+}
+
+@keyframes photo-spark {
+    from { transform: rotate(var(--a)) translateX(48%); opacity: 1; }
+    to   { transform: rotate(var(--a)) translateX(78%); opacity: 0; }
+}
+
+.photo-frame.bump {
+    animation: photo-bump 0.5s ease-out;
+}
+
+@keyframes photo-bump {
+    30% { transform: scale(1.045) rotate(-1.5deg); }
+    60% { transform: scale(0.99) rotate(1deg); }
+}
+
+/* animated decoration behind the project pages */
+.page-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+body.project-page main,
+body.project-page .footer {
+    position: relative;
+    z-index: 1;
+}
+
+.page-bg .kin-host {
+    position: absolute;
+    right: 1%;
+    bottom: 4%;
+    width: 330px;
+}
+
+.page-bg .sym {
+    opacity: 0.12;
+}
+
+@media (max-width: 1180px) {
+    .page-bg > :not(.keep) {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .kin-hero {
+        width: 70vw;
+        right: -8vw;
+        z-index: 0;
+        opacity: 0.55;
     }
 }

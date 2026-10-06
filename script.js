@@ -384,11 +384,101 @@ const yearEl = document.querySelector('#year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 
+
+/* ---------- Animated robot arm drawn as a kinematic diagram (joints q1..q3, frames, trace) ---------- */
+let kinCount = 0;
+function createKinArm(host, opts) {
+    const o = Object.assign({ phase: 0 }, opts || {});
+    const id = 'kin' + (++kinCount);
+    const base = { x: 120, y: 350 }, L = [150, 128, 72];
+    const arrow = (a, b) => `<path class="kin-axis" d="M${a[0]} ${a[1]} L${b[0]} ${b[1]}" marker-end="url(#${id}-ah)"/>`;
+    host.innerHTML = `<svg class="kin-svg" viewBox="0 0 480 420" aria-hidden="true">
+        <defs><marker id="${id}-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="currentColor"/></marker></defs>
+        <path class="kin-ground" d="M10 372 H470"/>
+        <rect class="kin-base" x="${base.x - 32}" y="${base.y + 2}" width="64" height="20" rx="4"/>
+        ${arrow([base.x, base.y], [base.x + 78, base.y])}${arrow([base.x, base.y], [base.x, base.y - 70])}
+        <text class="kin-t" x="${base.x - 40}" y="${base.y + 42}">{0}</text>
+        <text class="kin-t" x="${base.x + 82}" y="${base.y + 16}">x₀</text>
+        <text class="kin-t" x="${base.x - 22}" y="${base.y - 66}">y₀</text>
+        <polyline class="kin-trace"/>
+        <path class="kin-ext e2"/><path class="kin-ext e3"/>
+        <path class="kin-arc a1"/><path class="kin-arc a2"/><path class="kin-arc a3"/>
+        <line class="kin-link l1"/><line class="kin-link l2"/><line class="kin-link l3"/>
+        <circle class="kin-joint j1"/><circle class="kin-joint j2"/><circle class="kin-joint j3"/>
+        <circle class="kin-dot d1"/><circle class="kin-dot d2"/><circle class="kin-dot d3"/>
+        <text class="kin-t q1">q₁</text><text class="kin-t q2">q₂</text><text class="kin-t q3">q₃</text>
+        <text class="kin-t t1">L₁</text><text class="kin-t t2">L₂</text><text class="kin-t t3">L₃</text>
+        <g class="kin-e"><path class="kin-axis ex" marker-end="url(#${id}-ah)"/><path class="kin-axis ey" marker-end="url(#${id}-ah)"/><text class="kin-t te">{E}</text></g>
+        <g class="kin-grip"><path class="kin-g" d="M0 0 H8 M8 -9 V9"/><path class="kin-g gu" d="M8 -9 H26 V-4"/><path class="kin-g gd" d="M8 9 H26 V4"/></g>
+    </svg>`;
+    const q = s => host.querySelector(s), trace = [];
+    const el = { l: [1, 2, 3].map(i => q('.l' + i)), j: [1, 2, 3].map(i => q('.j' + i)), d: [1, 2, 3].map(i => q('.d' + i)),
+        a: [1, 2, 3].map(i => q('.a' + i)), q: [1, 2, 3].map(i => q('.q' + i)), t: [1, 2, 3].map(i => q('.t' + i)),
+        e2: q('.e2'), e3: q('.e3'), ex: q('.ex'), ey: q('.ey'), te: q('.te'), eg: q('.kin-e'), grip: q('.kin-grip'),
+        gu: q('.gu'), gd: q('.gd'), trace: q('.kin-trace') };
+    const pt = (p, a, l) => ({ x: p.x + l * Math.cos(a), y: p.y - l * Math.sin(a) });
+    const set = (e, a) => Object.keys(a).forEach(k => e.setAttribute(k, typeof a[k] === 'number' ? a[k].toFixed(1) : a[k]));
+    const arc = (c, r, a, b) => {
+        const s = pt(c, a, r), e = pt(c, b, r);
+        return `M${s.x.toFixed(1)} ${s.y.toFixed(1)} A${r} ${r} 0 0 ${b > a ? 0 : 1} ${e.x.toFixed(1)} ${e.y.toFixed(1)}`;
+    };
+    const put = (e, c, ang, r, dx) => set(e, { x: c.x + r * Math.cos(ang) + (dx || 0), y: c.y - r * Math.sin(ang) + 4 });
+    const deg = x => x * Math.PI / 180;
+    function draw(t) {
+        t += o.phase;
+        const t1 = deg(58 + 16 * Math.sin(0.55 * t)), t2 = t1 - deg(66 + 26 * Math.sin(0.8 * t + 1)), t3 = t2 - deg(35 + 30 * Math.sin(1.1 * t + 2));
+        const p = [base, pt(base, t1, L[0])]; p.push(pt(p[1], t2, L[1])); p.push(pt(p[2], t3, L[2]));
+        const th = [t1, t2, t3];
+        for (let i = 0; i < 3; i++) {
+            set(el.l[i], { x1: p[i].x, y1: p[i].y, x2: p[i + 1].x, y2: p[i + 1].y });
+            set(el.j[i], { cx: p[i].x, cy: p[i].y, r: 9 });
+            set(el.d[i], { cx: p[i].x, cy: p[i].y, r: 2.4 });
+            const from = i === 0 ? 0 : th[i - 1];
+            el.a[i].setAttribute('d', arc(p[i], 30 + i * 4, from, th[i]));
+            put(el.q[i], p[i], (from + th[i]) / 2, 48 + i * 4, -6);
+            const m = { x: (p[i].x + p[i + 1].x) / 2, y: (p[i].y + p[i + 1].y) / 2 };
+            put(el.t[i], m, th[i] + Math.PI / 2, 16, -6);
+        }
+        [el.e2, el.e3].forEach((e, i) => { const a = pt(p[i + 1], th[i], 0), b = pt(p[i + 1], th[i], 38); e.setAttribute('d', `M${a.x.toFixed(1)} ${a.y.toFixed(1)} L${b.x.toFixed(1)} ${b.y.toFixed(1)}`); });
+        const ex = pt(p[3], t3, 40), ey = pt(p[3], t3 + Math.PI / 2, 30);
+        el.ex.setAttribute('d', `M${p[3].x.toFixed(1)} ${p[3].y.toFixed(1)} L${ex.x.toFixed(1)} ${ex.y.toFixed(1)}`);
+        el.ey.setAttribute('d', `M${p[3].x.toFixed(1)} ${p[3].y.toFixed(1)} L${ey.x.toFixed(1)} ${ey.y.toFixed(1)}`);
+        put(el.te, p[3], t3 - Math.PI / 2, 26, -8);
+        const open = 2.5 + 6.5 * (0.5 + 0.5 * Math.sin(1.5 * t));
+        el.grip.setAttribute('transform', `translate(${p[3].x.toFixed(1)} ${p[3].y.toFixed(1)}) rotate(${(-t3 * 180 / Math.PI).toFixed(1)})`);
+        el.gu.setAttribute('transform', `translate(0 ${(9 - open).toFixed(2)})`);
+        el.gd.setAttribute('transform', `translate(0 ${(open - 9).toFixed(2)})`);
+        const tip = pt(p[3], t3, 26);
+        trace.push(tip.x.toFixed(1) + ',' + tip.y.toFixed(1));
+        if (trace.length > 110) trace.shift();
+        el.trace.setAttribute('points', trace.join(' '));
+    }
+    draw(0);
+    return draw;
+}
+
+const kinArms = [];
+function startKinArms() {
+    let t0 = null;
+    function tick(now) {
+        requestAnimationFrame(tick);
+        if (t0 === null) t0 = now;
+        kinArms.forEach(a => { if (a.visible) a.draw((now - t0) / 1000); });
+    }
+    requestAnimationFrame(tick);
+}
+function addKinArm(host, opts) {
+    const arm = { draw: createKinArm(host, opts), visible: true };
+    if ('IntersectionObserver' in window) new IntersectionObserver(es => { arm.visible = es[0].isIntersecting; }).observe(host);
+    if (!kinArms.length) startKinArms();
+    kinArms.push(arm);
+}
+
 /* ---------- Faint robot symbols in the background of each section ---------- */
 (function () {
     // symbol, size, position, rotation, delay, hide on phones?
     const layout = {
-        home:       [['arm',   480, 'right:-50px;bottom:4%',   '0deg',   '0s', 0], ['gear', 240, 'left:-70px;top:12%',     '12deg', '-6s', 1], ['cobot', 270, 'left:44%;bottom:-60px', '0deg', '-4s', 1]],
+        home:       [['gear', 240, 'left:-70px;top:12%',     '12deg', '-6s', 1], ['cobot', 270, 'left:44%;bottom:-60px', '0deg', '-4s', 1]],
         background: [['rover', 340, 'right:2%;top:4%',         '0deg',   '-3s', 0], ['chip', 290, 'left:-40px;bottom:3%',  '0deg',  '-9s', 1], ['lidar', 250, 'left:44%;top:-30px',   '0deg', '-7s', 1]],
         services:   [['drone', 300, 'right:3%;top:6%',         '8deg',   '-5s', 0], ['gear', 210, 'left:2%;bottom:5%',     '-10deg','-2s', 1], ['delta', 270, 'left:-30px;top:8%',   '0deg', '-8s', 1]],
         skills:     [['head',  260, 'left:1%;top:6%',          '-6deg',  '-7s', 0], ['chip', 290, 'right:-30px;bottom:4%', '0deg',  '-4s', 1], ['loop', 290, 'right:5%;top:2%',       '0deg', '-1s', 1]],
@@ -432,6 +522,10 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
             </g>
         </svg>`;
     hero.insertBefore(fx, hero.firstChild);
+    const kin = document.createElement('div');
+    kin.className = 'kin-host kin-hero';
+    hero.appendChild(kin);                                      // above the stats card, so the diagram stays readable
+    addKinArm(kin);
 
     // The tool is a parallel-jaw gripper: it follows the trajectory, stops at the waypoints,
     // closes on a small cube at P1, drops it at P2, and pinches once at P3.
@@ -634,6 +728,8 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
         wait(() => write(texts[0], 0), 800 + delay * 1000);
     }
 
+    window.typeCode = type;
+    window.codeSnippets = snippets;
     Object.keys(layout).forEach(id => {
         const box = document.querySelector('#' + id + ' .bg-symbols');
         if (!box) return;
@@ -818,4 +914,59 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
         bot.setAttribute('aria-label', t); bot.title = t;
     });
     update();
+})();
+
+
+/* ---------- Project pages: animated background (gears, kinematic arm, typed code) ---------- */
+(function () {
+    if (!document.body.classList.contains('project-page')) return;
+    const bg = document.createElement('div');
+    bg.className = 'page-bg';
+    bg.setAttribute('aria-hidden', 'true');
+    bg.innerHTML = `
+        <span class="sym sym-gear" style="--s:230px;--r:0deg;--d:-3s;left:-60px;bottom:6%"></span>
+        <span class="sym sym-gear" style="--s:150px;--r:15deg;--d:-8s;left:130px;bottom:26%"></span>
+        <span class="sym sym-gear" style="--s:200px;--r:0deg;--d:-5s;right:-50px;top:14%"></span>
+        <span class="sym sym-drone" style="--s:210px;--r:0deg;--d:-2s;left:2%;top:16%"></span>
+        <div class="kin-host"></div>`;
+    document.body.insertBefore(bg, document.body.firstChild);
+    addKinArm(bg.querySelector('.kin-host'), { phase: 2 });
+    if (!window.typeCode) return;
+    [['pid', 'left:1%;top:44%', 14, 0], ['fsk', 'right:1.5%;top:10%', 13, 2]].forEach(([name, pos, size, delay]) => {
+        const s = window.codeSnippets[name];
+        const el = document.createElement('pre');
+        el.className = 'code-bg';
+        el.style.cssText = `--fs:${size}px;--cols:${Math.max(...s.map(l => l.length)) + 1};--rows:${s.length};${pos}`;
+        el.innerHTML = '<code class="code-live"></code>';
+        bg.appendChild(el);
+        window.typeCode(el, [name], delay);
+    });
+})();
+
+
+/* ---------- Click effects: ripple anywhere, burst on the portrait ---------- */
+(function () {
+    document.addEventListener('pointerdown', e => {
+        const r = document.createElement('span');
+        r.className = 'click-ripple';
+        r.style.left = e.clientX + 'px';
+        r.style.top = e.clientY + 'px';
+        document.body.appendChild(r);
+        setTimeout(() => r.remove(), 800);
+    });
+    const frame = document.querySelector('.photo-frame');
+    if (!frame) return;
+    frame.addEventListener('click', () => {
+        frame.classList.remove('bump');
+        void frame.offsetWidth;                                 // restart the animation on every click
+        frame.classList.add('bump');
+        const parts = [];
+        for (let i = 0; i < 3; i++) parts.push(`<span class="photo-ring" style="--rd:${i * 0.18}s"></span>`);
+        for (let i = 0; i < 10; i++) parts.push(`<span class="photo-spark" style="--a:${i * 36 + 12}deg"></span>`);
+        const burst = document.createElement('span');
+        burst.innerHTML = parts.join('');
+        const nodes = [...burst.children];
+        nodes.forEach(n => frame.appendChild(n));
+        setTimeout(() => { nodes.forEach(n => n.remove()); frame.classList.remove('bump'); }, 1500);
+    });
 })();
