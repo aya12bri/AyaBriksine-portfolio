@@ -578,7 +578,8 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: '',
+        image: 'staubli-tp-robot.jpg',
+        imageFit: 'contain',
         art: 'arm',
         tags: ['Stäubli TX60', 'VAL3', 'Stäubli Robotics Suite', 'Pick-and-place'],
         title: {
@@ -597,17 +598,26 @@ const projects = [
             en: [
                 'Programmed the Stäubli TX60 6-axis robot in VAL3',
                 'Used the teach pendant and Stäubli Robotics Suite to define and simulate motions',
-                'Built trajectory and pick-and-place programs'
+                'Built trajectory and pick-and-place programs',
+                'Wrote a VAL3 program with two nested loops (4 × 5) that offsets the pick and place points by 50 mm on each pass, closing and opening the gripper at each point'
             ],
             fr: [
                 'Programmation du robot 6 axes Stäubli TX60 en VAL3',
                 'Utilisation du pupitre et de Stäubli Robotics Suite pour définir et simuler les mouvements',
-                'Réalisation de programmes de trajectoires et de pick-and-place'
+                'Réalisation de programmes de trajectoires et de pick-and-place',
+                'Écriture d’un programme VAL3 à deux boucles imbriquées (4 × 5) qui décale de 50 mm les points de prise et de dépose à chaque passage, avec fermeture et ouverture de la pince à chaque point'
             ]
-        }
+        },
+        gallery: [
+            { src: 'staubli-tp-robot.jpg', caption: { en: 'The Stäubli TX60 arm with its gripper above the plates', fr: 'Le bras Stäubli TX60 et sa pince au-dessus des plaques' } },
+            { src: 'staubli-tp-code-val3.jpg', caption: { en: 'VAL3 program: two nested loops and offset approach points', fr: 'Programme VAL3 : deux boucles imbriquées et points d’approche décalés' } }
+        ]
     },
     {
         id: 'dc-motor-speed-control',
+        downloads: [
+            { file: 'rapport-tp-asservissement-vitesse-mcc.pdf', icon: 'bx-file', label: { en: 'Group report (PDF)', fr: 'Compte rendu du groupe (PDF)' } }
+        ],
         category: 'control',
         icon: 'bx-tachometer',
         year: '2026',
@@ -616,14 +626,14 @@ const projects = [
         demo: '',
         image: '',
         art: 'motor',
-        tags: ['MATLAB', 'Simulink', 'Modelling', 'PID tuning'],
+        tags: ['MATLAB', 'LabVIEW', 'NI-USB 6008', 'Identification de Broïda', 'Moindres carrés (ARX)', 'Régulateur PI', 'Placement de pôles', 'Travail en groupe'],
         title: {
             en: 'DC Motor Speed Control',
             fr: "Asservissement en vitesse d'un moteur à courant continu"
         },
         context: {
-            en: 'Polytech Orléans – Control lab (M1)',
-            fr: "Polytech Orléans – TP d'automatique (M1)"
+            en: 'Polytech Orléans – Master MARS (M1) robotics lab, group work',
+            fr: "Polytech Orléans – Master MARS (M1), TP de robotique, en groupe"
         },
         summary: {
             en: 'Modelling a DC motor, simulating it in MATLAB, tuning a speed controller and validating it on the real system.',
@@ -631,17 +641,25 @@ const projects = [
         },
         highlights: {
             en: [
-                'Theoretical study and modelling of the motor',
-                'Simulation of the closed-loop system in MATLAB',
-                'Controller tuning to meet the speed specifications',
-                'Experimental validation on the test bench'
+                'Acquired the input and output of an Escap DC motor (tachometer generator, NI-USB 6008) in LabVIEW and MATLAB with a multi-step excitation, Te = 5 ms',
+                'Wrote the physical model of the motor (electrical and mechanical equations) and its block diagram',
+                'Identified a first-order model with the Broïda method: K = 1.11, τ = 62.8 ms, no significant delay',
+                'Identified a second-order discrete ARX model by least squares: R² = 98.79 %, stable (a₁ + a₂ < 1)',
+                'Compared the two methods (accuracy, stability, complexity, use for digital control)',
+                'Designed a PI controller by pole placement (ξ = 0.85, ωn = 47.7 rad/s, Kp = 3.69, Ki = 128.9) to get less than 10 % overshoot and a closed-loop response time three times shorter'
             ],
             fr: [
-                'Étude théorique et modélisation du moteur',
-                'Simulation du système en boucle fermée sous MATLAB',
-                'Réglage du correcteur pour respecter le cahier des charges',
-                'Validation expérimentale sur le banc de test'
+                'Acquisition de l’entrée et de la sortie d’un moteur à courant continu Escap (génératrice tachymétrique, NI-USB 6008) sous LabVIEW et MATLAB avec une excitation à paliers multiples, Te = 5 ms',
+                'Écriture du modèle physique du moteur (équations électrique et mécanique) et de son schéma synoptique',
+                'Identification d’un modèle du premier ordre par la méthode de Broïda : K = 1,11, τ = 62,8 ms, pas de retard significatif',
+                'Identification d’un modèle ARX discret d’ordre 2 par moindres carrés : R² = 98,79 %, stable (a₁ + a₂ < 1)',
+                'Comparaison des deux méthodes (précision, stabilité, complexité, usage en commande numérique)',
+                'Synthèse d’un régulateur PI par placement de pôles (ξ = 0,85, ωn = 47,7 rad/s, Kp = 3,69, Ki = 128,9) pour un dépassement inférieur à 10 % et un temps de réponse en boucle fermée trois fois plus court'
             ]
+        },
+        results: {
+            en: 'Both identifications are consistent and stable; least squares fits the measurements best (R² = 98.79 %), while Broïda is quicker and easier to interpret. The PI controller was sized to meet the overshoot and response-time requirements.',
+            fr: 'Les deux identifications sont cohérentes et stables ; les moindres carrés suivent le mieux les mesures (R² = 98,79 %), tandis que Broïda est plus rapide et plus simple à interpréter. Le régulateur PI a été dimensionné pour respecter le cahier des charges de dépassement et de rapidité.'
         }
     },
     {
@@ -705,7 +723,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: '',
+        image: 'green-energy-park-serre.jpg',
+        video: 'video-green-energy-park.mp4',
         art: 'chip',
         tags: ['IoT', 'Web/mobile app', 'Data acquisition', 'Real-time dashboard'],
         title: {
@@ -733,7 +752,10 @@ const projects = [
                 'Tests et validation sur site',
                 'Réduction de 70 % du temps de collecte manuelle'
             ]
-        }
+        },
+        gallery: [
+            { src: 'green-energy-park-serre.jpg', caption: { en: 'The greenhouse model with its sensors and the live monitoring dashboard', fr: 'La maquette de serre, ses capteurs et le tableau de bord de supervision en direct' } }
+        ]
     },
     {
         id: 'point-cloud-3d',
