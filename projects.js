@@ -578,7 +578,8 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: '',
+        image: 'staubli-tp-robot.jpg',
+        imageFit: 'contain',
         art: 'arm',
         tags: ['Stäubli TX60', 'VAL3', 'Stäubli Robotics Suite', 'Pick-and-place'],
         title: {
@@ -597,14 +598,20 @@ const projects = [
             en: [
                 'Programmed the Stäubli TX60 6-axis robot in VAL3',
                 'Used the teach pendant and Stäubli Robotics Suite to define and simulate motions',
-                'Built trajectory and pick-and-place programs'
+                'Built trajectory and pick-and-place programs',
+                'Wrote a VAL3 program with two nested loops (4 × 5) that offsets the pick and place points by 50 mm on each pass, closing and opening the gripper at each point'
             ],
             fr: [
                 'Programmation du robot 6 axes Stäubli TX60 en VAL3',
                 'Utilisation du pupitre et de Stäubli Robotics Suite pour définir et simuler les mouvements',
-                'Réalisation de programmes de trajectoires et de pick-and-place'
+                'Réalisation de programmes de trajectoires et de pick-and-place',
+                'Écriture d’un programme VAL3 à deux boucles imbriquées (4 × 5) qui décale de 50 mm les points de prise et de dépose à chaque passage, avec fermeture et ouverture de la pince à chaque point'
             ]
-        }
+        },
+        gallery: [
+            { src: 'staubli-tp-robot.jpg', caption: { en: 'The Stäubli TX60 arm with its gripper above the plates', fr: 'Le bras Stäubli TX60 et sa pince au-dessus des plaques' } },
+            { src: 'staubli-tp-code-val3.jpg', caption: { en: 'VAL3 program: two nested loops and offset approach points', fr: 'Programme VAL3 : deux boucles imbriquées et points d’approche décalés' } }
+        ]
     },
     {
         id: 'dc-motor-speed-control',
@@ -705,7 +712,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: '',
+        image: 'green-energy-park-serre.jpg',
+        video: 'video-green-energy-park.mp4',
         art: 'chip',
         tags: ['IoT', 'Web/mobile app', 'Data acquisition', 'Real-time dashboard'],
         title: {
@@ -733,7 +741,10 @@ const projects = [
                 'Tests et validation sur site',
                 'Réduction de 70 % du temps de collecte manuelle'
             ]
-        }
+        },
+        gallery: [
+            { src: 'green-energy-park-serre.jpg', caption: { en: 'The greenhouse model with its sensors and the live monitoring dashboard', fr: 'La maquette de serre, ses capteurs et le tableau de bord de supervision en direct' } }
+        ]
     },
     {
         id: 'point-cloud-3d',
