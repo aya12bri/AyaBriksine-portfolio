@@ -1112,8 +1112,8 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: 'video-ur3-tp.jpg',
-        video: 'video-ur3-tp.mp4',
+        image: 'video-ur3-cobot.jpg',
+        video: 'video-ur3-cobot.mp4',
         tags: ['Universal Robots UR3', 'PolyScope', 'Robotiq Hand-E', 'Pick & Place', 'Palettisation', 'Cinématique', 'Denavit-Hartenberg'],
         title: {
             en: 'UR3 Collaborative Robot: Pick & Place, Speed Profiles and Palletizing',
