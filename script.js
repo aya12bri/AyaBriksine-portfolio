@@ -970,3 +970,17 @@ function addKinArm(host, opts) {
         setTimeout(() => { nodes.forEach(n => n.remove()); frame.classList.remove('bump'); }, 1500);
     });
 })();
+
+
+/* ---------- A kinematic arm also works behind the Expertise and Skills sections ---------- */
+(function () {
+    [['services', 'right:1%;bottom:2%', 1], ['skills', 'left:1%;bottom:3%', 3.5]].forEach(([id, pos, phase]) => {
+        const box = document.querySelector('#' + id + ' .bg-symbols');
+        if (!box) return;
+        const host = document.createElement('div');
+        host.className = 'kin-host kin-sec';
+        host.style.cssText = pos;
+        box.appendChild(host);
+        addKinArm(host, { phase });
+    });
+})();

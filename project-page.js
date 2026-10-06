@@ -59,6 +59,8 @@
         const pdfLink = p.pdf
             ? `<a href="${escapeHTML(p.pdf)}" download class="btn btn-primary"><i class='bx bx-download'></i> ${t.pdf[lang]}</a>`
             : '';
+        const downloadLinks = (p.downloads || []).map(d =>
+            `<a href="${escapeHTML(d.file)}" download class="btn btn-outline"><i class='bx ${escapeHTML(d.icon || 'bx-download')}'></i> ${escapeHTML(d.label[lang])}</a>`).join('');
         const demoLink = p.demo
             ? `<a href="${escapeHTML(p.demo)}" target="_blank" rel="noopener" class="btn btn-outline"><i class='bx bx-play-circle'></i> ${t.demo[lang]}</a>`
             : '';
@@ -84,7 +86,7 @@
                         <li><i class='bx bx-calendar'></i> ${escapeHTML(p.year)}</li>
                         <li><i class='bx bx-buildings'></i> ${escapeHTML(p.context[lang])}</li>
                     </ul>
-                    <div class="hero-buttons">${pdfLink}${githubLink}${demoLink}</div>
+                    <div class="hero-buttons">${pdfLink}${downloadLinks}${githubLink}${demoLink}</div>
                 </div>
             </section>
 

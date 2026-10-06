@@ -21,6 +21,7 @@
                  button until the link is added). Leave it out for projects with no
                  code: then no GitHub button is shown.
      pdf         optional PDF file to download from the project page, e.g. "report.pdf"
+     downloads   optional list of files to download: [ { file: "script.m", icon: "bx-code-alt", label: { en: "...", fr: "..." } } ]
      demo        optional link to a video or live demo, or ""
      video       optional video file shown in a player on the project page, e.g. "robot.mp4"
                  (use "image" for its picture on the card)
@@ -162,6 +163,10 @@ const projects = [
     },
     {
         id: 'drone-modelling-control',
+        downloads: [
+            { file: 'drone-tp-observateur-commande.m', icon: 'bx-code-alt', label: { en: 'Download the MATLAB script (.m)', fr: 'Télécharger le script MATLAB (.m)' } },
+            { file: 'drone-tp-question5-simulink.sltx', icon: 'bx-chip', label: { en: 'Download the Simulink model (.sltx)', fr: 'Télécharger le modèle Simulink (.sltx)' } }
+        ],
         category: 'control',
         icon: 'bx-navigation',
         year: '2026',
@@ -200,7 +205,17 @@ const projects = [
                 'Conception et test d’un observateur linéaire et d’un observateur non linéaire',
                 'Retour d’état pour stabiliser l’angle, complété pour obtenir une erreur statique nulle'
             ]
-        }
+        },
+        results: {
+            en: 'The linearised models match the non-linear system close to each equilibrium point, and the simulations show how the non-linear response drifts away from the linear one as the angle grows (θ = 0°, 10°, 20°).',
+            fr: 'Les modèles linéarisés reproduisent bien le système non linéaire près de chaque point d’équilibre, et les simulations montrent comment la réponse non linéaire s’écarte de la réponse linéaire quand l’angle augmente (θ = 0°, 10°, 20°).'
+        },
+        gallery: [
+            { src: 'drone-bode-comparaison.png', caption: { en: 'Frequency responses of the linearised models for θ = 0°, 10° and 20°', fr: 'Réponses fréquentielles des modèles linéarisés pour θ = 0°, 10° et 20°' } },
+            { src: 'drone-simulink-theta-0.png', caption: { en: 'Simulink scopes: non-linear model (red) vs linear model (blue) around θ = 0°', fr: 'Oscilloscopes Simulink : modèle non linéaire (rouge) et modèle linéaire (bleu) autour de θ = 0°' } },
+            { src: 'drone-simulink-theta-10.png', caption: { en: 'Same comparison around θ = 10°', fr: 'Même comparaison autour de θ = 10°' } },
+            { src: 'drone-simulink-theta-20.png', caption: { en: 'Same comparison around θ = 20°', fr: 'Même comparaison autour de θ = 20°' } }
+        ]
     },
     {
         id: 'reservoirs-s7-1200',
@@ -553,6 +568,7 @@ const projects = [
     },
     {
         id: 'staubli-tx60',
+        pdf: 'rapport-tp-staubli-tx60l.pdf',
         category: 'robotics',
         icon: 'bx-cog',
         year: '2026',
