@@ -715,6 +715,11 @@ const projects = [
     },
     {
         id: 'greenhouse-monitoring',
+        pdf: 'memoire-pfe-serre-solaire-iot.pdf',
+        downloads: [
+            { file: 'pfe-schema-synoptique.pdf', icon: 'bx-sitemap', label: { en: 'Block diagram (PDF)', fr: 'Schéma synoptique (PDF)' } },
+            { file: 'pfe-circuit-prototype.pdf', icon: 'bx-chip', label: { en: 'Prototype circuit (PDF)', fr: 'Circuit du prototype (PDF)' } }
+        ],
         category: 'iot',
         icon: 'bx-leaf',
         year: '2022',
@@ -724,7 +729,7 @@ const projects = [
         image: 'green-energy-park-serre.jpg',
         video: 'video-green-energy-park.mp4',
         art: 'chip',
-        tags: ['IoT', 'Web/mobile app', 'Data acquisition', 'Real-time dashboard'],
+        tags: ['IoT', 'MQTT', 'Node-RED', 'MySQL', 'ESP8266 (NodeMCU)', 'DHT22', 'SysML', 'Web/mobile app', 'Real-time dashboard'],
         title: {
             en: 'Greenhouse Monitoring Application',
             fr: 'Application de supervision de serre'
@@ -739,20 +744,35 @@ const projects = [
         },
         highlights: {
             en: [
-                'Data acquisition and storage from the greenhouse sensors',
-                'Real-time visualisation and operator interface',
-                'On-site testing and validation',
+                'Final-year project of the professional bachelor’s degree at Green Energy Park (IRESEN / UM6P): a web and mobile platform to monitor, control and log a solar-powered sewage-sludge drying greenhouse',
+                'Functional analysis (SADT, FAST) and SysML modelling (requirement and use-case diagrams): eight requirements, from real-time monitoring to remote control of windows and fans and data storage',
+                'Built a prototype greenhouse: two DHT22 sensors (inside and outside), an SG90 servomotor for the window, an LCD screen and a NodeMCU ESP8266 programmed in the Arduino IDE; the fan is simulated by an LED',
+                'Chose the architecture ESP8266 → MQTT (Mosquitto broker) → Node-RED → MySQL, with a real-time dashboard on web and mobile and automatic or manual window control',
+                'Validated the full chain on the prototype (measurement every 2 s, automatic window opening on humidity, data archived in MySQL), then sized the real system: two boards (greenhouse and compound parabolic collector field), industrial hardware and four supervision pages',
                 'Cut manual data collection time by 70%'
             ],
             fr: [
-                'Acquisition et stockage des données des capteurs de la serre',
-                'Visualisation en temps réel et interface opérateur',
-                'Tests et validation sur site',
+                'Projet de fin d’études de la licence professionnelle au Green Energy Park (IRESEN / UM6P) : une plateforme web et mobile de suivi, de contrôle et d’enregistrement des données d’une serre de séchage solaire des boues d’épuration',
+                'Analyse fonctionnelle (SADT, FAST) et modélisation SysML (diagrammes des exigences et des cas d’utilisation) : huit exigences, du suivi en temps réel au pilotage à distance des fenêtres et des ventilateurs et au stockage des données',
+                'Réalisation d’un prototype de serre : deux capteurs DHT22 (intérieur et extérieur), un servomoteur SG90 pour la fenêtre, un écran LCD et un NodeMCU ESP8266 programmé sous Arduino IDE ; le ventilateur est simulé par une LED',
+                'Choix de l’architecture ESP8266 → MQTT (courtier Mosquitto) → Node-RED → MySQL, avec un tableau de bord temps réel web et mobile et un contrôle automatique ou manuel des fenêtres',
+                'Validation de toute la chaîne sur le prototype (mesure toutes les 2 s, ouverture automatique de la fenêtre selon l’humidité, données archivées dans MySQL), puis dimensionnement du système réel : deux cartes (serre et champ de capteurs paraboliques composés), matériel industriel et quatre pages de supervision',
                 'Réduction de 70 % du temps de collecte manuelle'
             ]
         },
+        results: {
+            en: 'The sensor → ESP8266 → MQTT → Node-RED → MySQL chain was validated under real operating conditions on the prototype, and the architecture was extended to the real greenhouse and its collector field. Next steps are commissioning on site, industrial humidity sensors and a secured platform (MQTT authentication, TLS).',
+            fr: 'La chaîne capteur → ESP8266 → MQTT → Node-RED → MySQL a été validée en conditions réelles de fonctionnement sur le prototype, et l’architecture a été étendue à la serre réelle et à son champ de capteurs. Les suites prévues sont la mise en service sur site, des capteurs d’humidité industriels et une plateforme sécurisée (authentification MQTT, TLS).'
+        },
         gallery: [
-            { src: 'green-energy-park-serre.jpg', caption: { en: 'The greenhouse model with its sensors and the live monitoring dashboard', fr: 'La maquette de serre, ses capteurs et le tableau de bord de supervision en direct' } }
+            { src: 'green-energy-park-serre.jpg', caption: { en: 'The greenhouse model with its sensors and the live monitoring dashboard', fr: 'La maquette de serre, ses capteurs et le tableau de bord de supervision en direct' } },
+            { src: 'pfe-serre-3d-face.png', caption: { en: '3D model of the drying greenhouse and its collector field: front view', fr: 'Modèle 3D de la serre de séchage et de son champ de capteurs : vue de face' } },
+            { src: 'pfe-serre-3d-perspective.png', caption: { en: '3D model: greenhouse, ducts and compound parabolic collectors', fr: 'Modèle 3D : serre, gaines et capteurs paraboliques composés' } },
+            { src: 'pfe-sysml-exigences.png', caption: { en: 'SysML requirement diagram of the intelligent greenhouse', fr: 'Diagramme des exigences SysML de la serre intelligente' } },
+            { src: 'pfe-cas-utilisation.png', caption: { en: 'Use-case diagram of the monitoring and control platform', fr: 'Diagramme des cas d’utilisation de la plateforme de suivi et de contrôle' } },
+            { src: 'pfe-organigramme.png', caption: { en: 'Operating flowchart: measurement, automatic or manual window opening, shutdown', fr: 'Organigramme de fonctionnement : mesure, ouverture automatique ou manuelle de la fenêtre, arrêt' } },
+            { src: 'pfe-circuit-prototype.png', caption: { en: 'Prototype wiring: NodeMCU ESP8266, two DHT22, SG90 servomotor, LCD screen and LED', fr: 'Câblage du prototype : NodeMCU ESP8266, deux DHT22, servomoteur SG90, écran LCD et LED' } },
+            { src: 'pfe-schema-synoptique.png', caption: { en: 'Block diagram of the real system: greenhouse and collector-field boards, MQTT broker, Node-RED and database', fr: 'Schéma synoptique du système réel : cartes de la serre et du champ de capteurs, courtier MQTT, Node-RED et base de données' } }
         ]
     },
     {
