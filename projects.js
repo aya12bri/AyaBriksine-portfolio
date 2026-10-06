@@ -268,8 +268,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: 'moto-modele-cao.png',
-        imageFit: 'contain',
+        image: 'moto-photo-recadree.jpg',
+        video: 'video-moto-equilibre.mp4',
         tags: ['MATLAB', 'Simulink', 'Simscape', 'Stateflow', 'CAO', 'Contrôleur PD', 'IMU BNO055', 'Volant d’inertie', 'Travail en binôme'],
         title: {
             en: 'Self-Balancing Motorcycle with an Inertia Wheel',
@@ -308,6 +308,7 @@ const projects = [
             fr: 'Cinq objectifs sur six atteints : modèle mathématique complet, contrôleur PD fonctionnel, simulations Simulink et CAO, et machine à états validée sur les deux modèles. La moto réelle n’a pas encore pu être équilibrée.'
         },
         gallery: [
+            { src: 'moto-photo-recadree.jpg', caption: { en: 'The self-balancing motorcycle with its inertia wheel', fr: 'La moto auto-équilibrée et son volant d’inertie' } },
             'moto-schema-pendule.png',
             'moto-simulink-modele.png',
             'moto-boucle-ouverte.png',
@@ -1102,6 +1103,114 @@ const projects = [
             { src: 'signaux-fsk-filtres.png', caption: { en: 'Signals filtered around f0 and f1', fr: 'Signaux filtrés autour de f0 et f1' } },
             { src: 'signaux-fsk-enveloppes.png', caption: { en: 'Smoothed envelopes of f0 and f1', fr: 'Enveloppes lissées de f0 et f1' } },
             { src: 'signaux-fsk-message.png', caption: { en: 'Original message (red) and reconstructed message (blue)', fr: 'Message original (rouge) et message reconstruit (bleu)' } }
+        ]
+    },
+    {
+        id: 'ur3-palletizing-lab',
+        pdf: 'rapport-tp-ur3.pdf',
+        category: 'robotics',
+        icon: 'bx-joystick',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: 'video-ur3-cobot.jpg',
+        video: 'video-ur3-cobot.mp4',
+        tags: ['Universal Robots UR3', 'PolyScope', 'Robotiq Hand-E', 'Pick & Place', 'Palettisation', 'Cinématique', 'Denavit-Hartenberg'],
+        title: {
+            en: 'UR3 Collaborative Robot: Pick & Place, Speed Profiles and Palletizing',
+            fr: 'Robot collaboratif UR3 : Pick & Place, lois de vitesse et palettisation'
+        },
+        context: {
+            en: 'Master MARS – Université d’Orléans, collaborative robotics lab (Sept.–Oct. 2026)',
+            fr: 'Master MARS – Université d’Orléans, TP de robotique collaborative (sept.–oct. 2026)'
+        },
+        summary: {
+            en: 'Programming a Universal Robots UR3 with a Robotiq Hand-E gripper in PolyScope, from first jogging to a cell where two robots exchange parts through a conveyor.',
+            fr: 'Programmation d’un Universal Robots UR3 équipé d’une pince Robotiq Hand-E sous PolyScope, de la prise en main jusqu’à une cellule où deux robots échangent des pièces par un tapis convoyeur.'
+        },
+        highlights: {
+            en: [
+                'Jogged the robot in joint and operational (TCP) modes, used free-drive to teach points, and found that the Function menu must be on “Base” to read real TCP coordinates',
+                'Computed the flange position for θ1 = … = θ6 = 0 from the manufacturer Denavit-Hartenberg parameters (X ≈ −456.9 mm, Y ≈ −194.3 mm, Z ≈ 66.6 mm) and drew the kinematic diagram',
+                'Programmed the standard Pick & Place cycle (12 in. stroke, 1 in. lift) and derived its triangular speed profile: theoretical cycle time 3.49 s, mean speed about 204 mm/s, and cycle time proportional to 1/√a',
+                'Integrated the Hand-E gripper (close at 0 mm, open at 40 mm) in a program mixing linear moves (250 mm/s, 1200 mm/s²) and a joint-space transfer, and recorded the joint configurations',
+                'Palletized parts from a feeding chute into the red pallet with the PolyScope pallet wizard',
+                'Dropped parts on a conveyor and synchronised two robots through I/O signals, then listed ways to reduce the cycle time'
+            ],
+            fr: [
+                'Pilotage manuel en mode articulaire et opérationnel (PCO), co-manipulation pour apprendre les points, et constat qu’il faut régler « Fonction » sur « Base » pour lire les vraies coordonnées du PCO',
+                'Calcul de la position de la bride pour θ1 = … = θ6 = 0 à partir des paramètres de Denavit-Hartenberg du constructeur (X ≈ −456,9 mm, Y ≈ −194,3 mm, Z ≈ 66,6 mm) et schéma cinématique',
+                'Programmation du cycle Pick & Place standard (course de 12 pouces, levée de 1 pouce) et loi de vitesse triangulaire : temps de cycle théorique 3,49 s, vitesse moyenne d’environ 204 mm/s, temps de cycle proportionnel à 1/√a',
+                'Intégration de la pince Hand-E (fermeture à 0 mm, ouverture à 40 mm) dans un programme mêlant déplacements linéaires (250 mm/s, 1200 mm/s²) et transfert articulaire, avec relevé des configurations articulaires',
+                'Palettisation de pièces issues d’une goulotte dans la palette rouge avec l’assistant palette de PolyScope',
+                'Dépose des pièces sur un tapis convoyeur et synchronisation de deux robots par signaux d’entrées/sorties, puis pistes pour réduire le temps de cycle'
+            ]
+        },
+        results: {
+            en: 'Theory and practice agree: with short strokes the speed set-point is never reached, so only the acceleration sets the cycle time, and the lab ends with a working palletizing and two-robot transfer cell.',
+            fr: 'Théorie et pratique concordent : sur de courtes distances la consigne de vitesse n’est jamais atteinte, seule l’accélération fixe le temps de cycle, et le TP aboutit à une cellule de palettisation et de transfert entre deux robots.'
+        },
+        gallery: [
+            { src: 'ur3-tp-cellule.jpg', caption: { en: 'The UR3 cell: feeding chute, robot, red and grey pallets', fr: 'La cellule UR3 : goulotte, robot, palettes rouge et grise' } },
+            { src: 'ur3-tp-robot.jpg', caption: { en: 'The UR3 collaborative robot on its aluminium table', fr: 'Le robot collaboratif UR3 sur sa table en profilés' } },
+            { src: 'ur3-tp-polyscope-deplacement.jpg', caption: { en: 'PolyScope Move tab: TCP arrows and joint values', fr: 'Onglet Déplacement de PolyScope : flèches du PCO et valeurs des articulations' } },
+            { src: 'ur3-tp-pince-fermeture.jpg', caption: { en: 'Gripper action: closing at 0 mm', fr: 'Action de pince : fermeture à 0 mm' } },
+            { src: 'ur3-tp-pince-ouverture.jpg', caption: { en: 'Gripper action: opening at 40 mm', fr: 'Action de pince : ouverture à 40 mm' } },
+            { src: 'ur3-tp-prise-piece.jpg', caption: { en: 'The robot picking a part', fr: 'Le robot en train de saisir une pièce' } },
+            { src: 'ur3-tp-palettisation.jpg', caption: { en: 'Palletizing in the red pallet', fr: 'Palettisation dans la palette rouge' } }
+        ]
+    },
+    {
+        id: 'fanuc-m1ia-pick-place',
+        pdf: 'rapport-tp-fanuc.pdf',
+        category: 'robotics',
+        icon: 'bx-cog',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: 'video-fanuc-tp.jpg',
+        video: 'video-fanuc-tp.mp4',
+        tags: ['FANUC M-1iA/0.5AL', 'Robot Delta', 'Teach Pendant', 'Pick & Place', 'Ventouse', 'Programmation robot'],
+        title: {
+            en: 'FANUC M-1iA/0.5AL Delta Robot: Teach Pendant and Pick & Place Cycle',
+            fr: 'Robot Delta FANUC M-1iA/0.5AL : Teach Pendant et cycle Pick & Place'
+        },
+        context: {
+            en: 'Polytech Orléans – IUT de Bourges, M2 Automatique, Robotique et Signal (2026–2027)',
+            fr: 'Polytech Orléans – IUT de Bourges, M2 Automatique, Robotique et Signal (2026–2027)'
+        },
+        summary: {
+            en: 'Programming a FANUC M-1iA/0.5AL parallel Delta robot with its Teach Pendant: teaching six points and running a suction-cup Pick & Place cycle.',
+            fr: 'Programmation d’un robot parallèle Delta FANUC M-1iA/0.5AL avec son Teach Pendant : apprentissage de six points et cycle Pick & Place avec ventouse.'
+        },
+        highlights: {
+            en: [
+                'Analysed the Delta structure (three parallel arms with parallelogram forearms keep the platform horizontal) and compared it with a serial robot',
+                'Learned the Teach Pendant: SHIFT and deadman switch, coordinate systems (JOINT, WORLD, TOOL, USER) and the T1 test mode limited to 250 mm/s',
+                'Taught six points (P[1] to P[6]) and wrote the TESTPNS program: joint moves at 100 % FINE, suction on RO[2], a 2 s wait for the vacuum and a final linear retreat at 4000 mm/s',
+                'Explained each line of the program and the choice of motion types: joint moves for speed, a linear move to lift clear of the part, FINE stops at pick and place points',
+                'Ran the program step by step, then continuously, and checked that every part was picked and placed in the green tray',
+                'Discussed improvements: FINE stops at pass-through points and the T1 speed limit slow the cycle down'
+            ],
+            fr: [
+                'Analyse de la structure Delta (trois bras parallèles à avant-bras en parallélogramme qui gardent la nacelle horizontale) et comparaison avec un robot sériel',
+                'Prise en main du Teach Pendant : SHIFT et interrupteur d’homme mort, systèmes de coordonnées (JOINT, WORLD, TOOL, USER) et mode de test T1 limité à 250 mm/s',
+                'Apprentissage de six points (P[1] à P[6]) et écriture du programme TESTPNS : mouvements articulaires à 100 % FINE, ventouse commandée par RO[2], attente de 2 s pour le vide et dégagement linéaire final à 4000 mm/s',
+                'Analyse ligne par ligne du programme et choix des types de mouvement : articulaire pour la vitesse, linéaire pour remonter sans accrocher la pièce, arrêts FINE aux points de prise et de dépose',
+                'Exécution pas à pas puis en continu, avec vérification que chaque pièce est saisie et déposée dans le plateau vert',
+                'Pistes d’amélioration : les arrêts FINE aux points de passage et la limite de vitesse du mode T1 ralentissent le cycle'
+            ]
+        },
+        results: {
+            en: 'The Pick & Place cycle ran correctly: every part was picked by suction and placed in a tray cell, and the platform stayed horizontal throughout, as the parallelogram structure predicts.',
+            fr: 'Le cycle Pick & Place s’est déroulé correctement : chaque pièce a été saisie par ventouse et déposée dans une alvéole, et la nacelle est restée horizontale tout du long, comme le prévoit la structure en parallélogramme.'
+        },
+        gallery: [
+            { src: 'fanuc-tp-prise.jpg', caption: { en: 'Picking the part with the suction cup', fr: 'Prise de la pièce par la ventouse' } },
+            { src: 'fanuc-tp-programme.jpg', caption: { en: 'The TESTPNS program on the Teach Pendant', fr: 'Le programme TESTPNS sur le Teach Pendant' } },
+            { src: 'fanuc-tp-transfert.jpg', caption: { en: 'Transfer towards the green tray', fr: 'Transfert vers le plateau vert' } },
+            { src: 'fanuc-tp-depose.jpg', caption: { en: 'Placing the part in a tray cell', fr: 'Dépose de la pièce dans une alvéole' } },
+            { src: 'fanuc-tp-retour.jpg', caption: { en: 'Back towards the pick area', fr: 'Retour vers la zone de prise' } }
         ]
     }
 ];
