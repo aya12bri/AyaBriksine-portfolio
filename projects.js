@@ -262,7 +262,7 @@ const projects = [
     },
     {
         id: 'self-balancing-motorcycle',
-        category: 'robotics',
+        category: 'control',
         icon: 'bx-cycling',
         year: '2026',
         github: '',
