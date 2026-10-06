@@ -19,6 +19,7 @@
         tools: { en: 'Tools & skills', fr: 'Outils & compétences' },
         github: { en: 'View code on GitHub', fr: 'Voir le code sur GitHub' },
         soon: { en: 'Code coming soon on GitHub', fr: 'Code bientôt en ligne sur GitHub' },
+        pdf: { en: 'Download the report (PDF)', fr: 'Télécharger le compte rendu (PDF)' },
         demo: { en: 'Watch the demo', fr: 'Voir la démo' },
         prev: { en: 'Previous project', fr: 'Projet précédent' },
         next: { en: 'Next project', fr: 'Projet suivant' },
@@ -55,6 +56,9 @@
             : p.github
             ? `<a href="${escapeHTML(p.github)}" target="_blank" rel="noopener" class="btn btn-primary"><i class='bx bxl-github'></i> ${t.github[lang]}</a>`
             : `<span class="btn btn-ghost"><i class='bx bxl-github'></i> ${t.soon[lang]}</span>`;
+        const pdfLink = p.pdf
+            ? `<a href="${escapeHTML(p.pdf)}" download class="btn btn-primary"><i class='bx bx-download'></i> ${t.pdf[lang]}</a>`
+            : '';
         const demoLink = p.demo
             ? `<a href="${escapeHTML(p.demo)}" target="_blank" rel="noopener" class="btn btn-outline"><i class='bx bx-play-circle'></i> ${t.demo[lang]}</a>`
             : '';
@@ -80,7 +84,7 @@
                         <li><i class='bx bx-calendar'></i> ${escapeHTML(p.year)}</li>
                         <li><i class='bx bx-buildings'></i> ${escapeHTML(p.context[lang])}</li>
                     </ul>
-                    <div class="hero-buttons">${githubLink}${demoLink}</div>
+                    <div class="hero-buttons">${pdfLink}${githubLink}${demoLink}</div>
                 </div>
             </section>
 
