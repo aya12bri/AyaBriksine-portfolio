@@ -514,6 +514,7 @@ const projects = [
     },
     {
         id: 'obstacle-avoidance-robot',
+        pdf: 'rapport-projet-evitement-obstacles.pdf',
         category: 'robotics',
         icon: 'bx-radar',
         year: '2025 – 2026',
@@ -976,6 +977,112 @@ const projects = [
             { src: 'electro-transfo-analyseur-vide.jpg', caption: { en: 'Values recorded during the no-load test', fr: 'Valeurs relevées lors de l’essai à vide' } },
             { src: 'electro-transfo-hysteresis.jpg', caption: { en: 'Hysteresis cycle of the core on the analyser', fr: 'Cycle d’hystérésis du noyau sur l’analyseur' } },
             { src: 'electro-transfo-court-circuit.jpg', caption: { en: 'Values recorded during the short-circuit test', fr: 'Valeurs relevées lors de l’essai en court-circuit' } }
+        ]
+    },
+    {
+        id: 'square-wave-emd-vmd',
+        pdf: 'rapport-tp-signal-carre-emd-vmd.pdf',
+        category: 'signal',
+        icon: 'bx-pulse',
+        year: '2026',
+        github: '',
+        code: true,
+        demo: '',
+        image: 'signaux-signal-carre-filtre.png',
+        imageFit: 'contain',
+        tags: ['MATLAB', 'Traitement du signal', 'FFT', 'Filtrage', 'EMD', 'VMD', 'Chirp'],
+        title: {
+            en: 'Square Wave, Filtering and Time-Frequency Decomposition (EMD, VMD)',
+            fr: 'Signal carré, filtrage et décomposition temps-fréquence (EMD, VMD)'
+        },
+        context: {
+            en: 'Polytech Orléans – Signal processing lab work, supervised by Mr. Hervé Lailheugue',
+            fr: 'Polytech Orléans – TP de traitement du signal, encadré par M. Hervé Lailheugue'
+        },
+        summary: {
+            en: 'Spectral analysis and filtering of a square wave, then separation of spectral components with classical filtering, EMD and VMD, including a non-stationary audio signal (chirp + cosine) with and without noise.',
+            fr: 'Analyse spectrale et filtrage d’un signal carré, puis séparation de composantes spectrales par filtrage classique, EMD et VMD, avec un signal audio non stationnaire (chirp + cosinus) avec et sans bruit.'
+        },
+        highlights: {
+            en: [
+                'Exercise 1: generated a ±0.5 V square wave in MATLAB (T = 1 s, fs = 1000 Hz) and showed with the FFT that only odd harmonics are present, decreasing as 1/n (fundamental 2A/π ≈ 0.318 V)',
+                'Isolated the 1 Hz fundamental with an ideal band-pass filter in the frequency domain (0.5–1.5 Hz) and recovered it even when the square wave was buried in Gaussian noise (σ² = 1)',
+                'Exercise 2: separated two cosines (1 Hz and 5 Hz) with low-pass and band-pass filters, then with EMD (two IMFs) and VMD (K = 2 modes), and discussed mode mixing when frequencies get close',
+                'Exercise 3: analysed an audio signal made of a chirp (4 to 12 kHz, fs = 44.1 kHz) plus a 4 kHz cosine: a band-pass filter cannot isolate the cosine because the chirp crosses the same band',
+                'Added Gaussian noise to the audio signal and compared the spectra and the filtering results before and after noise'
+            ],
+            fr: [
+                'Exercice 1 : génération d’un signal carré ±0,5 V sous MATLAB (T = 1 s, fs = 1000 Hz) et mise en évidence par FFT des seules harmoniques impaires, décroissantes en 1/n (fondamentale 2A/π ≈ 0,318 V)',
+                'Isolement de la fondamentale à 1 Hz par un filtre passe-bande idéal dans le domaine fréquentiel (0,5–1,5 Hz), y compris lorsque le signal carré est noyé dans un bruit gaussien (σ² = 1)',
+                'Exercice 2 : séparation de deux cosinusoïdes (1 Hz et 5 Hz) par filtres passe-bas et passe-bande, puis par EMD (deux IMF) et VMD (K = 2 modes), avec discussion du mode mixing quand les fréquences se rapprochent',
+                'Exercice 3 : analyse d’un signal audio composé d’un chirp (4 à 12 kHz, fs = 44,1 kHz) et d’une cosinusoïde à 4 kHz : un filtre passe-bande ne peut pas isoler la cosinusoïde car le chirp traverse la même bande',
+                'Ajout d’un bruit gaussien au signal audio et comparaison des spectres et des résultats de filtrage avant et après bruit'
+            ]
+        },
+        results: {
+            en: 'Classical filtering is simple and effective for stationary signals with well-separated frequencies, even in noise, but it fails on non-stationary or overlapping components, where adaptive methods such as EMD and VMD are more appropriate.',
+            fr: 'Le filtrage classique est simple et efficace pour des signaux stationnaires à fréquences bien séparées, même bruités, mais il échoue sur des composantes non stationnaires ou qui se chevauchent, où les méthodes adaptatives comme l’EMD et la VMD sont mieux adaptées.'
+        },
+        gallery: [
+            { src: 'signaux-signal-carre.png', caption: { en: 'Square wave: T = 1 s, amplitude ±0.5 V', fr: 'Signal carré : T = 1 s, amplitude ±0,5 V' } },
+            { src: 'signaux-signal-carre-spectre.png', caption: { en: 'Spectrum of the square wave: odd harmonics only', fr: 'Spectre du signal carré : harmoniques impaires uniquement' } },
+            { src: 'signaux-signal-carre-filtre.png', caption: { en: 'Square wave and its filtered fundamental (pure 1 Hz sine)', fr: 'Signal carré et sa fondamentale filtrée (sinusoïde pure à 1 Hz)' } },
+            { src: 'signaux-signal-carre-bruite.png', caption: { en: 'Noisy square wave (σ² = 1) and result after filtering', fr: 'Signal carré bruité (σ² = 1) et résultat après filtrage' } },
+            { src: 'signaux-separation-composantes.png', caption: { en: 'Separation of the 1 Hz and 5 Hz components', fr: 'Séparation des composantes à 1 Hz et 5 Hz' } },
+            { src: 'signaux-chirp-filtrage.png', caption: { en: 'Chirp + 4 kHz cosine: the band-pass filter keeps part of the chirp', fr: 'Chirp + cosinusoïde à 4 kHz : le passe-bande conserve une partie du chirp' } },
+            { src: 'signaux-chirp-bruit-resultat.png', caption: { en: 'Audio signal: noisy signal and filtering results with and without noise', fr: 'Signal audio : signal bruité et résultats du filtrage sans et avec bruit' } }
+        ]
+    },
+    {
+        id: 'fsk-demodulation-matlab',
+        pdf: 'rapport-tp-demodulation-fsk.pdf',
+        category: 'signal',
+        icon: 'bx-pulse',
+        year: '2025',
+        github: '',
+        code: true,
+        demo: '',
+        image: 'signaux-fsk-spectre.png',
+        imageFit: 'contain',
+        tags: ['MATLAB', 'Modulation FSK', 'Filtre FIR', 'Détection d’enveloppe', 'Taux d’erreur binaire', 'Traitement du signal'],
+        title: {
+            en: 'Recovering a Noisy Binary Signal: FSK Demodulation in MATLAB',
+            fr: 'Récupération d’un signal binaire bruité : démodulation FSK sous MATLAB'
+        },
+        context: {
+            en: 'Polytech Orléans – Signal processing lab work, supervised by Mrs. Tinhinane Mehdi',
+            fr: 'Polytech Orléans – TP de traitement du signal, encadré par Mme Tinhinane Mehdi'
+        },
+        summary: {
+            en: 'Complete FSK demodulation chain on a noisy 500-bit message: spectral analysis, FIR band-pass filtering, envelope detection and bit-by-bit decision, with a 0 % bit error rate.',
+            fr: 'Chaîne complète de démodulation FSK d’un message bruité de 500 bits : analyse spectrale, filtrage passe-bande FIR, détection d’enveloppe et décision bit à bit, avec un taux d’erreur binaire nul.'
+        },
+        highlights: {
+            en: [
+                'Displayed the noisy signal (500 bits, 999,500 samples, Fs = 1999 Hz): the message is impossible to read in the time domain',
+                'Located the two FSK frequencies on the power spectrum with signalAnalyzer: f0 ≈ 277 Hz and f1 ≈ 522 Hz',
+                'Designed two FIR band-pass filters (fir1, order 50, ±50 Hz) around f0 and f1 and checked that the two filtered signals are complementary',
+                'Detected the envelopes with the absolute value followed by a moving average over one bit (1999 samples)',
+                'Decided each bit by comparing the mean envelopes and computed the bit error rate: 0 errors out of 500 bits (0.00 %); spotted and corrected an inverted encoding convention (f0 codes bit 1, f1 codes bit 0)'
+            ],
+            fr: [
+                'Affichage du signal bruité (500 bits, 999 500 échantillons, Fs = 1999 Hz) : le message est illisible dans le domaine temporel',
+                'Repérage des deux fréquences FSK sur le spectre de puissance avec signalAnalyzer : f0 ≈ 277 Hz et f1 ≈ 522 Hz',
+                'Conception de deux filtres passe-bande FIR (fir1, ordre 50, ±50 Hz) autour de f0 et f1 et vérification que les deux signaux filtrés sont complémentaires',
+                'Détection des enveloppes par valeur absolue puis moyenne glissante sur la durée d’un bit (1999 échantillons)',
+                'Décision bit à bit par comparaison des enveloppes moyennes et calcul du taux d’erreur binaire : 0 erreur sur 500 bits (0,00 %) ; détection et correction d’une convention de codage inversée (f0 code le bit 1, f1 code le bit 0)'
+            ]
+        },
+        results: {
+            en: 'The 500-bit message was recovered without any error from a signal that looked like pure noise: the bit error rate is 0.00 %.',
+            fr: 'Le message de 500 bits a été récupéré sans aucune erreur à partir d’un signal qui ressemblait à du bruit pur : le taux d’erreur binaire est de 0,00 %.'
+        },
+        gallery: [
+            { src: 'signaux-fsk-signal-bruite.png', caption: { en: 'Noisy signal, first 2 seconds', fr: 'Signal bruité, 2 premières secondes' } },
+            { src: 'signaux-fsk-spectre.png', caption: { en: 'Spectrum of the noisy signal: two peaks at f0 and f1', fr: 'Spectre du signal bruité : deux pics à f0 et f1' } },
+            { src: 'signaux-fsk-filtres.png', caption: { en: 'Signals filtered around f0 and f1', fr: 'Signaux filtrés autour de f0 et f1' } },
+            { src: 'signaux-fsk-enveloppes.png', caption: { en: 'Smoothed envelopes of f0 and f1', fr: 'Enveloppes lissées de f0 et f1' } },
+            { src: 'signaux-fsk-message.png', caption: { en: 'Original message (red) and reconstructed message (blue)', fr: 'Message original (rouge) et message reconstruit (bleu)' } }
         ]
     }
 ];
