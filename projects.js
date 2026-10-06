@@ -20,6 +20,7 @@
      code        true if the project has code to put on GitHub (shows a "Coming soon"
                  button until the link is added). Leave it out for projects with no
                  code: then no GitHub button is shown.
+     pdf         optional PDF file to download from the project page, e.g. "report.pdf"
      demo        optional link to a video or live demo, or ""
      video       optional video file shown in a player on the project page, e.g. "robot.mp4"
                  (use "image" for its picture on the card)
@@ -821,6 +822,7 @@ const projects = [
     },
     {
         id: 'dc-machine-lab',
+        pdf: 'rapport-tp-machine-courant-continu.pdf',
         category: 'electrotechnique',
         icon: 'bx-bolt-circle',
         year: '2026',
@@ -872,6 +874,7 @@ const projects = [
     },
     {
         id: 'induction-motor-lab',
+        pdf: 'rapport-tp-moteur-asynchrone.pdf',
         category: 'electrotechnique',
         icon: 'bx-bolt-circle',
         year: '2026',
@@ -923,6 +926,7 @@ const projects = [
     },
     {
         id: 'three-phase-transformer-lab',
+        pdf: 'rapport-tp-transformateur-triphase.pdf',
         category: 'electrotechnique',
         icon: 'bx-bolt-circle',
         year: '2026',
