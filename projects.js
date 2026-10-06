@@ -615,9 +615,7 @@ const projects = [
     },
     {
         id: 'dc-motor-speed-control',
-        downloads: [
-            { file: 'rapport-tp-asservissement-vitesse-mcc.pdf', icon: 'bx-file', label: { en: 'Group report (PDF)', fr: 'Compte rendu du groupe (PDF)' } }
-        ],
+        pdf: 'rapport-tp-asservissement-vitesse-mcc.pdf',
         category: 'control',
         icon: 'bx-tachometer',
         year: '2026',
