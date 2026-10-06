@@ -268,8 +268,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: 'moto-modele-cao.png',
-        imageFit: 'contain',
+        image: 'moto-photo.jpg',
+        video: 'video-moto-equilibre.mp4',
         tags: ['MATLAB', 'Simulink', 'Simscape', 'Stateflow', 'CAO', 'Contrôleur PD', 'IMU BNO055', 'Volant d’inertie', 'Travail en binôme'],
         title: {
             en: 'Self-Balancing Motorcycle with an Inertia Wheel',
@@ -308,6 +308,7 @@ const projects = [
             fr: 'Cinq objectifs sur six atteints : modèle mathématique complet, contrôleur PD fonctionnel, simulations Simulink et CAO, et machine à états validée sur les deux modèles. La moto réelle n’a pas encore pu être équilibrée.'
         },
         gallery: [
+            { src: 'moto-photo.jpg', caption: { en: 'The self-balancing motorcycle with its inertia wheel', fr: 'La moto auto-équilibrée et son volant d’inertie' } },
             'moto-schema-pendule.png',
             'moto-simulink-modele.png',
             'moto-boucle-ouverte.png',
