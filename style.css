@@ -3569,3 +3569,12 @@ html:not(.light-mode) .back-top {
         padding: 2px 0 6px;
     }
 }
+
+
+/* six certificates: three per row on wide screens */
+@media (min-width: 1000px) {
+    #certifications .card-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1160px;
+    }
+}
