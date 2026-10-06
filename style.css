@@ -1082,6 +1082,7 @@ h3 {
 .cat-iot         { --cat: #9aa1ad; --cat-soft: rgba(154, 161, 173, 0.18); }
 .cat-programming { --cat: #c0c5ce; --cat-soft: rgba(192, 197, 206, 0.18); }
 .cat-digital  { --cat: #878e9a; --cat-soft: rgba(135, 142, 154, 0.18); }
+.cat-electrotechnique { --cat: #cfd3db; --cat-soft: rgba(207, 211, 219, 0.18); }
 
 .light-mode .cat-robotics { --cat: #1b1d22; --cat-soft: rgba(27, 29, 34, 0.12); }
 .light-mode .cat-control  { --cat: #3d424c; --cat-soft: rgba(61, 66, 76, 0.12); }
@@ -1091,6 +1092,7 @@ h3 {
 .light-mode .cat-iot         { --cat: #646a75; --cat-soft: rgba(100, 106, 117, 0.12); }
 .light-mode .cat-programming { --cat: #3a3f48; --cat-soft: rgba(58, 63, 72, 0.12); }
 .light-mode .cat-digital  { --cat: #767c87; --cat-soft: rgba(118, 124, 135, 0.12); }
+.light-mode .cat-electrotechnique { --cat: #333841; --cat-soft: rgba(51, 56, 65, 0.12); }
 
 .project-body {
     display: flex;

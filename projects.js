@@ -12,7 +12,7 @@
 
    Fields:
      id          short name with no spaces, used in the page link
-     category    one of: "robotics", "control", "automation", "signal", "iot", "programming", "digital"
+     category    one of: "robotics", "control", "automation", "signal", "iot", "programming", "digital", "electrotechnique"
      icon        a Boxicons name (https://boxicons.com), e.g. "bx-bot"
      year        e.g. "2026"
      context     where / with whom (school, company, club…)
@@ -44,7 +44,8 @@ const projectCategories = {
     signal:      { en: 'Signal Processing', fr: 'Traitement du signal', icon: 'bx-pulse' },
     iot:         { en: 'IoT', fr: 'IoT', icon: 'bx-chip' },
     programming: { en: 'Programming', fr: 'Programmation', icon: 'bx-code-alt' },
-    digital:     { en: 'Digital Transformation', fr: 'Transformation digitale', icon: 'bx-line-chart' }
+    digital:     { en: 'Digital Transformation', fr: 'Transformation digitale', icon: 'bx-line-chart' },
+    electrotechnique: { en: 'Electrical Engineering', fr: 'Électrotechnique', icon: 'bx-bolt-circle' }
 };
 
 const projects = [
@@ -817,5 +818,158 @@ const projects = [
                 'Coordination des équipes techniques et métiers, reporting à la direction'
             ]
         }
+    },
+    {
+        id: 'dc-machine-lab',
+        category: 'electrotechnique',
+        icon: 'bx-bolt-circle',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: 'electro-mcc-caracteristique-vide.png',
+        imageFit: 'contain',
+        tags: ['DC machine', 'Separately excited', 'Test bench', 'Characterisation', 'Électrotechnique', 'Travail en binôme'],
+        title: {
+            en: 'DC Machine Lab: Generator and Motor Operation',
+            fr: 'TP machine à courant continu : fonctionnement génératrice et moteur'
+        },
+        context: {
+            en: 'Polytech Orléans – Electrical engineering lab (M1), pair work, supervised by Mr. Hervé Lailheugue',
+            fr: 'Polytech Orléans – TP d’électrotechnique (M1), en binôme, encadré par M. Hervé Lailheugue'
+        },
+        summary: {
+            en: 'Experimental study of a separately excited DC machine run first as a generator, then as a motor, to record and analyse its electrical and mechanical characteristics.',
+            fr: 'Étude expérimentale d’une machine à courant continu à excitation indépendante, utilisée d’abord en génératrice puis en moteur, pour relever et analyser ses caractéristiques électriques et mécaniques.'
+        },
+        highlights: {
+            en: [
+                'Generator mode: drove the machine with an induction motor and plotted the no-load curve Ea = f(Ie), showing magnetic saturation and hysteresis (rising vs. falling Ie)',
+                'Loaded the generator at Ie = 0.75 A (rated Ia = 6.8 A) and plotted Ua = f(Ia): voltage drop explained by the armature resistance',
+                'Plotted the regulation characteristic Ie = f(Ia) at constant Ua = 110 V',
+                'Measured the armature resistance (Ra ≈ 4.11 Ω against 4.2 Ω in the datasheet) and set up the generator energy balance Pu = Pa − Pc − Pj',
+                'Motor mode: power balance at 6 load points, computed Cu, Pu and efficiency from Ua·Ia − Ra·Ia² − (Pf + Pm), and plotted Cu = f(n), η = f(Pu) and Ia = f(Cu)'
+            ],
+            fr: [
+                'Mode génératrice : entraînement par un moteur asynchrone et tracé de la caractéristique à vide Ea = f(Ie), avec mise en évidence de la saturation magnétique et de l’hystérésis (Ie croissant puis décroissant)',
+                'Mise en charge de la génératrice à Ie = 0,75 A (Ia nominal = 6,8 A) et tracé de Ua = f(Ia) : chute de tension expliquée par la résistance d’induit',
+                'Tracé de la caractéristique de réglage Ie = f(Ia) à Ua constante = 110 V',
+                'Mesure de la résistance d’induit (Ra ≈ 4,11 Ω contre 4,2 Ω en annexe) et écriture du bilan énergétique de la génératrice Pu = Pa − Pc − Pj',
+                'Mode moteur : bilan de puissance sur 6 points de charge, calcul de Cu, Pu et du rendement à partir de Ua·Ia − Ra·Ia² − (Pf + Pm), et tracé de Cu = f(n), η = f(Pu) et Ia = f(Cu)'
+            ]
+        },
+        results: {
+            en: 'The measurements matched the theory: saturation and hysteresis in the no-load curve, a decreasing Ua = f(Ia), nearly constant speed whatever the load, a linear Ia = f(Cu) and an efficiency that rises with the useful power.',
+            fr: 'Les mesures sont cohérentes avec la théorie : saturation et hystérésis sur la caractéristique à vide, Ua = f(Ia) décroissante, vitesse quasi constante quelle que soit la charge, Ia = f(Cu) linéaire et rendement croissant avec la puissance utile.'
+        },
+        gallery: [
+            { src: 'electro-mcc-caracteristique-vide.png', caption: { en: 'No-load characteristic Ea = f(Ie): saturation and hysteresis', fr: 'Caractéristique à vide Ea = f(Ie) : saturation et hystérésis' } },
+            { src: 'electro-mcc-caracteristique-charge.png', caption: { en: 'Load characteristic Ua = f(Ia)', fr: 'Caractéristique en charge Ua = f(Ia)' } },
+            { src: 'electro-mcc-caracteristique-reglage.png', caption: { en: 'Regulation characteristic Ie = f(Ia) at Ua = 110 V', fr: 'Caractéristique de réglage Ie = f(Ia) à Ua = 110 V' } },
+            { src: 'electro-mcc-couple-vitesse.png', caption: { en: 'Motor mode: Cu = f(n)', fr: 'Mode moteur : Cu = f(n)' } },
+            { src: 'electro-mcc-rendement.png', caption: { en: 'Motor mode: efficiency η = f(Pu)', fr: 'Mode moteur : rendement η = f(Pu)' } },
+            { src: 'electro-mcc-courant-couple.png', caption: { en: 'Motor mode: Ia = f(Cu)', fr: 'Mode moteur : Ia = f(Cu)' } }
+        ]
+    },
+    {
+        id: 'induction-motor-lab',
+        category: 'electrotechnique',
+        icon: 'bx-bolt-circle',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: 'electro-mas-schema-montage.png',
+        imageFit: 'contain',
+        tags: ['Induction motor', 'Powder brake', 'Oscilloscope', 'Efficiency', 'Électrotechnique', 'Travail en binôme'],
+        title: {
+            en: 'Three-Phase Induction Motor Test Bench',
+            fr: 'TP moteur asynchrone triphasé sur banc d’essai'
+        },
+        context: {
+            en: 'Polytech Orléans – Electrical engineering lab (M1), pair work, supervised by Mr. Hervé Lailheugue',
+            fr: 'Polytech Orléans – TP d’électrotechnique (M1), en binôme, encadré par M. Hervé Lailheugue'
+        },
+        summary: {
+            en: 'Checking the datasheet of a 1.5 kW induction motor on a test bench (powder brake, torque sensor, tachometer dynamo): efficiency curve and starting current.',
+            fr: 'Vérification des données constructeur d’un moteur asynchrone de 1,5 kW sur banc d’essai (frein à poudre, capteur de couple, dynamo tachymétrique) : courbe de rendement et courant de démarrage.'
+        },
+        highlights: {
+            en: [
+                'Written preparation: read the LS90L-1.5 kW datasheet and checked the rated current (3.70 A computed vs 3.4 A) and torque (10.03 N·m vs 10 N·m); chose the star (Y) coupling on the 400 V network',
+                'Wired the motor on the three-phase network through a starter, with a clamp meter and a series ammeter, and loaded it with a powder brake',
+                'Recorded input power, current, useful power, speed, torque and efficiency at 6 load points, and verified Pu = T·Ω (1.526 kW vs 1.55 kW measured, about 1.5 % gap)',
+                'Plotted the efficiency η against Pu/Pu,nom: maximum of 81.3 % around mid-load and 79.9 % at rated load, against 79.4 % announced',
+                'Captured the start-up on an oscilloscope (current probe and tachometer dynamo): about 28 A inrush, 1600 rpm steady speed, start-up time of 0.5 to 0.75 s'
+            ],
+            fr: [
+                'Préparation écrite : relevé des données du moteur LS90L-1,5 kW et vérification du courant nominal (3,70 A calculé pour 3,4 A) et du couple nominal (10,03 N·m pour 10 N·m) ; choix du couplage étoile (Y) sur le réseau 400 V',
+                'Câblage du moteur sur le réseau triphasé via un démarreur, avec pince de mesure et ampèremètre en série, et mise en charge par un frein à poudre',
+                'Relevé de la puissance absorbée, du courant, de la puissance utile, de la vitesse, du couple et du rendement sur 6 points de charge, et vérification de Pu = T·Ω (1,526 kW calculé contre 1,55 kW mesuré, écart d’environ 1,5 %)',
+                'Tracé du rendement η en fonction de Pu/Pu,nom : maximum de 81,3 % vers la mi-charge et 79,9 % à charge nominale, pour 79,4 % annoncé',
+                'Visualisation du démarrage à l’oscilloscope (sonde de courant et dynamo tachymétrique) : appel de courant d’environ 28 A, vitesse établie de 1600 tr/min, temps de démarrage de 0,5 à 0,75 s'
+            ]
+        },
+        results: {
+            en: 'The measured efficiency stays within 1 % of the manufacturer’s 79.4 % at rated load, and the start-up shows the typical inrush current of an induction motor, which falls as the back-EMF builds up with speed.',
+            fr: 'Le rendement mesuré reste à moins de 1 % des 79,4 % du constructeur à charge nominale, et le démarrage met en évidence l’appel de courant typique d’un moteur asynchrone, qui diminue quand la force contre-électromotrice augmente avec la vitesse.'
+        },
+        gallery: [
+            { src: 'electro-mas-schema-montage.png', caption: { en: 'Test bench wiring diagram (starter, clamp meter, powder brake, tachometer dynamo)', fr: 'Schéma du montage (démarreur, pince, frein à poudre, dynamo tachymétrique)' } },
+            { src: 'electro-mas-plaque.jpg', caption: { en: 'Motor nameplate', fr: 'Plaque signalétique du moteur' } },
+            { src: 'electro-mas-modmeca.jpg', caption: { en: 'MODMECA 3: power, speed and torque display', fr: 'MODMECA 3 : affichage de la puissance, de la vitesse et du couple' } },
+            { src: 'electro-mas-rendement.png', caption: { en: 'Efficiency η as a function of Pu / Pu,nom', fr: 'Rendement η en fonction de Pu / Pu,nom' } },
+            { src: 'electro-mas-schema-demarrage.png', caption: { en: 'Start-up measurement diagram (current probe, tachometer dynamo)', fr: 'Schéma de mesure du démarrage (sonde de courant, dynamo tachymétrique)' } },
+            { src: 'electro-mas-oscillogramme.jpg', caption: { en: 'Start-up oscillogram: current and speed', fr: 'Oscillogramme du démarrage : courant et vitesse' } }
+        ]
+    },
+    {
+        id: 'three-phase-transformer-lab',
+        category: 'electrotechnique',
+        icon: 'bx-bolt-circle',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: 'electro-transfo-montage.jpg',
+        imageFit: 'cover',
+        tags: ['Three-phase transformer', 'Kapp equivalent circuit', 'No-load test', 'Short-circuit test', 'Power analyser', 'Électrotechnique', 'Travail en binôme'],
+        title: {
+            en: 'Three-Phase Transformer: Kapp Equivalent Circuit',
+            fr: 'Étude d’un transformateur triphasé : schéma équivalent de Kapp'
+        },
+        context: {
+            en: 'Polytech Orléans – Electrical engineering lab (M1), pair work, supervised by Mr. Hervé Lailheugue',
+            fr: 'Polytech Orléans – TP d’électrotechnique (M1), en binôme, encadré par M. Hervé Lailheugue'
+        },
+        summary: {
+            en: 'Identifying the parameters of the Kapp equivalent circuit of a 4 kVA three-phase transformer from a no-load test and a short-circuit test, measured with a power analyser.',
+            fr: 'Détermination des paramètres du schéma équivalent de Kapp d’un transformateur triphasé de 4 kVA à partir d’un essai à vide et d’un essai en court-circuit, mesurés à l’analyseur de réseau.'
+        },
+        highlights: {
+            en: [
+                'Preliminary study: nameplate (4 kVA, 3 × 250 V / 6 × 63 V), Yy0 wiring, transformation ratio and rated currents (I1N ≈ 5.33 A, I2N ≈ 10.6 A)',
+                'Explained the physical meaning of each element of the Kapp circuit, the hysteresis loop and the odd harmonics produced by magnetic saturation (Faraday and Lenz laws)',
+                'No-load test: wired the transformer, measured with a Chauvin Arnoux analyser (current wound 6 turns around the clamps for accuracy), checked that the three phases are balanced, and found m ≈ 0.53, RF ≈ 476 Ω and XP ≈ 230 Ω',
+                'Displayed the hysteresis cycle of the core on the analyser',
+                'Short-circuit test at the rated secondary current (10.58 A): RS ≈ 1.0 Ω and XS ≈ 0.20 Ω'
+            ],
+            fr: [
+                'Étude préliminaire : plaque signalétique (4 kVA, 3 × 250 V / 6 × 63 V), couplage Yy0, rapport de transformation et courants nominaux (I1N ≈ 5,33 A, I2N ≈ 10,6 A)',
+                'Explication de la signification physique de chaque élément du schéma de Kapp, du cycle d’hystérésis et des harmoniques de rang 3 dus à la saturation magnétique (lois de Faraday et de Lenz)',
+                'Essai à vide : câblage du transformateur, mesures à l’analyseur Chauvin Arnoux (courant enroulé 6 fois autour des pinces pour gagner en précision), vérification de l’équilibre des trois phases, et détermination de m ≈ 0,53, RF ≈ 476 Ω et XP ≈ 230 Ω',
+                'Affichage du cycle d’hystérésis du noyau sur l’analyseur',
+                'Essai en court-circuit au courant secondaire nominal (10,58 A) : RS ≈ 1,0 Ω et XS ≈ 0,20 Ω'
+            ]
+        },
+        results: {
+            en: 'Both tests gave all four elements of the Kapp circuit (RF, XP, RS, XS). The values are consistent with theory, apart from small gaps on the secondary voltages attributed to measurement inaccuracy.',
+            fr: 'Les deux essais ont donné les quatre éléments du schéma de Kapp (RF, XP, RS, XS). Les valeurs sont cohérentes avec la théorie, à l’exception de petits écarts sur les tensions secondaires attribués aux imprécisions de mesure.'
+        },
+        gallery: [
+            { src: 'electro-transfo-plaque.jpg', caption: { en: 'Transformer nameplate (4 kVA, 3 × 250 V / 6 × 63 V)', fr: 'Plaque signalétique du transformateur (4 kVA, 3 × 250 V / 6 × 63 V)' } },
+            { src: 'electro-transfo-schema-couplage.png', caption: { en: 'Star-star (Yy0) connection diagram', fr: 'Schéma du couplage étoile-étoile (Yy0)' } },
+            { src: 'electro-transfo-montage.jpg', caption: { en: 'No-load test setup with the power analyser', fr: 'Montage de l’essai à vide avec l’analyseur de réseau' } },
+            { src: 'electro-transfo-analyseur-vide.jpg', caption: { en: 'Values recorded during the no-load test', fr: 'Valeurs relevées lors de l’essai à vide' } },
+            { src: 'electro-transfo-hysteresis.jpg', caption: { en: 'Hysteresis cycle of the core on the analyser', fr: 'Cycle d’hystérésis du noyau sur l’analyseur' } },
+            { src: 'electro-transfo-court-circuit.jpg', caption: { en: 'Values recorded during the short-circuit test', fr: 'Valeurs relevées lors de l’essai en court-circuit' } }
+        ]
     }
 ];

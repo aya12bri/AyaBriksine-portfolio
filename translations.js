@@ -229,7 +229,7 @@ const frenchText = {
     "Professional": "Professionnel",
     "Native": "Langue maternelle",
 
-    "My projects by field: robotics, control, automation, signal processing, IoT, programming and digital transformation. Open one to see the details.": "Mes projets par domaine : robotique, automatique, automatisme, traitement du signal, IoT, programmation et transformation digitale. Ouvrez-en un pour voir les détails.",
+    "My projects by field: robotics, control, automation, signal processing, electrical engineering, IoT, programming and digital transformation. Open one to see the details.": "Mes projets par domaine : robotique, automatique, automatisme, traitement du signal, électrotechnique, IoT, programmation et transformation digitale. Ouvrez-en un pour voir les détails.",
     "Looking for a robotics intern?": "Vous cherchez une stagiaire en robotique ?",
     "I'm looking for a 6-month end-of-studies internship in robotics / AI from February 2027. I'd love to hear from you.": "Je recherche un stage de fin d'études de 6 mois en robotique / IA à partir de février 2027. Je serais ravie d'échanger avec vous.",
 
