@@ -163,9 +163,12 @@ const projects = [
     },
     {
         id: 'drone-modelling-control',
+        pdf: 'rapport-tp-drone.pdf',
         downloads: [
-            { file: 'drone-tp-observateur-commande.m', icon: 'bx-code-alt', label: { en: 'Download the MATLAB script (.m)', fr: 'Télécharger le script MATLAB (.m)' } },
-            { file: 'drone-tp-question5-simulink.sltx', icon: 'bx-chip', label: { en: 'Download the Simulink model (.sltx)', fr: 'Télécharger le modèle Simulink (.sltx)' } }
+            { file: 'drone-tp-observateur-commande.m', icon: 'bx-code-alt', label: { en: 'MATLAB script (.m)', fr: 'Script MATLAB (.m)' } },
+            { file: 'drone-tp-question4.slx', icon: 'bx-chip', label: { en: 'Simulink model, question 4 (.slx)', fr: 'Modèle Simulink, question 4 (.slx)' } },
+            { file: 'drone-tp-question5.slx', icon: 'bx-chip', label: { en: 'Simulink model, question 5 (.slx)', fr: 'Modèle Simulink, question 5 (.slx)' } },
+            { file: 'drone-tp-question5-simulink.sltx', icon: 'bx-chip', label: { en: 'Simulink template (.sltx)', fr: 'Modèle type Simulink (.sltx)' } }
         ],
         category: 'control',
         icon: 'bx-navigation',
