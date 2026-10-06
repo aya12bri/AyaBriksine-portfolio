@@ -412,7 +412,6 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 (function () {
     const hero = document.getElementById('home');
     if (!hero) return;
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const d = 'M-20 640 C180 560 280 720 470 640 S760 430 930 500 S1230 330 1460 260';
     const waypoints = [[470, 640, 'P1'], [930, 500, 'P2'], [1240, 340, 'P3']];
     const fx = document.createElement('div');
@@ -508,7 +507,6 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
         jaws(j);
     }
 
-    if (reduce) { place(grip, pose(dist[0] - 60)); jaws(OPEN); place(cube, cubePose, 21); return; }
     let t0 = null, running = true;
     function tick(now) {
         if (t0 === null) t0 = now;
@@ -582,7 +580,6 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 /* ---------- Faint code that types itself and erases itself (Python / C++) ---------- */
 (function () {
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const snippets = {
         pick: [
             '# pick and place', 'robot.movel(P1)', 'gripper.close()', 'robot.movel(P2)', 'gripper.open()'],
@@ -650,8 +647,7 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
             el.style.cssText = `--fs:${size}px;--cols:${cols};--rows:${rows};--d:${delay}s;${pos}`;
             el.innerHTML = '<code class="code-live"></code>';
             box.appendChild(el);
-            if (reduce) el.querySelector('.code-live').textContent = all[0].join('\n');
-            else type(el, names, delay);
+            type(el, names, delay);
         });
     });
 })();
@@ -662,7 +658,6 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     const hero = document.getElementById('home');
     const fx = hero && hero.querySelector('.hero-fx');
     if (!fx) return;
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const floor = document.createElement('div');
     floor.className = 'roam-floor';
     const crate = document.createElement('span');
@@ -690,7 +685,6 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
         bot.style.transformOrigin = `${W / 2}px 50%`;
         wheels.forEach(w => w.style.transform = `rotate(${spin.toFixed(0)}deg)`);
     }
-    if (reduce) { x = width() * 0.15; render(); return; }
     let visible = true;
     function tick(now) {
         requestAnimationFrame(tick);

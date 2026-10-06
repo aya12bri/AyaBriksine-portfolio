@@ -1701,18 +1701,6 @@ h3 {
     html {
         scroll-behavior: auto;
     }
-
-    *,
-    *::before,
-    *::after {
-        animation: none !important;
-        transition: none !important;
-    }
-
-    .js .reveal {
-        opacity: 1;
-        transform: none;
-    }
 }
 
 /* ---------- Hero badges, notes & small extras ---------- */
@@ -2499,12 +2487,6 @@ html:not(.light-mode) .back-top {
     .photo-frame::after { inset: -20px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .photo-frame::before,
-    .photo-frame::after {
-        animation: none;
-    }
-}
 
 
 /* =========================================================
@@ -2586,11 +2568,6 @@ html:not(.light-mode) .back-top {
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .sym {
-        animation: none;
-    }
-}
 
 
 /* =========================================================
@@ -2764,13 +2741,6 @@ html:not(.light-mode) .back-top {
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .badge-live::before,
-    .fx-blob,
-    .section::before {
-        animation: none;
-    }
-}
 
 
 /* =========================================================
@@ -2872,13 +2842,6 @@ html:not(.light-mode) .back-top {
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .eq,
-    .curve,
-    .curve .trace {
-        animation: none;
-    }
-}
 
 
 /* =========================================================
@@ -3179,9 +3142,6 @@ html:not(.light-mode) .back-top {
     .scroll-bot  { right: -2px; width: 32px; height: 40px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .scroll-bot .bot-led { animation: none; }
-}
 
 
 /* =========================================================
@@ -3710,12 +3670,5 @@ html:not(.light-mode) .back-top {
 
     .roam-bot {
         width: 44px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .roam-led,
-    .code-live::after {
-        animation: none;
     }
 }
