@@ -446,8 +446,8 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: 'video-universal-robots-ur5.jpg',
-        video: 'video-universal-robots-ur5.mp4',
+        image: 'video-ur5-cobot.jpg',
+        video: 'video-ur5-cobot.mp4',
         tags: ['Universal Robots', 'UR3', 'UR5', 'PolyScope', 'Cobots', 'Programmation robot', 'Singularités', 'Denavit-Hartenberg', 'Cinématique', 'Travail en équipe'],
         title: {
             en: 'Universal Robots UR3 & UR5 Cobot Programming and Modelling',
