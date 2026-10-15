@@ -486,6 +486,7 @@ const projects = [
     },
     {
         id: 'fanuc-crx-delta',
+        pdf: 'rapport-tp-fanuc-crx10ia.pdf',
         category: 'robotics',
         icon: 'bx-target-lock',
         year: '2026',

@@ -13,7 +13,9 @@
     <script>
         // Runs before the page shows: apply the saved light/dark choice so it doesn't flash
         document.documentElement.classList.add('js');
-        try { if (localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode'); } catch (e) {}
+        // light mode first; a visitor who switched to dark keeps it
+        document.documentElement.classList.add('light-mode');
+        try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.remove('light-mode'); } catch (e) {}
     </script>
 
 </head>
