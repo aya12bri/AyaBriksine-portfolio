@@ -3931,3 +3931,85 @@ body.project-page .footer {
         display: none;
     }
 }
+
+
+/* =========================================================
+   Calm, professional look (html.calm)
+   Plain backgrounds, no animated decoration, no neon glow.
+   To bring the animated decoration back, remove the "calm" class in the <head> script.
+   ========================================================= */
+html.calm .bg-symbols,
+html.calm .hero-fx,
+html.calm .kin-host,
+html.calm .page-bg,
+html.calm .scroll-rail,
+html.calm .scroll-bot,
+html.calm .hero::before,
+html.calm .hero::after,
+html.calm .hero-photo::after,
+html.calm .photo-frame::before,
+html.calm .photo-frame::after,
+html.calm .section::before,
+html.calm .section-head::after,
+html.calm #projects .section-head::after,
+html.calm .project-index,
+html.calm #projects .project-index,
+html.calm .project-hero::before,
+html.calm .eyebrow::before,
+html.calm .badge-live::before {
+    display: none !important;
+}
+
+html.calm {
+    --glow: 0 2px 8px rgba(20, 24, 40, 0.12);
+    --glow-strong: 0 4px 14px rgba(20, 24, 40, 0.18);
+    --glow-photo: 0 14px 36px rgba(20, 24, 40, 0.16);
+    --text-glow: none;
+    --shadow: 0 6px 20px rgba(20, 24, 40, 0.08);
+}
+
+html.calm h1,
+html.calm h2,
+html.calm h3,
+html.calm .accent {
+    text-shadow: none !important;
+}
+
+html.calm .hero {
+    background: none;
+}
+
+html.calm .badge-live {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+html.calm .photo-frame,
+html.calm .photo-frame:hover {
+    padding: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--glow-photo);
+    animation: none;
+}
+
+html.calm .btn,
+html.calm .btn:hover {
+    box-shadow: none !important;
+}
+
+html.calm .contact-panel {
+    background: var(--surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-color: var(--border);
+    box-shadow: none;
+}
+
+html.calm .eyebrow {
+    letter-spacing: 1.5px;
+    font-family: inherit;
+}

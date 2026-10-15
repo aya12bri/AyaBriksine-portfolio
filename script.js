@@ -476,6 +476,7 @@ function addKinArm(host, opts) {
 
 /* ---------- Faint robot symbols in the background of each section ---------- */
 (function () {
+    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     // symbol, size, position, rotation, delay, hide on phones?
     const layout = {
         home:       [['gear', 240, 'left:-70px;top:12%',     '12deg', '-6s', 1], ['cobot', 270, 'left:44%;bottom:-60px', '0deg', '-4s', 1]],
@@ -500,6 +501,7 @@ function addKinArm(host, opts) {
 
 /* ---------- Hero background: aurora blobs, a robot trajectory and the kinematic arm ---------- */
 (function () {
+    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     const hero = document.getElementById('home');
     if (!hero) return;
     const d = 'M-20 640 C180 560 280 720 470 640 S760 430 930 500 S1230 330 1460 260';
@@ -524,6 +526,7 @@ function addKinArm(host, opts) {
 
 /* ---------- Faint equations and signal curves in the background ---------- */
 (function () {
+    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     const W = 300, H = 120, mid = 60;
     const pts = (fn, n = 120) => Array.from({ length: n + 1 }, (_, i) => {
         const x = (i / n) * W;
@@ -582,6 +585,7 @@ function addKinArm(host, opts) {
 
 /* ---------- Faint code that types itself and erases itself (Python / C++) ---------- */
 (function () {
+    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     const snippets = {
         pick: [
             '# pick and place', 'robot.movel(P1)', 'gripper.close()', 'robot.movel(P2)', 'gripper.open()'],
@@ -659,6 +663,7 @@ function addKinArm(host, opts) {
 
 /* ---------- A small mobile robot driving along the bottom of the hero ---------- */
 (function () {
+    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     const hero = document.getElementById('home');
     const fx = hero && hero.querySelector('.hero-fx');
     if (!fx) return;
@@ -717,6 +722,7 @@ function addKinArm(host, opts) {
 
 /* ---------- Background layout: no robot, curve or equation ever overlaps another ---------- */
 (function () {
+    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     const GAP = 24;                       // clear space between two drawings (also covers the slow floating motion)
     const HEADER = 96;                    // fixed header height + margin
     const SCALES = [1, 0.8, 0.62];        // an item that does not fit is shrunk before being hidden
@@ -827,6 +833,7 @@ function addKinArm(host, opts) {
 
 /* ---------- Project pages: animated background (gears, kinematic arm, typed code) ---------- */
 (function () {
+    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     if (!document.body.classList.contains('project-page')) return;
     const bg = document.createElement('div');
     bg.className = 'page-bg';
@@ -854,6 +861,7 @@ function addKinArm(host, opts) {
 
 /* ---------- Click effects: ripple anywhere, burst on the portrait ---------- */
 (function () {
+    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     document.addEventListener('pointerdown', e => {
         const r = document.createElement('span');
         r.className = 'click-ripple';
@@ -882,6 +890,7 @@ function addKinArm(host, opts) {
 
 /* ---------- A kinematic arm also works behind the Expertise and Skills sections ---------- */
 (function () {
+    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     [['services', 'right:1%;bottom:2%', 1], ['skills', 'left:1%;bottom:3%', 3.5]].forEach(([id, pos, phase]) => {
         const box = document.querySelector('#' + id + ' .bg-symbols');
         if (!box) return;
