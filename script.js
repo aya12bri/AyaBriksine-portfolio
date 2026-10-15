@@ -426,9 +426,7 @@ function createKinArm(host, opts) {
     const deg = x => x * Math.PI / 180;
     function draw(t) {
         t += o.phase;
-        let t1, t2, t3;
-        if (o.pose) { t1 = deg(o.pose.q1); t2 = t1 + deg(o.pose.q2); t3 = t2 + deg(o.pose.q3); }      // pose set by sliders
-        else { t1 = deg(58 + 16 * Math.sin(0.55 * t)); t2 = t1 - deg(66 + 26 * Math.sin(0.8 * t + 1)); t3 = t2 - deg(35 + 30 * Math.sin(1.1 * t + 2)); }
+        const t1 = deg(58 + 16 * Math.sin(0.55 * t)), t2 = t1 - deg(66 + 26 * Math.sin(0.8 * t + 1)), t3 = t2 - deg(35 + 30 * Math.sin(1.1 * t + 2));
         const p = [base, pt(base, t1, L[0])]; p.push(pt(p[1], t2, L[1])); p.push(pt(p[2], t3, L[2]));
         const th = [t1, t2, t3];
         for (let i = 0; i < 3; i++) {
@@ -446,17 +444,14 @@ function createKinArm(host, opts) {
         el.ex.setAttribute('d', `M${p[3].x.toFixed(1)} ${p[3].y.toFixed(1)} L${ex.x.toFixed(1)} ${ex.y.toFixed(1)}`);
         el.ey.setAttribute('d', `M${p[3].x.toFixed(1)} ${p[3].y.toFixed(1)} L${ey.x.toFixed(1)} ${ey.y.toFixed(1)}`);
         put(el.te, p[3], t3 - Math.PI / 2, 26, -8);
-        const open = o.pose ? 2.5 + 6.5 * o.pose.open : 2.5 + 6.5 * (0.5 + 0.5 * Math.sin(1.5 * t));
+        const open = 2.5 + 6.5 * (0.5 + 0.5 * Math.sin(1.5 * t));
         el.grip.setAttribute('transform', `translate(${p[3].x.toFixed(1)} ${p[3].y.toFixed(1)}) rotate(${(-t3 * 180 / Math.PI).toFixed(1)})`);
         el.gu.setAttribute('transform', `translate(0 ${(9 - open).toFixed(2)})`);
         el.gd.setAttribute('transform', `translate(0 ${(open - 9).toFixed(2)})`);
         const tip = pt(p[3], t3, 26);
-        if (!o.pose) {                                          // the trail only makes sense for the animated arm
-            trace.push(tip.x.toFixed(1) + ',' + tip.y.toFixed(1));
-            if (trace.length > 110) trace.shift();
-        }
+        trace.push(tip.x.toFixed(1) + ',' + tip.y.toFixed(1));
+        if (trace.length > 110) trace.shift();
         el.trace.setAttribute('points', trace.join(' '));
-        return { x: tip.x - base.x, y: base.y - tip.y, below: tip.y > base.y + 12 };
     }
     draw(0);
     return draw;
@@ -479,113 +474,8 @@ function addKinArm(host, opts) {
     kinArms.push(arm);
 }
 
-/* ---------- Robot Lab: the robots I have worked on + an interactive arm ---------- */
-(function () {
-    const grid = document.querySelector('#lab-grid');
-    const simBox = document.querySelector('#lab-sim');
-    if (!grid || !simBox) return;
-    const robots = [
-        { id: 'doosan-m0617', img: 'video-doosan-m0617.jpg', name: 'Doosan M0617', chips: { en: ['6-axis cobot', 'Teach pendant'], fr: ['Cobot 6 axes', 'Pupitre de programmation'] },
-          text: { en: 'JOG in joint and Cartesian space, hand guiding and a pick-and-place cycle with a conveyor.', fr: 'Pilotage JOG articulaire et cartésien, co-manipulation et cycle de pick-and-place avec un convoyeur.' } },
-        { id: 'universal-robots-ur3-ur5', img: 'video-ur5-cobot.jpg', name: 'Universal Robots UR3 / UR5', chips: { en: ['6-axis cobots', 'PolyScope'], fr: ['Cobots 6 axes', 'PolyScope'] },
-          text: { en: 'Singularities, MoveJ / MoveL trajectories, kinematic diagrams and modified Denavit-Hartenberg parameters.', fr: 'Singularités, trajectoires MoveJ / MoveL, schémas cinématiques et paramètres de Denavit-Hartenberg modifiés.' } },
-        { id: 'fanuc-crx-delta', img: 'video-fanuc-crx.jpg', name: 'FANUC CRX-10iA', chips: { en: ['6-axis cobot', 'Vacuum gripper'], fr: ['Cobot 6 axes', 'Ventouse'] },
-          text: { en: 'JOG and hand guiding, a pick-and-place program on the tablet and the geometric model.', fr: 'Pilotage JOG et co-manipulation, programme de pick-and-place sur la tablette et modélisation géométrique.' } },
-        { id: 'fanuc-m1ia-pick-place', img: 'fanuc-tp-prise.jpg', name: 'FANUC M-1iA/0.5AL', chips: { en: ['Delta robot', '± 0.03 mm'], fr: ['Robot Delta', '± 0,03 mm'] },
-          text: { en: 'Teach Pendant programming of a parallel robot: six taught points and a suction pick-and-place cycle.', fr: 'Programmation au Teach Pendant d’un robot parallèle : six points appris et cycle de pick-and-place à ventouse.' } },
-        { id: 'staubli-tx60', img: 'staubli-tp-robot.jpg', name: 'Stäubli TX60L', chips: { en: ['6-axis robot', 'VAL3'], fr: ['Robot 6 axes', 'VAL3'] },
-          text: { en: 'VAL3 programming from the teach pendant and Stäubli Robotics Suite: A to B transfer with nested loops.', fr: 'Programmation VAL3 depuis le pupitre et Stäubli Robotics Suite : transfert A vers B avec des boucles imbriquées.' } },
-        { id: 'obstacle-avoidance-robot', img: 'video-robot-evitement-obstacles.jpg', name: { en: 'Obstacle-avoidance mobile robot', fr: 'Robot mobile d’évitement d’obstacles' }, chips: { en: ['Arduino Uno', 'Lidar + infrared'], fr: ['Arduino Uno', 'Lidar + infrarouge'] },
-          text: { en: 'Sensors, motor control and a Grafcet behaviour: the robot stops in front of an obstacle and turns.', fr: 'Capteurs, commande des moteurs et comportement en Grafcet : le robot s’arrête devant un obstacle et tourne.' } }
-    ];
-    const tx = {
-        open: { en: 'View project', fr: 'Voir le projet' },
-        title: { en: 'Move the arm', fr: 'Déplacez le bras' },
-        lead: { en: 'A planar arm with three revolute joints. Change the angles and watch the tool position and the kinematic diagram follow.', fr: 'Un bras plan à trois articulations pivot. Changez les angles et regardez la position de l’outil et le schéma cinématique suivre.' },
-        gripper: { en: 'Gripper', fr: 'Pince' },
-        pos: { en: 'Tool position', fr: 'Position de l’outil' },
-        reset: { en: 'Reset', fr: 'Réinitialiser' },
-        random: { en: 'Random pose', fr: 'Pose aléatoire' },
-        warn: { en: 'The tool is below the table.', fr: 'L’outil est sous la table.' },
-        note: { en: 'Link lengths L1 = 150, L2 = 128, L3 = 72 (mm). q1 is measured from the horizontal, q2 and q3 relative to the previous link.', fr: 'Longueurs L1 = 150, L2 = 128, L3 = 72 (mm). q1 est mesuré depuis l’horizontale, q2 et q3 par rapport au maillon précédent.' }
-    };
-    const pick = (v, lang) => (v && v[lang]) || v;
-
-    function renderCards() {
-        const lang = currentLang();
-        grid.innerHTML = robots.map(r => `
-            <article class="lab-card">
-                <a class="lab-photo" href="project.html?id=${encodeURIComponent(r.id)}" tabindex="-1" aria-hidden="true"><img src="${escapeHTML(r.img)}" alt="" loading="lazy"></a>
-                <div class="lab-body">
-                    <h3>${escapeHTML(pick(r.name, lang))}</h3>
-                    <ul class="lab-chips">${r.chips[lang].map(c => `<li>${escapeHTML(c)}</li>`).join('')}</ul>
-                    <p>${escapeHTML(r.text[lang])}</p>
-                    <a class="lab-link" href="project.html?id=${encodeURIComponent(r.id)}">${tx.open[lang]} <i class='bx bx-right-arrow-alt'></i></a>
-                </div>
-            </article>`).join('');
-    }
-
-    // ---- interactive arm ----
-    const ranges = { q1: [20, 160, 58], q2: [-130, 30, -66], q3: [-120, 60, -35], open: [0, 100, 60] };
-    const pose = { q1: 58, q2: -66, q3: -35, open: 0.6 };
-    let draw = null, mounted = false;
-    function buildSim() {
-        const lang = currentLang();
-        simBox.innerHTML = `
-            <div class="lab-sim-view"><div class="lab-kin"></div></div>
-            <div class="lab-sim-panel">
-                <h3>${tx.title[lang]}</h3>
-                <p class="lab-sim-lead">${tx.lead[lang]}</p>
-                ${['q1', 'q2', 'q3', 'open'].map(k => `
-                    <label class="lab-slider">
-                        <span class="lab-slider-name">${k === 'open' ? tx.gripper[lang] : 'q<sub>' + k[1] + '</sub>'}</span>
-                        <input type="range" data-k="${k}" min="${ranges[k][0]}" max="${ranges[k][1]}" value="${k === 'open' ? Math.round(pose.open * 100) : Math.round(pose[k])}">
-                        <output data-o="${k}"></output>
-                    </label>`).join('')}
-                <p class="lab-readout"><strong>${tx.pos[lang]}</strong> <span id="lab-xy"></span></p>
-                <p class="lab-warn" id="lab-warn" hidden>${tx.warn[lang]}</p>
-                <div class="lab-actions">
-                    <button type="button" class="btn btn-sm btn-outline" id="lab-reset">${tx.reset[lang]}</button>
-                    <button type="button" class="btn btn-sm btn-outline" id="lab-random">${tx.random[lang]}</button>
-                </div>
-                <p class="lab-note">${tx.note[lang]}</p>
-            </div>`;
-        draw = createKinArm(simBox.querySelector('.lab-kin'), { pose });
-        const update = () => {
-            const r = draw(0);
-            simBox.querySelectorAll('output').forEach(o => {
-                const k = o.dataset.o;
-                o.textContent = k === 'open' ? Math.round(pose.open * 100) + ' %' : Math.round(pose[k]) + '°';
-            });
-            simBox.querySelector('#lab-xy').textContent = `X = ${Math.round(r.x)} mm · Z = ${Math.round(r.y)} mm`;
-            simBox.querySelector('#lab-warn').hidden = !r.below;
-        };
-        simBox.querySelectorAll('input[type=range]').forEach(inp => inp.addEventListener('input', () => {
-            const k = inp.dataset.k;
-            pose[k] = k === 'open' ? inp.value / 100 : +inp.value;
-            update();
-        }));
-        const setAll = v => {
-            Object.assign(pose, v);
-            simBox.querySelectorAll('input[type=range]').forEach(inp => { const k = inp.dataset.k; inp.value = k === 'open' ? Math.round(pose.open * 100) : Math.round(pose[k]); });
-            update();
-        };
-        simBox.querySelector('#lab-reset').addEventListener('click', () => setAll({ q1: 58, q2: -66, q3: -35, open: 0.6 }));
-        simBox.querySelector('#lab-random').addEventListener('click', () => {
-            const rnd = k => ranges[k][0] + Math.random() * (ranges[k][1] - ranges[k][0]);
-            setAll({ q1: rnd('q1'), q2: rnd('q2') * 0.7, q3: rnd('q3') * 0.7, open: Math.random() });
-        });
-        update();
-    }
-    renderCards();
-    buildSim();
-    document.addEventListener('langchange', () => { renderCards(); buildSim(); });
-})();
-
-
 /* ---------- Faint robot symbols in the background of each section ---------- */
 (function () {
-    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     // symbol, size, position, rotation, delay, hide on phones?
     const layout = {
         home:       [['gear', 240, 'left:-70px;top:12%',     '12deg', '-6s', 1], ['cobot', 270, 'left:44%;bottom:-60px', '0deg', '-4s', 1]],
@@ -608,9 +498,8 @@ function addKinArm(host, opts) {
 })();
 
 
-/* ---------- Hero background: aurora blobs, a robot trajectory and the kinematic arm ---------- */
+/* ---------- Hero background: aurora blobs + a robot end-effector following a trajectory ---------- */
 (function () {
-    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     const hero = document.getElementById('home');
     if (!hero) return;
     const d = 'M-20 640 C180 560 280 720 470 640 S760 430 930 500 S1230 330 1460 260';
@@ -623,6 +512,14 @@ function addKinArm(host, opts) {
         <svg class="fx-trajectory" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
             <path class="path" d="${d}"/>
             ${waypoints.map(([x, y, n]) => `<circle class="wp" cx="${x}" cy="${y}" r="9"/><circle class="wp-dot" cx="${x}" cy="${y}" r="2.5"/><text x="${x + 16}" y="${y - 14}">${n}</text>`).join('')}
+            <rect class="cube" x="-4.5" y="-4.5" width="9" height="9" rx="1.5"/>
+            <g class="gripper">
+                <circle class="tool-halo" r="13"/>
+                <circle class="tool" r="4.5"/>
+                <path class="g-arm" d="M4 0 H12 M12 -9 V9"/>
+                <path class="g-jaw g-jaw-up" d="M12 -9 H30 V-4"/>
+                <path class="g-jaw g-jaw-down" d="M12 9 H30 V4"/>
+            </g>
         </svg>`;
     hero.insertBefore(fx, hero.firstChild);
     const kin = document.createElement('div');
@@ -630,12 +527,95 @@ function addKinArm(host, opts) {
     hero.appendChild(kin);                                      // above the stats card, so the diagram stays readable
     addKinArm(kin);
 
+    // The tool is a parallel-jaw gripper: it follows the trajectory, stops at the waypoints,
+    // closes on a small cube at P1, drops it at P2, and pinches once at P3.
+    const svg = fx.querySelector('.fx-trajectory');
+    const pathEl = svg.querySelector('.path');
+    const grip = svg.querySelector('.gripper');
+    const jawUp = svg.querySelector('.g-jaw-up');
+    const jawDown = svg.querySelector('.g-jaw-down');
+    const cube = svg.querySelector('.cube');
+    const L = pathEl.getTotalLength();
+    const dist = waypoints.map(([x, y]) => {                   // distance along the path of each waypoint
+        let best = 0, bd = 1e9;
+        for (let s = 0; s <= L; s += 3) {
+            const p = pathEl.getPointAtLength(s), e = (p.x - x) ** 2 + (p.y - y) ** 2;
+            if (e < bd) { bd = e; best = s; }
+        }
+        return best;
+    });
+    const OPEN = 13, HOLD = 5, PINCH = 1.5;                     // half-opening of the jaws
+    const pose = d => {
+        const a = pathEl.getPointAtLength(Math.max(0, d - 6)), b = pathEl.getPointAtLength(Math.min(L, d + 6));
+        const p = pathEl.getPointAtLength(d);
+        return { x: p.x, y: p.y, r: Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI };
+    };
+    const K = 1.7;                                             // the gripper is drawn a bit larger than its 30-unit design
+    const place = (el, ps, dx) => el.setAttribute('transform', `translate(${ps.x.toFixed(1)} ${ps.y.toFixed(1)}) rotate(${ps.r.toFixed(1)}) translate(${((dx || 0) * K).toFixed(1)} 0) scale(${K})`);
+    const jaws = j => {
+        jawUp.setAttribute('transform', `translate(0 ${(OPEN - j).toFixed(2)})`);
+        jawDown.setAttribute('transform', `translate(0 ${(j - OPEN).toFixed(2)})`);
+    };
+    const ease = u => 0.5 - 0.5 * Math.cos(Math.PI * Math.min(1, Math.max(0, u)));
+    const lerp = (a, b, u) => a + (b - a) * u;
+
+    // timeline: moves along the path and pauses with a gripper action
+    const SPEED = 105;                                          // path units per second
+    const steps = [
+        { to: dist[0] }, { act: 'grasp', t: 1.4 },
+        { to: dist[1] }, { act: 'release', t: 1.3 },
+        { to: dist[2] }, { act: 'pinch', t: 1.1 },
+        { to: L }, { act: 'wait', t: 0.8 }
+    ];
+    const startAt = -30;                                        // the loop starts a little before the first point
+    let d0 = startAt;
+    steps.forEach(s => {
+        if (s.to !== undefined) { s.from = d0; s.t = Math.abs(s.to - d0) / SPEED; d0 = s.to; }
+    });
+    const total = steps.reduce((n, s) => n + s.t, 0);
+    const cubePose = pose(dist[0]);
+    const dropPose = pose(dist[1]);
+
+    function frame(sec) {
+        let t = sec % total, k = 0;
+        while (k < steps.length - 1 && t >= steps[k].t) { t -= steps[k].t; k++; }
+        const s = steps[k], u = t / s.t;
+        const d = s.to !== undefined ? lerp(s.from, s.to, ease(u)) : steps[k - 1].to;
+        const ps = pose(Math.max(0, d));
+
+        // jaw opening
+        let j = OPEN;
+        if (k === 1) j = u < 0.5 ? lerp(OPEN, HOLD, ease(u / 0.5)) : HOLD;
+        else if (k === 2) j = HOLD;
+        else if (k === 3) j = u < 0.5 ? HOLD : lerp(HOLD, OPEN, ease((u - 0.5) / 0.5));
+        else if (k === 5) j = u < 0.5 ? lerp(OPEN, PINCH, ease(u / 0.5)) : lerp(PINCH, OPEN, ease((u - 0.5) / 0.5));
+
+        // cube: waits at P1, is carried to P2, then stays where it was dropped and fades out
+        const carried = (k === 1 && u >= 0.55) || k === 2 || (k === 3 && u < 0.45);
+        if (carried) place(cube, ps, 21);
+        else if (k < 2) place(cube, cubePose, 21);
+        else place(cube, dropPose, 21);
+        cube.style.opacity = k < 6 ? 1 : k === 6 ? 1 - ease(u) * 0.8 : 0.2 * (1 - u);
+
+        place(grip, ps);
+        jaws(j);
+    }
+
+    let t0 = null, running = true;
+    function tick(now) {
+        if (t0 === null) t0 = now;
+        if (running) frame((now - t0) / 1000);
+        requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    if ('IntersectionObserver' in window) {                     // do nothing while the hero is off screen
+        new IntersectionObserver(es => { running = es[0].isIntersecting; }, { threshold: 0 }).observe(hero);
+    }
 })();
 
 
 /* ---------- Faint equations and signal curves in the background ---------- */
 (function () {
-    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     const W = 300, H = 120, mid = 60;
     const pts = (fn, n = 120) => Array.from({ length: n + 1 }, (_, i) => {
         const x = (i / n) * W;
@@ -694,7 +674,6 @@ function addKinArm(host, opts) {
 
 /* ---------- Faint code that types itself and erases itself (Python / C++) ---------- */
 (function () {
-    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     const snippets = {
         pick: [
             '# pick and place', 'robot.movel(P1)', 'gripper.close()', 'robot.movel(P2)', 'gripper.open()'],
@@ -772,7 +751,6 @@ function addKinArm(host, opts) {
 
 /* ---------- A small mobile robot driving along the bottom of the hero ---------- */
 (function () {
-    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     const hero = document.getElementById('home');
     const fx = hero && hero.querySelector('.hero-fx');
     if (!fx) return;
@@ -831,7 +809,6 @@ function addKinArm(host, opts) {
 
 /* ---------- Background layout: no robot, curve or equation ever overlaps another ---------- */
 (function () {
-    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     const GAP = 24;                       // clear space between two drawings (also covers the slow floating motion)
     const HEADER = 96;                    // fixed header height + margin
     const SCALES = [1, 0.8, 0.62];        // an item that does not fit is shrunk before being hidden
@@ -942,7 +919,6 @@ function addKinArm(host, opts) {
 
 /* ---------- Project pages: animated background (gears, kinematic arm, typed code) ---------- */
 (function () {
-    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     if (!document.body.classList.contains('project-page')) return;
     const bg = document.createElement('div');
     bg.className = 'page-bg';
@@ -970,7 +946,6 @@ function addKinArm(host, opts) {
 
 /* ---------- Click effects: ripple anywhere, burst on the portrait ---------- */
 (function () {
-    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     document.addEventListener('pointerdown', e => {
         const r = document.createElement('span');
         r.className = 'click-ripple';
@@ -999,7 +974,6 @@ function addKinArm(host, opts) {
 
 /* ---------- A kinematic arm also works behind the Expertise and Skills sections ---------- */
 (function () {
-    if (document.documentElement.classList.contains('calm')) return;   // calm look: no decorative animation
     [['services', 'right:1%;bottom:2%', 1], ['skills', 'left:1%;bottom:3%', 3.5]].forEach(([id, pos, phase]) => {
         const box = document.querySelector('#' + id + ' .bg-symbols');
         if (!box) return;
