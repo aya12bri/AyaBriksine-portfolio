@@ -4307,3 +4307,334 @@ body.project-page .footer {
         padding: 10px 14px;
     }
 }
+
+
+/* =========================================================
+   Robot Lab: live kinematic diagram (labkin)
+   ========================================================= */
+.labkin {
+    margin-top: 40px;
+}
+
+.labkin-head h3 {
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.labkin-head p {
+    max-width: 760px;
+    margin-bottom: 22px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.labkin-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.labkin-card,
+.labkin-use {
+    padding: 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+}
+
+.labkin-card h4,
+.labkin-use > h4 {
+    margin: 0 0 12px;
+    font-size: 13.5px;
+    letter-spacing: 0.3px;
+}
+
+.labkin-data h4:not(:first-child) {
+    margin-top: 22px;
+}
+
+.labkin-card h5,
+.labkin-cards h5 {
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+#kin-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    background: var(--bg-alt);
+}
+
+.kin-ground { stroke: var(--muted); stroke-width: 1.5; }
+.kin-hatch { stroke: var(--muted); stroke-width: 1; opacity: 0.55; }
+.kin-base { fill: var(--surface-2); stroke: var(--heading); stroke-width: 1.5; }
+.kin-reach { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 5 6; opacity: 0.7; }
+.kin-link { stroke: var(--heading); stroke-linecap: round; opacity: 0.85; }
+.kin-link.l1, .kin-link.l2, .kin-link.l3 { stroke-width: 10; }
+.kin-link.l4 { stroke-width: 7; }
+.kin-link.l5 { stroke-width: 5; opacity: 0.7; }
+.kin-axis { stroke: var(--heading); stroke-width: 1.6; stroke-dasharray: 5 4; fill: none; }
+.kin-axis-halo { stroke: var(--bg-alt); stroke-width: 5; fill: none; }
+.kin-legend { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 11.5px; fill: var(--muted); }
+.kin-ax, .kin-ay, .kin-az { fill: none; stroke-linecap: round; }
+.kin-ax { stroke: var(--muted); stroke-width: 2; }
+.kin-ay { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 6 4; }
+.kin-az { stroke: var(--heading); stroke-width: 2.6; }
+.kin-ah-z { fill: var(--heading); }
+.kin-ah-x { fill: var(--muted); }
+.kin-joint { fill: var(--surface); stroke: var(--heading); stroke-width: 2.2; }
+.kin-jdot { fill: var(--heading); }
+.kin-tcp { fill: var(--surface); stroke: var(--heading); stroke-width: 2; }
+.kin-tcpx { stroke: var(--heading); stroke-width: 1.4; }
+.kin-arc { fill: none; stroke: var(--muted); stroke-width: 1.6; }
+.kin-sym { fill: var(--surface); stroke: var(--heading); stroke-width: 1.5; }
+.kin-sym.tri { stroke-width: 2; }
+.kin-sym-dot { fill: var(--heading); }
+.kin-sym-x { stroke: var(--heading); stroke-width: 1.8; fill: none; }
+.kin-t, .kin-dim, .kin-zt, .kin-jt, .kin-tri, .kin-fr {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    paint-order: stroke;
+    stroke: var(--bg-alt);
+    stroke-width: 3px;
+    stroke-linejoin: round;
+}
+.kin-t { font-size: 12px; fill: var(--muted); }
+.kin-dim { font-size: 11.5px; fill: var(--muted); }
+.kin-zt { font-size: 12.5px; fill: var(--heading); font-weight: 700; }
+.kin-jt { font-size: 12px; fill: var(--heading); font-weight: 700; }
+.kin-tri { font-size: 13px; fill: var(--heading); font-weight: 700; }
+.kin-fr { font-size: 13px; fill: var(--heading); font-weight: 700; }
+
+.labkin-frames {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 12.5px;
+}
+
+.labkin-frames span {
+    margin-right: 4px;
+}
+
+.labkin-frames .lab3d-chip {
+    padding: 5px 11px;
+    font-size: 12px;
+    color: var(--text);
+    background: var(--surface-2);
+    border-color: var(--border);
+}
+
+.labkin-frames .lab3d-chip.active {
+    color: var(--on-accent);
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+}
+
+.labkin-cap {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.labkin-dh {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+}
+
+.labkin-dh th,
+.labkin-dh td {
+    padding: 5px 6px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.labkin-dh th {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.labkin-dh td:nth-child(5) {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-weight: 700;
+    color: var(--heading);
+}
+
+.labkin-mat,
+.labkin-jac {
+    display: grid;
+    gap: 3px;
+    padding: 10px;
+    background: var(--bg-alt);
+    border-radius: 12px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.labkin-mat {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.labkin-mat .p {
+    color: var(--heading);
+    font-weight: 700;
+}
+
+.labkin-jac {
+    grid-template-columns: repeat(6, 1fr);
+    font-size: 11.5px;
+}
+
+.labkin-jac .w {
+    color: var(--muted);
+}
+
+.labkin-mat span,
+.labkin-jac span {
+    text-align: right;
+}
+
+.labkin-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.labkin-mono {
+    white-space: pre;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--heading);
+}
+
+.labkin-small {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.labkin-meter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 13px;
+}
+
+.labkin-meter b {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    color: var(--heading);
+}
+
+.labkin-meter em {
+    flex: 1 0 100%;
+    font-style: normal;
+    font-size: 12.5px;
+    color: var(--muted);
+}
+
+.labkin-meter em[data-level="warn"] {
+    color: var(--heading);
+    font-weight: 600;
+}
+
+.labkin-meter em[data-level="bad"] {
+    color: #b3402a;
+    font-weight: 700;
+}
+
+.labkin-track {
+    flex: 1 1 120px;
+    height: 6px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.labkin-track i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width 0.15s ease;
+}
+
+.labkin-use {
+    margin-top: 24px;
+}
+
+.labkin-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.labkin-cards > div {
+    padding: 16px;
+    background: var(--bg-alt);
+    border-radius: 14px;
+}
+
+.labkin-cards p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.labkin-cards pre {
+    margin-top: 8px;
+    overflow-x: auto;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--heading);
+}
+
+@media (max-width: 1060px) {
+    .labkin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .labkin-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    .labkin-card,
+    .labkin-use {
+        padding: 16px;
+    }
+
+    .labkin-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .labkin-dh {
+        font-size: 11.5px;
+    }
+
+    .labkin-jac {
+        font-size: 10.5px;
+        padding: 8px 6px;
+    }
+
+    .labkin-mat {
+        font-size: 11px;
+    }
+}
