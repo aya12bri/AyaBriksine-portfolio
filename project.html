@@ -14,6 +14,7 @@
         document.documentElement.classList.add('js');
         // light mode first; a visitor who switched to dark keeps it
         document.documentElement.classList.add('light-mode');
+        document.documentElement.classList.add('calm');   // sober look; remove this line to bring back the animated decoration
         try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.remove('light-mode'); } catch (e) {}
     </script>
 </head>
@@ -30,6 +31,7 @@
                 <a href="index.html#services">Expertise</a>
                 <a href="index.html#skills">Skills</a>
                 <a href="index.html#projects" class="active">Projects</a>
+                <a href="index.html#lab">Robot Lab</a>
                 <a href="index.html#contact">Contact</a>
             </nav>
 
