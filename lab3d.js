@@ -135,7 +135,8 @@ function init() {
         camera.position.copy(controls.target).add(off.setLength(d));
     }, { passive: false });
 
-    scene.add(new THREE.HemisphereLight(0xcfe6ff, 0x1b1e2b, 1.0));
+    const hemi = new THREE.HemisphereLight(0xffffff, 0x9aa0ab, 1.0);
+    scene.add(hemi);
     const sun = new THREE.DirectionalLight(0xffffff, 1.8);
     sun.position.set(7, 15, 9);
     sun.castShadow = true;
@@ -231,24 +232,26 @@ function init() {
 
     /* ---------- trays and cubes ---------- */
     const TRAY_TOP = 0.3, CUBE = 0.56, PITCH = 1.0;
-    function makeTray(color, pocket, x, z, yaw) {
+    const trayMats = { pick: { body: null, pocket: [] }, place: { body: null, pocket: [] } };
+    function makeTray(role, x, z, yaw) {
         const g = new THREE.Group();
-        const body = new THREE.Mesh(new THREE.BoxGeometry(3.5, 0.3, 3.5), mat(color, { roughness: 0.55 }));
+        const body = new THREE.Mesh(new THREE.BoxGeometry(3.5, 0.3, 3.5), mat(0xffffff, { roughness: 0.55 }));
+        trayMats[role].body = body.material;
         body.position.y = 0.15; body.castShadow = true; body.receiveShadow = true; g.add(body);
         for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) {
-            const p = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.02, 0.78), mat(pocket, { roughness: 0.8 }));
+            const p = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.02, 0.78), mat(0x000000, { roughness: 0.8 }));
+            trayMats[role].pocket.push(p.material);
             p.position.set((i - 1) * PITCH, TRAY_TOP + 0.005, (j - 1) * PITCH); g.add(p);
         }
         g.position.set(x, 0, z); g.rotation.y = yaw;
         scene.add(g); g.updateMatrixWorld(true);
         return g;
     }
-    const pickTray = makeTray(0xf5a93c, 0x7a4d10, 3.0, 5.5, -0.45);
-    const placeTray = makeTray(0xd8dae1, 0x4a4d5b, -3.4, -5.0, 0.5);
+    const pickTray = makeTray('pick', 3.0, 5.5, -0.45);
+    const placeTray = makeTray('place', -3.4, -5.0, 0.5);
     const slotWorld = (tray, i, j, lift = 0) => tray.localToWorld(new THREE.Vector3((i - 1) * PITCH, TRAY_TOP + CUBE / 2 + lift, (j - 1) * PITCH));
-    const cubeColors = [0x5b8cff, 0xff6fa9, 0xffd84a];
-    const cubes = cubeColors.map((c, k) => {
-        const m = new THREE.Mesh(new THREE.BoxGeometry(CUBE, CUBE, CUBE), mat(c, { roughness: 0.4 }));
+    const cubes = [0, 1, 2].map(k => {
+        const m = new THREE.Mesh(new THREE.BoxGeometry(CUBE, CUBE, CUBE), mat(0x888888, { roughness: 0.4 }));
         m.castShadow = true; m.receiveShadow = true;
         scene.add(m);
         return m;
@@ -261,6 +264,43 @@ function init() {
         });
     }
     resetCubes();
+
+    /* ---------- theme: follow the site (light / dark), silver and charcoal like the rest of the page ---------- */
+    const PALETTES = {
+        light: {
+            hemi: [0xffffff, 0x9aa0ab, 1.1], sun: 1.7,
+            disc: 0xd2d5dc, lines: 0x3a3e47, lineOpacity: 0.28,
+            glow: 0x3a3e47, glowEmissive: 0x3a3e47, glowI: 0.12,
+            link: 0xf6f7f9, joint: 0x3a3e47, cup: 0x2e3139, cupEmissive: 0x000000, cupI: 0,
+            pick: [0xc3c7d0, 0x9da2ae], place: [0x9da2ae, 0x7d8290],
+            cubes: [0x2e3139, 0x6b7080, 0xaab0bc]
+        },
+        dark: {
+            hemi: [0xdfe2e8, 0x1b1e2b, 0.9], sun: 1.7,
+            disc: 0x1d1d28, lines: 0xdfe2e8, lineOpacity: 0.16,
+            glow: 0xdfe2e8, glowEmissive: 0xdfe2e8, glowI: 0.35,
+            link: 0xe9eaee, joint: 0x3a3d4a, cup: 0xdfe2e8, cupEmissive: 0xdfe2e8, cupI: 0.25,
+            pick: [0x3a3a48, 0x23232e], place: [0x2c2c38, 0x1a1a23],
+            cubes: [0xe4e6eb, 0xa4a6b5, 0x7d8096]
+        }
+    };
+    function applyTheme() {
+        const P = PALETTES[document.documentElement.classList.contains('light-mode') ? 'light' : 'dark'];
+        hemi.color.set(P.hemi[0]); hemi.groundColor.set(P.hemi[1]); hemi.intensity = P.hemi[2];
+        sun.intensity = P.sun;
+        disc.material.color.set(P.disc);
+        lineMat.color.set(P.lines); lineMat.opacity = P.lineOpacity;
+        matGlow.color.set(P.glow); matGlow.emissive.set(P.glowEmissive); matGlow.emissiveIntensity = P.glowI;
+        matLink.color.set(P.link); matJoint.color.set(P.joint);
+        matCup.color.set(P.cup); matCup.emissive.set(P.cupEmissive); matCup.emissiveIntensity = P.cupI;
+        ['pick', 'place'].forEach(role => {
+            trayMats[role].body.color.set(P[role][0]);
+            trayMats[role].pocket.forEach(m => m.color.set(P[role][1]));
+        });
+        cubes.forEach((m, k) => m.material.color.set(P.cubes[k]));
+    }
+    applyTheme();
+    new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     /* ---------- kinematics helpers ---------- */
     const vA = new THREE.Vector3(), vB = new THREE.Vector3();

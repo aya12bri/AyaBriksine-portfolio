@@ -3966,15 +3966,16 @@ body.project-page .footer {
 
 /* =========================================================
    Robot Lab: 3D cobot (lab3d.js)
-   The lab is always a dark "control room", whatever the site theme.
+   Colours follow the site theme (light and dark).
    ========================================================= */
 .lab3d {
-    --lab-bg: #060a11;
-    --lab-panel: rgba(9, 15, 24, 0.82);
-    --lab-line: rgba(76, 201, 255, 0.28);
-    --lab-cyan: #4cc9ff;
-    --lab-text: #dfe6ef;
-    --lab-muted: #98a5b6;
+    /* the lab uses the colours of the site, in light and in dark mode */
+    --lab-bg: var(--bg-alt);
+    --lab-panel: rgba(var(--surface-rgb), 0.86);
+    --lab-line: var(--border);
+    --lab-cyan: var(--accent);
+    --lab-text: var(--text);
+    --lab-muted: var(--muted);
     display: grid;
     grid-template-columns: minmax(0, 1fr) 360px;
     gap: 24px;
@@ -3985,7 +3986,7 @@ body.project-page .footer {
     position: relative;
     min-height: 700px;
     overflow: hidden;
-    background: radial-gradient(circle at 50% 40%, #0f1826 0%, var(--lab-bg) 70%);
+    background: radial-gradient(circle at 50% 40%, var(--surface) 0%, var(--bg-alt) 85%);
     border: 1px solid var(--lab-line);
     border-radius: 22px;
 }
@@ -4065,7 +4066,7 @@ body.project-page .footer {
 }
 
 .lab3d-tcp dd {
-    color: #fff;
+    color: var(--heading);
     font-weight: 700;
     font-variant-numeric: tabular-nums;
 }
@@ -4080,11 +4081,11 @@ body.project-page .footer {
 }
 
 .lab3d-vac b {
-    color: #7a8596;
+    color: var(--muted);
 }
 
 .lab3d-vac b.on {
-    color: #3ee6a8;
+    color: var(--heading);
 }
 
 .lab3d-prog ol {
@@ -4097,7 +4098,8 @@ body.project-page .footer {
     padding: 2px 6px;
     margin: 0 -6px;
     border-radius: 5px;
-    color: #66717f;
+    color: var(--muted);
+    opacity: 0.75;
 }
 
 .lab3d-prog li span {
@@ -4105,8 +4107,10 @@ body.project-page .footer {
 }
 
 .lab3d-prog li.active {
-    background: rgba(76, 201, 255, 0.16);
-    color: #fff;
+    background: rgba(var(--accent-rgb), 0.14);
+    color: var(--heading);
+    opacity: 1;
+    font-weight: 700;
 }
 
 .lab3d-actions {
@@ -4136,13 +4140,13 @@ body.project-page .footer {
 .lab3d-btn svg {
     width: 14px;
     height: 14px;
-    fill: var(--lab-cyan);
+    fill: var(--accent);
 }
 
 .lab3d-btn:hover,
 .lab3d-btn.running {
-    border-color: var(--lab-cyan);
-    background: rgba(76, 201, 255, 0.14);
+    border-color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.12);
 }
 
 .lab3d-override {
@@ -4172,20 +4176,20 @@ body.project-page .footer {
 }
 
 .lab3d-chip.active {
-    background: var(--lab-cyan);
-    border-color: var(--lab-cyan);
-    color: #04121c;
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    color: var(--on-accent);
 }
 
 .lab3d-panel {
     padding: 24px;
-    background: var(--lab-bg);
+    background: var(--surface);
     border: 1px solid var(--lab-line);
     border-radius: 22px;
 }
 
 .lab3d-panel h3 {
-    color: #fff;
+    color: var(--heading);
     font-size: 19px;
     margin-bottom: 8px;
 }
@@ -4220,7 +4224,7 @@ body.project-page .footer {
 
 .lab3d-slider output {
     display: block;
-    color: #fff;
+    color: var(--heading);
     font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 12.5px;
     font-weight: 700;
