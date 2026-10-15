@@ -18,7 +18,7 @@ const frenchText = {
     "Projects": "Projets",
     "Robot Lab": "Labo robots",
     "Hands-on": "En pratique",
-    "The robots I have programmed during my Master, and a small arm you can move yourself to see how its joint angles set the position of the tool.": "Les robots que j'ai programmés pendant mon Master, et un petit bras que vous pouvez déplacer vous-même pour voir comment les angles des articulations fixent la position de l'outil.",
+    "Jog a six-axis cobot in 3D, read the position of its tool and run a pick-and-place cycle, like on the teach pendant.": "Pilotez un cobot 6 axes en 3D, lisez la position de son outil et lancez un cycle de pick-and-place, comme sur le pupitre de programmation.",
     "Contact": "Contact",
     "Hire me": "Me contacter",
 
