@@ -984,3 +984,18 @@ function addKinArm(host, opts) {
         addKinArm(host, { phase });
     });
 })();
+
+
+/* Robot Lab: show / hide the kinematic diagram */
+(() => {
+    const btn = document.getElementById('labkin-toggle');
+    const panel = document.getElementById('labkin');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', () => {
+        const open = panel.hasAttribute('hidden');
+        panel.toggleAttribute('hidden', !open);
+        btn.setAttribute('aria-expanded', String(open));
+        btn.classList.toggle('open', open);
+        if (open) setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+    });
+})();

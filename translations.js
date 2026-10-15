@@ -17,8 +17,10 @@ const frenchText = {
     "Skills": "Compétences",
     "Projects": "Projets",
     "Robot Lab": "Labo robots",
+    "Show the kinematic diagram and calculations": "Afficher le schéma cinématique et les calculs",
+    "Hide the kinematic diagram": "Masquer le schéma cinématique",
     "Hands-on": "En pratique",
-    "Jog a six-axis cobot in an industrial cell: it takes cartons from a conveyor and stacks them on a pallet. Below, the live kinematic diagram with everything needed to compute and program the arm.": "Pilotez un cobot 6 axes dans une cellule industrielle : il prend des cartons sur un convoyeur et les empile sur une palette. Dessous, le schéma cinématique en direct avec tout ce qu'il faut pour calculer et programmer le bras.",
+    "Jog a six-axis cobot in an industrial cell: it takes cartons from a conveyor and stacks them on a pallet. Below, the live kinematic diagram with everything needed to compute and program the arm.": "Pilotez un cobot 6 axes dans une cellule industrielle : il prend des cartons sur un convoyeur et les empile sur une palette. Ouvrez dessous le schéma cinématique en direct avec tout ce qu'il faut pour calculer et programmer le bras.",
     "Contact": "Contact",
     "Hire me": "Me contacter",
 

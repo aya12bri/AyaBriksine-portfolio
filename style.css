@@ -47,7 +47,7 @@
 
     --radius: 18px;
     --radius-sm: 12px;
-    --header-h: 76px;
+    --header-h: 64px;
     --container: 1160px;
 }
 
@@ -312,16 +312,16 @@ h3 {
 .logo {
     display: inline-flex;
     align-items: center;
-    gap: 11px;
-    font-size: 20px;
+    gap: 9px;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: -0.3px;
     white-space: nowrap;
 }
 
 .logo-mark {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     flex: none;
     transition: transform 0.5s cubic-bezier(.3, 1.4, .5, 1);
 }
@@ -347,8 +347,8 @@ h3 {
 
 .navbar {
     display: flex;
-    gap: 2px;
-    padding: 5px;
+    gap: 1px;
+    padding: 3px;
     border-radius: 999px;
     border: 1px solid var(--border);
     background: var(--header-bg);
@@ -359,9 +359,9 @@ h3 {
 
 .navbar a {
     position: relative;
-    padding: 8px 15px;
+    padding: 6px 12px;
     border-radius: 999px;
-    font-size: 14.5px;
+    font-size: 13.5px;
     font-weight: 500;
     color: var(--muted);
     white-space: nowrap;
@@ -4011,14 +4011,15 @@ body.project-page .footer {
     --lab-text: var(--text);
     --lab-muted: var(--muted);
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 360px;
-    gap: 24px;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 18px;
+    align-items: stretch;
     color: var(--lab-text);
 }
 
 .lab3d-stage {
     position: relative;
-    min-height: 700px;
+    height: clamp(440px, 68vh, 600px);
     overflow: hidden;
     background: radial-gradient(circle at 50% 40%, var(--surface) 0%, var(--bg-alt) 85%);
     border: 1px solid var(--lab-line);
@@ -4216,7 +4217,9 @@ body.project-page .footer {
 }
 
 .lab3d-panel {
-    padding: 24px;
+    max-height: clamp(440px, 68vh, 600px);
+    overflow-y: auto;
+    padding: 18px 20px;
     background: var(--surface);
     border: 1px solid var(--lab-line);
     border-radius: 22px;
@@ -4224,20 +4227,21 @@ body.project-page .footer {
 
 .lab3d-panel h3 {
     color: var(--heading);
-    font-size: 19px;
+    font-size: 17px;
     margin-bottom: 8px;
 }
 
 .lab3d-lead {
-    margin-bottom: 18px;
+    margin-bottom: 12px;
     color: var(--lab-muted);
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 12.5px;
+    line-height: 1.5;
 }
 
 .lab3d-slider {
+    position: relative;
     display: block;
-    margin-bottom: 14px;
+    margin-bottom: 6px;
 }
 
 .lab3d-jn {
@@ -4252,11 +4256,14 @@ body.project-page .footer {
 
 .lab3d-slider input[type=range] {
     width: 100%;
-    margin: 6px 0 0;
+    margin: 2px 0 0;
     accent-color: var(--lab-cyan);
 }
 
 .lab3d-slider output {
+    position: absolute;
+    top: 0;
+    right: 0;
     display: block;
     color: var(--heading);
     font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -4285,13 +4292,17 @@ body.project-page .footer {
     }
 
     .lab3d-stage {
-        min-height: 560px;
+        height: 520px;
+    }
+
+    .lab3d-panel {
+        max-height: none;
     }
 }
 
 @media (max-width: 640px) {
     .lab3d-stage {
-        min-height: 520px;
+        height: 500px;
     }
 
     .lab3d-prog {
@@ -4300,7 +4311,17 @@ body.project-page .footer {
 
     .lab3d-tcp {
         min-width: 0;
-        padding: 10px 12px;
+        padding: 8px 10px;
+        font-size: 11px;
+    }
+
+    .lab3d-tcp h4,
+    .lab3d-vac {
+        display: none;
+    }
+
+    .lab3d-tcp dl {
+        margin: 0;
     }
 
     .lab3d-hint {
@@ -4309,10 +4330,6 @@ body.project-page .footer {
 
     .lab3d-override span {
         display: none;
-    }
-
-    .lab3d-stage {
-        min-height: 560px;
     }
 
     /* phones: controls on two rows so nothing overlaps */
@@ -4671,4 +4688,56 @@ body.project-page .footer {
     .labkin-mat {
         font-size: 11px;
     }
+}
+
+
+/* Robot Lab: button that opens the kinematic diagram */
+.labkin-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 16px;
+    padding: 14px 18px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface);
+    color: var(--heading);
+    font: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.labkin-toggle:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.labkin-toggle i {
+    font-size: 22px;
+    transition: transform 0.25s ease;
+}
+
+.labkin-toggle.open i {
+    transform: rotate(180deg);
+}
+
+.labkin-toggle .lk-hide,
+.labkin-toggle.open .lk-show {
+    display: none;
+}
+
+.labkin-toggle.open .lk-hide {
+    display: inline;
+}
+
+.labkin {
+    margin-top: 18px;
+}
+
+.labkin[hidden] {
+    display: none;
 }
