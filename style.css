@@ -2680,17 +2680,6 @@ html:not(.light-mode) .back-top {
     letter-spacing: 1px;
 }
 
-.fx-trajectory .tool {
-    fill: var(--signal);
-    filter: drop-shadow(0 0 8px rgba(var(--signal-rgb), 0.9));
-}
-
-.fx-trajectory .tool-halo {
-    fill: none;
-    stroke: rgba(var(--signal-rgb), 0.5);
-    stroke-width: 1.5;
-}
-
 /* --- radar / lidar sweep behind the portrait --- */
 .hero-photo::after {
     content: "";
@@ -3545,28 +3534,8 @@ html:not(.light-mode) .back-top {
 
 
 /* =========================================================
-   Hero: gripper on the trajectory, roaming robot, self-typing code
+   Hero: roaming robot, self-typing code
    ========================================================= */
-.fx-trajectory .gripper {
-    color: var(--signal);
-}
-
-.fx-trajectory .g-arm,
-.fx-trajectory .g-jaw {
-    fill: none;
-    stroke: var(--signal);
-    stroke-width: 2.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    filter: drop-shadow(0 0 6px rgba(var(--signal-rgb), 0.7));
-}
-
-.fx-trajectory .cube {
-    fill: rgba(var(--signal-rgb), 0.25);
-    stroke: var(--signal);
-    stroke-width: 1.6;
-}
-
 .roam-floor {
     position: absolute;
     left: 0;

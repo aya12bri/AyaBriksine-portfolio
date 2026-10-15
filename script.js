@@ -498,7 +498,7 @@ function addKinArm(host, opts) {
 })();
 
 
-/* ---------- Hero background: aurora blobs + a robot end-effector following a trajectory ---------- */
+/* ---------- Hero background: aurora blobs, a robot trajectory and the kinematic arm ---------- */
 (function () {
     const hero = document.getElementById('home');
     if (!hero) return;
@@ -512,14 +512,6 @@ function addKinArm(host, opts) {
         <svg class="fx-trajectory" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
             <path class="path" d="${d}"/>
             ${waypoints.map(([x, y, n]) => `<circle class="wp" cx="${x}" cy="${y}" r="9"/><circle class="wp-dot" cx="${x}" cy="${y}" r="2.5"/><text x="${x + 16}" y="${y - 14}">${n}</text>`).join('')}
-            <rect class="cube" x="-4.5" y="-4.5" width="9" height="9" rx="1.5"/>
-            <g class="gripper">
-                <circle class="tool-halo" r="13"/>
-                <circle class="tool" r="4.5"/>
-                <path class="g-arm" d="M4 0 H12 M12 -9 V9"/>
-                <path class="g-jaw g-jaw-up" d="M12 -9 H30 V-4"/>
-                <path class="g-jaw g-jaw-down" d="M12 9 H30 V4"/>
-            </g>
         </svg>`;
     hero.insertBefore(fx, hero.firstChild);
     const kin = document.createElement('div');
@@ -527,90 +519,6 @@ function addKinArm(host, opts) {
     hero.appendChild(kin);                                      // above the stats card, so the diagram stays readable
     addKinArm(kin);
 
-    // The tool is a parallel-jaw gripper: it follows the trajectory, stops at the waypoints,
-    // closes on a small cube at P1, drops it at P2, and pinches once at P3.
-    const svg = fx.querySelector('.fx-trajectory');
-    const pathEl = svg.querySelector('.path');
-    const grip = svg.querySelector('.gripper');
-    const jawUp = svg.querySelector('.g-jaw-up');
-    const jawDown = svg.querySelector('.g-jaw-down');
-    const cube = svg.querySelector('.cube');
-    const L = pathEl.getTotalLength();
-    const dist = waypoints.map(([x, y]) => {                   // distance along the path of each waypoint
-        let best = 0, bd = 1e9;
-        for (let s = 0; s <= L; s += 3) {
-            const p = pathEl.getPointAtLength(s), e = (p.x - x) ** 2 + (p.y - y) ** 2;
-            if (e < bd) { bd = e; best = s; }
-        }
-        return best;
-    });
-    const OPEN = 13, HOLD = 5, PINCH = 1.5;                     // half-opening of the jaws
-    const pose = d => {
-        const a = pathEl.getPointAtLength(Math.max(0, d - 6)), b = pathEl.getPointAtLength(Math.min(L, d + 6));
-        const p = pathEl.getPointAtLength(d);
-        return { x: p.x, y: p.y, r: Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI };
-    };
-    const K = 1.7;                                             // the gripper is drawn a bit larger than its 30-unit design
-    const place = (el, ps, dx) => el.setAttribute('transform', `translate(${ps.x.toFixed(1)} ${ps.y.toFixed(1)}) rotate(${ps.r.toFixed(1)}) translate(${((dx || 0) * K).toFixed(1)} 0) scale(${K})`);
-    const jaws = j => {
-        jawUp.setAttribute('transform', `translate(0 ${(OPEN - j).toFixed(2)})`);
-        jawDown.setAttribute('transform', `translate(0 ${(j - OPEN).toFixed(2)})`);
-    };
-    const ease = u => 0.5 - 0.5 * Math.cos(Math.PI * Math.min(1, Math.max(0, u)));
-    const lerp = (a, b, u) => a + (b - a) * u;
-
-    // timeline: moves along the path and pauses with a gripper action
-    const SPEED = 105;                                          // path units per second
-    const steps = [
-        { to: dist[0] }, { act: 'grasp', t: 1.4 },
-        { to: dist[1] }, { act: 'release', t: 1.3 },
-        { to: dist[2] }, { act: 'pinch', t: 1.1 },
-        { to: L }, { act: 'wait', t: 0.8 }
-    ];
-    const startAt = -30;                                        // the loop starts a little before the first point
-    let d0 = startAt;
-    steps.forEach(s => {
-        if (s.to !== undefined) { s.from = d0; s.t = Math.abs(s.to - d0) / SPEED; d0 = s.to; }
-    });
-    const total = steps.reduce((n, s) => n + s.t, 0);
-    const cubePose = pose(dist[0]);
-    const dropPose = pose(dist[1]);
-
-    function frame(sec) {
-        let t = sec % total, k = 0;
-        while (k < steps.length - 1 && t >= steps[k].t) { t -= steps[k].t; k++; }
-        const s = steps[k], u = t / s.t;
-        const d = s.to !== undefined ? lerp(s.from, s.to, ease(u)) : steps[k - 1].to;
-        const ps = pose(Math.max(0, d));
-
-        // jaw opening
-        let j = OPEN;
-        if (k === 1) j = u < 0.5 ? lerp(OPEN, HOLD, ease(u / 0.5)) : HOLD;
-        else if (k === 2) j = HOLD;
-        else if (k === 3) j = u < 0.5 ? HOLD : lerp(HOLD, OPEN, ease((u - 0.5) / 0.5));
-        else if (k === 5) j = u < 0.5 ? lerp(OPEN, PINCH, ease(u / 0.5)) : lerp(PINCH, OPEN, ease((u - 0.5) / 0.5));
-
-        // cube: waits at P1, is carried to P2, then stays where it was dropped and fades out
-        const carried = (k === 1 && u >= 0.55) || k === 2 || (k === 3 && u < 0.45);
-        if (carried) place(cube, ps, 21);
-        else if (k < 2) place(cube, cubePose, 21);
-        else place(cube, dropPose, 21);
-        cube.style.opacity = k < 6 ? 1 : k === 6 ? 1 - ease(u) * 0.8 : 0.2 * (1 - u);
-
-        place(grip, ps);
-        jaws(j);
-    }
-
-    let t0 = null, running = true;
-    function tick(now) {
-        if (t0 === null) t0 = now;
-        if (running) frame((now - t0) / 1000);
-        requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-    if ('IntersectionObserver' in window) {                     // do nothing while the hero is off screen
-        new IntersectionObserver(es => { running = es[0].isIntersecting; }, { threshold: 0 }).observe(hero);
-    }
 })();
 
 
