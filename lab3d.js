@@ -212,9 +212,9 @@ function init() {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, 1.5, 0.1, 200);
-    camera.position.set(-15.5, 13.5, 20.5);
+    camera.position.set(-17.6, 15.3, 23.3);
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0.2, 2.6, 0.3);
+    controls.target.set(0.1, 2.2, 0.3);
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
     controls.enableZoom = false;                       // zoom only with Ctrl + scroll, so the page keeps scrolling
@@ -911,12 +911,18 @@ Jj = [ zj × (pE − oj) ; zj ]</pre><p data-t="f3d"></p></div>
     }
 
     /* ---------- sizing and render loop ---------- */
+    let fitK = 1;
     function resize() {
         const w = stage.clientWidth, h = stage.clientHeight;
         if (!w || !h) return;
         renderer.setSize(w, h, false);
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
+        // narrow stage (phones): move back so the whole cell stays in view
+        const k = Math.max(1, 1.25 / camera.aspect);
+        const off = camera.position.clone().sub(controls.target);
+        camera.position.copy(controls.target).add(off.setLength(off.length() * k / fitK));
+        fitK = k;
     }
     new ResizeObserver(resize).observe(stage);
     resize();

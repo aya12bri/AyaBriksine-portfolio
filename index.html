@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="stylesheet" href="style.css?v=64">
+    <link rel="stylesheet" href="style.css?v=65">
     <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/"}}</script>
     <script>
         // Runs before the page shows: apply the saved light/dark choice so it doesn't flash
@@ -450,10 +450,15 @@
             <div class="section-head reveal">
                 <p class="eyebrow">Hands-on</p>
                 <h2 class="section-title">Robot Lab</h2>
-                <p class="section-sub">Jog a six-axis cobot in an industrial cell: it takes cartons from a conveyor and stacks them on a pallet. Below, the live kinematic diagram with everything needed to compute and program the arm.</p>
+                <p class="section-sub">Jog a six-axis cobot in an industrial cell: it takes cartons from a conveyor and stacks them on a pallet. Open the live kinematic diagram below for everything needed to compute and program the arm.</p>
             </div>
             <div class="lab3d reveal" id="lab3d" data-no-translate><p class="lab3d-fallback">Loading the 3D lab…</p></div>
-            <div class="labkin reveal" id="labkin" data-no-translate></div>
+            <button type="button" class="labkin-toggle" id="labkin-toggle" aria-expanded="false" aria-controls="labkin">
+                <span class="lk-show">Show the kinematic diagram and calculations</span>
+                <span class="lk-hide">Hide the kinematic diagram</span>
+                <i class='bx bx-chevron-down'></i>
+            </button>
+            <div class="labkin" id="labkin" data-no-translate hidden></div>
         </div>
     </section>
 
@@ -518,6 +523,6 @@
     <script src="projects.js?v=63"></script>
     <script src="script.js?v=63"></script>
     <script src="translations.js?v=63"></script>
-    <script type="module" src="lab3d.js?v=63"></script>
+    <script type="module" src="lab3d.js?v=65"></script>
 </body>
 </html>
