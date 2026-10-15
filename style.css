@@ -310,51 +310,76 @@ h3 {
 }
 
 .logo {
-    font-size: 21px;
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: -0.3px;
     white-space: nowrap;
 }
 
-.logo span {
-    color: var(--accent);
+.logo-mark {
+    width: 40px;
+    height: 40px;
+    flex: none;
+    transition: transform 0.5s cubic-bezier(.3, 1.4, .5, 1);
+}
+
+.logo-mark .lm-hex { fill: var(--accent); }
+.logo-mark .lm-a {
+    fill: none;
+    stroke: var(--bg);
+    stroke-width: 3.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.logo-mark .lm-joint { fill: var(--bg); stroke: var(--accent); stroke-width: 2; }
+.logo-mark .lm-pin { fill: var(--accent); }
+
+.logo:hover .logo-mark {
+    transform: rotate(-8deg) scale(1.06);
+}
+
+.logo-text span {
+    color: var(--muted);
 }
 
 .navbar {
     display: flex;
-    gap: 6px;
+    gap: 2px;
+    padding: 5px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--header-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.07);
 }
 
 .navbar a {
     position: relative;
-    padding: 8px 12px;
+    padding: 8px 15px;
+    border-radius: 999px;
     font-size: 14.5px;
     font-weight: 500;
     color: var(--muted);
     white-space: nowrap;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .navbar a::after {
-    content: "";
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: 2px;
-    height: 2px;
-    border-radius: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transition: transform 0.25s ease;
+    display: none;
 }
 
-.navbar a:hover,
-.navbar a.active {
+.navbar a:hover {
     color: var(--text);
+    background: var(--accent-soft);
 }
 
-.navbar a.active::after {
-    transform: scaleX(1);
+.navbar a.active {
+    color: var(--on-accent);
+    background: var(--accent);
 }
 
 .header-actions {
@@ -1765,7 +1790,7 @@ h3 {
 }
 
 /* ---------- Dark mode "lights" (neon glow, like the original design) ---------- */
-html:not(.light-mode) .logo span,
+html:not(.light-mode) .logo-text span,
 html:not(.light-mode) .hero h1 .accent,
 html:not(.light-mode) .hero-role,
 html:not(.light-mode) .stats strong {
@@ -1882,7 +1907,7 @@ html:not(.light-mode) .back-top {
     }
 
     .navbar a {
-        padding: 8px 9px;
+        padding: 8px 10px;
     }
 }
 
@@ -1905,8 +1930,11 @@ html:not(.light-mode) .back-top {
         gap: 0;
         padding: 12px 24px 24px;
         background: var(--bg);
+        border: 0;
+        border-radius: 0;
         border-bottom: 1px solid var(--border);
         box-shadow: var(--shadow);
+        backdrop-filter: none;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);
@@ -1922,7 +1950,13 @@ html:not(.light-mode) .back-top {
     .navbar a {
         padding: 14px 4px;
         font-size: 16px;
+        border-radius: 0;
         border-bottom: 1px solid var(--border);
+    }
+
+    .navbar a:hover,
+    .navbar a.active {
+        background: none;
     }
 
     .navbar a:last-child {
@@ -1934,7 +1968,8 @@ html:not(.light-mode) .back-top {
     }
 
     .navbar a.active {
-        color: var(--accent);
+        color: var(--text);
+        font-weight: 700;
     }
 
     .header.menu-open {
@@ -2035,9 +2070,8 @@ html:not(.light-mode) .back-top {
         gap: 8px;
     }
 
-    .logo {
-        font-size: 18px;
-    }
+    .logo { font-size: 18px; }
+    .logo-mark { width: 34px; height: 34px; }
 
     .hero-buttons .btn {
         flex: 1;
