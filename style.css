@@ -310,51 +310,76 @@ h3 {
 }
 
 .logo {
-    font-size: 21px;
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: -0.3px;
     white-space: nowrap;
 }
 
-.logo span {
-    color: var(--accent);
+.logo-mark {
+    width: 40px;
+    height: 40px;
+    flex: none;
+    transition: transform 0.5s cubic-bezier(.3, 1.4, .5, 1);
+}
+
+.logo-mark .lm-hex { fill: var(--accent); }
+.logo-mark .lm-a {
+    fill: none;
+    stroke: var(--bg);
+    stroke-width: 3.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.logo-mark .lm-joint { fill: var(--bg); stroke: var(--accent); stroke-width: 2; }
+.logo-mark .lm-pin { fill: var(--accent); }
+
+.logo:hover .logo-mark {
+    transform: rotate(-8deg) scale(1.06);
+}
+
+.logo-text span {
+    color: var(--muted);
 }
 
 .navbar {
     display: flex;
-    gap: 6px;
+    gap: 2px;
+    padding: 5px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--header-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.07);
 }
 
 .navbar a {
     position: relative;
-    padding: 8px 12px;
+    padding: 8px 15px;
+    border-radius: 999px;
     font-size: 14.5px;
     font-weight: 500;
     color: var(--muted);
     white-space: nowrap;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .navbar a::after {
-    content: "";
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: 2px;
-    height: 2px;
-    border-radius: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transition: transform 0.25s ease;
+    display: none;
 }
 
-.navbar a:hover,
-.navbar a.active {
+.navbar a:hover {
     color: var(--text);
+    background: var(--accent-soft);
 }
 
-.navbar a.active::after {
-    transform: scaleX(1);
+.navbar a.active {
+    color: var(--on-accent);
+    background: var(--accent);
 }
 
 .header-actions {
@@ -1765,7 +1790,7 @@ h3 {
 }
 
 /* ---------- Dark mode "lights" (neon glow, like the original design) ---------- */
-html:not(.light-mode) .logo span,
+html:not(.light-mode) .logo-text span,
 html:not(.light-mode) .hero h1 .accent,
 html:not(.light-mode) .hero-role,
 html:not(.light-mode) .stats strong {
@@ -1882,7 +1907,7 @@ html:not(.light-mode) .back-top {
     }
 
     .navbar a {
-        padding: 8px 9px;
+        padding: 8px 10px;
     }
 }
 
@@ -1905,8 +1930,11 @@ html:not(.light-mode) .back-top {
         gap: 0;
         padding: 12px 24px 24px;
         background: var(--bg);
+        border: 0;
+        border-radius: 0;
         border-bottom: 1px solid var(--border);
         box-shadow: var(--shadow);
+        backdrop-filter: none;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);
@@ -1922,7 +1950,13 @@ html:not(.light-mode) .back-top {
     .navbar a {
         padding: 14px 4px;
         font-size: 16px;
+        border-radius: 0;
         border-bottom: 1px solid var(--border);
+    }
+
+    .navbar a:hover,
+    .navbar a.active {
+        background: none;
     }
 
     .navbar a:last-child {
@@ -1934,7 +1968,8 @@ html:not(.light-mode) .back-top {
     }
 
     .navbar a.active {
-        color: var(--accent);
+        color: var(--text);
+        font-weight: 700;
     }
 
     .header.menu-open {
@@ -2035,9 +2070,8 @@ html:not(.light-mode) .back-top {
         gap: 8px;
     }
 
-    .logo {
-        font-size: 18px;
-    }
+    .logo { font-size: 18px; }
+    .logo-mark { width: 34px; height: 34px; }
 
     .hero-buttons .btn {
         flex: 1;
@@ -3966,15 +4000,16 @@ body.project-page .footer {
 
 /* =========================================================
    Robot Lab: 3D cobot (lab3d.js)
-   The lab is always a dark "control room", whatever the site theme.
+   Colours follow the site theme (light and dark).
    ========================================================= */
 .lab3d {
-    --lab-bg: #060a11;
-    --lab-panel: rgba(9, 15, 24, 0.82);
-    --lab-line: rgba(76, 201, 255, 0.28);
-    --lab-cyan: #4cc9ff;
-    --lab-text: #dfe6ef;
-    --lab-muted: #98a5b6;
+    /* the lab uses the colours of the site, in light and in dark mode */
+    --lab-bg: var(--bg-alt);
+    --lab-panel: rgba(var(--surface-rgb), 0.86);
+    --lab-line: var(--border);
+    --lab-cyan: var(--accent);
+    --lab-text: var(--text);
+    --lab-muted: var(--muted);
     display: grid;
     grid-template-columns: minmax(0, 1fr) 360px;
     gap: 24px;
@@ -3985,7 +4020,7 @@ body.project-page .footer {
     position: relative;
     min-height: 700px;
     overflow: hidden;
-    background: radial-gradient(circle at 50% 40%, #0f1826 0%, var(--lab-bg) 70%);
+    background: radial-gradient(circle at 50% 40%, var(--surface) 0%, var(--bg-alt) 85%);
     border: 1px solid var(--lab-line);
     border-radius: 22px;
 }
@@ -4065,7 +4100,7 @@ body.project-page .footer {
 }
 
 .lab3d-tcp dd {
-    color: #fff;
+    color: var(--heading);
     font-weight: 700;
     font-variant-numeric: tabular-nums;
 }
@@ -4080,11 +4115,11 @@ body.project-page .footer {
 }
 
 .lab3d-vac b {
-    color: #7a8596;
+    color: var(--muted);
 }
 
 .lab3d-vac b.on {
-    color: #3ee6a8;
+    color: var(--heading);
 }
 
 .lab3d-prog ol {
@@ -4097,7 +4132,8 @@ body.project-page .footer {
     padding: 2px 6px;
     margin: 0 -6px;
     border-radius: 5px;
-    color: #66717f;
+    color: var(--muted);
+    opacity: 0.75;
 }
 
 .lab3d-prog li span {
@@ -4105,8 +4141,10 @@ body.project-page .footer {
 }
 
 .lab3d-prog li.active {
-    background: rgba(76, 201, 255, 0.16);
-    color: #fff;
+    background: rgba(var(--accent-rgb), 0.14);
+    color: var(--heading);
+    opacity: 1;
+    font-weight: 700;
 }
 
 .lab3d-actions {
@@ -4136,13 +4174,13 @@ body.project-page .footer {
 .lab3d-btn svg {
     width: 14px;
     height: 14px;
-    fill: var(--lab-cyan);
+    fill: var(--accent);
 }
 
 .lab3d-btn:hover,
 .lab3d-btn.running {
-    border-color: var(--lab-cyan);
-    background: rgba(76, 201, 255, 0.14);
+    border-color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.12);
 }
 
 .lab3d-override {
@@ -4172,20 +4210,20 @@ body.project-page .footer {
 }
 
 .lab3d-chip.active {
-    background: var(--lab-cyan);
-    border-color: var(--lab-cyan);
-    color: #04121c;
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    color: var(--on-accent);
 }
 
 .lab3d-panel {
     padding: 24px;
-    background: var(--lab-bg);
+    background: var(--surface);
     border: 1px solid var(--lab-line);
     border-radius: 22px;
 }
 
 .lab3d-panel h3 {
-    color: #fff;
+    color: var(--heading);
     font-size: 19px;
     margin-bottom: 8px;
 }
@@ -4220,7 +4258,7 @@ body.project-page .footer {
 
 .lab3d-slider output {
     display: block;
-    color: #fff;
+    color: var(--heading);
     font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 12.5px;
     font-weight: 700;
@@ -4301,5 +4339,336 @@ body.project-page .footer {
 
     .lab3d-btn {
         padding: 10px 14px;
+    }
+}
+
+
+/* =========================================================
+   Robot Lab: live kinematic diagram (labkin)
+   ========================================================= */
+.labkin {
+    margin-top: 40px;
+}
+
+.labkin-head h3 {
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.labkin-head p {
+    max-width: 760px;
+    margin-bottom: 22px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.labkin-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.labkin-card,
+.labkin-use {
+    padding: 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+}
+
+.labkin-card h4,
+.labkin-use > h4 {
+    margin: 0 0 12px;
+    font-size: 13.5px;
+    letter-spacing: 0.3px;
+}
+
+.labkin-data h4:not(:first-child) {
+    margin-top: 22px;
+}
+
+.labkin-card h5,
+.labkin-cards h5 {
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+#kin-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    background: var(--bg-alt);
+}
+
+.kin-ground { stroke: var(--muted); stroke-width: 1.5; }
+.kin-hatch { stroke: var(--muted); stroke-width: 1; opacity: 0.55; }
+.kin-base { fill: var(--surface-2); stroke: var(--heading); stroke-width: 1.5; }
+.kin-reach { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 5 6; opacity: 0.7; }
+.kin-link { stroke: var(--heading); stroke-linecap: round; opacity: 0.85; }
+.kin-link.l1, .kin-link.l2, .kin-link.l3 { stroke-width: 10; }
+.kin-link.l4 { stroke-width: 7; }
+.kin-link.l5 { stroke-width: 5; opacity: 0.7; }
+.kin-axis { stroke: var(--heading); stroke-width: 1.6; stroke-dasharray: 5 4; fill: none; }
+.kin-axis-halo { stroke: var(--bg-alt); stroke-width: 5; fill: none; }
+.kin-legend { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 11.5px; fill: var(--muted); }
+.kin-ax, .kin-ay, .kin-az { fill: none; stroke-linecap: round; }
+.kin-ax { stroke: var(--muted); stroke-width: 2; }
+.kin-ay { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 6 4; }
+.kin-az { stroke: var(--heading); stroke-width: 2.6; }
+.kin-ah-z { fill: var(--heading); }
+.kin-ah-x { fill: var(--muted); }
+.kin-joint { fill: var(--surface); stroke: var(--heading); stroke-width: 2.2; }
+.kin-jdot { fill: var(--heading); }
+.kin-tcp { fill: var(--surface); stroke: var(--heading); stroke-width: 2; }
+.kin-tcpx { stroke: var(--heading); stroke-width: 1.4; }
+.kin-arc { fill: none; stroke: var(--muted); stroke-width: 1.6; }
+.kin-sym { fill: var(--surface); stroke: var(--heading); stroke-width: 1.5; }
+.kin-sym.tri { stroke-width: 2; }
+.kin-sym-dot { fill: var(--heading); }
+.kin-sym-x { stroke: var(--heading); stroke-width: 1.8; fill: none; }
+.kin-t, .kin-dim, .kin-zt, .kin-jt, .kin-tri, .kin-fr {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    paint-order: stroke;
+    stroke: var(--bg-alt);
+    stroke-width: 3px;
+    stroke-linejoin: round;
+}
+.kin-t { font-size: 12px; fill: var(--muted); }
+.kin-dim { font-size: 11.5px; fill: var(--muted); }
+.kin-zt { font-size: 12.5px; fill: var(--heading); font-weight: 700; }
+.kin-jt { font-size: 12px; fill: var(--heading); font-weight: 700; }
+.kin-tri { font-size: 13px; fill: var(--heading); font-weight: 700; }
+.kin-fr { font-size: 13px; fill: var(--heading); font-weight: 700; }
+
+.labkin-frames {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 12.5px;
+}
+
+.labkin-frames span {
+    margin-right: 4px;
+}
+
+.labkin-frames .lab3d-chip {
+    padding: 5px 11px;
+    font-size: 12px;
+    color: var(--text);
+    background: var(--surface-2);
+    border-color: var(--border);
+}
+
+.labkin-frames .lab3d-chip.active {
+    color: var(--on-accent);
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+}
+
+.labkin-cap {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.labkin-dh {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+}
+
+.labkin-dh th,
+.labkin-dh td {
+    padding: 5px 6px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.labkin-dh th {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.labkin-dh td:nth-child(5) {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-weight: 700;
+    color: var(--heading);
+}
+
+.labkin-mat,
+.labkin-jac {
+    display: grid;
+    gap: 3px;
+    padding: 10px;
+    background: var(--bg-alt);
+    border-radius: 12px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.labkin-mat {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.labkin-mat .p {
+    color: var(--heading);
+    font-weight: 700;
+}
+
+.labkin-jac {
+    grid-template-columns: repeat(6, 1fr);
+    font-size: 11.5px;
+}
+
+.labkin-jac .w {
+    color: var(--muted);
+}
+
+.labkin-mat span,
+.labkin-jac span {
+    text-align: right;
+}
+
+.labkin-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.labkin-mono {
+    white-space: pre;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--heading);
+}
+
+.labkin-small {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.labkin-meter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 13px;
+}
+
+.labkin-meter b {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    color: var(--heading);
+}
+
+.labkin-meter em {
+    flex: 1 0 100%;
+    font-style: normal;
+    font-size: 12.5px;
+    color: var(--muted);
+}
+
+.labkin-meter em[data-level="warn"] {
+    color: var(--heading);
+    font-weight: 600;
+}
+
+.labkin-meter em[data-level="bad"] {
+    color: #b3402a;
+    font-weight: 700;
+}
+
+.labkin-track {
+    flex: 1 1 120px;
+    height: 6px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.labkin-track i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width 0.15s ease;
+}
+
+.labkin-use {
+    margin-top: 24px;
+}
+
+.labkin-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.labkin-cards > div {
+    padding: 16px;
+    background: var(--bg-alt);
+    border-radius: 14px;
+}
+
+.labkin-cards p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.labkin-cards pre {
+    margin-top: 8px;
+    overflow-x: auto;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--heading);
+}
+
+@media (max-width: 1060px) {
+    .labkin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .labkin-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    .labkin-card,
+    .labkin-use {
+        padding: 16px;
+    }
+
+    .labkin-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .labkin-dh {
+        font-size: 11.5px;
+    }
+
+    .labkin-jac {
+        font-size: 10.5px;
+        padding: 8px 6px;
+    }
+
+    .labkin-mat {
+        font-size: 11px;
     }
 }

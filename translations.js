@@ -18,7 +18,7 @@ const frenchText = {
     "Projects": "Projets",
     "Robot Lab": "Labo robots",
     "Hands-on": "En pratique",
-    "Jog a six-axis cobot in 3D, read the position of its tool and run a pick-and-place cycle, like on the teach pendant.": "Pilotez un cobot 6 axes en 3D, lisez la position de son outil et lancez un cycle de pick-and-place, comme sur le pupitre de programmation.",
+    "Jog a six-axis cobot in an industrial cell: it takes cartons from a conveyor and stacks them on a pallet. Below, the live kinematic diagram with everything needed to compute and program the arm.": "Pilotez un cobot 6 axes dans une cellule industrielle : il prend des cartons sur un convoyeur et les empile sur une palette. Dessous, le schéma cinématique en direct avec tout ce qu'il faut pour calculer et programmer le bras.",
     "Contact": "Contact",
     "Hire me": "Me contacter",
 
