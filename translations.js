@@ -16,6 +16,9 @@ const frenchText = {
     "Services": "Services",
     "Skills": "Compétences",
     "Projects": "Projets",
+    "Robot Lab": "Labo robots",
+    "Hands-on": "En pratique",
+    "The robots I have programmed during my Master, and a small arm you can move yourself to see how its joint angles set the position of the tool.": "Les robots que j'ai programmés pendant mon Master, et un petit bras que vous pouvez déplacer vous-même pour voir comment les angles des articulations fixent la position de l'outil.",
     "Contact": "Contact",
     "Hire me": "Me contacter",
 

@@ -426,7 +426,9 @@ function createKinArm(host, opts) {
     const deg = x => x * Math.PI / 180;
     function draw(t) {
         t += o.phase;
-        const t1 = deg(58 + 16 * Math.sin(0.55 * t)), t2 = t1 - deg(66 + 26 * Math.sin(0.8 * t + 1)), t3 = t2 - deg(35 + 30 * Math.sin(1.1 * t + 2));
+        let t1, t2, t3;
+        if (o.pose) { t1 = deg(o.pose.q1); t2 = t1 + deg(o.pose.q2); t3 = t2 + deg(o.pose.q3); }      // pose set by sliders
+        else { t1 = deg(58 + 16 * Math.sin(0.55 * t)); t2 = t1 - deg(66 + 26 * Math.sin(0.8 * t + 1)); t3 = t2 - deg(35 + 30 * Math.sin(1.1 * t + 2)); }
         const p = [base, pt(base, t1, L[0])]; p.push(pt(p[1], t2, L[1])); p.push(pt(p[2], t3, L[2]));
         const th = [t1, t2, t3];
         for (let i = 0; i < 3; i++) {
@@ -444,14 +446,17 @@ function createKinArm(host, opts) {
         el.ex.setAttribute('d', `M${p[3].x.toFixed(1)} ${p[3].y.toFixed(1)} L${ex.x.toFixed(1)} ${ex.y.toFixed(1)}`);
         el.ey.setAttribute('d', `M${p[3].x.toFixed(1)} ${p[3].y.toFixed(1)} L${ey.x.toFixed(1)} ${ey.y.toFixed(1)}`);
         put(el.te, p[3], t3 - Math.PI / 2, 26, -8);
-        const open = 2.5 + 6.5 * (0.5 + 0.5 * Math.sin(1.5 * t));
+        const open = o.pose ? 2.5 + 6.5 * o.pose.open : 2.5 + 6.5 * (0.5 + 0.5 * Math.sin(1.5 * t));
         el.grip.setAttribute('transform', `translate(${p[3].x.toFixed(1)} ${p[3].y.toFixed(1)}) rotate(${(-t3 * 180 / Math.PI).toFixed(1)})`);
         el.gu.setAttribute('transform', `translate(0 ${(9 - open).toFixed(2)})`);
         el.gd.setAttribute('transform', `translate(0 ${(open - 9).toFixed(2)})`);
         const tip = pt(p[3], t3, 26);
-        trace.push(tip.x.toFixed(1) + ',' + tip.y.toFixed(1));
-        if (trace.length > 110) trace.shift();
+        if (!o.pose) {                                          // the trail only makes sense for the animated arm
+            trace.push(tip.x.toFixed(1) + ',' + tip.y.toFixed(1));
+            if (trace.length > 110) trace.shift();
+        }
         el.trace.setAttribute('points', trace.join(' '));
+        return { x: tip.x - base.x, y: base.y - tip.y, below: tip.y > base.y + 12 };
     }
     draw(0);
     return draw;
@@ -473,6 +478,110 @@ function addKinArm(host, opts) {
     if (!kinArms.length) startKinArms();
     kinArms.push(arm);
 }
+
+/* ---------- Robot Lab: the robots I have worked on + an interactive arm ---------- */
+(function () {
+    const grid = document.querySelector('#lab-grid');
+    const simBox = document.querySelector('#lab-sim');
+    if (!grid || !simBox) return;
+    const robots = [
+        { id: 'doosan-m0617', img: 'video-doosan-m0617.jpg', name: 'Doosan M0617', chips: { en: ['6-axis cobot', 'Teach pendant'], fr: ['Cobot 6 axes', 'Pupitre de programmation'] },
+          text: { en: 'JOG in joint and Cartesian space, hand guiding and a pick-and-place cycle with a conveyor.', fr: 'Pilotage JOG articulaire et cartésien, co-manipulation et cycle de pick-and-place avec un convoyeur.' } },
+        { id: 'universal-robots-ur3-ur5', img: 'video-ur5-cobot.jpg', name: 'Universal Robots UR3 / UR5', chips: { en: ['6-axis cobots', 'PolyScope'], fr: ['Cobots 6 axes', 'PolyScope'] },
+          text: { en: 'Singularities, MoveJ / MoveL trajectories, kinematic diagrams and modified Denavit-Hartenberg parameters.', fr: 'Singularités, trajectoires MoveJ / MoveL, schémas cinématiques et paramètres de Denavit-Hartenberg modifiés.' } },
+        { id: 'fanuc-crx-delta', img: 'video-fanuc-crx.jpg', name: 'FANUC CRX-10iA', chips: { en: ['6-axis cobot', 'Vacuum gripper'], fr: ['Cobot 6 axes', 'Ventouse'] },
+          text: { en: 'JOG and hand guiding, a pick-and-place program on the tablet and the geometric model.', fr: 'Pilotage JOG et co-manipulation, programme de pick-and-place sur la tablette et modélisation géométrique.' } },
+        { id: 'fanuc-m1ia-pick-place', img: 'fanuc-tp-prise.jpg', name: 'FANUC M-1iA/0.5AL', chips: { en: ['Delta robot', '± 0.03 mm'], fr: ['Robot Delta', '± 0,03 mm'] },
+          text: { en: 'Teach Pendant programming of a parallel robot: six taught points and a suction pick-and-place cycle.', fr: 'Programmation au Teach Pendant d’un robot parallèle : six points appris et cycle de pick-and-place à ventouse.' } },
+        { id: 'staubli-tx60', img: 'staubli-tp-robot.jpg', name: 'Stäubli TX60L', chips: { en: ['6-axis robot', 'VAL3'], fr: ['Robot 6 axes', 'VAL3'] },
+          text: { en: 'VAL3 programming from the teach pendant and Stäubli Robotics Suite: A to B transfer with nested loops.', fr: 'Programmation VAL3 depuis le pupitre et Stäubli Robotics Suite : transfert A vers B avec des boucles imbriquées.' } },
+        { id: 'obstacle-avoidance-robot', img: 'video-robot-evitement-obstacles.jpg', name: { en: 'Obstacle-avoidance mobile robot', fr: 'Robot mobile d’évitement d’obstacles' }, chips: { en: ['Arduino Uno', 'Lidar + infrared'], fr: ['Arduino Uno', 'Lidar + infrarouge'] },
+          text: { en: 'Sensors, motor control and a Grafcet behaviour: the robot stops in front of an obstacle and turns.', fr: 'Capteurs, commande des moteurs et comportement en Grafcet : le robot s’arrête devant un obstacle et tourne.' } }
+    ];
+    const tx = {
+        open: { en: 'View project', fr: 'Voir le projet' },
+        title: { en: 'Move the arm', fr: 'Déplacez le bras' },
+        lead: { en: 'A planar arm with three revolute joints. Change the angles and watch the tool position and the kinematic diagram follow.', fr: 'Un bras plan à trois articulations pivot. Changez les angles et regardez la position de l’outil et le schéma cinématique suivre.' },
+        gripper: { en: 'Gripper', fr: 'Pince' },
+        pos: { en: 'Tool position', fr: 'Position de l’outil' },
+        reset: { en: 'Reset', fr: 'Réinitialiser' },
+        random: { en: 'Random pose', fr: 'Pose aléatoire' },
+        warn: { en: 'The tool is below the table.', fr: 'L’outil est sous la table.' },
+        note: { en: 'Link lengths L1 = 150, L2 = 128, L3 = 72 (mm). q1 is measured from the horizontal, q2 and q3 relative to the previous link.', fr: 'Longueurs L1 = 150, L2 = 128, L3 = 72 (mm). q1 est mesuré depuis l’horizontale, q2 et q3 par rapport au maillon précédent.' }
+    };
+    const pick = (v, lang) => (v && v[lang]) || v;
+
+    function renderCards() {
+        const lang = currentLang();
+        grid.innerHTML = robots.map(r => `
+            <article class="lab-card">
+                <a class="lab-photo" href="project.html?id=${encodeURIComponent(r.id)}" tabindex="-1" aria-hidden="true"><img src="${escapeHTML(r.img)}" alt="" loading="lazy"></a>
+                <div class="lab-body">
+                    <h3>${escapeHTML(pick(r.name, lang))}</h3>
+                    <ul class="lab-chips">${r.chips[lang].map(c => `<li>${escapeHTML(c)}</li>`).join('')}</ul>
+                    <p>${escapeHTML(r.text[lang])}</p>
+                    <a class="lab-link" href="project.html?id=${encodeURIComponent(r.id)}">${tx.open[lang]} <i class='bx bx-right-arrow-alt'></i></a>
+                </div>
+            </article>`).join('');
+    }
+
+    // ---- interactive arm ----
+    const ranges = { q1: [20, 160, 58], q2: [-130, 30, -66], q3: [-120, 60, -35], open: [0, 100, 60] };
+    const pose = { q1: 58, q2: -66, q3: -35, open: 0.6 };
+    let draw = null, mounted = false;
+    function buildSim() {
+        const lang = currentLang();
+        simBox.innerHTML = `
+            <div class="lab-sim-view"><div class="lab-kin"></div></div>
+            <div class="lab-sim-panel">
+                <h3>${tx.title[lang]}</h3>
+                <p class="lab-sim-lead">${tx.lead[lang]}</p>
+                ${['q1', 'q2', 'q3', 'open'].map(k => `
+                    <label class="lab-slider">
+                        <span class="lab-slider-name">${k === 'open' ? tx.gripper[lang] : 'q<sub>' + k[1] + '</sub>'}</span>
+                        <input type="range" data-k="${k}" min="${ranges[k][0]}" max="${ranges[k][1]}" value="${k === 'open' ? Math.round(pose.open * 100) : Math.round(pose[k])}">
+                        <output data-o="${k}"></output>
+                    </label>`).join('')}
+                <p class="lab-readout"><strong>${tx.pos[lang]}</strong> <span id="lab-xy"></span></p>
+                <p class="lab-warn" id="lab-warn" hidden>${tx.warn[lang]}</p>
+                <div class="lab-actions">
+                    <button type="button" class="btn btn-sm btn-outline" id="lab-reset">${tx.reset[lang]}</button>
+                    <button type="button" class="btn btn-sm btn-outline" id="lab-random">${tx.random[lang]}</button>
+                </div>
+                <p class="lab-note">${tx.note[lang]}</p>
+            </div>`;
+        draw = createKinArm(simBox.querySelector('.lab-kin'), { pose });
+        const update = () => {
+            const r = draw(0);
+            simBox.querySelectorAll('output').forEach(o => {
+                const k = o.dataset.o;
+                o.textContent = k === 'open' ? Math.round(pose.open * 100) + ' %' : Math.round(pose[k]) + '°';
+            });
+            simBox.querySelector('#lab-xy').textContent = `X = ${Math.round(r.x)} mm · Z = ${Math.round(r.y)} mm`;
+            simBox.querySelector('#lab-warn').hidden = !r.below;
+        };
+        simBox.querySelectorAll('input[type=range]').forEach(inp => inp.addEventListener('input', () => {
+            const k = inp.dataset.k;
+            pose[k] = k === 'open' ? inp.value / 100 : +inp.value;
+            update();
+        }));
+        const setAll = v => {
+            Object.assign(pose, v);
+            simBox.querySelectorAll('input[type=range]').forEach(inp => { const k = inp.dataset.k; inp.value = k === 'open' ? Math.round(pose.open * 100) : Math.round(pose[k]); });
+            update();
+        };
+        simBox.querySelector('#lab-reset').addEventListener('click', () => setAll({ q1: 58, q2: -66, q3: -35, open: 0.6 }));
+        simBox.querySelector('#lab-random').addEventListener('click', () => {
+            const rnd = k => ranges[k][0] + Math.random() * (ranges[k][1] - ranges[k][0]);
+            setAll({ q1: rnd('q1'), q2: rnd('q2') * 0.7, q3: rnd('q3') * 0.7, open: Math.random() });
+        });
+        update();
+    }
+    renderCards();
+    buildSim();
+    document.addEventListener('langchange', () => { renderCards(); buildSim(); });
+})();
+
 
 /* ---------- Faint robot symbols in the background of each section ---------- */
 (function () {
