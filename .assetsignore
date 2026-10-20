@@ -1,0 +1,6 @@
+.git
+.vscode
+.gitignore
+.assetsignore
+wrangler.jsonc
+node_modules
