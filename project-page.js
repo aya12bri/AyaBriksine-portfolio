@@ -62,7 +62,7 @@
         const downloadLinks = (p.downloads || []).map(d =>
             `<a href="${escapeHTML(d.file)}" download class="btn btn-outline"><i class='bx ${escapeHTML(d.icon || 'bx-download')}'></i> ${escapeHTML(d.label[lang])}</a>`).join('');
         const demoLink = p.demo
-            ? `<a href="${escapeHTML(p.demo)}" target="_blank" rel="noopener" class="btn btn-outline"><i class='bx bx-play-circle'></i> ${t.demo[lang]}</a>`
+            ? `<a href="${escapeHTML(p.demo)}" target="_blank" rel="noopener" class="btn btn-outline"><i class='bx bx-play-circle'></i> ${(p.demoLabel || t.demo)[lang]}</a>`
             : '';
         const results = p.results && p.results[lang]
             ? `<aside class="results-callout"><h2><i class='bx bx-trophy'></i> ${t.results[lang]}</h2><p>${escapeHTML(p.results[lang])}</p></aside>`

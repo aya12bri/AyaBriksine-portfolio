@@ -17,6 +17,7 @@ const frenchText = {
     "Skills": "Compétences",
     "Projects": "Projets",
     "Robot Lab": "Labo robots",
+    "Explore the full Robotics Atlas": "Explorer le Robotics Atlas complet",
     "Show the kinematic diagram and calculations": "Afficher le schéma cinématique et les calculs",
     "Hide the kinematic diagram": "Masquer le schéma cinématique",
     "Hands-on": "En pratique",
