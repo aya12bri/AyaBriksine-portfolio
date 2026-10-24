@@ -4743,11 +4743,17 @@ body.project-page .footer {
 }
 .lab-more { margin: 1.6rem 0 0; text-align: center; }
 
-/* cards: "View project" and "GitHub" must always fit on one row; on narrow cards the GitHub button keeps only its icon */
+/* cards: "View project" and "GitHub" must always fit on one row; when the card is narrow (4 cards per row, phones) the GitHub button keeps only its icon */
 #projects .project-actions { gap: 8px; }
 #projects .project-actions .btn { padding-left: 16px; padding-right: 16px; white-space: nowrap; }
-@media (max-width: 480px) {
+#projects .project-body { container-type: inline-size; }
+@container (max-width: 275px) {
     #projects .project-actions .gh-label { display: none; }
     #projects .project-actions .btn-outline { padding-left: 14px; padding-right: 14px; }
 }
 @media (max-width: 360px) { #projects .project-actions .btn { padding-left: 11px; padding-right: 11px; } }
+@container (max-width: 200px) {
+    #projects .project-actions .btn-primary { padding-left: 12px; padding-right: 12px; }
+    #projects .project-actions .btn-primary i { display: none; }
+}
+@container (max-width: 170px) { #projects .project-actions { flex-wrap: wrap; } }
