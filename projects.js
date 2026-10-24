@@ -23,6 +23,7 @@
      pdf         optional PDF file to download from the project page, e.g. "report.pdf"
      downloads   optional list of files to download: [ { file: "script.m", icon: "bx-code-alt", label: { en: "...", fr: "..." } } ]
      demo        optional link to a video or live demo, or ""
+     demoLabel   optional text for the demo button: { en: "...", fr: "..." } (default: Watch the demo)
      video       optional video file shown in a player on the project page, e.g. "robot.mp4"
                  (use "image" for its picture on the card)
      image       optional picture file for the card, e.g. "robot.jpg", or ""
@@ -51,6 +52,47 @@ const projectCategories = {
 };
 
 const projects = [
+    {
+        id: 'robotics-atlas',
+        category: 'robotics',
+        icon: 'bx-cube-alt',
+        year: '2026',
+        github: 'https://github.com/aya12bri/robotics-atlas',
+        demo: 'https://roboticsatlas.ayabriksine.com',
+        demoLabel: { en: 'Open the live website', fr: 'Ouvrir le site en ligne' },
+        image: 'robotics-atlas.jpg',
+        tags: ['Three.js', 'JavaScript', 'Kinematics', 'DH / DHM tables', 'Inverse kinematics', '3D', 'Cloudflare'],
+        title: {
+            en: 'Robotics Atlas: an interactive atlas of robots in 3D',
+            fr: 'Robotics Atlas : un atlas interactif des robots en 3D'
+        },
+        context: {
+            en: 'Personal project – design, 3D and code, published as a free website',
+            fr: 'Projet personnel – conception, 3D et code, publié comme site web gratuit'
+        },
+        summary: {
+            en: 'A learning website that shows every main type of robot with its kinematic diagram, its DH and DHM tables and a 3D model you move with sliders, plus short courses and 3D views that look inside each robot.',
+            fr: 'Un site pour apprendre qui présente chaque grand type de robot avec son schéma cinématique, ses tableaux DH et DHM et un modèle 3D que l’on bouge avec des curseurs, avec des cours courts et des vues 3D qui montrent l’intérieur de chaque robot.'
+        },
+        highlights: {
+            en: [
+                'Interactive 3D models of a 3-axis arm, a Cartesian gantry, a SCARA, a 6-axis robot, a cobot, a Delta robot and mobile robots, built with Three.js',
+                'Inverse kinematics solved live, with pick-and-place demos on the robot pages',
+                'Eleven 3D anatomy views with an X-ray mode showing motors, gearboxes, controller and cables, including a quadrotor that flies and a humanoid that walks',
+                'Short courses on joints, frames, DH tables, singularities, control and AI, with a roadmap to track progress',
+                'English and French, light and dark themes, works on phones',
+                'Hosted for free on Cloudflare, with its own address, sitemap and share previews'
+            ],
+            fr: [
+                'Modèles 3D interactifs d’un bras 3 axes, d’un robot cartésien, d’un SCARA, d’un robot 6 axes, d’un cobot, d’un robot Delta et de robots mobiles, réalisés avec Three.js',
+                'Cinématique inverse résolue en direct, avec des démonstrations de prise et dépose sur les pages des robots',
+                'Onze vues 3D d’anatomie avec un mode rayons X qui montre moteurs, réducteurs, contrôleur et câbles, dont un quadrirotor qui vole et un humanoïde qui marche',
+                'Cours courts sur les liaisons, les repères, les tableaux DH, les singularités, la commande et l’IA, avec un parcours pour suivre sa progression',
+                'Anglais et français, thèmes clair et sombre, utilisable sur téléphone',
+                'Hébergé gratuitement sur Cloudflare, avec sa propre adresse, son plan du site et ses aperçus de partage'
+            ]
+        }
+    },
     {
         id: 'signal-processing-matlab',
         category: 'signal',
