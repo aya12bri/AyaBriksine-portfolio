@@ -168,8 +168,8 @@
         form.addEventListener('submit', e => { e.preventDefault(); const q = input.value.trim(); if (q) { input.value = ''; ask(q); } });
         chipsBox.addEventListener('click', e => { const b = e.target.closest('button[data-q]'); if (b) ask(b.dataset.q); });
         log.addEventListener('click', e => {
-            const a = e.target.closest('a[data-open-lab]');
-            if (a) { e.preventDefault(); close(); const sw = document.querySelector('[data-view="lab"]'); if (sw) sw.click(); document.getElementById('projects').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
+            const a = e.target.closest('a[data-open-timeline]');
+            if (a) { e.preventDefault(); close(); if (window.ProjectTimeline) window.ProjectTimeline.show(); document.getElementById('projects').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
         });
         document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) { close(); launcher.focus(); } });
         document.addEventListener('langchange', () => { texts(); if (opened && !history.length) greet(true); chips(); });
@@ -229,7 +229,7 @@
         const box = document.createElement('div');
         box.className = 'ai-related';
         box.innerHTML = `<small>${L('Related projects', 'Projets liés')}</small>` + ps.map(p => `<a href="project.html?id=${encodeURIComponent(p.id)}"><i class='bx bx-right-arrow-alt' aria-hidden="true"></i>${esc(p.title[lang()] || p.title.en)}</a>`).join('') +
-            (document.getElementById('project-lab') ? `<a href="#projects" data-open-lab><i class='bx bx-network-chart' aria-hidden="true"></i>${L('See them in the Project Lab', 'Les voir dans le Labo des projets')}</a>` : '');
+            (document.getElementById('project-timeline') ? `<a href="#projects" data-open-timeline><i class='bx bx-time-five' aria-hidden="true"></i>${L('See them on the timeline', 'Les voir sur la frise')}</a>` : '');
         return box;
     }
 
