@@ -322,7 +322,7 @@
         const p = projectById(b.dataset.askProject);
         if (!p) return;
         e.preventDefault();
-        window.AyaAssistant.open(L(`Explain "${p.title.en}" in simple words`, `Explique « ${p.title.fr || p.title.en} » avec des mots simples`), { project: p.id });
+        window.AyaAssistant.open(b.dataset.askQuestion || L(`Explain "${p.title.en}" in simple words`, `Explique « ${p.title.fr || p.title.en} » avec des mots simples`), { project: p.id });
     });
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();

@@ -4852,6 +4852,60 @@ body.project-page .footer {
     .tl-body { transition: none; }
 }
 
+/* ---------- inside a project: facts, step-by-step walk-through, related projects ---------- */
+.proj-facts { display: flex; flex-wrap: wrap; gap: 12px; list-style: none; margin: 4px 0 34px; padding: 0; }
+.proj-facts li { flex: 1 1 130px; padding: 16px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); }
+.proj-facts strong { display: block; font-size: 1.9rem; line-height: 1.1; color: var(--heading); }
+.proj-facts span { font-size: 0.8rem; color: var(--muted); }
+
+.walk-head h2 { margin: 0 0 6px; }
+.walk-head p { margin: 0 0 24px; color: var(--muted); font-size: 0.92rem; max-width: 60ch; }
+.walk-body { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 18px; align-items: start; }
+.walk-rail { position: sticky; top: calc(var(--header-h) + 24px); display: flex; flex-direction: column; align-items: center; gap: 10px; align-self: start; }
+.walk-count { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+.walk-count b { color: var(--heading); font-size: 1.15rem; }
+.walk-bar { position: relative; width: 3px; height: 90px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.walk-bar i { position: absolute; left: 0; top: 0; width: 100%; height: 0; background: var(--signal); box-shadow: 0 0 10px rgba(var(--signal-rgb), 0.7); transition: height 0.2s; }
+.walk-dots { display: flex; flex-direction: column; gap: 5px; }
+.walk-dots button { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--muted); font: inherit; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s; }
+.walk-dots button.on { background: var(--accent-strong); color: var(--on-accent); border-color: transparent; transform: scale(1.12); }
+.walk-list { list-style: none; margin: 0; padding: 0; position: relative; display: flex; flex-direction: column; gap: 16px; }
+.walk-step { position: relative; display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 14px; opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.walk-step.in { opacity: 1; transform: none; }
+.walk-num { position: relative; z-index: 1; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; border: 2px solid var(--border); background: var(--bg); color: var(--muted); transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s; }
+.walk-step:not(:last-child) .walk-num::after { content: ''; position: absolute; left: 50%; top: 100%; width: 2px; height: calc(100% + 36px); margin-left: -1px; background: var(--border); z-index: -1; transition: background 0.4s; }
+.walk-step.done .walk-num { border-color: var(--signal); color: var(--signal); }
+.walk-step.done:not(:last-child) .walk-num::after { background: var(--signal); }
+.walk-step.active .walk-num { background: var(--signal); color: #0b0b10; border-color: var(--signal); box-shadow: 0 0 0 6px rgba(var(--signal-rgb), 0.18); }
+.walk-card { padding: 16px 20px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s; }
+.walk-step.active .walk-card { border-color: rgba(var(--signal-rgb), 0.55); box-shadow: var(--shadow); transform: translateX(3px); }
+.walk-card p { margin: 0; font-size: 0.96rem; line-height: 1.65; color: var(--text); }
+.walk-card .num, .results-callout .num { color: var(--signal); font-weight: 700; white-space: nowrap; }
+.walk-tools { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 10px 0 0; padding: 0; }
+.walk-tools li { padding: 2px 10px; border-radius: 99px; background: rgba(var(--signal-rgb), 0.12); color: var(--signal); font-size: 0.74rem; font-weight: 600; }
+.walk-explain { margin-top: 10px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: transparent; color: var(--muted); font: inherit; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: color 0.2s, border-color 0.2s; }
+.walk-explain:hover { color: var(--text); border-color: var(--signal); }
+
+.proj-related { margin: 48px 0 8px; }
+.proj-related h2 { margin: 0 0 16px; }
+.rel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.rel-grid a { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); text-decoration: none; transition: transform 0.25s, border-color 0.25s; }
+.rel-grid a:hover { transform: translateY(-3px); border-color: var(--signal); }
+.rel-grid strong { font-size: 0.95rem; line-height: 1.35; color: var(--heading); }
+.rel-grid span { font-size: 0.78rem; color: var(--muted); }
+@media (max-width: 760px) {
+    .walk-body { grid-template-columns: 1fr; }
+    .walk-rail { display: none; }
+    .walk-step { grid-template-columns: 34px minmax(0, 1fr); gap: 10px; }
+    .walk-num { width: 34px; height: 34px; font-size: 0.85rem; }
+    .walk-card { padding: 14px 15px 12px; }
+    .proj-facts li { padding: 12px 14px; } .proj-facts strong { font-size: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .walk-step { opacity: 1; transform: none; transition: none; }
+    .walk-step.active .walk-card { transform: none; }
+}
+
 /* ---------- the assistant ---------- */
 #assistant { position: fixed; right: 18px; bottom: 18px; z-index: 70; }
 .ai-launch { display: inline-flex; align-items: center; gap: 9px; height: 52px; padding: 0 20px 0 16px; border-radius: 999px; border: 1px solid var(--border); background: var(--accent-strong); color: var(--on-accent); font: inherit; font-weight: 700; font-size: 0.92rem; cursor: pointer; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
@@ -4908,3 +4962,4 @@ body.project-page .footer {
 .project-groups[hidden], .project-timeline[hidden] { display: none !important; }
 .ai-msg ul { list-style: disc; }
 .ai-msg li::marker { color: var(--signal); }
+.project-main, .walk, .walk-body, .walk-list, .walk-card { min-width: 0; }

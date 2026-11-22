@@ -9,6 +9,17 @@
     const t = {
         back: { en: 'All projects', fr: 'Tous les projets' },
         ask: { en: 'Explain this project simply', fr: 'Expliquer ce projet simplement' },
+        walk: { en: 'Follow the work, step by step', fr: 'Suivre le travail, étape par étape' },
+        walkLead: { en: 'Each step is something Aya did. Tap “Explain” if a step is not clear: the assistant puts it in simple words.', fr: 'Chaque étape est quelque chose qu’Aya a réalisé. Touchez « Expliquer » si une étape n’est pas claire : l’assistante la reformule avec des mots simples.' },
+        step: { en: 'Step', fr: 'Étape' },
+        explain: { en: 'Explain', fr: 'Expliquer' },
+        factSteps: { en: 'steps', fr: 'étapes' },
+        factTools: { en: 'tools & topics', fr: 'outils & thèmes' },
+        factFiles: { en: 'files to download', fr: 'fichiers à télécharger' },
+        factPics: { en: 'figures', fr: 'figures' },
+        factVideo: { en: 'video', fr: 'vidéo' },
+        related: { en: 'Same tools, other projects', fr: 'Mêmes outils, autres projets' },
+        via: { en: 'shared:', fr: 'en commun :' },
         overview: { en: 'Overview', fr: 'Présentation' },
         did: { en: 'What I did', fr: 'Ce que j’ai réalisé' },
         results: { en: 'Results', fr: 'Résultats' },
@@ -66,7 +77,7 @@
             ? `<a href="${escapeHTML(p.demo)}" target="_blank" rel="noopener" class="btn btn-outline"><i class='bx bx-play-circle'></i> ${(p.demoLabel || t.demo)[lang]}</a>`
             : '';
         const results = p.results && p.results[lang]
-            ? `<aside class="results-callout"><h2><i class='bx bx-trophy'></i> ${t.results[lang]}</h2><p>${escapeHTML(p.results[lang])}</p></aside>`
+            ? `<aside class="results-callout"><h2><i class='bx bx-trophy'></i> ${t.results[lang]}</h2><p>${p.results[lang].split(/(\d+(?:[.,]\d+)?\s?(?:%|°|mm|ms|Hz|kg)?)/).map((x, i) => i % 2 ? `<b class="num">${escapeHTML(x)}</b>` : escapeHTML(x)).join('')}</p></aside>`
             : '';
         const gallery = p.gallery && p.gallery.length
             ? `<section class="project-gallery"><h2>${t.gallery[lang]}</h2><div class="gallery">${p.gallery.map(item => {
@@ -75,6 +86,43 @@
                 return `<figure><a href="${escapeHTML(src)}" target="_blank" rel="noopener"><img src="${escapeHTML(src)}" alt="${escapeHTML(cap)}" loading="lazy"></a>${cap ? `<figcaption>${escapeHTML(cap)}</figcaption>` : ''}</figure>`;
             }).join('')}</div></section>`
             : '';
+
+        const SOFT = ['travail en binôme', 'travail en équipe', 'teamwork', 'pair work', 'team work'];
+        const realTags = (p.tags || []).filter(x => !SOFT.includes(x.toLowerCase()));
+        const steps = p.highlights[lang] || [];
+        const stepTools = s => realTags.filter(x => s.toLowerCase().includes(x.toLowerCase())).slice(0, 4);
+        const fileCount = (p.pdf ? 1 : 0) + (p.downloads || []).length;
+        const facts = [
+            [steps.length, t.factSteps[lang]], [realTags.length, t.factTools[lang]],
+            p.video ? ['▶', t.factVideo[lang]] : (p.gallery && p.gallery.length ? [p.gallery.length, t.factPics[lang]] : null),
+            fileCount ? [fileCount, t.factFiles[lang]] : null
+        ].filter(Boolean);
+        const factsHtml = `<ul class="proj-facts">${facts.map(f => `<li><strong>${f[0]}</strong><span>${escapeHTML(f[1])}</span></li>`).join('')}</ul>`;
+        const mine = new Set(realTags.map(x => x.toLowerCase()));
+        const relatedList = projects.filter(o => o.id !== p.id).map(o => ({ o, via: (o.tags || []).filter(x => mine.has(x.toLowerCase()) && !SOFT.includes(x.toLowerCase())) }))
+            .filter(r => r.via.length).sort((a, b) => b.via.length - a.via.length).slice(0, 4);
+        const relatedHtml = relatedList.length ? `<section class="proj-related"><h2>${t.related[lang]}</h2><div class="rel-grid">${relatedList.map(r => `<a href="project.html?id=${encodeURIComponent(r.o.id)}"><strong>${escapeHTML(r.o.title[lang])}</strong><span>${t.via[lang]} ${escapeHTML(r.via.slice(0, 3).join(' · '))}</span></a>`).join('')}</div></section>` : '';
+        const hl = txt => escapeHTML(txt).replace(/(\d+(?:[.,]\d+)?\s?(?:%|°|mm|ms|s|Hz|kg|V|A|W|rad)?)/g, m => /\d/.test(m) ? `<b class="num">${m}</b>` : m);
+        const walkHtml = steps.length ? `
+            <section class="walk" aria-labelledby="walk-title">
+                <div class="walk-head"><h2 id="walk-title">${t.walk[lang]}</h2><p>${t.walkLead[lang]}</p></div>
+                <div class="walk-body">
+                    <aside class="walk-rail" aria-hidden="true">
+                        <span class="walk-count"><b id="walk-cur">1</b> / ${steps.length}</span>
+                        <span class="walk-bar"><i id="walk-fill"></i></span>
+                        <span class="walk-dots">${steps.map((_, i) => `<button type="button" tabindex="-1" data-go="${i}">${i + 1}</button>`).join('')}</span>
+                    </aside>
+                    <ol class="walk-list">${steps.map((s, i) => `
+                        <li class="walk-step" data-i="${i}">
+                            <span class="walk-num">${i + 1}</span>
+                            <div class="walk-card">
+                                <p>${hl(s)}</p>
+                                ${stepTools(s).length ? `<ul class="walk-tools">${stepTools(s).map(x => `<li>${escapeHTML(x)}</li>`).join('')}</ul>` : ''}
+                                <button type="button" class="walk-explain" data-ask-project="${escapeHTML(p.id)}" data-ask-question="${escapeHTML((lang === 'fr' ? 'Explique avec des mots simples cette étape du projet : ' : 'Explain this step of the project in simple words: ') + s)}"><i class='bx bx-bot'></i> ${t.explain[lang]}</button>
+                            </div>
+                        </li>`).join('')}</ol>
+                </div>
+            </section>` : '';
 
         root.innerHTML = `
             <section class="project-hero">
@@ -98,12 +146,11 @@
                         : p.image ? `<div class="project-banner project-visual cat-${p.category} has-image fit-${p.imageFit || 'cover'}"><img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}"></div>`
                         : p.art ? `<div class="project-banner project-visual cat-${p.category}"><span class="cover-art art-${escapeHTML(p.art)}"></span></div>` : ''}
 
+                    ${factsHtml}
+
                     <div class="project-layout">
                         <article class="project-main">
-                            <h2>${t.did[lang]}</h2>
-                            <ol class="steps">
-                                ${p.highlights[lang].map(h => `<li><span>${escapeHTML(h)}</span></li>`).join('')}
-                            </ol>
+                            ${walkHtml}
                             ${results}
                         </article>
 
@@ -120,6 +167,8 @@
                     </div>
 
                     ${gallery}
+
+                    ${relatedHtml}
 
                     <div class="project-cta card">
                         <p>${t.contact[lang]}</p>
@@ -181,6 +230,31 @@
         if (e.key === 'ArrowRight') showFigure(shown + 1);
     });
 
+    /* the walk-through: the current step lights up, the line fills while scrolling */
+    let walkIO = null;
+    function setupWalk() {
+        if (walkIO) walkIO.disconnect();
+        const list = document.querySelector('.walk-list'); if (!list) return;
+        const stepsEl = [...list.querySelectorAll('.walk-step')], fill = document.getElementById('walk-fill'), cur = document.getElementById('walk-cur');
+        const dots = [...document.querySelectorAll('.walk-dots button')];
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const update = () => {
+            const mid = innerHeight * 0.5; let a = 0;
+            stepsEl.forEach((s, i) => { const r = s.getBoundingClientRect(); if (r.top < mid) a = i; s.classList.toggle('done', r.top + r.height * 0.35 < mid); });
+            stepsEl.forEach((s, i) => s.classList.toggle('active', i === a));
+            if (cur) cur.textContent = a + 1;
+            dots.forEach((d, i) => d.classList.toggle('on', i === a));
+            const lr = list.getBoundingClientRect();
+            if (fill) fill.style.height = Math.max(0, Math.min(100, ((mid - lr.top) / Math.max(1, lr.height)) * 100)) + '%';
+        };
+        walkIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); walkIO.unobserve(e.target); } }), { rootMargin: '0px 0px -6% 0px' });
+        stepsEl.forEach(s => reduce ? s.classList.add('in') : walkIO.observe(s));
+        document.querySelector('.walk-dots').addEventListener('click', e => { const b = e.target.closest('button[data-go]'); if (b) stepsEl[+b.dataset.go].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); });
+        if (!setupWalk.bound) { setupWalk.bound = true; addEventListener('scroll', () => { if (!setupWalk.t) setupWalk.t = requestAnimationFrame(() => { setupWalk.t = 0; setupWalk.fn && setupWalk.fn(); }); }, { passive: true }); }
+        setupWalk.fn = update; update();
+    }
+
     render();
-    document.addEventListener('langchange', render);
+    setupWalk();
+    document.addEventListener('langchange', () => { render(); setupWalk(); });
 })();
