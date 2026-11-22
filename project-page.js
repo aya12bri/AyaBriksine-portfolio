@@ -8,6 +8,7 @@
 
     const t = {
         back: { en: 'All projects', fr: 'Tous les projets' },
+        ask: { en: 'Explain this project simply', fr: 'Expliquer ce projet simplement' },
         overview: { en: 'Overview', fr: 'Présentation' },
         did: { en: 'What I did', fr: 'Ce que j’ai réalisé' },
         results: { en: 'Results', fr: 'Résultats' },
@@ -86,7 +87,7 @@
                         <li><i class='bx bx-calendar'></i> ${escapeHTML(p.year)}</li>
                         <li><i class='bx bx-buildings'></i> ${escapeHTML(p.context[lang])}</li>
                     </ul>
-                    <div class="hero-buttons">${pdfLink}${downloadLinks}${githubLink}${demoLink}</div>
+                    <div class="hero-buttons">${pdfLink}${downloadLinks}${githubLink}${demoLink}<button type="button" class="btn btn-outline" data-ask-project="${escapeHTML(p.id)}"><i class='bx bx-bot'></i> ${t.ask[lang]}</button></div>
                 </div>
             </section>
 
