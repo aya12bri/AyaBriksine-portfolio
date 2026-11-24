@@ -95,7 +95,7 @@
     border-radius: 10px;
 }
 
-.portfolio-chat-robot .robot-face {
+.portfolio-chat :is(.portfolio-chat-robot, .portfolio-chat-avatar) .robot-face {
     display: flex;
     height: 100%;
     align-items: center;
@@ -105,8 +105,8 @@
     background: #182333;
 }
 
-.portfolio-chat-robot .robot-face::before,
-.portfolio-chat-robot .robot-face::after {
+.portfolio-chat :is(.portfolio-chat-robot, .portfolio-chat-avatar) .robot-face::before,
+.portfolio-chat :is(.portfolio-chat-robot, .portfolio-chat-avatar) .robot-face::after {
     width: 5px;
     height: 7px;
     border-radius: 50%;
@@ -293,21 +293,45 @@
     font-size: .9rem;
 }
 
-.portfolio-chat-greeting,
 .portfolio-chat-message {
+    display: flex;
+    align-items: flex-end;
+    gap: .5rem;
     margin: 0 0 .7rem;
+}
+
+.portfolio-chat-avatar {
+    flex: 0 0 2rem;
+    height: 2rem;
+    padding: .35rem .25rem;
+    border: 1px solid #7d8998;
+    border-radius: 50%;
+    background: linear-gradient(155deg, #f0f3f8, #9eacbb);
+}
+
+.portfolio-chat .portfolio-chat-avatar .robot-face {
+    gap: 4px;
+}
+
+.portfolio-chat-bubble {
+    margin: 0;
     padding: .65rem .8rem;
-    width: fit-content;
-    max-width: 95%;
-    border-radius: var(--radius-sm);
+    min-width: 0;
+    max-width: 85%;
+    border-radius: var(--radius) var(--radius) var(--radius) 5px;
     background: var(--surface-2);
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
 
 .portfolio-chat-message.user {
-    margin-left: auto;
-    background: var(--accent-soft);
+    justify-content: flex-end;
+}
+
+.portfolio-chat-message.user .portfolio-chat-bubble {
+    border-radius: var(--radius) var(--radius) 5px var(--radius);
+    background: var(--accent-strong);
+    color: var(--on-accent);
 }
 
 .portfolio-chat-status {

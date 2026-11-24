@@ -32,6 +32,8 @@
      highlights  { en: [ "...", "..." ], fr: [ "...", "..." ] } – "What I did" list
 
    Optional extras for the project's page (leave them out if you don't need them):
+     brief       overview with bilingual objective and role. Can include an intro,
+                 a short outcome, and phases with bilingual titles and descriptions.
      results     { en: "...", fr: "..." }  – a short paragraph about the results
      gallery     [ "photo1.jpg", { src: "fig.png", caption: { en: "...", fr: "..." } } ] – pictures shown on the project page
                  (a plain file name or a picture with a caption)
@@ -54,6 +56,16 @@ const projectCategories = {
 const projects = [
     {
         id: 'robotics-atlas',
+        brief: {
+            objective: {
+                en: "Help learners relate a robot’s geometry to the way it moves.",
+                fr: "Aider à comprendre le lien entre la géométrie d’un robot et ses mouvements."
+            },
+            role: {
+                en: "Built interactive Three.js models and wrote the accompanying kinematics lessons.",
+                fr: "J’ai créé les modèles interactifs sous Three.js et rédigé les cours de cinématique."
+            }
+        },
         category: 'robotics',
         icon: 'bx-cube-alt',
         year: '2026',
@@ -95,6 +107,16 @@ const projects = [
     },
     {
         id: 'signal-processing-matlab',
+        brief: {
+            objective: {
+                en: "Use simple experiments to see how filters and the Fourier transform change what we can observe in a signal.",
+                fr: "Comprendre, par des exercices, comment les filtres et la transformée de Fourier modifient l’analyse d’un signal."
+            },
+            role: {
+                en: "Built and compared MATLAB examples and checked the results against the theory.",
+                fr: "J’ai réalisé et comparé les exercices sous MATLAB, puis confronté les résultats à la théorie."
+            }
+        },
         category: 'signal',
         icon: 'bx-pulse',
         year: '2026',
@@ -160,6 +182,16 @@ const projects = [
     },
     {
         id: 'grafcet-sequential-systems',
+        brief: {
+            objective: {
+                en: "Describe in what order four industrial systems must act and under what conditions they can move to the next step.",
+                fr: "Décrire l’ordre des actions de quatre systèmes industriels et les conditions de passage d’une étape à la suivante."
+            },
+            role: {
+                en: "Designed the Grafcets for a manipulator, a crane, an elevator and a machining station.",
+                fr: "J’ai conçu les Grafcets d’un bras manipulateur, d’un pont roulant, d’un ascenseur et d’un poste d’usinage."
+            }
+        },
         category: 'automation',
         icon: 'bx-sitemap',
         year: '2026',
@@ -205,6 +237,16 @@ const projects = [
     },
     {
         id: 'drone-modelling-control',
+        brief: {
+            objective: {
+                en: "Keep a quadcopter stable in a vertical plane by estimating the states needed for control.",
+                fr: "Stabiliser un quadricoptère dans un plan vertical en estimant les états nécessaires à sa commande."
+            },
+            role: {
+                en: "Modelled the drone and compared observer and feedback-controller responses in MATLAB and Simulink.",
+                fr: "J’ai modélisé le drone et comparé les réponses de l’observateur et de la commande sous MATLAB et Simulink."
+            }
+        },
         pdf: 'rapport-tp-drone.pdf',
         downloads: [
             { file: 'drone-tp-observateur-commande.m', icon: 'bx-code-alt', label: { en: 'MATLAB script (.m)', fr: 'Script MATLAB (.m)' } },
@@ -264,6 +306,16 @@ const projects = [
     },
     {
         id: 'reservoirs-s7-1200',
+        brief: {
+            objective: {
+                en: "Automate a station that measures liquids and mixes them in a separate tank.",
+                fr: "Automatiser une station qui dose les liquides et les mélange dans un réservoir séparé."
+            },
+            role: {
+                en: "Wired the control board, translated the Grafcet into a PLC program and tested the sequence.",
+                fr: "J’ai câblé la platine, traduit le Grafcet en programme automate et testé la séquence."
+            }
+        },
         category: 'automation',
         icon: 'bx-water',
         year: '2026',
@@ -304,6 +356,16 @@ const projects = [
     },
     {
         id: 'self-balancing-motorcycle',
+        brief: {
+            objective: {
+                en: "Use an inertia wheel to stabilise a motorcycle around its upright position.",
+                fr: "Utiliser un volant d’inertie pour stabiliser une moto autour de sa position verticale."
+            },
+            role: {
+                en: "Modelled the dynamics, designed the PD controller and validated the state machine in simulation.",
+                fr: "J’ai modélisé la dynamique, conçu le correcteur PD et validé la machine à états en simulation."
+            }
+        },
         category: 'control',
         icon: 'bx-cycling',
         year: '2026',
@@ -365,6 +427,16 @@ const projects = [
     },
     {
         id: 'turbofan-imc-pid',
+        brief: {
+            objective: {
+                en: "Compare how different control strategies hold turbine speed when conditions change.",
+                fr: "Comparer plusieurs stratégies pour maintenir la vitesse de la turbine malgré les perturbations."
+            },
+            role: {
+                en: "Identified a model and compared open-loop, PID and IMC responses in Simulink.",
+                fr: "J’ai identifié un modèle puis comparé les réponses en boucle ouverte, avec PID et avec IMC sous Simulink."
+            }
+        },
         category: 'control',
         icon: 'bx-wind',
         year: '2026',
@@ -427,6 +499,16 @@ const projects = [
     },
     {
         id: 'doosan-m0617',
+        brief: {
+            objective: {
+                en: "Teach the robot to pick up and place parts with a suction cup.",
+                fr: "Apprendre au robot à saisir puis déposer des pièces avec une ventouse."
+            },
+            role: {
+                en: "Programmed the joint and linear moves and controlled the suction cup from the pendant.",
+                fr: "J’ai programmé les déplacements articulaires et linéaires et piloté la ventouse depuis le pupitre."
+            }
+        },
         pdf: 'rapport-tp-doosan-m0617.pdf',
         category: 'robotics',
         icon: 'bx-bot',
@@ -482,6 +564,16 @@ const projects = [
     },
     {
         id: 'universal-robots-ur3-ur5',
+        brief: {
+            objective: {
+                en: "Learn how to move the two cobots accurately in joint and Cartesian coordinates.",
+                fr: "Apprendre à déplacer les deux cobots avec précision en coordonnées articulaires et cartésiennes."
+            },
+            role: {
+                en: "Programmed motions in PolyScope and modelled the arms’ kinematics.",
+                fr: "J’ai programmé les déplacements sous PolyScope et modélisé la cinématique des bras."
+            }
+        },
         pdf: 'rapport-tp-universal-robots-ur5.pdf',
         category: 'robotics',
         icon: 'bx-joystick',
@@ -528,6 +620,16 @@ const projects = [
     },
     {
         id: 'fanuc-crx-delta',
+        brief: {
+            objective: {
+                en: "Compare the programming of a six-axis cobot with that of a Delta for pick and place.",
+                fr: "Comparer la programmation d’un cobot six axes à celle d’un robot Delta de prise et de dépose."
+            },
+            role: {
+                en: "Worked with both teach pendants to jog the robots and program their movements.",
+                fr: "J’ai utilisé les deux pupitres pour piloter les robots et programmer leurs déplacements."
+            }
+        },
         pdf: 'rapport-tp-fanuc-crx10ia.pdf',
         category: 'robotics',
         icon: 'bx-target-lock',
@@ -576,6 +678,16 @@ const projects = [
     },
     {
         id: 'obstacle-avoidance-robot',
+        brief: {
+            objective: {
+                en: "Allow a mobile robot to continue moving when an obstacle gets in its path.",
+                fr: "Permettre à un robot mobile de poursuivre son déplacement lorsqu’un obstacle se trouve sur sa trajectoire."
+            },
+            role: {
+                en: "Integrated the distance sensors, programmed avoidance and motor control, and tested the robot with the team.",
+                fr: "J’ai intégré les capteurs de distance, programmé l’évitement et la commande des moteurs, puis testé le robot en équipe."
+            }
+        },
         pdf: 'rapport-projet-evitement-obstacles.pdf',
         category: 'robotics',
         icon: 'bx-radar',
@@ -615,6 +727,16 @@ const projects = [
     },
     {
         id: 'staubli-tx60',
+        brief: {
+            objective: {
+                en: "Program a six-axis arm to follow a path and move a series of parts.",
+                fr: "Programmer un bras six axes pour suivre une trajectoire et déplacer une série de pièces."
+            },
+            role: {
+                en: "Taught and simulated the points, then wrote the VAL3 trajectory and pick-and-place programs.",
+                fr: "J’ai appris et simulé les points, puis écrit les programmes VAL3 de trajectoire et de prise et dépose."
+            }
+        },
         pdf: 'rapport-tp-staubli-tx60l.pdf',
         category: 'robotics',
         icon: 'bx-cog',
@@ -658,6 +780,16 @@ const projects = [
     },
     {
         id: 'dc-motor-speed-control',
+        brief: {
+            objective: {
+                en: "Hold a DC motor at a target speed using a controller validated on a real bench.",
+                fr: "Maintenir un moteur à courant continu à une vitesse de consigne avec un correcteur validé sur banc."
+            },
+            role: {
+                en: "Collected measurements, compared two identification methods and tuned a PI controller.",
+                fr: "J’ai acquis les mesures, comparé deux méthodes d’identification et réglé un correcteur PI."
+            }
+        },
         pdf: 'rapport-tp-asservissement-vitesse-mcc.pdf',
         category: 'control',
         icon: 'bx-tachometer',
@@ -705,6 +837,16 @@ const projects = [
     },
     {
         id: 'climax-plc-robot-arm',
+        brief: {
+            objective: {
+                en: "Turn an industrial handling sequence into a program that runs on the CLIMAX arm.",
+                fr: "Transformer un cycle industriel de manutention en programme exécutable sur le bras CLIMAX."
+            },
+            role: {
+                en: "Mapped the PLC inputs and outputs, built the Grafcet and translated it into Ladder logic.",
+                fr: "J’ai répertorié les entrées et sorties de l’automate, construit le Grafcet et l’ai traduit en Ladder."
+            }
+        },
         category: 'automation',
         icon: 'bx-git-merge',
         year: '2026',
@@ -758,6 +900,66 @@ const projects = [
     },
     {
         id: 'greenhouse-monitoring',
+        brief: {
+            objective: {
+                en: "Automate monitoring for a solar greenhouse used to dry sewage sludge.",
+                fr: "Automatiser le suivi d’une serre de séchage solaire des boues."
+            },
+            role: {
+                en: "Designed the prototype and its web and mobile monitoring dashboard.",
+                fr: "J’ai conçu le prototype et son tableau de bord de supervision web et mobile."
+            },
+            intro: {
+                en: "Track the greenhouse temperature and humidity and control its window remotely.",
+                fr: "Suivre la température et l’humidité de la serre et piloter sa fenêtre à distance."
+            },
+            outcome: {
+                en: "Readings every two seconds and automatic window opening were validated on the prototype.",
+                fr: "Les mesures toutes les deux secondes et l’ouverture automatique ont été validées sur le prototype."
+            },
+            phases: [
+                {
+                    title: {
+                        en: "Analyse the requirements",
+                        fr: "Analyser les besoins"
+                    },
+                    description: {
+                        en: "Define what to measure and which equipment to control.",
+                        fr: "Définir les mesures et les commandes."
+                    }
+                },
+                {
+                    title: {
+                        en: "Build the prototype",
+                        fr: "Construire le prototype"
+                    },
+                    description: {
+                        en: "Connect the two sensors and the window servo to the ESP8266.",
+                        fr: "Relier les deux capteurs et le servomoteur de la fenêtre à l’ESP8266."
+                    }
+                },
+                {
+                    title: {
+                        en: "Program the dashboard",
+                        fr: "Programmer la supervision"
+                    },
+                    description: {
+                        en: "Send readings over MQTT to Node-RED and store them in MySQL.",
+                        fr: "Transmettre les données via MQTT à Node-RED et les conserver dans MySQL."
+                    }
+                },
+                {
+                    title: {
+                        en: "Test and validate",
+                        fr: "Tester et valider"
+                    },
+                    description: {
+                        en: "Check the readings every two seconds and the automatic window opening.",
+                        fr: "Vérifier les mesures toutes les deux secondes et l’ouverture automatique de la fenêtre."
+                    }
+                }
+            ]
+        },
         pdf: 'memoire-pfe-serre-solaire-iot.pdf',
         downloads: [
             { file: 'pfe-schema-synoptique.pdf', icon: 'bx-sitemap', label: { en: 'Block diagram (PDF)', fr: 'Schéma synoptique (PDF)' } },
@@ -820,6 +1022,16 @@ const projects = [
     },
     {
         id: 'point-cloud-3d',
+        brief: {
+            objective: {
+                en: "Make point clouds easier to inspect and manipulate in 3D.",
+                fr: "Faciliter l’exploration et la manipulation de nuages de points en 3D."
+            },
+            role: {
+                en: "Developed Python examples with Open3D, PyVista and simple Tkinter interfaces.",
+                fr: "J’ai développé des exemples en Python avec Open3D, PyVista et des interfaces Tkinter."
+            }
+        },
         category: 'programming',
         icon: 'bx-cube-alt',
         year: '2026',
@@ -856,6 +1068,16 @@ const projects = [
     },
     {
         id: 'client-reporting',
+        brief: {
+            objective: {
+                en: "Reduce the manual work of preparing monthly reports.",
+                fr: "Réduire la préparation manuelle des rapports mensuels."
+            },
+            role: {
+                en: "Analysed client processes and built KPI dashboards and automated Power BI reports.",
+                fr: "J’ai analysé les processus clients et créé des tableaux de bord et des rapports automatisés sous Power BI."
+            }
+        },
         category: 'digital',
         icon: 'bx-bar-chart-alt-2',
         year: '2023 – 2024',
@@ -892,6 +1114,16 @@ const projects = [
     },
     {
         id: 'crm-digitalisation',
+        brief: {
+            objective: {
+                en: "Centralise sales activity and simplify follow-up with a CRM.",
+                fr: "Centraliser l’activité commerciale et simplifier le suivi avec un CRM."
+            },
+            role: {
+                en: "Gathered requirements, wrote specifications and coordinated rollout and follow-up.",
+                fr: "J’ai recueilli les besoins, rédigé le cahier des charges et coordonné le déploiement et le suivi."
+            }
+        },
         category: 'digital',
         icon: 'bx-network-chart',
         year: '2022 – 2025',
@@ -928,6 +1160,16 @@ const projects = [
     },
     {
         id: 'dc-machine-lab',
+        brief: {
+            objective: {
+                en: "Compare how a DC machine behaves as a generator and as a motor.",
+                fr: "Comparer le comportement d’une machine à courant continu en génératrice et en moteur."
+            },
+            role: {
+                en: "Measured and plotted the electrical and mechanical characteristics under different operating conditions.",
+                fr: "J’ai relevé et tracé les caractéristiques électriques et mécaniques dans plusieurs conditions de fonctionnement."
+            }
+        },
         pdf: 'rapport-tp-machine-courant-continu.pdf',
         category: 'electrotechnique',
         icon: 'bx-bolt-circle',
@@ -980,6 +1222,16 @@ const projects = [
     },
     {
         id: 'induction-motor-lab',
+        brief: {
+            objective: {
+                en: "Check whether the three-phase motor meets its specifications on a test bench.",
+                fr: "Vérifier sur banc si le moteur triphasé respecte les caractéristiques du constructeur."
+            },
+            role: {
+                en: "Measured speed, torque and current, and analysed efficiency and start-up behaviour.",
+                fr: "J’ai relevé vitesse, couple et courant, puis analysé le rendement et le démarrage."
+            }
+        },
         pdf: 'rapport-tp-moteur-asynchrone.pdf',
         category: 'electrotechnique',
         icon: 'bx-bolt-circle',
@@ -1032,6 +1284,16 @@ const projects = [
     },
     {
         id: 'three-phase-transformer-lab',
+        brief: {
+            objective: {
+                en: "Use bench measurements to build an equivalent electrical model of the transformer.",
+                fr: "Utiliser les mesures sur banc pour établir un modèle électrique équivalent du transformateur."
+            },
+            role: {
+                en: "Used no-load and short-circuit tests to determine the Kapp circuit parameters.",
+                fr: "J’ai exploité les essais à vide et en court-circuit pour déterminer les paramètres du schéma de Kapp."
+            }
+        },
         pdf: 'rapport-tp-transformateur-triphase.pdf',
         category: 'electrotechnique',
         icon: 'bx-bolt-circle',
@@ -1084,6 +1346,16 @@ const projects = [
     },
     {
         id: 'square-wave-emd-vmd',
+        brief: {
+            objective: {
+                en: "Understand which methods separate signal components when frequencies overlap or vary.",
+                fr: "Comprendre quelles méthodes séparent les composantes d’un signal lorsque les fréquences se chevauchent ou varient."
+            },
+            role: {
+                en: "Ran MATLAB experiments with spectral analysis, conventional filtering, EMD and VMD.",
+                fr: "J’ai réalisé sous MATLAB des essais d’analyse spectrale, de filtrage classique, d’EMD et de VMD."
+            }
+        },
         pdf: 'rapport-tp-signal-carre-emd-vmd.pdf',
         category: 'signal',
         icon: 'bx-pulse',
@@ -1138,6 +1410,16 @@ const projects = [
     },
     {
         id: 'fsk-demodulation-matlab',
+        brief: {
+            objective: {
+                en: "Recover the original bits from a noisy frequency-modulated signal.",
+                fr: "Retrouver les bits d’origine dans un signal modulé en fréquence et bruité."
+            },
+            role: {
+                en: "Built the MATLAB demodulation chain and compared the recovered message to the reference.",
+                fr: "J’ai construit la chaîne de démodulation sous MATLAB et comparé le message récupéré à la référence."
+            }
+        },
         pdf: 'rapport-tp-demodulation-fsk.pdf',
         category: 'signal',
         icon: 'bx-pulse',
@@ -1190,6 +1472,16 @@ const projects = [
     },
     {
         id: 'ur3-palletizing-lab',
+        brief: {
+            objective: {
+                en: "Teach a UR3 to palletise parts and transfer them between two robots.",
+                fr: "Apprendre à un UR3 à palettiser des pièces et à les transférer entre deux robots."
+            },
+            role: {
+                en: "Programmed motions and gripper actions in PolyScope and studied the effects of speed and acceleration.",
+                fr: "J’ai programmé les déplacements et la pince sous PolyScope et étudié les effets de la vitesse et de l’accélération."
+            }
+        },
         pdf: 'rapport-tp-ur3.pdf',
         category: 'robotics',
         icon: 'bx-joystick',
@@ -1245,6 +1537,16 @@ const projects = [
     },
     {
         id: 'fanuc-m1ia-pick-place',
+        brief: {
+            objective: {
+                en: "Use a Delta robot to pick up parts and deposit them in a tray.",
+                fr: "Utiliser un robot Delta pour saisir des pièces et les déposer dans un plateau."
+            },
+            role: {
+                en: "Taught six points and programmed the moves and suction-cup sequence on the teach pendant.",
+                fr: "J’ai appris six points et programmé les déplacements et le cycle de la ventouse sur le pupitre."
+            }
+        },
         pdf: 'rapport-tp-fanuc.pdf',
         category: 'robotics',
         icon: 'bx-cog',

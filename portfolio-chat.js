@@ -2,7 +2,7 @@
     const messages = []
     const copy = {
         en: {
-            prompt: 'Have a question?',
+            prompt: 'Do you have a question?',
             title: 'Ask about Aya', close: 'Close chat', placeholder: 'Ask a question…',
             send: 'Send', greeting: 'Ask me about Aya’s projects, skills, experience or internship search.',
             pending: 'Thinking…', error: 'The assistant is unavailable. Please try again.',
@@ -19,6 +19,7 @@
         }
     }
 
+    const robotAvatar = '<span class="portfolio-chat-avatar" aria-hidden="true"><span class="robot-face"></span></span>'
     const widget = document.createElement('div')
     widget.className = 'portfolio-chat'
     widget.innerHTML = `
@@ -40,7 +41,10 @@
                 <button class="portfolio-chat-close" type="button">×</button>
             </header>
             <div class="portfolio-chat-log" role="log" aria-label="Conversation" tabindex="0">
-                <p class="portfolio-chat-greeting"></p>
+                <div class="portfolio-chat-message assistant">
+                    ${robotAvatar}
+                    <p class="portfolio-chat-bubble portfolio-chat-greeting"></p>
+                </div>
             </div>
             <p class="portfolio-chat-status" role="status"></p>
             <form class="portfolio-chat-form">
@@ -90,12 +94,16 @@
     }
 
     function appendMessage(message) {
+        const row = document.createElement('div')
+        row.className = 'portfolio-chat-message ' + message.role
+        if (message.role === 'assistant') row.insertAdjacentHTML('afterbegin', robotAvatar)
         const bubble = document.createElement('p')
-        bubble.className = 'portfolio-chat-message ' + message.role
+        bubble.className = 'portfolio-chat-bubble'
         bubble.textContent = message.content
-        log.append(bubble)
+        row.append(bubble)
+        log.append(row)
         log.scrollTop = log.scrollHeight
-        return bubble
+        return row
     }
 
     new MutationObserver(translate).observe(document.documentElement, {
@@ -121,7 +129,7 @@
         if (!question || pending) return
 
         const message = { role: 'user', content: question }
-        const bubble = appendMessage(message)
+        const row = appendMessage(message)
         input.value = ''
         input.readOnly = true
         send.disabled = true
@@ -151,7 +159,7 @@
             setStatus('error')
         } finally {
             if (statusKey) {
-                bubble.remove()
+                row.remove()
                 input.value = question
             }
             pending = false
