@@ -10,17 +10,221 @@
     bottom: max(1rem, env(safe-area-inset-bottom));
     display: inline-flex;
     align-items: center;
-    gap: .5rem;
-    padding: .7rem 1rem;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    background: var(--accent-strong);
-    color: var(--on-accent);
-    box-shadow: var(--shadow);
+    gap: .35rem;
+    max-width: calc(100vw - 2rem);
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--text);
 }
 
-.portfolio-chat-launch i {
-    font-size: 1.35rem;
+.portfolio-chat-prompt {
+    position: relative;
+    padding: .55rem .75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    font-size: .85rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.portfolio-chat-prompt::after {
+    position: absolute;
+    top: calc(50% - 4px);
+    right: -5px;
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    background: inherit;
+    transform: rotate(45deg);
+    content: '';
+}
+
+.portfolio-chat-robot {
+    position: relative;
+    flex: 0 0 76px;
+    height: 72px;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, .28));
+}
+
+.portfolio-chat-robot > span {
+    position: absolute;
+    display: block;
+}
+
+.portfolio-chat-robot .robot-antenna {
+    top: 7px;
+    left: 36px;
+    width: 3px;
+    height: 9px;
+    background: #8593a4;
+}
+
+.portfolio-chat-robot .robot-antenna::before {
+    position: absolute;
+    top: -3px;
+    left: -1px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #78c3e8;
+    content: '';
+}
+
+.portfolio-chat-robot .robot-head,
+.portfolio-chat-robot .robot-body {
+    border: 1px solid #7d8998;
+    background: linear-gradient(155deg, #f0f3f8, #9eacbb);
+}
+
+.portfolio-chat-robot .robot-head {
+    top: 14px;
+    left: 16px;
+    width: 44px;
+    height: 26px;
+    padding: 4px;
+    border-radius: 10px;
+}
+
+.portfolio-chat-robot .robot-face {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border-radius: 6px;
+    background: #182333;
+}
+
+.portfolio-chat-robot .robot-face::before,
+.portfolio-chat-robot .robot-face::after {
+    width: 5px;
+    height: 7px;
+    border-radius: 50%;
+    background: #91deff;
+    box-shadow: 0 0 6px #63c8f3;
+    content: '';
+}
+
+.portfolio-chat-robot .robot-body {
+    top: 41px;
+    left: 23px;
+    width: 30px;
+    height: 17px;
+    border-radius: 7px;
+}
+
+.portfolio-chat-robot .robot-body::before {
+    position: absolute;
+    inset: 5px 10px;
+    border-radius: 3px;
+    background: #50687e;
+    content: '';
+}
+
+.portfolio-chat-robot .robot-arm {
+    top: 45px;
+    width: 20px;
+    height: 5px;
+    border-radius: 4px;
+    background: #8593a4;
+    transform: rotate(var(--rest));
+}
+
+.portfolio-chat-robot .robot-arm::before {
+    position: absolute;
+    top: -2px;
+    width: 9px;
+    height: 9px;
+    border: 1px solid #758393;
+    border-radius: 3px;
+    background: #d6dfe9;
+    content: '';
+}
+
+.portfolio-chat-robot .robot-arm-left {
+    --rest: -19deg;
+    --raise: 58deg;
+    --wave: 35deg;
+    left: 6px;
+    transform-origin: 17px center;
+}
+
+.portfolio-chat-robot .robot-arm-right {
+    --rest: 19deg;
+    --raise: -58deg;
+    --wave: -35deg;
+    right: 6px;
+    transform-origin: 3px center;
+}
+
+.portfolio-chat-robot .robot-arm-left::before {
+    left: 0;
+}
+
+.portfolio-chat-robot .robot-arm-right::before {
+    right: 0;
+}
+
+.portfolio-chat-robot .robot-wheel {
+    bottom: 3px;
+    width: 16px;
+    height: 16px;
+    border: 3px solid #293747;
+    border-radius: 50%;
+    background: conic-gradient(#94a5b8 25%, #576b81 0 50%, #94a5b8 0 75%, #576b81 0);
+}
+
+.portfolio-chat-robot .robot-wheel-left {
+    left: 19px;
+}
+
+.portfolio-chat-robot .robot-wheel-right {
+    right: 19px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .portfolio-chat-robot {
+        animation: portfolio-robot-roll-in .8s ease-out both;
+    }
+
+    .portfolio-chat-robot .robot-wheel {
+        animation: portfolio-robot-spin .8s ease-out;
+    }
+
+    .portfolio-chat-robot .robot-arm {
+        animation: portfolio-robot-wave 1s ease-in-out .7s;
+    }
+
+    .portfolio-chat-launch:not(:focus-visible) .portfolio-chat-prompt {
+        animation: portfolio-chat-prompt-in .25s ease-out 1s both;
+    }
+}
+
+@keyframes portfolio-robot-roll-in {
+    from { transform: translateX(-64px); }
+    to { transform: translateX(0); }
+}
+
+@keyframes portfolio-robot-spin {
+    from { transform: rotate(-540deg); }
+    to { transform: rotate(0); }
+}
+
+@keyframes portfolio-robot-wave {
+    0%, 100% { transform: rotate(var(--rest)); }
+    25%, 65% { transform: rotate(var(--raise)); }
+    45%, 80% { transform: rotate(var(--wave)); }
+}
+
+@keyframes portfolio-chat-prompt-in {
+    from { opacity: 0; transform: translateX(5px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 .portfolio-chat-dialog {

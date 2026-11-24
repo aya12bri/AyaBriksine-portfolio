@@ -2,6 +2,7 @@
     const messages = []
     const copy = {
         en: {
+            prompt: 'Have a question?',
             title: 'Ask about Aya', close: 'Close chat', placeholder: 'Ask a question…',
             send: 'Send', greeting: 'Ask me about Aya’s projects, skills, experience or internship search.',
             pending: 'Thinking…', error: 'The assistant is unavailable. Please try again.',
@@ -9,6 +10,7 @@
             contact: 'Contact Aya', projects: 'View projects'
         },
         fr: {
+            prompt: 'Vous avez une question ?',
             title: 'Poser une question', close: 'Fermer le chat', placeholder: 'Écrire une question…',
             send: 'Envoyer', greeting: 'Pose-moi une question sur les projets, les compétences, le parcours ou la recherche de stage d’Aya.',
             pending: 'Réflexion en cours…', error: 'L’assistant est indisponible. Réessaie dans un instant.',
@@ -20,11 +22,19 @@
     const widget = document.createElement('div')
     widget.className = 'portfolio-chat'
     widget.innerHTML = `
-        <button class="portfolio-chat-launch" type="button" aria-haspopup="dialog">
-            <i class="bx bx-message-rounded-dots" aria-hidden="true"></i>
-            <span></span>
+        <button class="portfolio-chat-launch" type="button" aria-haspopup="dialog" aria-controls="portfolio-chat-dialog">
+            <span class="portfolio-chat-prompt"></span>
+            <span class="portfolio-chat-robot" aria-hidden="true">
+                <span class="robot-antenna"></span>
+                <span class="robot-head"><span class="robot-face"></span></span>
+                <span class="robot-body"></span>
+                <span class="robot-arm robot-arm-left"></span>
+                <span class="robot-arm robot-arm-right"></span>
+                <span class="robot-wheel robot-wheel-left"></span>
+                <span class="robot-wheel robot-wheel-right"></span>
+            </span>
         </button>
-        <dialog class="portfolio-chat-dialog" aria-labelledby="portfolio-chat-title">
+        <dialog class="portfolio-chat-dialog" id="portfolio-chat-dialog" aria-labelledby="portfolio-chat-title">
             <header>
                 <h2 id="portfolio-chat-title"></h2>
                 <button class="portfolio-chat-close" type="button">×</button>
@@ -45,6 +55,7 @@
     document.body.append(widget)
 
     const launch = widget.querySelector('.portfolio-chat-launch')
+    const prompt = launch.querySelector('.portfolio-chat-prompt')
     const dialog = widget.querySelector('dialog')
     const close = dialog.querySelector('.portfolio-chat-close')
     const title = dialog.querySelector('h2')
@@ -61,7 +72,7 @@
 
     function translate() {
         const labels = copy[language()]
-        launch.querySelector('span').textContent = labels.title
+        prompt.textContent = labels.prompt
         title.textContent = labels.title
         close.setAttribute('aria-label', labels.close)
         greeting.textContent = labels.greeting
