@@ -117,12 +117,15 @@
         const steps = brief?.phases?.length
             ? brief.phases.map(ph => ({ title: ph.title[lang], text: ph.description[lang] }))
             : p.highlights[lang].map(h => ({ title: '', text: h }));
-        const mainMedia = p.video
+        const vis = !p.video && !p.image && window.systemVisuals ? systemVisuals.get(p.id, lang) : [];
+        const visHTML = v => `<div class="pt-sv">${v.html}</div><span class="pt-cap">${escapeHTML(v.cap)}</span>`;
+        const mainMedia = vis.length ? visHTML(vis[0])
+            : p.video
             ? `<video controls playsinline preload="metadata" ${p.image ? `poster="${escapeHTML(p.image)}"` : ''} src="${escapeHTML(p.video)}"></video>`
             : p.image ? `<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}" class="fit-${p.imageFit || 'cover'}">`
             : figs.length ? `<img src="${escapeHTML(figs[0].src)}" alt="${escapeHTML(figs[0].cap)}" class="fit-contain">`
             : p.art ? `<div class="pt-art project-visual cat-${p.category}"><span class="cover-art art-${escapeHTML(p.art)}" aria-hidden="true"></span></div>` : '';
-        const thumbs = figs.slice(0, 4);
+        const thumbs = figs.slice(0, vis.length ? Math.max(0, 5 - vis.length) : 4);
         const files = [pdfLink, downloadLinks, githubLink, externalDemo].join('');
         const tabs = [
             ['overview', L2('Overview', 'Présentation'), true],
@@ -147,8 +150,8 @@
                     <section class="pt-panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
                         <div class="pt-view">
                             <div class="pt-media-col">
-                                ${mainMedia ? `<div class="pt-media" id="pt-media">${mainMedia}</div>` : ''}
-                                ${thumbs.length ? `<div class="pt-thumbs">${p.video ? `<button type="button" class="on" data-media="video" aria-label="${t.video[lang]}"><span class="pt-play" aria-hidden="true">▶</span></button>` : ''}${thumbs.map((f, i) => `<button type="button" data-media="${i}" aria-label="${escapeHTML(f.cap || String(i + 1))}"><img src="${escapeHTML(f.src)}" alt="" loading="lazy"></button>`).join('')}${figs.length > thumbs.length ? `<button type="button" class="pt-more" data-tab-go="images">+${figs.length - thumbs.length}</button>` : ''}</div>` : ''}
+                                ${mainMedia ? `<div class="pt-media${vis.length ? ' is-sv' : ''}" id="pt-media">${mainMedia}</div>` : ''}
+                                ${thumbs.length || vis.length > 1 ? `<div class="pt-thumbs">${vis.map((v, i) => `<button type="button" class="pt-vthumb${i === 0 ? ' on' : ''}" data-media="v${i}"><i class='bx ${v.icon}' aria-hidden="true"></i><span>${escapeHTML(v.label)}</span></button>`).join('')}${p.video ? `<button type="button" class="on" data-media="video" aria-label="${t.video[lang]}"><span class="pt-play" aria-hidden="true">▶</span></button>` : ''}${thumbs.map((f, i) => `<button type="button" data-media="${i}" aria-label="${escapeHTML(f.cap || String(i + 1))}"><img src="${escapeHTML(f.src)}" alt="" loading="lazy"></button>`).join('')}${figs.length > thumbs.length ? `<button type="button" class="pt-more" data-tab-go="images">+${figs.length - thumbs.length}</button>` : ''}</div>` : ''}
             </div>
                             <div class="pt-info">
                                 ${info}
@@ -188,13 +191,14 @@
                     </nav>
                 </div>
             </section>`;
-        mediaSrc = { video: p.video ? mainMedia : '', figs };
+        mediaSrc = { video: p.video ? mainMedia : '', figs, vis: vis.map(visHTML) };
+        if (vis.length) systemVisuals.mount(p.id, root.querySelector('#pt-media'));
         const want = (location.hash || '').slice(1);
         if (tabs.some(x => x[0] === want)) showTab(want, false);
     }
 
     /* tabs */
-    let mediaSrc = { video: '', figs: [] };
+    let mediaSrc = { video: '', figs: [], vis: [] };
     function showTab(id, focus) {
         const btns = [...root.querySelectorAll('.pt-tabs [role="tab"]')];
         btns.forEach(b => {
@@ -216,7 +220,9 @@
             const box = root.querySelector('#pt-media'); if (!box) return;
             const k = th.dataset.media;
             box.querySelectorAll('video').forEach(v => v.pause());
+            box.classList.toggle('is-sv', k[0] === 'v' && k !== 'video');
             if (k === 'video') box.innerHTML = mediaSrc.video;
+            else if (k[0] === 'v') { box.innerHTML = mediaSrc.vis[+k.slice(1)]; systemVisuals.mount(projects[index].id, box); }
             else { const f = mediaSrc.figs[+k]; box.innerHTML = `<img src="${escapeHTML(f.src)}" alt="${escapeHTML(f.cap)}" class="fit-contain">${f.cap ? `<span class="pt-cap">${escapeHTML(f.cap)}</span>` : ''}`; }
             root.querySelectorAll('.pt-thumbs button').forEach(b => b.classList.toggle('on', b === th));
         }
