@@ -130,13 +130,14 @@
             ['images', L2('Images', 'Images'), figs.length],
             ['files', L2('Files', 'Fichiers'), files.trim()]
         ].filter(x => x[2]);
-        const info = overview.map(([label, value]) => `<h3>${label}</h3><p>${escapeHTML(value)}</p>`).join('')
-            || `<h3>${t.overview[lang]}</h3><p>${escapeHTML(p.summary[lang])}</p>`;
+        const icons = ['bx-target-lock', 'bx-user', 'bx-trophy'];
+        const info = overview.map(([label, value], i) => `<div class="pt-block"><h3><i class='bx ${icons[i] || 'bx-info-circle'}'></i> ${label}</h3><p>${escapeHTML(value)}</p></div>`).join('')
+            || `<div class="pt-block"><h3>${t.overview[lang]}</h3><p>${escapeHTML(p.summary[lang])}</p></div>`;
 
         root.innerHTML = `
             <section class="pt">
                 <div class="container">
-                    <p class="pt-kicker">${escapeHTML(cat[lang])} · ${escapeHTML(p.context[lang])} · ${escapeHTML(p.year)}</p>
+                    <p class="pt-kicker"><span class="pt-chip pt-chip-cat"><i class='bx ${cat.icon}'></i> ${escapeHTML(cat[lang])}</span><span class="pt-chip"><i class='bx bx-calendar'></i> ${escapeHTML(p.year)}</span><span class="pt-ctx">${escapeHTML(p.context[lang])}</span></p>
                     <h1>${escapeHTML(p.title[lang])}</h1>
 
                     <div class="pt-tabs" role="tablist" aria-label="${escapeHTML(p.title[lang])}">
