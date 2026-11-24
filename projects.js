@@ -1297,3 +1297,6 @@ const projects = [
         ]
     }
 ];
+
+// Share the project catalogue with the portfolio chat Worker.
+globalThis.portfolioProjects = projects;
