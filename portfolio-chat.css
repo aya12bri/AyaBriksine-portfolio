@@ -1,3 +1,7 @@
+.portfolio-chat {
+    display: contents;
+}
+
 .portfolio-chat button {
     cursor: pointer;
     font: inherit;
@@ -266,6 +270,7 @@
 }
 
 .portfolio-chat-dialog h2 {
+    margin: 0;
     font-size: 1rem;
 }
 
