@@ -117,6 +117,14 @@
         input.focus()
         log.scrollTop = log.scrollHeight
     })
+    // other scripts can ask the chat a question:  document.dispatchEvent(new CustomEvent('portfolio-chat:ask', { detail: 'question' }))
+    document.addEventListener('portfolio-chat:ask', event => {
+        const question = String(event.detail || '').trim().slice(0, 500)
+        if (!question || pending) return
+        if (!dialog.open) dialog.showModal()
+        input.value = question
+        form.requestSubmit()
+    })
     close.addEventListener('click', () => dialog.close())
     dialog.addEventListener('close', () => launch.focus())
     for (const link of [projects, contact]) {

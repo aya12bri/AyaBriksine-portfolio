@@ -27,9 +27,25 @@
         next: { en: 'Next project', fr: 'Projet suivant' },
         contact: { en: 'Interested in this project? Let’s talk.', fr: 'Ce projet vous intéresse ? Parlons-en.' },
         contactBtn: { en: 'Contact me', fr: 'Me contacter' },
+        walk: { en: 'Follow the work, step by step', fr: 'Suivre le travail, étape par étape' },
+        walkLead: { en: 'Each step is something Aya did. If one is not clear, tap “Explain”.', fr: 'Chaque étape est quelque chose qu’Aya a réalisé. Si une étape n’est pas claire, touchez « Expliquer ».' },
+        explain: { en: 'Explain', fr: 'Expliquer' },
+        explainQ: { en: 'Explain this step of the project in simple words: ', fr: 'Explique avec des mots simples cette étape du projet : ' },
+        factSteps: { en: 'steps', fr: 'étapes' }, factTools: { en: 'tools & topics', fr: 'outils & thèmes' },
+        factFiles: { en: 'files to download', fr: 'fichiers à télécharger' }, factPics: { en: 'figures', fr: 'figures' }, factVideo: { en: 'video', fr: 'vidéo' },
+        related: { en: 'Same tools, other projects', fr: 'Mêmes outils, autres projets' }, via: { en: 'shared:', fr: 'en commun :' },
+        onPage: { en: 'On this page', fr: 'Sur cette page' },
+        zoom: { en: 'Enlarge', fr: 'Agrandir' },
         notFound: { en: 'Project not found', fr: 'Projet introuvable' },
         notFoundText: { en: 'This project doesn’t exist or has moved.', fr: 'Ce projet n’existe pas ou a été déplacé.' }
     };
+
+    let galleryItems = [];
+    /* the steps: the phases of the brief when there are some, else the "what I did" list */
+    function phases2(brief, p, lang) {
+        if (brief && brief.phases && brief.phases.length) return brief.phases.map(ph => ({ title: ph.title[lang], text: ph.description[lang] }));
+        return (p.highlights[lang] || []).map(h => ({ title: '', text: h }));
+    }
 
     function render() {
         const lang = currentLang();
@@ -111,6 +127,47 @@
             }).join('')}</div></section>`
             : '';
 
+        const SOFT = ['travail en binôme', 'travail en équipe', 'teamwork', 'pair work', 'team work'];
+        const realTags = (p.tags || []).filter(x => !SOFT.includes(x.toLowerCase()));
+        const stepItems = phases2(brief, p, lang);
+        const toolsIn = s => realTags.filter(x => s.toLowerCase().includes(x.toLowerCase())).slice(0, 4);
+        const num = txt => escapeHTML(txt).replace(/(\d+(?:[.,]\d+)?\s?(?:%|°|mm|ms|Hz|kg|V|A|W)?)/g, m => `<b class="num">${m}</b>`);
+        const figs = (p.gallery || []).map(item => ({ src: typeof item === 'string' ? item : item.src, cap: (item.caption && item.caption[lang]) || '' }));
+        galleryItems = figs;
+        const fileCount = (p.pdf ? 1 : 0) + (p.downloads || []).length;
+        const facts = [[stepItems.length, t.factSteps[lang]], [realTags.length, t.factTools[lang]],
+            p.video ? ['▶', t.factVideo[lang]] : (figs.length ? [figs.length, t.factPics[lang]] : null), fileCount ? [fileCount, t.factFiles[lang]] : null].filter(Boolean);
+        const mine = new Set(realTags.map(x => x.toLowerCase()));
+        const rel = projects.filter(o => o.id !== p.id).map(o => ({ o, via: (o.tags || []).filter(x => mine.has(x.toLowerCase()) && !SOFT.includes(x.toLowerCase())) }))
+            .filter(r => r.via.length).sort((a, b) => b.via.length - a.via.length).slice(0, 4);
+        const icons = ['bx-target-lock', 'bx-user-circle', 'bx-trophy'];
+        const nav = [['cs-overview', t.overview[lang], overview.length], ['cs-walk', t.process[lang], stepItems.length], ['cs-gallery', t.gallery[lang], figs.length || p.video],
+            ['project-resources', t.resources[lang], resources], ['project-skills', t.tools[lang], 1]].filter(x => x[2]);
+        const stage = figs.length ? `
+            <section class="cs-gallery" id="cs-gallery" aria-label="${t.gallery[lang]}">
+                <h2>${t.gallery[lang]}</h2>
+                <div class="cs-stage"><button type="button" class="cs-main" data-open="0" aria-label="${t.zoom[lang]}"><img src="${escapeHTML(figs[0].src)}" alt="${escapeHTML(figs[0].cap)}"><span class="cs-zoom"><i class='bx bx-expand-alt'></i> ${t.zoom[lang]}</span></button>
+                    <p class="cs-cap">${escapeHTML(figs[0].cap)}</p></div>
+                ${figs.length > 1 ? `<div class="cs-thumbs">${figs.map((f, i) => `<button type="button" class="${i ? '' : 'on'}" data-pick="${i}" aria-label="${i + 1} / ${figs.length}"><img src="${escapeHTML(f.src)}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}
+            </section>` : '';
+        const relHtml = rel.length ? `<section class="cs-related"><h2>${t.related[lang]}</h2><div class="cs-rel-grid">${rel.map(r => `<a href="project.html?id=${encodeURIComponent(r.o.id)}"><strong>${escapeHTML(r.o.title[lang])}</strong><span>${t.via[lang]} ${escapeHTML(r.via.slice(0, 3).join(' · '))}</span></a>`).join('')}</div></section>` : '';
+        const walkHtml = stepItems.length ? `
+            <section class="cs-walk" id="cs-walk" aria-labelledby="cs-walk-title">
+                <div class="cs-walk-head"><h2 id="cs-walk-title">${t.walk[lang]}</h2><p>${t.walkLead[lang]}</p></div>
+                <div class="cs-walk-body">
+                    <aside class="cs-rail" aria-hidden="true"><span class="cs-count"><b id="cs-cur">1</b> / ${stepItems.length}</span><span class="cs-bar"><i id="cs-fill"></i></span></aside>
+                    <ol class="cs-steps">${stepItems.map((s, i) => `
+                        <li class="cs-step" data-i="${i}"><span class="cs-num">${i + 1}</span>
+                            <div class="cs-card">
+                                ${s.title ? `<h3>${escapeHTML(s.title)}</h3>` : ''}
+                                <p>${num(s.text)}</p>
+                                ${toolsIn((s.title || '') + ' ' + s.text).length ? `<ul class="cs-tools">${toolsIn((s.title || '') + ' ' + s.text).map(x => `<li>${escapeHTML(x)}</li>`).join('')}</ul>` : ''}
+                                <button type="button" class="cs-explain" data-q="${escapeHTML(t.explainQ[lang] + (s.title ? s.title + ' - ' : '') + s.text)}"><i class='bx bx-bot'></i> ${t.explain[lang]}</button>
+                            </div>
+                        </li>`).join('')}</ol>
+                </div>
+            </section>` : '';
+
         root.innerHTML = `
             <section class="project-hero">
                 <div class="container">
@@ -123,30 +180,31 @@
                         </div>
                         ${cover}
                     </div>
+                    <ul class="cs-facts">${facts.map(f => `<li><strong>${f[0]}</strong><span>${escapeHTML(f[1])}</span></li>`).join('')}</ul>
                 </div>
             </section>
+            <nav class="cs-nav" aria-label="${t.onPage[lang]}"><div class="container">${nav.map(n => `<a href="#${n[0]}">${escapeHTML(n[1])}</a>`).join('')}</div></nav>
 
             <section class="project-content">
                 <div class="container">
-                    ${overview.length ? `<section class="project-overview" aria-label="${t.overview[lang]}">
-                        ${overview.map(([label, value]) => `<div><h2>${label}</h2><p>${escapeHTML(value)}</p></div>`).join('')}
+                    ${overview.length ? `<section class="cs-overview" id="cs-overview" aria-label="${t.overview[lang]}">
+                        ${overview.map(([label, value], i) => `<article><span class="cs-ico"><i class='bx ${icons[i] || 'bx-info-circle'}'></i></span><h2>${label}</h2><p>${num(value)}</p></article>`).join('')}
                     </section>` : ''}
 
-                    <section class="project-process">
-                        <h2>${t.process[lang]}</h2>
-                        <ol class="steps" role="list">${phases || highlights}</ol>
-                    </section>
+                    ${walkHtml}
 
-                    ${gallery}
+                    ${stage}
                     ${video}
                     ${details}
 
-                    ${resources ? `<section class="project-resources">
+                    ${resources ? `<section class="project-resources" id="project-resources">
                         <h2>${t.resources[lang]}</h2>
                         <div class="project-resource-links">${resources}</div>
                     </section>` : ''}
 
-                    <section class="project-skills">
+                    ${relHtml}
+
+                    <section class="project-skills" id="project-skills">
                         <h2>${t.tools[lang]}</h2>
                         <ul class="tags">${skills.map(skill => `<li>${escapeHTML(skill)}</li>`).join('')}</ul>
                     </section>
@@ -170,14 +228,12 @@
             </section>`;
     }
 
-    /* lightbox: click a figure to see it large, arrows / Esc to navigate */
+    /* lightbox: enlarge a figure, arrows / Esc to navigate */
     let box = null, shown = 0;
     function showFigure(i) {
-        const links = [...document.querySelectorAll('.gallery figure a')];
-        if (!links.length) return;
-        shown = (i + links.length) % links.length;
-        const img = links[shown].querySelector('img');
-        const cap = links[shown].parentElement.querySelector('figcaption');
+        if (!galleryItems.length) return;
+        shown = (i + galleryItems.length) % galleryItems.length;
+        const f = galleryItems[shown];
         if (!box) {
             box = document.createElement('div');
             box.className = 'lightbox';
@@ -192,18 +248,12 @@
             });
             document.body.appendChild(box);
         }
-        box.querySelector('img').src = links[shown].getAttribute('href');
-        box.querySelector('img').alt = img.alt;
-        box.querySelector('figcaption').textContent = cap ? cap.textContent : '';
+        box.querySelector('img').src = f.src;
+        box.querySelector('img').alt = f.cap;
+        box.querySelector('figcaption').textContent = f.cap;
         box.classList.add('open');
     }
     function closeFigure() { if (box) box.classList.remove('open'); }
-    document.addEventListener('click', e => {
-        const a = e.target.closest('.gallery figure a');
-        if (!a) return;
-        e.preventDefault();
-        showFigure([...document.querySelectorAll('.gallery figure a')].indexOf(a));
-    });
     document.addEventListener('keydown', e => {
         if (!box || !box.classList.contains('open')) return;
         if (e.key === 'Escape') closeFigure();
@@ -211,6 +261,45 @@
         if (e.key === 'ArrowRight') showFigure(shown + 1);
     });
 
+    /* gallery stage, "Explain" buttons */
+    root.addEventListener('click', e => {
+        const pick = e.target.closest('[data-pick]');
+        if (pick) {
+            const i = +pick.dataset.pick, f = galleryItems[i], main = root.querySelector('.cs-main');
+            main.dataset.open = i; main.querySelector('img').src = f.src; main.querySelector('img').alt = f.cap;
+            root.querySelector('.cs-cap').textContent = f.cap;
+            root.querySelectorAll('.cs-thumbs button').forEach(b => b.classList.toggle('on', b === pick));
+            return;
+        }
+        const open = e.target.closest('[data-open]');
+        if (open) { showFigure(+open.dataset.open); return; }
+        const ex = e.target.closest('.cs-explain');
+        if (ex) document.dispatchEvent(new CustomEvent('portfolio-chat:ask', { detail: ex.dataset.q }));
+    });
+
+    /* the walk-through: the current step lights up, the line fills while scrolling; the section bar follows the page */
+    let io = null, scrollFn = null, bound = false;
+    function setupMotion() {
+        if (io) io.disconnect();
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const steps = [...root.querySelectorAll('.cs-step')], list = root.querySelector('.cs-steps'), fill = root.querySelector('#cs-fill'), cur = root.querySelector('#cs-cur');
+        const links = [...root.querySelectorAll('.cs-nav a')], targets = links.map(a => root.querySelector(a.getAttribute('href')));
+        io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -6% 0px' });
+        root.querySelectorAll('.cs-step, .cs-overview article, .cs-related, .cs-gallery').forEach(el => { if (reduce) el.classList.add('in'); else io.observe(el); });
+        scrollFn = () => {
+            const mid = innerHeight * 0.5; let a = 0;
+            steps.forEach((s, i) => { const r = s.getBoundingClientRect(); if (r.top < mid) a = i; s.classList.toggle('done', r.top + r.height * 0.35 < mid); });
+            steps.forEach((s, i) => s.classList.toggle('active', i === a));
+            if (cur) cur.textContent = a + 1;
+            if (list && fill) { const lr = list.getBoundingClientRect(); fill.style.height = Math.max(0, Math.min(100, ((mid - lr.top) / Math.max(1, lr.height)) * 100)) + '%'; }
+            let on = 0; targets.forEach((t, i) => { if (t && t.getBoundingClientRect().top < innerHeight * 0.4) on = i; });
+            links.forEach((l, i) => l.classList.toggle('on', i === on));
+        };
+        if (!bound) { bound = true; let tick = 0; addEventListener('scroll', () => { if (!tick) tick = requestAnimationFrame(() => { tick = 0; scrollFn && scrollFn(); }); }, { passive: true }); }
+        scrollFn();
+    }
+
     render();
-    document.addEventListener('langchange', render);
+    setupMotion();
+    document.addEventListener('langchange', () => { render(); setupMotion(); });
 })();
