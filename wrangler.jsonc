@@ -23,5 +23,20 @@
         "period": 60
       }
     }
-  ]
+  ],
+  "previews": {
+    "ai": {
+      "binding": "AI"
+    },
+    "ratelimits": [
+      {
+        "name": "CHAT_LIMIT",
+        "namespace_id": "409334196",
+        "simple": {
+          "limit": 8,
+          "period": 60
+        }
+      }
+    ]
+  }
 }
