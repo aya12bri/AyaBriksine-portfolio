@@ -3,6 +3,7 @@
 
 (function () {
     const root = document.querySelector('#project-root');
+    const backLabel = document.querySelector('#project-back-label');
     const id = new URLSearchParams(location.search).get('id');
     const index = projects.findIndex(p => p.id === id);
 
@@ -16,6 +17,7 @@
         results: { en: 'Results', fr: 'Résultats' },
         gallery: { en: 'Project gallery', fr: 'Galerie du projet' },
         tools: { en: 'Tools & skills', fr: 'Outils & compétences' },
+        resources: { en: 'Project resources', fr: 'Ressources du projet' },
         github: { en: 'View code on GitHub', fr: 'Voir le code sur GitHub' },
         soon: { en: 'Code coming soon on GitHub', fr: 'Code bientôt en ligne sur GitHub' },
         pdf: { en: 'Download the report (PDF)', fr: 'Télécharger le rapport (PDF)' },
@@ -31,13 +33,13 @@
 
     function render() {
         const lang = currentLang();
+        backLabel.textContent = t.back[lang];
 
         if (index === -1) {
             document.title = t.notFound[lang] + ' | Aya Briksine';
             root.innerHTML = `
                 <section class="project-hero">
                     <div class="container">
-                        <a href="index.html#projects" class="back-link"><i class='bx bx-left-arrow-alt'></i> ${t.back[lang]}</a>
                         <h1>${t.notFound[lang]}</h1>
                         <p class="project-lead">${t.notFoundText[lang]}</p>
                     </div>
@@ -47,6 +49,7 @@
 
         const p = projects[index];
         const cat = projectCategories[p.category];
+        const skills = [...new Set([cat[lang], ...p.tags])];
         const prev = projects[(index - 1 + projects.length) % projects.length];
         const next = projects[(index + 1) % projects.length];
         document.title = p.title[lang] + ' | Aya Briksine';
@@ -103,21 +106,20 @@
             ? `<section class="project-gallery"><h2>${t.gallery[lang]}</h2><div class="gallery">${p.gallery.map(item => {
                 const src = typeof item === 'string' ? item : item.src;
                 const cap = item.caption && item.caption[lang] ? item.caption[lang] : '';
-                return `<figure><a href="${escapeHTML(src)}" target="_blank" rel="noopener"><img src="${escapeHTML(src)}" alt="${escapeHTML(cap)}" loading="lazy"></a>${cap ? `<figcaption>${escapeHTML(cap)}</figcaption>` : ''}</figure>`;
+                const imageClass = src === p.image && p.imageFit !== 'contain' ? ' class="gallery-cover"' : '';
+                return `<figure><a href="${escapeHTML(src)}" target="_blank" rel="noopener"><img${imageClass} src="${escapeHTML(src)}" alt="${escapeHTML(cap)}" loading="lazy"></a>${cap ? `<figcaption>${escapeHTML(cap)}</figcaption>` : ''}</figure>`;
             }).join('')}</div></section>`
             : '';
 
         root.innerHTML = `
             <section class="project-hero">
                 <div class="container">
-                    <a href="index.html#projects" class="back-link"><i class='bx bx-left-arrow-alt'></i> ${t.back[lang]}</a>
                     <div class="project-hero-grid ${cover ? 'with-cover' : ''}">
                         <div>
-                            <p class="project-context"><span class="cat-${p.category}">${escapeHTML(cat[lang])}</span> · ${escapeHTML(p.context[lang])} · ${escapeHTML(p.year)}</p>
+                            <p class="project-context">${escapeHTML(p.context[lang])} · ${escapeHTML(p.year)}</p>
                             <h1>${escapeHTML(p.title[lang])}</h1>
                             <p class="project-lead">${escapeHTML(brief?.intro?.[lang] || p.summary[lang])}</p>
                             ${actions ? `<div class="hero-buttons">${actions}</div>` : ''}
-                            ${resources ? `<div class="project-resources">${resources}</div>` : ''}
                         </div>
                         ${cover}
                     </div>
@@ -132,17 +134,22 @@
 
                     <section class="project-process">
                         <h2>${t.process[lang]}</h2>
-                        <ol class="steps ${phases ? 'steps-phases' : ''}" role="list">${phases || highlights}</ol>
-                        ${details}
+                        <ol class="steps" role="list">${phases || highlights}</ol>
                     </section>
 
-                    ${video}
                     ${gallery}
+                    ${video}
+                    ${details}
 
-                    ${p.tags.length ? `<section class="project-tools">
-                            <h2>${t.tools[lang]}</h2>
-                            <ul class="tags">${p.tags.map(tag => `<li>${escapeHTML(tag)}</li>`).join('')}</ul>
+                    ${resources ? `<section class="project-resources">
+                        <h2>${t.resources[lang]}</h2>
+                        <div class="project-resource-links">${resources}</div>
                     </section>` : ''}
+
+                    <section class="project-skills">
+                        <h2>${t.tools[lang]}</h2>
+                        <ul class="tags">${skills.map(skill => `<li>${escapeHTML(skill)}</li>`).join('')}</ul>
+                    </section>
 
                     <div class="project-cta card">
                         <p>${t.contact[lang]}</p>

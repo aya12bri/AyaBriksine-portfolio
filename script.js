@@ -917,33 +917,6 @@ function addKinArm(host, opts) {
 })();
 
 
-/* ---------- Project pages: animated background (gears, kinematic arm, typed code) ---------- */
-(function () {
-    if (!document.body.classList.contains('project-page')) return;
-    const bg = document.createElement('div');
-    bg.className = 'page-bg';
-    bg.setAttribute('aria-hidden', 'true');
-    bg.innerHTML = `
-        <span class="sym sym-gear" style="--s:230px;--r:0deg;--d:-3s;left:-60px;bottom:6%"></span>
-        <span class="sym sym-gear" style="--s:150px;--r:15deg;--d:-8s;left:130px;bottom:26%"></span>
-        <span class="sym sym-gear" style="--s:200px;--r:0deg;--d:-5s;right:-50px;top:14%"></span>
-        <span class="sym sym-drone" style="--s:210px;--r:0deg;--d:-2s;left:2%;top:16%"></span>
-        <div class="kin-host"></div>`;
-    document.body.insertBefore(bg, document.body.firstChild);
-    addKinArm(bg.querySelector('.kin-host'), { phase: 2 });
-    if (!window.typeCode) return;
-    [['pid', 'left:1%;top:44%', 14, 0], ['fsk', 'right:1.5%;top:10%', 13, 2]].forEach(([name, pos, size, delay]) => {
-        const s = window.codeSnippets[name];
-        const el = document.createElement('pre');
-        el.className = 'code-bg';
-        el.style.cssText = `--fs:${size}px;--cols:${Math.max(...s.map(l => l.length)) + 1};--rows:${s.length};${pos}`;
-        el.innerHTML = '<code class="code-live"></code>';
-        bg.appendChild(el);
-        window.typeCode(el, [name], delay);
-    });
-})();
-
-
 /* ---------- Click effects: ripple anywhere, burst on the portrait ---------- */
 (function () {
     document.addEventListener('pointerdown', e => {
