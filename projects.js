@@ -902,20 +902,20 @@ const projects = [
         id: 'greenhouse-monitoring',
         brief: {
             objective: {
-                en: "Automate monitoring for a solar greenhouse used to dry sewage sludge.",
-                fr: "Automatiser le suivi d’une serre de séchage solaire des boues."
+                en: "Automate greenhouse monitoring.",
+                fr: "Automatiser le suivi de la serre."
             },
             role: {
-                en: "Designed the prototype and its web and mobile monitoring dashboard.",
-                fr: "J’ai conçu le prototype et son tableau de bord de supervision web et mobile."
+                en: "Designed the prototype and its dashboard.",
+                fr: "J’ai conçu le prototype et son tableau de bord."
             },
             intro: {
                 en: "Track the greenhouse temperature and humidity and control its window remotely.",
                 fr: "Suivre la température et l’humidité de la serre et piloter sa fenêtre à distance."
             },
             outcome: {
-                en: "Readings every two seconds and automatic window opening were validated on the prototype.",
-                fr: "Les mesures toutes les deux secondes et l’ouverture automatique ont été validées sur le prototype."
+                en: "Validated readings every 2 seconds on the prototype.",
+                fr: "Des mesures toutes les 2 s, validées sur le prototype."
             },
             phases: [
                 {
@@ -934,8 +934,8 @@ const projects = [
                         fr: "Construire le prototype"
                     },
                     description: {
-                        en: "Connect the two sensors and the window servo to the ESP8266.",
-                        fr: "Relier les deux capteurs et le servomoteur de la fenêtre à l’ESP8266."
+                        en: "Connect the sensors to the microcontroller.",
+                        fr: "Relier les capteurs au microcontrôleur."
                     }
                 },
                 {
@@ -944,8 +944,8 @@ const projects = [
                         fr: "Programmer la supervision"
                     },
                     description: {
-                        en: "Send readings over MQTT to Node-RED and store them in MySQL.",
-                        fr: "Transmettre les données via MQTT à Node-RED et les conserver dans MySQL."
+                        en: "Show readings and control the window.",
+                        fr: "Afficher les mesures et piloter la fenêtre."
                     }
                 },
                 {
@@ -954,8 +954,8 @@ const projects = [
                         fr: "Tester et valider"
                     },
                     description: {
-                        en: "Check the readings every two seconds and the automatic window opening.",
-                        fr: "Vérifier les mesures toutes les deux secondes et l’ouverture automatique de la fenêtre."
+                        en: "Check the readings and automatic opening.",
+                        fr: "Vérifier les mesures et l’ouverture automatique."
                     }
                 }
             ]
@@ -1011,12 +1011,12 @@ const projects = [
         },
         gallery: [
             { src: 'green-energy-park-serre.jpg', caption: { en: 'The greenhouse model with its sensors and the live monitoring dashboard', fr: 'La maquette de serre, ses capteurs et le tableau de bord de supervision en direct' } },
-            { src: 'pfe-serre-3d-face.png', caption: { en: '3D model of the drying greenhouse and its collector field: front view', fr: 'Modèle 3D de la serre de séchage et de son champ de capteurs : vue de face' } },
             { src: 'pfe-serre-3d-perspective.png', caption: { en: '3D model: greenhouse, ducts and compound parabolic collectors', fr: 'Modèle 3D : serre, gaines et capteurs paraboliques composés' } },
+            { src: 'pfe-circuit-prototype.png', caption: { en: 'Prototype wiring: NodeMCU ESP8266, two DHT22, SG90 servomotor, LCD screen and LED', fr: 'Câblage du prototype : NodeMCU ESP8266, deux DHT22, servomoteur SG90, écran LCD et LED' } },
+            { src: 'pfe-serre-3d-face.png', caption: { en: '3D model of the drying greenhouse and its collector field: front view', fr: 'Modèle 3D de la serre de séchage et de son champ de capteurs : vue de face' } },
             { src: 'pfe-sysml-exigences.png', caption: { en: 'SysML requirement diagram of the intelligent greenhouse', fr: 'Diagramme des exigences SysML de la serre intelligente' } },
             { src: 'pfe-cas-utilisation.png', caption: { en: 'Use-case diagram of the monitoring and control platform', fr: 'Diagramme des cas d’utilisation de la plateforme de suivi et de contrôle' } },
             { src: 'pfe-organigramme.png', caption: { en: 'Operating flowchart: measurement, automatic or manual window opening, shutdown', fr: 'Organigramme de fonctionnement : mesure, ouverture automatique ou manuelle de la fenêtre, arrêt' } },
-            { src: 'pfe-circuit-prototype.png', caption: { en: 'Prototype wiring: NodeMCU ESP8266, two DHT22, SG90 servomotor, LCD screen and LED', fr: 'Câblage du prototype : NodeMCU ESP8266, deux DHT22, servomoteur SG90, écran LCD et LED' } },
             { src: 'pfe-schema-synoptique.png', caption: { en: 'Block diagram of the real system: greenhouse and collector-field boards, MQTT broker, Node-RED and database', fr: 'Schéma synoptique du système réel : cartes de la serre et du champ de capteurs, courtier MQTT, Node-RED et base de données' } }
         ]
     },
