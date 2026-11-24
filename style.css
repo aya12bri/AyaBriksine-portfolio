@@ -4916,3 +4916,79 @@ html:not(.light-mode) .back-top {
     .cs-step.active .cs-card { transform: none; }
 }
 
+
+/* =========================================================
+   Technical dashboard look for the inside of a project
+   (grid paper, corner brackets on panels, mono labels, big numbers)
+   ========================================================= */
+.project-page { --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace; --grid: rgba(var(--signal-rgb), 0.07); --panel: rgba(var(--surface-rgb), 0.82); --edge: rgba(var(--signal-rgb), 0.42); }
+.project-page.light-mode { --grid: rgba(30, 60, 90, 0.07); --edge: rgba(40, 90, 130, 0.55); }
+.project-page #project-root { background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 36px 36px; background-position: -1px -1px; }
+.project-page .project-hero { border-bottom: 1px solid var(--border); background: linear-gradient(180deg, rgba(var(--signal-rgb), 0.06), transparent 70%); }
+.project-page .project-context { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--signal); }
+.project-page .project-context::before { content: '// '; opacity: 0.7; }
+.project-page .project-hero h1 { letter-spacing: -0.02em; }
+.project-page .project-hero-grid .project-visual { border: 1px solid var(--edge); border-radius: 6px; box-shadow: 0 0 0 4px rgba(var(--signal-rgb), 0.06), 0 20px 40px rgba(0, 0, 0, 0.25); }
+.project-page .hero-buttons .btn { border-radius: 4px; font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.02em; }
+
+.cs-facts li, .cs-overview article, .cs-card, .cs-main, .cs-rel-grid a { position: relative; border-radius: 4px; background: var(--panel); border-color: var(--border); }
+.cs-facts li::before, .cs-overview article::before, .cs-card::before, .cs-rel-grid a::before, .cs-main::before,
+.cs-facts li::after, .cs-overview article::after, .cs-card::after, .cs-rel-grid a::after, .cs-main::after { content: ''; position: absolute; width: 11px; height: 11px; border: 2px solid var(--edge); pointer-events: none; transition: border-color 0.3s, width 0.3s, height 0.3s; z-index: 2; }
+.cs-facts li::before, .cs-overview article::before, .cs-card::before, .cs-rel-grid a::before, .cs-main::before { left: -1px; top: -1px; border-right: 0; border-bottom: 0; }
+.cs-facts li::after, .cs-overview article::after, .cs-card::after, .cs-rel-grid a::after, .cs-main::after { right: -1px; bottom: -1px; border-left: 0; border-top: 0; }
+.cs-step.active .cs-card::before, .cs-step.active .cs-card::after, .cs-rel-grid a:hover::before, .cs-rel-grid a:hover::after { width: 20px; height: 20px; border-color: var(--signal); }
+
+.cs-facts { gap: 10px; margin-top: 34px; }
+.cs-facts li { padding: 16px 18px 14px; }
+.cs-facts em { position: absolute; right: 12px; top: 10px; font-style: normal; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); opacity: 0.8; }
+.cs-facts strong { font-family: var(--mono); font-size: 2.5rem; font-weight: 700; letter-spacing: -0.04em; color: var(--signal); line-height: 1; }
+.cs-facts span { display: block; margin-top: 8px; font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+
+.cs-nav a { border-radius: 3px; font-family: var(--mono); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.cs-nav a.on { background: rgba(var(--signal-rgb), 0.16); color: var(--signal); box-shadow: inset 0 -2px 0 var(--signal); }
+
+.cs-walk-head h2, .cs-gallery h2, .cs-related h2, .project-page .project-resources h2, .project-page .project-skills h2 { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--heading); }
+.cs-walk-head h2::before, .cs-gallery h2::before, .cs-related h2::before, .project-page .project-resources h2::before, .project-page .project-skills h2::before { content: ''; flex: none; width: 10px; height: 10px; background: var(--signal); box-shadow: 0 0 10px var(--signal); }
+.cs-walk-head h2::after, .cs-gallery h2::after, .cs-related h2::after, .project-page .project-resources h2::after, .project-page .project-skills h2::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+.cs-walk-head p { font-family: var(--mono); font-size: 0.84rem; }
+
+.cs-overview article { padding: 24px 24px 22px; }
+.cs-overview h2 { font-family: var(--mono); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--signal); }
+.cs-overview h2 small { opacity: 0.6; font-size: 0.78rem; margin-right: 4px; }
+.cs-ico { border-radius: 4px; background: rgba(var(--signal-rgb), 0.1); border: 1px solid var(--edge); }
+
+.cs-rail { gap: 10px; }
+.cs-lbl { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; color: var(--muted); }
+.cs-count { font-family: var(--mono); }
+.cs-count b { font-size: 1.6rem; color: var(--signal); }
+.cs-bar { width: 6px; border-radius: 0; background: repeating-linear-gradient(var(--border) 0 6px, transparent 6px 10px); }
+.cs-bar i { border-radius: 0; }
+.cs-num { border-radius: 4px; font-family: var(--mono); font-size: 1.05rem; }
+.cs-step.active .cs-num { box-shadow: 0 0 0 5px rgba(var(--signal-rgb), 0.16), 0 0 22px rgba(var(--signal-rgb), 0.5); }
+.cs-card { padding: 18px 24px 18px; }
+.cs-step.active .cs-card { box-shadow: 0 0 0 1px rgba(var(--signal-rgb), 0.35), 0 18px 40px rgba(0, 0, 0, 0.22); }
+.cs-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 0 0 10px !important; font-family: var(--mono); font-size: 0.7rem !important; letter-spacing: 0.12em; color: var(--muted) !important; }
+.cs-state { padding: 2px 9px; border-radius: 3px; border: 1px solid var(--border); font-size: 0.64rem; letter-spacing: 0.12em; }
+.cs-state[data-k='done'] { color: var(--signal); border-color: var(--edge); }
+.cs-state[data-k='now'] { background: var(--signal); color: #0b0b10; border-color: var(--signal); }
+.cs-card h3 { font-size: 1.12rem; }
+.cs-tools li { border-radius: 3px; font-family: var(--mono); font-size: 0.72rem; border: 1px solid var(--edge); background: transparent; }
+.cs-explain { border-radius: 3px; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.num { font-family: var(--mono); }
+
+.cs-main img { background: #fff; }
+.cs-zoom { border-radius: 3px; font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.cs-cap { display: flex; gap: 12px; align-items: baseline; font-size: 0.88rem; }
+.cs-cap b { flex: none; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.1em; color: var(--signal); }
+.cs-thumbs button { border-radius: 3px; }
+.cs-thumbs button.on { box-shadow: 0 0 14px rgba(var(--signal-rgb), 0.6); }
+.cs-rel-grid span { font-family: var(--mono); font-size: 0.72rem; }
+.project-page .tags li { border-radius: 3px; font-family: var(--mono); font-size: 0.74rem; }
+.project-page .project-resource-links .btn { border-radius: 3px; font-family: var(--mono); font-size: 0.78rem; }
+@media (max-width: 760px) {
+    .cs-facts strong { font-size: 1.9rem; }
+    .cs-card { padding: 14px 15px 14px; }
+    .cs-meta { font-size: 0.64rem !important; }
+    .cs-cap { flex-direction: column; gap: 2px; }
+}
+
