@@ -1350,7 +1350,7 @@ h3 {
 }
 
 .project-header .logo {
-    font-size: clamp(1.05rem, 2.2vw, 1.7rem);
+    font-size: 18px;               /* same size as on the home page */
 }
 
 .project-header .icon-btn {
@@ -5010,7 +5010,7 @@ html:not(.light-mode) .back-top {
 @keyframes sv-blade { 0% { transform: scaleY(1); } 50% { transform: scaleY(-1); } 100% { transform: scaleY(1); } }
 @keyframes sv-prop { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.3); } }
 @media (max-width: 860px) { .pt-sv { padding: 30px 2px 2px; } .pt-media.is-sv { aspect-ratio: 16 / 11; } }
-@media (prefers-reduced-motion: reduce) { .sv *, .sv { animation: none !important; } .sv .sv-curve { stroke-dashoffset: 0; } }
+/* The animations are opened on purpose with a click, so they also play when the system asks for reduced motion */
 .sv .spin.fast { animation-duration: .35s; }
 
 /* Project page: the whole project inside one frame that fits the screen */
