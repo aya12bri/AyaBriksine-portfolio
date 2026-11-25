@@ -5049,3 +5049,14 @@ html:not(.light-mode) .back-top {
 
 /* Videos: show the whole frame (vertical videos included) instead of cropping and enlarging it */
 .pt-media video { object-fit: contain; background: #000; }
+
+/* Smaller project title so the whole project fits in the frame */
+.pt-frame h1 { font-size: clamp(1.3rem, 1.9vw, 1.7rem); line-height: 1.25; margin-bottom: 12px; }
+.pt-frame .pt-top { margin-bottom: 8px; }
+.pt-frame .pt-tabs { margin-bottom: 18px; }
+.pt-frame .pt-tabs button { padding-top: 10px; padding-bottom: 10px; }
+@media (min-width: 861px) {
+    .pt-frame .pt-media { max-height: max(260px, calc(100vh - var(--header-h) - 300px)); }
+    .pt-frame .pt-info { max-height: max(330px, calc(100vh - var(--header-h) - 224px)); }
+}
+@media (max-width: 860px) { .pt-frame h1 { font-size: 1.3rem; } }
