@@ -111,44 +111,67 @@
             }).join('')}</div></section>`
             : '';
 
+        // F layout: title, then tabs (Overview / Steps / Images / Files)
+        const L2 = (en, fr) => (lang === 'fr' ? fr : en);
+        const figs = (p.gallery || []).map(item => ({ src: typeof item === 'string' ? item : item.src, cap: (item.caption && item.caption[lang]) || '' }));
+        const steps = brief?.phases?.length
+            ? brief.phases.map(ph => ({ title: ph.title[lang], text: ph.description[lang] }))
+            : p.highlights[lang].map(h => ({ title: '', text: h }));
+        const vis = !p.video && !p.image && window.systemVisuals ? systemVisuals.get(p.id, lang) : [];
+        const visHTML = v => `<div class="pt-sv">${v.html}</div><span class="pt-cap">${escapeHTML(v.cap)}</span>`;
+        const mainMedia = vis.length ? visHTML(vis[0])
+            : p.video
+            ? `<video controls playsinline preload="metadata" ${p.image ? `poster="${escapeHTML(p.image)}"` : ''} src="${escapeHTML(p.video)}"></video>`
+            : p.image ? `<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}" class="fit-${p.imageFit || 'cover'}">`
+            : figs.length ? `<img src="${escapeHTML(figs[0].src)}" alt="${escapeHTML(figs[0].cap)}" class="fit-contain">`
+            : p.art ? `<div class="pt-art project-visual cat-${p.category}"><span class="cover-art art-${escapeHTML(p.art)}" aria-hidden="true"></span></div>` : '';
+        const thumbs = figs.slice(0, vis.length ? Math.max(0, 5 - vis.length) : 4);
+        const files = [pdfLink, downloadLinks, githubLink, externalDemo].join('');
+        const tabs = [
+            ['overview', L2('Overview', 'Présentation'), true],
+            ['steps', L2('Steps', 'Étapes'), steps.length],
+            ['images', L2('Images', 'Images'), figs.length],
+            ['files', L2('Files', 'Fichiers'), files.trim()]
+        ].filter(x => x[2]);
+        const icons = ['bx-target-lock', 'bx-user', 'bx-trophy'];
+        const info = overview.map(([label, value], i) => `<div class="pt-block"><h3><i class='bx ${icons[i] || 'bx-info-circle'}'></i> ${label}</h3><p>${escapeHTML(value)}</p></div>`).join('')
+            || `<div class="pt-block"><h3>${t.overview[lang]}</h3><p>${escapeHTML(p.summary[lang])}</p></div>`;
+
         root.innerHTML = `
-            <section class="project-hero">
+            <section class="pt">
                 <div class="container">
-                    <div class="project-hero-grid ${cover ? 'with-cover' : ''}">
-                        <div>
-                            <p class="project-context">${escapeHTML(p.context[lang])} · ${escapeHTML(p.year)}</p>
-                            <h1>${escapeHTML(p.title[lang])}</h1>
-                            <p class="project-lead">${escapeHTML(brief?.intro?.[lang] || p.summary[lang])}</p>
-                            ${actions ? `<div class="hero-buttons">${actions}</div>` : ''}
-                        </div>
-                        ${cover}
+                    <p class="pt-kicker"><span class="pt-chip pt-chip-cat"><i class='bx ${cat.icon}'></i> ${escapeHTML(cat[lang])}</span><span class="pt-chip"><i class='bx bx-calendar'></i> ${escapeHTML(p.year)}</span><span class="pt-ctx">${escapeHTML(p.context[lang])}</span></p>
+                    <h1>${escapeHTML(p.title[lang])}</h1>
+
+                    <div class="pt-tabs" role="tablist" aria-label="${escapeHTML(p.title[lang])}">
+                        ${tabs.map(([id, label], i) => `<button type="button" role="tab" id="tab-${id}" aria-controls="panel-${id}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-tab="${id}">${label}${id === 'steps' ? ` <span>${steps.length}</span>` : id === 'images' ? ` <span>${figs.length}</span>` : ''}</button>`).join('')}
                     </div>
-                </div>
-            </section>
 
-            <section class="project-content">
-                <div class="container">
-                    ${overview.length ? `<section class="project-overview" aria-label="${t.overview[lang]}">
-                        ${overview.map(([label, value]) => `<div><h2>${label}</h2><p>${escapeHTML(value)}</p></div>`).join('')}
-                    </section>` : ''}
-
-                    <section class="project-process">
-                        <h2>${t.process[lang]}</h2>
-                        <ol class="steps" role="list">${phases || highlights}</ol>
+                    <section class="pt-panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
+                        <div class="pt-view">
+                            <div class="pt-media-col">
+                                ${mainMedia ? `<div class="pt-media${vis.length ? ' is-sv' : ''}" id="pt-media">${mainMedia}</div>` : ''}
+                                ${thumbs.length || vis.length > 1 ? `<div class="pt-thumbs">${vis.map((v, i) => `<button type="button" class="pt-vthumb${i === 0 ? ' on' : ''}" data-media="v${i}"><i class='bx ${v.icon}' aria-hidden="true"></i><span>${escapeHTML(v.label)}</span></button>`).join('')}${p.video ? `<button type="button" class="on" data-media="video" aria-label="${t.video[lang]}"><span class="pt-play" aria-hidden="true">▶</span></button>` : ''}${thumbs.map((f, i) => `<button type="button" data-media="${i}" aria-label="${escapeHTML(f.cap || String(i + 1))}"><img src="${escapeHTML(f.src)}" alt="" loading="lazy"></button>`).join('')}${figs.length > thumbs.length ? `<button type="button" class="pt-more" data-tab-go="images">+${figs.length - thumbs.length}</button>` : ''}</div>` : ''}
+            </div>
+                            <div class="pt-info">
+                                ${info}
+                                ${actions ? `<div class="pt-actions">${actions}</div>` : ''}
+                                <ul class="pt-tags">${skills.map(s => `<li>${escapeHTML(s)}</li>`).join('')}</ul>
+                            </div>
+                        </div>
                     </section>
 
-                    ${gallery}
-                    ${video}
-                    ${details}
+                    <section class="pt-panel" role="tabpanel" id="panel-steps" aria-labelledby="tab-steps" hidden>
+                        <ol class="pt-steps">${steps.map((s, i) => `<li><span class="pt-n">${String(i + 1).padStart(2, '0')}</span><div>${s.title ? `<h3>${escapeHTML(s.title)}</h3>` : ''}<p>${escapeHTML(s.text)}</p></div></li>`).join('')}</ol>
+                        ${p.results?.[lang] && brief?.outcome?.[lang] ? `<div class="pt-result"><h3>${t.results[lang]}</h3><p>${escapeHTML(p.results[lang])}</p></div>` : ''}
+                    </section>
 
-                    ${resources ? `<section class="project-resources">
-                        <h2>${t.resources[lang]}</h2>
-                        <div class="project-resource-links">${resources}</div>
-                    </section>` : ''}
+                    <section class="pt-panel" role="tabpanel" id="panel-images" aria-labelledby="tab-images" hidden>
+                        <div class="gallery pt-gallery">${figs.map(f => `<figure><a href="${escapeHTML(f.src)}" target="_blank" rel="noopener"><img src="${escapeHTML(f.src)}" alt="${escapeHTML(f.cap)}" loading="lazy"></a>${f.cap ? `<figcaption>${escapeHTML(f.cap)}</figcaption>` : ''}</figure>`).join('')}</div>
+                    </section>
 
-                    <section class="project-skills">
-                        <h2>${t.tools[lang]}</h2>
-                        <ul class="tags">${skills.map(skill => `<li>${escapeHTML(skill)}</li>`).join('')}</ul>
+                    <section class="pt-panel" role="tabpanel" id="panel-files" aria-labelledby="tab-files" hidden>
+                        <div class="pt-files">${files}</div>
                     </section>
 
                     <div class="project-cta card">
@@ -168,7 +191,49 @@
                     </nav>
                 </div>
             </section>`;
+        mediaSrc = { video: p.video ? mainMedia : '', figs, vis: vis.map(visHTML) };
+        if (vis.length) systemVisuals.mount(p.id, root.querySelector('#pt-media'));
+        const want = (location.hash || '').slice(1);
+        if (tabs.some(x => x[0] === want)) showTab(want, false);
     }
+
+    /* tabs */
+    let mediaSrc = { video: '', figs: [], vis: [] };
+    function showTab(id, focus) {
+        const btns = [...root.querySelectorAll('.pt-tabs [role="tab"]')];
+        btns.forEach(b => {
+            const on = b.dataset.tab === id;
+            b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1;
+            if (on && focus) b.focus();
+        });
+        root.querySelectorAll('.pt-panel').forEach(pn => { pn.hidden = pn.id !== 'panel-' + id; });
+        root.querySelectorAll('.pt-panel video').forEach(v => { if (id !== 'overview') v.pause(); });
+        history.replaceState(null, '', id === 'overview' ? location.pathname + location.search : '#' + id);
+    }
+    root.addEventListener('click', e => {
+        const tab = e.target.closest('[data-tab]');
+        if (tab) { showTab(tab.dataset.tab, false); return; }
+        const go = e.target.closest('[data-tab-go]');
+        if (go) { showTab(go.dataset.tabGo, true); return; }
+        const th = e.target.closest('[data-media]');
+        if (th) {
+            const box = root.querySelector('#pt-media'); if (!box) return;
+            const k = th.dataset.media;
+            box.querySelectorAll('video').forEach(v => v.pause());
+            box.classList.toggle('is-sv', k[0] === 'v' && k !== 'video');
+            if (k === 'video') box.innerHTML = mediaSrc.video;
+            else if (k[0] === 'v') { box.innerHTML = mediaSrc.vis[+k.slice(1)]; systemVisuals.mount(projects[index].id, box); }
+            else { const f = mediaSrc.figs[+k]; box.innerHTML = `<img src="${escapeHTML(f.src)}" alt="${escapeHTML(f.cap)}" class="fit-contain">${f.cap ? `<span class="pt-cap">${escapeHTML(f.cap)}</span>` : ''}`; }
+            root.querySelectorAll('.pt-thumbs button').forEach(b => b.classList.toggle('on', b === th));
+        }
+    });
+    root.addEventListener('keydown', e => {
+        const tab = e.target.closest('[role="tab"]'); if (!tab) return;
+        const btns = [...root.querySelectorAll('.pt-tabs [role="tab"]')], i = btns.indexOf(tab);
+        const j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? btns.length - 1 : null;
+        if (j === null) return;
+        e.preventDefault(); showTab(btns[(j + btns.length) % btns.length].dataset.tab, true);
+    });
 
     /* lightbox: click a figure to see it large, arrows / Esc to navigate */
     let box = null, shown = 0;
