@@ -5060,3 +5060,4 @@ html:not(.light-mode) .back-top {
     .pt-frame .pt-info { max-height: max(330px, calc(100vh - var(--header-h) - 224px)); }
 }
 @media (max-width: 860px) { .pt-frame h1 { font-size: 1.3rem; } }
+@media (min-width: 861px) { .pt { padding-top: calc(var(--header-h) + 14px); } .pt-frame { padding-top: 20px; padding-bottom: 20px; } }
