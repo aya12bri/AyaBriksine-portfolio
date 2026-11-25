@@ -236,7 +236,7 @@
         anim: L => {
             const id = 'svd' + (++uid);
             const css = `@keyframes ${id}r{0%,8%{transform:translate(400px,230px) rotate(0)}30%,42%{transform:translate(470px,224px) rotate(20deg)}62%,72%{transform:translate(360px,226px) rotate(-10deg)}92%,100%{transform:translate(400px,230px) rotate(0)}}
-                .${id}r{animation:${id}r 9s ease-in-out infinite}`
+                .${id}r{transform:translate(400px,230px);animation:${id}r 9s ease-in-out infinite}`
                 + phases(id + 'a', 9, [[0, 15], [88, 100]]) + phases(id + 'b', 9, [[22, 48]]) + phases(id + 'c', 9, [[56, 78]]);
             return svg(
                 `<line x1="40" y1="400" x2="760" y2="400" class="ground"/><line x1="60" y1="230" x2="740" y2="230" class="ref"/>`
@@ -393,7 +393,7 @@
         mount(el) {
             const g = el.querySelector('[data-cloud]'); if (!g) return;
             const pts = cloudPoints(700); let a = 0, last = 0;
-            const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const reduce = false;
             const frame = t => {
                 if (!g.isConnected) return;
                 if (t - last > 33) { a += 0.012; last = t; g.innerHTML = drawCloud(pts, a, 400, 225, 150); }

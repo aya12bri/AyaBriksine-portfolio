@@ -65,7 +65,7 @@
         const downloadLinks = (p.downloads || []).map(d =>
             `<a href="${escapeHTML(d.file)}" download class="btn btn-outline"><i class='bx ${escapeHTML(d.icon || 'bx-download')}'></i> ${escapeHTML(d.label[lang])}</a>`).join('');
         const videoLink = p.video
-            ? `<a href="#project-demo" class="btn btn-outline"><i class='bx bx-play-circle'></i> ${t.demo[lang]}</a>`
+            ? `<button type="button" class="btn btn-outline" data-play><i class='bx bx-play-circle'></i> ${t.demo[lang]}</button>`
             : '';
         const externalDemo = p.demo
             ? `<a href="${escapeHTML(p.demo)}" target="_blank" rel="noopener" class="btn btn-outline"><i class='bx bx-play-circle'></i> ${(p.demoLabel || t.demo)[lang]}</a>`
@@ -225,6 +225,16 @@
         if (tab) { showTab(tab.dataset.tab, false); return; }
         const go = e.target.closest('[data-tab-go]');
         if (go) { showTab(go.dataset.tabGo, true); return; }
+        if (e.target.closest('[data-play]')) {
+            const box = root.querySelector('#pt-media'); if (!box || !mediaSrc.video) return;
+            if (!box.querySelector('video')) {
+                box.classList.remove('is-sv'); box.innerHTML = mediaSrc.video;
+                root.querySelectorAll('.pt-thumbs button').forEach(b => b.classList.toggle('on', b.dataset.media === 'video'));
+            }
+            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const v = box.querySelector('video'); v.play().catch(() => {});
+            return;
+        }
         if (e.target.closest('[data-full]')) {
             const box = root.querySelector('#pt-media');
             if (document.fullscreenElement) document.exitFullscreen();
