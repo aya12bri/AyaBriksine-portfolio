@@ -5013,11 +5013,6 @@ html:not(.light-mode) .back-top {
 @media (prefers-reduced-motion: reduce) { .sv *, .sv { animation: none !important; } .sv .sv-curve { stroke-dashoffset: 0; } }
 .sv .spin.fast { animation-duration: .35s; }
 
-/* Header name: bigger, no logo */
-.logo, .project-header .logo { font-size: clamp(1.35rem, 2.4vw, 2rem); font-weight: 800; letter-spacing: -0.03em; }
-.logo-text span { color: var(--signal); }
-@media (max-width: 860px) { .logo, .project-header .logo { font-size: 1.35rem; } }
-
 /* Project page: the whole project inside one frame that fits the screen */
 .pt { padding: calc(var(--header-h) + 22px) 0 60px; }
 .pt-frame { padding: 26px 32px 30px; border-radius: 28px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow); }
