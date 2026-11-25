@@ -140,7 +140,15 @@
         root.innerHTML = `
             <section class="pt">
                 <div class="container">
+                  <article class="pt-frame">
+                    <div class="pt-top">
                     <p class="pt-kicker"><span class="pt-chip pt-chip-cat"><i class='bx ${cat.icon}'></i> ${escapeHTML(cat[lang])}</span><span class="pt-chip"><i class='bx bx-calendar'></i> ${escapeHTML(p.year)}</span><span class="pt-ctx">${escapeHTML(p.context[lang])}</span></p>
+                    <nav class="pt-pager" aria-label="${L2('Projects', 'Projets')}">
+                        <a href="project.html?id=${encodeURIComponent(prev.id)}" aria-label="${t.prev[lang]}" title="${escapeHTML(prev.title[lang])}">‹</a>
+                        <span>${index + 1} / ${projects.length}</span>
+                        <a href="project.html?id=${encodeURIComponent(next.id)}" aria-label="${t.next[lang]}" title="${escapeHTML(next.title[lang])}">›</a>
+                    </nav>
+                    </div>
                     <h1>${escapeHTML(p.title[lang])}</h1>
 
                     <div class="pt-tabs" role="tablist" aria-label="${escapeHTML(p.title[lang])}">
@@ -150,7 +158,7 @@
                     <section class="pt-panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
                         <div class="pt-view">
                             <div class="pt-media-col">
-                                ${mainMedia ? `<div class="pt-media${vis.length ? ' is-sv' : ''}" id="pt-media">${mainMedia}</div>` : ''}
+                                ${mainMedia ? `<div class="pt-media${vis.length ? ' is-sv' : ''}" id="pt-media">${mainMedia}</div><button type="button" class="pt-full" data-full aria-label="${L2('Full screen', 'Plein écran')}" title="${L2('Full screen', 'Plein écran')}">⤢</button>` : ''}
                                 ${thumbs.length || vis.length > 1 ? `<div class="pt-thumbs">${vis.map((v, i) => `<button type="button" class="pt-vthumb${i === 0 ? ' on' : ''}" data-media="v${i}"><i class='bx ${v.icon}' aria-hidden="true"></i><span>${escapeHTML(v.label)}</span></button>`).join('')}${p.video ? `<button type="button" class="on" data-media="video" aria-label="${t.video[lang]}"><span class="pt-play" aria-hidden="true">▶</span></button>` : ''}${thumbs.map((f, i) => `<button type="button" data-media="${i}" aria-label="${escapeHTML(f.cap || String(i + 1))}"><img src="${escapeHTML(f.src)}" alt="" loading="lazy"></button>`).join('')}${figs.length > thumbs.length ? `<button type="button" class="pt-more" data-tab-go="images">+${figs.length - thumbs.length}</button>` : ''}</div>` : ''}
             </div>
                             <div class="pt-info">
@@ -173,6 +181,8 @@
                     <section class="pt-panel" role="tabpanel" id="panel-files" aria-labelledby="tab-files" hidden>
                         <div class="pt-files">${files}</div>
                     </section>
+
+                  </article>
 
                     <div class="project-cta card">
                         <p>${t.contact[lang]}</p>
@@ -215,6 +225,12 @@
         if (tab) { showTab(tab.dataset.tab, false); return; }
         const go = e.target.closest('[data-tab-go]');
         if (go) { showTab(go.dataset.tabGo, true); return; }
+        if (e.target.closest('[data-full]')) {
+            const box = root.querySelector('#pt-media');
+            if (document.fullscreenElement) document.exitFullscreen();
+            else if (box && box.requestFullscreen) box.requestFullscreen().catch(() => {});
+            return;
+        }
         const th = e.target.closest('[data-media]');
         if (th) {
             const box = root.querySelector('#pt-media'); if (!box) return;

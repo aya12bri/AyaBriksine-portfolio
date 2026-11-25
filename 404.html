@@ -56,10 +56,18 @@
         .links a { padding: 0.65rem 1.2rem; border-radius: 999px; border: 1px solid var(--border); color: var(--text); text-decoration: none; font-weight: 600; }
         .links a.main { background: var(--accent); border-color: var(--accent); color: #fff; }
         .links a:hover { border-color: var(--accent); }
+        .logo { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 2rem; color: var(--text); text-decoration: none; font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+        .logo-mark { width: 32px; height: 32px; }
+        .logo-mark .lm-hex { fill: var(--text); }
+        .logo-mark .lm-a { fill: none; stroke: var(--bg); stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
+        .logo-mark .lm-joint { fill: var(--bg); stroke: var(--text); stroke-width: 2; }
+        .logo-mark .lm-pin { fill: var(--text); }
+        .logo-text span { color: var(--muted); }
     </style>
 </head>
 <body>
     <main>
+        <a href="./" class="logo" aria-label="Aya Briksine"><svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true"><path class="lm-hex" d="M24 2.5 43 13.250v21.500L24 45.500 5 34.750v-21.500z"/><path class="lm-a" d="M14.500 35 24 13l9.500 22M18.600 28.500h10.800"/><circle class="lm-joint" cx="24" cy="12.500" r="4.200"/><circle class="lm-pin" cx="24" cy="12.500" r="1.400"/></svg><span class="logo-text">Aya<span>.</span>Briksine</span></a>
         <h1>404</h1>
         <h2>This page does not exist</h2>
         <p>The link may be old or mistyped. You can go back to the portfolio or see the robotics projects.</p>
