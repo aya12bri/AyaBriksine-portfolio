@@ -5046,3 +5046,6 @@ html:not(.light-mode) .back-top {
     .pt-pager span { display: none; }
     .pt-frame .pt-thumbs button { width: 72px; height: 52px; }
 }
+
+/* Videos: show the whole frame (vertical videos included) instead of cropping and enlarging it */
+.pt-media video { object-fit: contain; background: #000; }
