@@ -184,11 +184,15 @@ function projectVisual(p, lang) {
         ? `<span class="cover-art art-${escapeHTML(p.art)}"></span>`
         : `<i class='bx ${escapeHTML(p.icon || cat.icon)}'></i>`;
     const video = p.video ? `<span class="project-badge"><i class='bx bx-play'></i>${projectLabels.video[lang]}</span>` : '';
+    // what the project page offers besides photos: an animated drawing, a 3D view
+    const kinds = window.systemVisuals && systemVisuals.kinds ? systemVisuals.kinds(p.id) : [];
+    const extras = [kinds.includes('anim') && (lang === 'fr' ? 'Animation' : 'Animation'), (kinds.includes('wire') || p.id === 'robotics-atlas') && '3D'].filter(Boolean);
+    const extra = extras.length ? `<span class="project-extras">${extras.map(x => `<span>${x}</span>`).join('')}</span>` : '';
     return `
         <a href="project.html?id=${encodeURIComponent(p.id)}" class="project-visual cat-${p.category}${p.image ? ' has-image fit-' + (p.imageFit || 'cover') : ''}" tabindex="-1" aria-hidden="true">
             ${inner}
             <span class="project-cat"><i class='bx ${cat.icon}'></i>${escapeHTML(cat[lang])}</span>
-            ${video}
+            ${video}${extra}${p.illustration ? `<span class="illu-tag">Illustration</span>` : ''}
         </a>`;
 }
 
@@ -219,8 +223,19 @@ function updateCarousel(car) {
     // dots: one per "page" of visible cards
     const step = carouselStep(track), pages = max > 2 ? Math.round(max / step) + 1 : 1;
     const dots = car.querySelector('.car-dots');
-    if (dots.children.length !== pages) dots.innerHTML = Array.from({ length: pages }, (_, i) => `<button type="button" data-page="${i}" tabindex="-1"></button>`).join('');
     const current = Math.min(pages - 1, Math.round(x / step));
+    if (pages > 7) {
+        // many pages: a progress bar and "page / pages" instead of a long row of dots
+        if (!dots.classList.contains('bar')) { dots.classList.add('bar'); dots.innerHTML = '<span class="car-bar"><i></i></span><span class="car-page"></span>'; }
+        dots.querySelector('.car-bar i').style.width = `${Math.max(6, (max > 2 ? x / max : 1) * 100)}%`;
+        // which projects are on screen, e.g. "4–7 / 29"
+        const n = track.querySelectorAll('.project-card:not(.project-more)').length;
+        const first = Math.min(n, current + 1), last = Math.min(n, current + Math.max(1, Math.round(track.clientWidth / step)));
+        dots.querySelector('.car-page').textContent = `${first === last ? first : first + '–' + last} / ${n}`;
+        return;
+    }
+    dots.classList.remove('bar');
+    if (dots.children.length !== pages) dots.innerHTML = Array.from({ length: pages }, (_, i) => `<button type="button" data-page="${i}" tabindex="-1"></button>`).join('');
     [...dots.children].forEach((d, i) => d.classList.toggle('on', i === current));
 }
 
@@ -903,4 +918,29 @@ function addKinArm(host, opts) {
         nums.forEach(el => { el.textContent = '0'; io.observe(el); });
     }
 
+})();
+
+
+/* ---------- Expertise cards: "See the projects" opens the matching filter ---------- */
+document.addEventListener('click', e => {
+    const a = e.target.closest('[data-go-filter]');
+    if (!a) return;
+    const btn = document.querySelector(`.filter[data-filter="${a.dataset.goFilter}"]`);
+    if (btn) btn.click();
+});
+
+/* ---------- Timeline: the line fills up as you scroll through it ---------- */
+(function () {
+    const lines = [...document.querySelectorAll('.timeline')];
+    if (!lines.length) return;
+    const update = () => lines.forEach(tl => {
+        const r = tl.getBoundingClientRect();
+        if (!r.height) return;
+        const p = Math.min(1, Math.max(0, (innerHeight * 0.6 - r.top) / r.height));
+        tl.style.setProperty('--fill', p.toFixed(3));
+    });
+    addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update);
+    document.addEventListener('click', e => { if (e.target.closest('.tab')) requestAnimationFrame(update); });
+    update();
 })();

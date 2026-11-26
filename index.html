@@ -20,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="stylesheet" href="style.css?v=85">
+    <link rel="stylesheet" href="style.css?v=90">
     <link rel="stylesheet" href="portfolio-chat.css?v=4">
     <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/"}}</script>
     <script>
@@ -320,22 +320,30 @@
                 <article class="card service-card reveal">
                     <div class="icon-box"><i class='bx bx-bot'></i></div>
                     <h3>Robotics &amp; Robot Programming</h3>
-                    <p>Programming industrial and mobile robots: the Stäubli TX60 in VAL3 with the teach pendant and Stäubli Robotics Suite, trajectories, pick-and-place and autonomous obstacle avoidance.</p>
+                    <p>Programming industrial and mobile robots: Stäubli TX60 in VAL3, FANUC CRX-10iA and M-1iA, Universal Robots UR3/UR5 and Doosan M0617 on their teach pendants: trajectories, pick-and-place, palletising and autonomous obstacle avoidance.</p>
+                    <ul class="service-tags"><li>Stäubli</li><li>FANUC</li><li>UR</li><li>Doosan</li></ul>
+                    <a href="#projects" class="service-link" data-go-filter="robotics">See the projects <span aria-hidden="true">→</span></a>
                 </article>
                 <article class="card service-card reveal">
                     <div class="icon-box"><i class='bx bx-slider-alt'></i></div>
                     <h3>Automatic Control &amp; PLCs</h3>
-                    <p>Modelling and simulating systems in MATLAB/Simulink, tuning controllers and validating them experimentally, and programming PLCs with PL7 Pro in Grafcet (SFC) and Ladder.</p>
+                    <p>Modelling and simulating systems in MATLAB/Simulink, tuning controllers and validating them on real benches, and programming Siemens (S7-1200, S7-300) and Schneider (M340, TSX) PLCs in Grafcet (SFC) and Ladder.</p>
+                    <ul class="service-tags"><li>MATLAB</li><li>Simulink</li><li>S7-1200</li><li>M340</li></ul>
+                    <a href="#projects" class="service-link" data-go-filter="automation">See the projects <span aria-hidden="true">→</span></a>
                 </article>
                 <article class="card service-card reveal">
                     <div class="icon-box"><i class='bx bx-code-alt'></i></div>
                     <h3>Python &amp; Software</h3>
                     <p>Building applications and interfaces in Python, plus C/C++, Java and web/mobile development, including data acquisition, real-time visualisation and 3D point clouds with Open3D and PyVista.</p>
+                    <ul class="service-tags"><li>Python</li><li>C/C++</li><li>Open3D</li></ul>
+                    <a href="#projects" class="service-link" data-go-filter="programming">See the projects <span aria-hidden="true">→</span></a>
                 </article>
                 <article class="card service-card reveal">
                     <div class="icon-box"><i class='bx bx-task'></i></div>
                     <h3>Technical Project Management</h3>
                     <p>Three years leading digitalisation projects: requirements, specifications, planning, reporting and change management, coordinating technical and business teams.</p>
+                    <ul class="service-tags"><li>Power BI</li><li>CRM</li><li>SAP Ariba</li></ul>
+                    <a href="#projects" class="service-link" data-go-filter="digital">See the projects <span aria-hidden="true">→</span></a>
                 </article>
             </div>
         </div>
@@ -356,8 +364,13 @@
                     <ul class="tool-list">
                         <li><i class='bx bx-bot'></i>Stäubli VAL3</li>
                         <li><i class='bx bx-cube'></i>Stäubli Robotics Suite</li>
+                        <li><i class='bx bx-joystick'></i>FANUC teach pendant</li>
+                        <li><i class='bx bx-joystick'></i>UR PolyScope</li>
+                        <li><i class='bx bx-joystick'></i>Doosan teach pendant</li>
                         <li><img src="Matlab.png" alt="" loading="lazy">MATLAB / Simulink</li>
                         <li><i class='bx bx-chip'></i>PL7 Pro</li>
+                        <li><i class='bx bx-chip'></i>Siemens S7-1200 / S7-300</li>
+                        <li><i class='bx bx-chip'></i>Schneider M340</li>
                         <li><i class='bx bx-git-merge'></i>Grafcet / Ladder</li>
                         <li><img src="TIA-PORTAL.png" alt="" loading="lazy">TIA Portal</li>
                         <li><img src="SIMATIC%20STEP7.png" alt="" loading="lazy">SIMATIC STEP 7</li>
@@ -536,9 +549,10 @@
 
     <div class="scroll-rail" aria-hidden="true"><span class="scroll-fill"></span></div>
     <button class="scroll-bot" id="scroll-bot" type="button" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 48 60" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4 V11"/><circle cx="24" cy="3.5" r="2.2" class="bot-led"/><rect x="9" y="11" width="30" height="20" rx="7"/><circle cx="18" cy="21" r="3.2" class="bot-eye"/><circle cx="30" cy="21" r="3.2" class="bot-eye"/><rect x="13" y="33" width="22" height="13" rx="4"/><path d="M13 38 H7 M35 38 H41"/><g class="bot-wheel"><circle cx="24" cy="51" r="7.5"/><path d="M24 45 V57 M18 51 H30"/></g></svg></button>
-    <script src="projects.js?v=68"></script>
-    <script src="script.js?v=67"></script>
-    <script src="translations.js?v=66"></script>
+    <script src="projects.js?v=70"></script>
+    <script src="system-visuals.js?v=8"></script>
+    <script src="script.js?v=72"></script>
+    <script src="translations.js?v=67"></script>
     <script type="module" src="lab3d.js?v=65"></script>
     <script src="portfolio-chat.js?v=4" defer></script>
 </body>

@@ -172,6 +172,9 @@ const frenchText = {
     "6-axis": "6 axes",
     "Stäubli TX60 industrial robot programmed in VAL3": "robot industriel Stäubli TX60 programmé en VAL3",
     "3 yrs": "3 ans",
+    "See the projects": "Voir les projets",
+    "FANUC teach pendant": "Pupitre FANUC",
+    "Doosan teach pendant": "Pupitre Doosan",
     "projects shown on this site": "projets présentés sur ce site",
     "industrial robots programmed: Stäubli, FANUC, UR, Doosan": "robots industriels programmés : Stäubli, FANUC, UR, Doosan",
     "of professional experience in development & project management": "d'expérience professionnelle en développement et gestion de projet",
@@ -212,11 +215,9 @@ const frenchText = {
 
     "From robot programming to control systems and software.": "De la programmation de robots aux systèmes asservis et au logiciel.",
     "Robotics & Robot Programming": "Robotique & programmation de robots",
-    "Programming industrial and mobile robots: the Stäubli TX60 in VAL3 with the teach pendant and Stäubli Robotics Suite, trajectories, pick-and-place and autonomous obstacle avoidance.":
-        "Programmation de robots industriels et mobiles : le Stäubli TX60 en VAL3 avec le pupitre et Stäubli Robotics Suite, trajectoires, pick-and-place et évitement d'obstacles autonome.",
+    "Programming industrial and mobile robots: Stäubli TX60 in VAL3, FANUC CRX-10iA and M-1iA, Universal Robots UR3/UR5 and Doosan M0617 on their teach pendants: trajectories, pick-and-place, palletising and autonomous obstacle avoidance.": "Programmation de robots industriels et mobiles : Stäubli TX60 en VAL3, FANUC CRX-10iA et M-1iA, Universal Robots UR3/UR5 et Doosan M0617 sur leurs pupitres : trajectoires, pick-and-place, palettisation et évitement d’obstacles autonome.",
     "Automatic Control & PLCs": "Automatique & automates",
-    "Modelling and simulating systems in MATLAB/Simulink, tuning controllers and validating them experimentally, and programming PLCs with PL7 Pro in Grafcet (SFC) and Ladder.":
-        "Modélisation et simulation de systèmes sous MATLAB/Simulink, réglage de correcteurs et validation expérimentale, et programmation d'automates avec PL7 Pro en Grafcet (SFC) et Ladder.",
+    "Modelling and simulating systems in MATLAB/Simulink, tuning controllers and validating them on real benches, and programming Siemens (S7-1200, S7-300) and Schneider (M340, TSX) PLCs in Grafcet (SFC) and Ladder.": "Modélisation et simulation de systèmes sous MATLAB/Simulink, réglage de correcteurs validés sur bancs réels, et programmation d’automates Siemens (S7-1200, S7-300) et Schneider (M340, TSX) en Grafcet (SFC) et Ladder.",
     "Python & Software": "Python & logiciel",
     "Building applications and interfaces in Python, plus C/C++, Java and web/mobile development, including data acquisition, real-time visualisation and 3D point clouds with Open3D and PyVista.":
         "Développement d'applications et d'interfaces en Python, ainsi qu'en C/C++, Java et web/mobile : acquisition de données, visualisation en temps réel et nuages de points 3D avec Open3D et PyVista.",
