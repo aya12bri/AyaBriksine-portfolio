@@ -114,6 +114,8 @@
         // F layout: title, then tabs (Overview / Steps / Images / Files)
         const L2 = (en, fr) => (lang === 'fr' ? fr : en);
         const figs = (p.gallery || []).map(item => ({ src: typeof item === 'string' ? item : item.src, cap: (item.caption && item.caption[lang]) || '' }));
+        const illuCap = L2('Illustration: not the actual lab equipment', 'Illustration : pas le matériel réel du TP');
+        if (p.image && p.illustration && !figs.some(f => f.src === p.image)) figs.unshift({ src: p.image, cap: illuCap });
         const steps = brief?.phases?.length
             ? brief.phases.map(ph => ({ title: ph.title[lang], text: ph.description[lang] }))
             : p.highlights[lang].map(h => ({ title: '', text: h }));
@@ -123,7 +125,7 @@
         const mainMedia = svMain ? visHTML(vis[0])
             : p.video
             ? `<video controls playsinline preload="metadata" ${p.image ? `poster="${escapeHTML(p.image)}"` : ''} src="${escapeHTML(p.video)}"></video>`
-            : p.image ? `<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}" class="fit-${p.imageFit || 'cover'}">`
+            : p.image ? `<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}" class="fit-${p.imageFit || 'cover'}">${p.illustration ? `<span class="pt-cap">${escapeHTML(illuCap)}</span>` : ''}`
             : figs.length ? `<img src="${escapeHTML(figs[0].src)}" alt="${escapeHTML(figs[0].cap)}" class="fit-contain">`
             : p.art ? `<div class="pt-art project-visual cat-${p.category}"><span class="cover-art art-${escapeHTML(p.art)}" aria-hidden="true"></span></div>` : '';
         const thumbs = figs.slice(0, vis.length ? Math.max(0, 5 - vis.length) : 4);

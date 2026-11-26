@@ -39,6 +39,7 @@
                  (a plain file name or a picture with a caption)
      art         optional line-art cover when there is no photo: arm, cobot, rover, drone, chip, head, gear,
                  lidar, delta, loop, motor, tank, grafcet, dashboard, network
+     illustration  true when "image" is a generic picture and not the real lab equipment (a small "Illustration" tag is shown)
      imageFit    "contain" to show the card/page picture whole on white (for figures and diagrams)
    ========================================================= */
 
@@ -205,7 +206,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: '',
+        image: 'illu-drone.webp',
+        illustration: true,   // generic picture, not the actual lab equipment
         art: 'drone',
         tags: ['MATLAB', 'Simulink', 'Linearisation', 'Observateur', 'Retour d’état', 'Commandabilité'],
         title: {
@@ -266,7 +268,8 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: '',
+        image: 'illu-reservoirs.webp',
+        illustration: true,   // generic picture, not the actual lab equipment
         art: 'tank',
         tags: ['Siemens S7-1200', 'TIA Portal', 'Grafcet', 'Automates programmables', 'Câblage'],
         title: {
@@ -316,7 +319,8 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: '',
+        image: 'illu-bras-m340.webp',
+        illustration: true,   // generic picture, not the actual lab equipment
         art: 'arm',
         tags: ['Schneider M340', 'Grafcet (SFC)', 'Entrées analogiques', 'Blocs de comparaison', 'Potentiomètres', 'Automates programmables'],
         title: {
@@ -598,7 +602,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: '',
+        image: 'illu-turbofan.webp',
+        illustration: true,   // generic picture, not the actual lab equipment
         art: 'loop',
         tags: ['MATLAB', 'Simulink', 'IMC', 'PID', 'Identification', 'Anti-windup', 'Placement de pôles'],
         title: {
@@ -1007,9 +1012,10 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: '',
+        image: 'illu-climax.webp',
+        illustration: true,   // generic picture, not the actual lab equipment
         art: 'cobot',
-        imageFit: 'contain',
+        imageFit: 'cover',
         tags: ['PLC', 'TSX 3705', 'PL7-Pro', 'Grafcet (SFC)', 'Ladder', 'Temporisateurs', 'Compteurs', 'Travail en équipe'],
         title: {
             en: 'Robotic Arm Control with a PLC (CLIMAX)',
