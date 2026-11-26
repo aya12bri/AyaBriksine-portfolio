@@ -117,9 +117,10 @@
         const steps = brief?.phases?.length
             ? brief.phases.map(ph => ({ title: ph.title[lang], text: ph.description[lang] }))
             : p.highlights[lang].map(h => ({ title: '', text: h }));
-        const vis = !p.video && !p.image && window.systemVisuals ? systemVisuals.get(p.id, lang) : [];
+        const vis = !p.video && window.systemVisuals ? systemVisuals.get(p.id, lang) : [];
         const visHTML = v => `<div class="pt-sv">${v.html}</div><span class="pt-cap">${escapeHTML(v.cap)}</span>`;
-        const mainMedia = vis.length ? visHTML(vis[0])
+        const svMain = vis.length && !p.image;   // with a photo, the photo comes first and the drawings are in the thumbnails
+        const mainMedia = svMain ? visHTML(vis[0])
             : p.video
             ? `<video controls playsinline preload="metadata" ${p.image ? `poster="${escapeHTML(p.image)}"` : ''} src="${escapeHTML(p.video)}"></video>`
             : p.image ? `<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title[lang])}" class="fit-${p.imageFit || 'cover'}">`
@@ -158,8 +159,8 @@
                     <section class="pt-panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
                         <div class="pt-view">
                             <div class="pt-media-col">
-                                ${mainMedia ? `<div class="pt-media${vis.length ? ' is-sv' : ''}" id="pt-media">${mainMedia}</div><button type="button" class="pt-full" data-full aria-label="${L2('Full screen', 'Plein écran')}" title="${L2('Full screen', 'Plein écran')}">⤢</button>` : ''}
-                                ${thumbs.length || vis.length > 1 ? `<div class="pt-thumbs">${vis.map((v, i) => `<button type="button" class="pt-vthumb${i === 0 ? ' on' : ''}" data-media="v${i}"><i class='bx ${v.icon}' aria-hidden="true"></i><span>${escapeHTML(v.label)}</span></button>`).join('')}${p.video ? `<button type="button" class="on" data-media="video" aria-label="${t.video[lang]}"><span class="pt-play" aria-hidden="true">▶</span></button>` : ''}${thumbs.map((f, i) => `<button type="button" data-media="${i}" aria-label="${escapeHTML(f.cap || String(i + 1))}"><img src="${escapeHTML(f.src)}" alt="" loading="lazy"></button>`).join('')}${figs.length > thumbs.length ? `<button type="button" class="pt-more" data-tab-go="images">+${figs.length - thumbs.length}</button>` : ''}</div>` : ''}
+                                ${mainMedia ? `<div class="pt-media${svMain ? ' is-sv' : ''}" id="pt-media">${mainMedia}</div><button type="button" class="pt-full" data-full aria-label="${L2('Full screen', 'Plein écran')}" title="${L2('Full screen', 'Plein écran')}">⤢</button>` : ''}
+                                ${thumbs.length || vis.length > 1 ? `<div class="pt-thumbs">${vis.map((v, i) => `<button type="button" class="pt-vthumb${i === 0 && svMain ? ' on' : ''}" data-media="v${i}"><i class='bx ${v.icon}' aria-hidden="true"></i><span>${escapeHTML(v.label)}</span></button>`).join('')}${p.video ? `<button type="button" class="on" data-media="video" aria-label="${t.video[lang]}"><span class="pt-play" aria-hidden="true">▶</span></button>` : ''} ${thumbs.map((f, i) => `<button type="button"${p.image && !p.video && f.src === p.image ? ' class="on"' : ''} data-media="${i}" aria-label="${escapeHTML(f.cap || String(i + 1))}"><img src="${escapeHTML(f.src)}" alt="" loading="lazy"></button>`).join('')}${figs.length > thumbs.length ? `<button type="button" class="pt-more" data-tab-go="images">+${figs.length - thumbs.length}</button>` : ''}</div>` : ''}
             </div>
                             <div class="pt-info">
                                 ${info}
@@ -202,7 +203,7 @@
                 </div>
             </section>`;
         mediaSrc = { video: p.video ? mainMedia : '', figs, vis: vis.map(visHTML) };
-        if (vis.length) systemVisuals.mount(p.id, root.querySelector('#pt-media'));
+        if (svMain) systemVisuals.mount(p.id, root.querySelector('#pt-media'));
         const want = (location.hash || '').slice(1);
         if (tabs.some(x => x[0] === want)) showTab(want, false);
     }

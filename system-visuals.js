@@ -38,15 +38,15 @@
         k.sort((p, q) => p[0] - q[0]);
         return `@keyframes ${name}{${k.map(([p, o]) => `${+p.toFixed(2)}%{opacity:${o}}`).join('')}}.${name}{opacity:${k[0][1]};animation:${name} ${dur}s linear infinite}`;
     }
-    function stepper(id, dur, items, x, y, w) {
+    function stepper(id, dur, items, x, y, w, gap = 44, hh = 36) {
         // a list of steps on the right; the active one lights up
         let css = '', body = '';
         items.forEach(([label, spans], i) => {
             const n = `${id}-p${i}`;
             css += phases(n, dur, spans);
-            const yy = y + i * 44;
-            body += `<g class="sv-step"><rect x="${x}" y="${yy}" width="${w}" height="36" rx="10"/>${T(x + 14, yy + 23, label, 's2', 'start')}</g>`
-                + `<g class="${n}"><rect class="sv-step-on" x="${x}" y="${yy}" width="${w}" height="36" rx="10"/>${T(x + 14, yy + 23, label, 's2 on', 'start')}</g>`;
+            const yy = y + i * gap, ty = yy + hh / 2 + 5;
+            body += `<g class="sv-step"><rect x="${x}" y="${yy}" width="${w}" height="${hh}" rx="9"/>${T(x + 12, ty, label, 's2', 'start')}</g>`
+                + `<g class="${n}"><rect class="sv-step-on" x="${x}" y="${yy}" width="${w}" height="${hh}" rx="9"/>${T(x + 12, ty, label, 's2 on', 'start')}</g>`;
         });
         return { css, body };
     }
@@ -265,7 +265,7 @@
     };
 
     /* Grafcet ------------------------------------------------------------ */
-    V['grafcet-sequential-systems'] = {
+    V['grafcet-elevator'] = {   // elevator animation, used by the S7-300 elevator project
         schema: L => {
             const step = (x, y, n, label, init) => `<g class="sv-gstep${init ? ' init' : ''}"><rect x="${x}" y="${y}" width="44" height="40"/>${init ? `<rect x="${x + 4}" y="${y + 4}" width="36" height="32"/>` : ''}${T(x + 22, y + 26, n, 't')}</g>`
                 + (label ? `<line x1="${x + 44}" y1="${y + 20}" x2="${x + 64}" y2="${y + 20}" class="ln noar"/><rect x="${x + 64}" y="${y + 4}" width="${label.length * 8 + 20}" height="32" class="act"/>${T(x + 74, y + 25, label, 's2', 'start')}` : '');
@@ -460,6 +460,339 @@
         }
     };
 
+    /* ---------- Automation labs (M340 / S7-300): diagram, animation and Grafcet ---------- */
+
+    /* kf(): keyframes from a list of [percent, css] pairs */
+    const kf = (name, list, dur, extra = '') => `@keyframes ${name}{${list.map(([p, c]) => `${p}%{${c}}`).join('')}}.${name}{${extra}animation:${name} ${dur}s linear infinite}`;
+    const tr = (x, y) => `transform:translate(${x}px,${y}px)`;
+
+    /* gcol(): one Grafcet column. steps = [{ n, a: [actions], t: 'condition to the next step' }] */
+    function gcol(x, y, steps, o = {}) {
+        const h = o.h || 40, bw = 30, bh = 24, cx = x + bw / 2;
+        let s = '';
+        steps.forEach((st, i) => {
+            const yy = y + i * h, init = i === 0 && o.init !== false;
+            s += `<g class="sv-gstep${init ? ' init' : ''}"><rect x="${x}" y="${yy}" width="${bw}" height="${bh}"/>${init ? `<rect x="${x + 3}" y="${yy + 3}" width="${bw - 6}" height="${bh - 6}"/>` : ''}${T(cx, yy + 17, st.n, 'gn')}</g>`;
+            let ax = x + bw + 12;
+            if (st.a && st.a.length) s += `<line x1="${x + bw}" y1="${yy + bh / 2}" x2="${ax}" y2="${yy + bh / 2}" class="gl"/>`;
+            (st.a || []).forEach(a => { const w = a.length * 6.6 + 14; s += `<rect x="${ax}" y="${yy + 1}" width="${w}" height="${bh - 2}" class="act"/>` + T(ax + w / 2, yy + 16, a, 'ga'); ax += w; });
+            const last = i === steps.length - 1;
+            if (!last || o.loop !== false || o.tail) {
+                const ty = yy + bh + (h - bh) / 2;
+                s += `<line x1="${cx}" y1="${yy + bh}" x2="${cx}" y2="${last ? ty + 8 : yy + h}" class="gl"/><line x1="${cx - 8}" y1="${ty}" x2="${cx + 8}" y2="${ty}" class="trans"/>` + (st.t ? T(cx + 14, ty + 4, st.t, 'gt', 'start') : '');
+            }
+        });
+        if (o.loop !== false) {
+            const yEnd = y + (steps.length - 1) * h + h - 4, lx = x - 16;
+            s += `<path d="M${cx} ${yEnd} V${yEnd + 6} H${lx} V${y - 10} H${cx} V${y - 1}" class="gl ln-loop" marker-end="url(#sv-ar)"/>`;
+        }
+        if (o.title) s += T(x - 16, y - 22, o.title, 'tag', 'start');
+        return s;
+    }
+    const legend = (lines, y) => `<g class="sv-note"><rect x="24" y="${y}" width="${W - 48}" height="${14 + lines.length * 18}" rx="10"/>${lines.map((l, i) => T(38, y + 24 + i * 18, l, 'gt', 'start')).join('')}</g>`;
+
+    /* Manipulator arm, Schneider M340 */
+    V['manipulator-arm-m340'] = {
+        schema: L => {
+            let s = node(16, 40, 168, 78, L('Potentiometers', 'Potentiomètres'), [L('rotation, height,', 'rotation, hauteur,'), L('reach', 'avance')])
+                + line('M184 79 H214') + node(216, 40, 160, 78, 'M340', L('analog inputs', 'entrées analogiques'), { dark: true })
+                + line('M376 79 H406') + node(408, 40, 170, 78, L('Comparison blocks', 'Blocs de comparaison'), L('value ≥ threshold', 'valeur ≥ seuil'))
+                + line('M578 79 H608') + node(610, 40, 174, 78, L('Position bits', 'Bits de position'), [L('A, B, high, low,', 'A, B, haute, basse,'), L('back', 'recul')]);
+            s += line('M697 118 V150 H400 V170') + node(300, 172, 200, 56, 'Grafcet', L('pick-and-place + initial position', 'prise/dépose + position initiale'), { r: 12 });
+            s += line('M400 228 V250');
+            const outs = [['FER / OUV', L('gripper', 'pince')], ['MON / DES', L('up / down', 'montée / descente')], ['TRI / HOR', L('rotation', 'rotation')], ['REC', L('back', 'recul')], ['CLI', L('blinking light', 'voyant clignotant')]];
+            s += `<line x1="96" y1="250" x2="704" y2="250" class="ln noar"/>` + outs.map(([t, sub], i) => line(`M${96 + i * 152} 250 V266`) + node(26 + i * 152, 268, 140, 60, t, sub, { r: 12 })).join('');
+            // path over the obstacle
+            s += `<line x1="140" y1="420" x2="660" y2="420" class="ground"/><rect x="360" y="370" width="80" height="50" rx="6" class="m2"/>` + T(400, 400, L('obstacle', 'obstacle'), 's2 inv')
+                + `<path d="M210 410 V350 H590 V410" class="ln d"/>` + `<rect x="196" y="392" width="28" height="28" rx="4" class="cup"/>` + T(210, 440, 'A', 't') + T(590, 440, 'B', 't')
+                + T(400, 342, L('up first, then rotate', 'monter d’abord, puis tourner'), 's');
+            return svg(s + legend([L('The cup is lifted above the obstacle before the arm rotates from A to B.', 'Le gobelet est levé au-dessus de l’obstacle avant que le bras tourne de A vers B.')], 456), '', L('Manipulator arm driven by the M340', 'Bras manipulateur piloté par le M340'));
+        },
+        anim: L => {
+            const id = 'sva' + (++uid), D = 14;
+            let css = kf(id + 'x', [[0, tr(0, 0)], [22, tr(0, 0)], [40, tr(260, 0)], [64, tr(260, 0)], [84, tr(0, 0)], [100, tr(0, 0)]], D)
+                + kf(id + 'y', [[0, tr(0, 0)], [12, tr(0, 0)], [22, tr(0, -120)], [40, tr(0, -120)], [50, tr(0, 0)], [56, tr(0, 0)], [64, tr(0, -120)], [84, tr(0, -120)], [92, tr(0, 0)], [100, tr(0, 0)]], D)
+                + kf(id + 'cx', [[0, tr(0, 0)], [22, tr(0, 0)], [40, tr(260, 0)], [95, tr(260, 0)], [95.01, tr(0, 0)], [100, tr(0, 0)]], D)
+                + kf(id + 'cy', [[0, tr(0, 0) + ';opacity:0'], [3, tr(0, 0) + ';opacity:1'], [12, tr(0, 0)], [22, tr(0, -120)], [40, tr(0, -120)], [50, tr(0, 0)], [93, tr(0, 0) + ';opacity:1'], [95, tr(0, 0) + ';opacity:0'], [100, tr(0, 0) + ';opacity:0']], D)
+                + kf(id + 'j', [[0, tr(0, 0)], [6, tr(0, 0)], [12, tr(7, 0)], [50, tr(7, 0)], [56, tr(0, 0)], [100, tr(0, 0)]], D)
+                + kf(id + 'k', [[0, tr(0, 0)], [6, tr(0, 0)], [12, tr(-7, 0)], [50, tr(-7, 0)], [56, tr(0, 0)], [100, tr(0, 0)]], D)
+                + kf(id + 'r', [[0, 'transform:scaleX(.1)'], [22, 'transform:scaleX(.1)'], [40, 'transform:scaleX(1)'], [64, 'transform:scaleX(1)'], [84, 'transform:scaleX(.1)'], [100, 'transform:scaleX(.1)']], D, 'transform-box:fill-box;transform-origin:left;')
+                + kf(id + 'h', [[0, 'transform:scaleX(.1)'], [12, 'transform:scaleX(.1)'], [22, 'transform:scaleX(1)'], [40, 'transform:scaleX(1)'], [50, 'transform:scaleX(.1)'], [56, 'transform:scaleX(.1)'], [64, 'transform:scaleX(1)'], [84, 'transform:scaleX(1)'], [92, 'transform:scaleX(.1)'], [100, 'transform:scaleX(.1)']], D, 'transform-box:fill-box;transform-origin:left;')
+                + phases(id + 'A', D, [[0, 22], [84, 100]]) + phases(id + 'B', D, [[40, 64]]) + phases(id + 'H', D, [[22, 40], [64, 84]]) + phases(id + 'D', D, [[0, 12], [50, 56], [92, 100]]) + phases(id + 'L', D, [[12, 50]]);
+            let s = `<line x1="40" y1="420" x2="500" y2="420" class="ground"/><rect x="20" y="64" width="480" height="18" rx="6" class="m2"/>`
+                + `<rect x="250" y="360" width="70" height="60" rx="6" class="m2"/>` + T(285, 395, L('obstacle', 'obstacle'), 's2 inv')
+                + T(130, 446, 'A', 't') + T(390, 446, 'B', 't');
+            s += `<g class="${id}cx"><g class="${id}cy"><rect x="116" y="382" width="28" height="38" rx="4" class="cup"/></g></g>`;
+            s += `<g class="${id}x"><rect x="110" y="56" width="40" height="34" rx="6" class="m1"/><rect x="124" y="90" width="12" height="150" class="m2"/>`
+                + `<g class="${id}y"><rect x="126" y="230" width="8" height="140" class="shaft-r"/><rect x="108" y="366" width="44" height="10" rx="3" class="m2"/>`
+                + `<g class="${id}k"><rect x="108" y="376" width="7" height="30" class="m2"/></g><g class="${id}j"><rect x="145" y="376" width="7" height="30" class="m2"/></g>`
+                + `<circle cx="160" cy="356" r="6" class="lamp off"/><circle cx="160" cy="356" r="6" class="lamp wait sv-blink ${id}L"/></g></g>`;
+            // M340 panel: analog values and comparison bits
+            s += `<g transform="translate(520 40)"><rect width="260" height="150" rx="14" class="kpi"/>` + T(16, 26, L('M340 · analog inputs', 'M340 · entrées analogiques'), 's2', 'start')
+                + T(16, 54, L('rotation', 'rotation'), 's', 'start') + `<rect x="90" y="44" width="150" height="12" rx="6" class="faintbar"/><rect x="90" y="44" width="150" height="12" rx="6" class="bar ${id}r"/>`
+                + T(16, 80, L('height', 'hauteur'), 's', 'start') + `<rect x="90" y="70" width="150" height="12" rx="6" class="faintbar"/><rect x="90" y="70" width="150" height="12" rx="6" class="bar ${id}h"/>`
+                + [['A', 'A'], ['B', 'B'], ['H', L('high', 'haute')], ['D', L('low', 'basse')]].map(([k, t], i) => `<circle cx="${30 + i * 62}" cy="112" r="8" class="lamp off"/><circle cx="${30 + i * 62}" cy="112" r="8" class="lamp ok ${id}${k}"/>` + T(30 + i * 62, 138, t, 's')).join('') + `</g>`;
+            const st = stepper(id + 's', D, [
+                [L('0 · initial position', '0 · position initiale'), [[0, 6]]], [L('1 · close gripper (FER)', '1 · fermer la pince (FER)'), [[6, 12]]],
+                [L('2 · up (MON) · CLI', '2 · monter (MON) · CLI'), [[12, 22]]], [L('3 · rotate to B (TRI)', '3 · tourner vers B (TRI)'), [[22, 40]]],
+                [L('4 · down (DES)', '4 · descendre (DES)'), [[40, 50]]], [L('5 · open (OUV)', '5 · ouvrir (OUV)'), [[50, 56]]],
+                [L('6 · up (MON)', '6 · monter (MON)'), [[56, 64]]], [L('7 · back to A (HOR)', '7 · revenir en A (HOR)'), [[64, 84]]], [L('8–9 · back to initial position', '8–9 · retour position initiale'), [[84, 100]]]
+            ], 520, 204, 260, 32, 28);
+            return svg(s + st.body, css + st.css, L('Arm moving the cup over the obstacle', 'Bras qui passe le gobelet au-dessus de l’obstacle'));
+        },
+        prog: L => svg(
+            gcol(40, 50, [
+                { n: '0', a: [L('Initial position', 'Position initiale')], t: L('start · initial pos.', 'dcy · pos. initiale') },
+                { n: '1', a: ['FER'], t: L('gripper closed', 'pince fermée') }, { n: '2', a: ['MON', 'CLI'], t: L('high pos.', 'pos. haute') },
+                { n: '3', a: ['TRI', 'CLI'], t: L('pos. B', 'pos. B') }, { n: '4', a: ['DES', 'CLI'], t: L('low pos.', 'pos. basse') },
+                { n: '5', a: ['OUV'], t: L('gripper open', 'pince ouverte') }, { n: '6', a: ['MON'], t: L('high pos.', 'pos. haute') },
+                { n: '7', a: ['HOR'], t: L('pos. A', 'pos. A') }, { n: '8', t: L('initial pos.', 'pos. init') }, { n: '9', t: L('back pos.', 'pos. recul') }
+            ], { h: 38, title: L('Pick and place', 'Prise et dépose') })
+            + gcol(440, 50, [
+                { n: '0', a: [L('Waiting', 'Attente')], t: 'init' }, { n: '1', a: ['OUV'], t: L('gripper open', 'pince ouverte') },
+                { n: '2', a: ['MON'], t: L('high pos.', 'pos. haute') }, { n: '3', a: ['REC'], t: L('back pos.', 'pos. recul') },
+                { n: '4', a: ['HOR'], t: L('pos. A', 'pos. A') }, { n: '5', a: ['DES'], t: L('low pos.', 'pos. basse') },
+                { n: '6', a: [L('Initial position OK', 'Position initiale OK')], t: L('1 (always true)', '1 (toujours vrai)') }
+            ], { h: 38, title: L('Back to initial position', 'Mise en position initiale') })
+            + `<g transform="translate(410 340)"><rect width="370" height="118" rx="12" class="kpi"/>` + [
+                L('FER / OUV: close / open gripper', 'FER / OUV : fermer / ouvrir la pince'), L('MON / DES: up / down', 'MON / DES : montée / descente'),
+                L('TRI / HOR: rotate one way / the other', 'TRI / HOR : rotation sens trigo / horaire'), L('REC: back · CLI: blinking light', 'REC : recul · CLI : voyant clignotant')
+            ].map((t, i) => T(16, 28 + i * 24, t, 'gt', 'start')).join('') + `</g>`,
+            '', L('Grafcets of the manipulator arm', 'Grafcets du bras manipulateur'))
+    };
+
+    /* Overhead crane, Schneider M340 */
+    const craneSteps = L => [
+        { n: '0', a: [L('Wait: P1, hoist up', 'Attente : P1, palan haut')], t: 'dcy · PV · P1' },
+        { n: '1', a: ['RD'], t: 'Ca = 9 ' + L('turns', 'tours') }, { n: '2', a: ['RAI', 'T/2s'], t: 't/2s' },
+        { n: '3', a: ['RM', 'RAI'], t: 'Ca = 5 ' + L('turns', 'tours') }, { n: '4', a: ['RDD', 'RAI'], t: 'P2' },
+        { n: '5', a: ['RD', 'RAI'], t: 'Ca = 7 ' + L('turns', 'tours') }, { n: '6', a: ['RAI', 'T/2s'], t: 't/2s' },
+        { n: '7', a: ['RM', 'RAI'], t: 'Ca = 7 ' + L('turns', 'tours') }, { n: '8', a: ['RDD', 'RAI'], t: 'P3' },
+        { n: '9', a: ['RD', 'RAI'], t: 'Ca = 7 ' + L('turns', 'tours') }, { n: '10', a: ['RAI', 'T/2s'], t: 't/2s' },
+        { n: '11', a: ['RM', 'RAI'], t: 'Ca = 7 ' + L('turns', 'tours') }, { n: '12', a: ['RDD', 'RAI'], t: 'P4' },
+        { n: '13', a: ['RD', 'RAI'], t: 'Ca = 5 ' + L('turns', 'tours') }, { n: '14', a: [L('magnet off', 'aimant coupé')], t: '' },
+        { n: '15', a: ['RM'], t: 'Ca = 9 ' + L('turns', 'tours') }, { n: '16', a: ['RDG'], t: 'P1' }
+    ];
+    V['overhead-crane-m340'] = {
+        schema: L => {
+            const X = [110, 296, 482, 668], u = 16, y0 = 96;   // hoist height: one turn = 16 px
+            const Y = h => y0 - h * u;
+            let s = T(400, 50, L('→ trolley right (RDD) between stations · ← back left (RDG) to P1', '→ chariot à droite (RDD) entre les postes · ← retour à gauche (RDG) vers P1'), 's');
+            s += `<rect x="${X[1] - 44}" y="${Y(-10)}" width="88" height="${Y(-13) - Y(-10)}" rx="6" class="liq"/><rect x="${X[2] - 44}" y="${Y(-10)}" width="88" height="${Y(-13) - Y(-10)}" rx="6" class="liq"/>`
+                + `<rect x="${X[0] - 30}" y="${Y(-9) + 16}" width="60" height="${Y(-13) - Y(-9) - 16}" rx="6" class="m1"/><rect x="${X[3] - 30}" y="${Y(-9) + 16}" width="60" height="${Y(-13) - Y(-9) - 16}" rx="6" class="m1"/>`;
+            const pts = [[0, 0], [0, -9], [0, -4], [1, -4], [1, -11], [1, -4], [2, -4], [2, -11], [2, -4], [3, -4], [3, -9], [3, 0], [0, 0]];
+            s += `<path d="M${pts.map(([k, h]) => X[k] + ' ' + Y(h)).join(' L')}" class="ln path3" marker-end="url(#sv-ar)"/>`;
+            s += X.map((x, i) => T(x, Y(-13) + 22, 'P' + (i + 1), 't') + T(x, Y(-13) + 40, [L('pick-up', 'prise'), L('bath', 'bain'), L('bath', 'bain'), L('drop-off', 'dépose')][i], 's')).join('');
+            const stack = (x, lines, anchor) => lines.map((t, i) => T(x, Y(-5.2) + i * 18, t, 's2', anchor)).join('');
+            s += stack(X[0] + 10, ['↓ 9 tr', L('magnet 2 s', 'aimant 2 s'), '↑ 5 tr'], 'start')
+                + stack(X[1] + 10, ['↓ 7 tr', L('treatment 2 s', 'traitement 2 s'), '↑ 7 tr'], 'start')
+                + stack(X[2] + 10, ['↓ 7 tr', L('treatment 2 s', 'traitement 2 s'), '↑ 7 tr'], 'start')
+                + stack(X[3] - 10, ['↓ 5 tr', L('magnet off', 'aimant coupé'), '↑ 9 tr'], 'end');
+            s += node(24, 372, 230, 56, 'M340', L('Grafcet · counter Ca · timers', 'Grafcet · compteur Ca · tempos'), { dark: true })
+                + node(286, 372, 230, 56, L('Hoist', 'Palan'), L('RD / RM · turns counted', 'RD / RM · tours comptés'), { r: 12 })
+                + node(548, 372, 230, 56, L('Trolley + magnet', 'Chariot + aimant'), 'RDD / RDG · RAI', { r: 12 });
+            return svg(s + legend([L('Heights are measured by counting hoist turns (Ca): no position sensor on the hoist.', 'Les hauteurs se mesurent en comptant les tours du palan (Ca) : pas de capteur de position sur le palan.')], 444), '', L('Overhead crane cycle', 'Cycle du pont roulant'));
+        },
+        anim: L => {
+            const id = 'svp' + (++uid), D = 22, dx = 125, uy = 12;
+            const tl = [[0, 0, 0], [5, 0, 9], [10, 0, 9], [14, 0, 4], [20, 1, 4], [25, 1, 11], [30, 1, 11], [35, 1, 4], [41, 2, 4], [46, 2, 11], [51, 2, 11], [56, 2, 4], [62, 3, 4], [66, 3, 9], [70, 3, 9], [75, 3, 0], [88, 0, 0], [100, 0, 0]];
+            const part = [[0, 0, 9, 0], [2, 0, 9, 1], [10, 0, 9, 1], [14, 0, 4, 1], [20, 1, 4, 1], [25, 1, 11, 1], [30, 1, 11, 1], [35, 1, 4, 1], [41, 2, 4, 1], [46, 2, 11, 1], [51, 2, 11, 1], [56, 2, 4, 1], [62, 3, 4, 1], [66, 3, 9, 1], [93, 3, 9, 1], [96, 3, 9, 0], [100, 3, 9, 0]];
+            let css = kf(id + 't', tl.map(([p, k]) => [p, tr(k * dx, 0)]), D)
+                + kf(id + 'h', tl.map(([p, , h]) => [p, tr(0, h * uy)]), D)
+                + kf(id + 'c', tl.map(([p, , h]) => [p, `transform:scaleY(${((60 + h * uy) / (60 + 11 * uy)).toFixed(3)})`]), D, 'transform-box:fill-box;transform-origin:top;')
+                + kf(id + 'q', part.map(([p, k, h, o]) => [p, tr(k * dx, h * uy) + `;opacity:${o}`]), D)
+                + phases(id + 'm', D, [[5, 70]]) + phases(id + 'd', D, [[0, 5], [10, 14], [20, 25], [30, 35], [41, 46], [51, 56], [62, 66], [70, 75]]) + phases(id + 'w', D, [[5, 10], [25, 30], [46, 51]]);
+            let s = `<rect x="20" y="60" width="500" height="14" rx="6" class="m2"/><line x1="20" y1="430" x2="520" y2="430" class="ground"/>`;
+            [0, 1, 2, 3].forEach(k => {
+                const x = 80 + k * dx;
+                s += T(x, 452, 'P' + (k + 1), 't');
+                if (k === 1 || k === 2) s += `<rect x="${x - 42}" y="260" width="84" height="170" rx="8" class="tank"/><rect x="${x - 39}" y="280" width="78" height="147" rx="6" class="liq"/>`;
+                else s += `<rect x="${x - 34}" y="280" width="68" height="150" rx="6" class="m1"/>`;
+            });
+            // part: hangs 30 px under the hook origin; at h = 9 it sits on the stand of P1/P4
+            s += `<g class="${id}q"><rect x="62" y="156" width="36" height="16" rx="3" class="part"/></g>`;
+            s += `<g class="${id}t"><rect x="56" y="52" width="48" height="32" rx="6" class="m1"/><circle cx="80" cy="68" r="9" class="disc"/><g transform="translate(80 68)"><g class="${id}d"><g class="spin"><line x1="-7" y1="0" x2="7" y2="0" class="spoke"/><line x1="0" y1="-7" x2="0" y2="7" class="spoke"/></g></g></g>`
+                + `<rect x="78" y="84" width="4" height="${60 + 11 * uy}" class="cable ${id}c"/>`
+                + `<g class="${id}h"><rect x="64" y="144" width="32" height="12" rx="3" class="magnet"/><rect x="64" y="144" width="32" height="12" rx="3" class="magnet-on ${id}m"/></g></g>`;
+            s += `<g class="${id}w">${T(270, 30, L('timer: 2 s', 'temporisation : 2 s'), 't')}</g>`;
+            const st = stepper(id + 's', D, [
+                [L('Down 9 turns at P1', 'Descente 9 tours en P1'), [[0, 5]]], [L('Magnet on · 2 s', 'Aimant (RAI) · 2 s'), [[5, 10]]],
+                [L('Up 5 turns', 'Montée 5 tours'), [[10, 14]]], [L('Move right to P2', 'Vers P2 (RDD)'), [[14, 20]]],
+                [L('P2: 7 turns down · 2 s', 'P2 : bain 7 tours · 2 s'), [[20, 35]]], [L('Move right to P3', 'Vers P3 (RDD)'), [[35, 41]]],
+                [L('P3: 7 turns down · 2 s', 'P3 : bain 7 tours · 2 s'), [[41, 56]]], [L('Move right to P4', 'Vers P4 (RDD)'), [[56, 62]]],
+                [L('P4: drop, magnet off', 'P4 : dépose, aimant coupé'), [[62, 75]]], [L('Up 9 turns, back to P1', 'Montée 9 tours, retour P1'), [[75, 100]]]
+            ], 540, 40, 244, 40, 32);
+            return svg(s + st.body, css + st.css, L('Overhead crane carrying the part through the baths', 'Pont roulant qui passe la pièce dans les bains'));
+        },
+        prog: L => {
+            const st = craneSteps(L);
+            return svg(gcol(46, 40, st.slice(0, 9), { h: 42, loop: false, tail: true })
+                + T(61, 40 + 9 * 42 + 8, L('↓ continues at step 9', '↓ suite à l’étape 9'), 'gt', 'middle')
+                + gcol(436, 40, st.slice(9), { h: 42, init: false, loop: false, tail: true })
+                + `<path d="M451 ${40 + 7 * 42 + 33} V${40 + 7 * 42 + 46} H400 V30 H61 V38" class="gl ln-loop" marker-end="url(#sv-ar)"/>` + T(392, 46, L('back to step 0', 'retour à l’étape 0'), 'gt', 'end')
+                + legend([L('RD / RM: hoist down / up · RDD / RDG: trolley right / left · RAI: electromagnet', 'RD / RM : palan descente / montée · RDD / RDG : chariot droite / gauche · RAI : électro-aimant'), L('Ca: hoist turn counter · VMA: running light, on during the whole cycle', 'Ca : compteur de tours du palan · VMA : voyant de marche, allumé pendant tout le cycle')], 440),
+                '', L('Grafcet of the overhead crane', 'Grafcet du pont roulant'));
+        }
+    };
+
+    /* Elevator, Siemens S7-300 */
+    V['elevator-s7-300'] = {
+        schema: L => {
+            const ins = [[L('Cabin calls', 'Appels cabine'), L('floors 1, 2, 3', 'étages 1, 2, 3')], [L('Landing calls', 'Appels paliers'), L('at each floor', 'à chaque étage')], [L('Floor sensors', 'Capteurs d’étage'), L('cabin present', 'présence cabine')]];
+            const outs = [[L('Up', 'Montée'), ''], [L('Down', 'Descente'), ''], [L('Cabin lamp', 'Lampe cabine'), ''], [L('Floor lights', 'Témoins d’étage'), '']];
+            let s = ins.map(([t, sub], i) => node(20, 40 + i * 92, 200, 70, t, sub) + line(`M220 ${75 + i * 92} H286`)).join('');
+            s += node(288, 40, 220, 254, 'S7-300', ['Grafcet', L('timer 5 s at each stop', 'tempo 5 s à chaque arrêt'), L('choice of direction', 'choix du sens')], { dark: true });
+            s += outs.map(([t], i) => line(`M508 167 H540 V${58 + i * 72} H576`) + node(578, 30 + i * 72, 200, 56, t, '', { r: 12 })).join('');
+            return svg(`<g transform="translate(0 60)">${s}</g>` + legend([L('After each stop the cabin waits 5 s with the floor light on, then serves the next call.', 'À chaque arrêt la cabine attend 5 s avec le témoin d’étage allumé, puis sert l’appel suivant.')], 400), '', L('Elevator inputs and outputs on the S7-300', 'Entrées et sorties de l’ascenseur sur le S7-300'));
+        },
+        anim: L => V['grafcet-elevator'].anim(L),
+        prog: L => svg(
+            gcol(40, 50, [
+                { n: '0', a: [L('Wait for a call (floor 1 or 3)', 'Attente appel étage 1 ou 3')], t: '(I136.2 + I137.0) · I137.2' },
+                { n: '1', a: [L('Up', 'Montée'), L('Cabin lamp', 'Lampe cabine')], t: L('floor 3 reached', 'présence étage 3') },
+                { n: '2', a: ['T/5s', L('Cabin lamp', 'Lampe cabine'), L('Floor 3 light', 'Témoin étage 3')], t: 't/5s · (I136.0 + I136.6)' },
+                { n: '3', a: [L('Down', 'Descente'), L('Cabin lamp', 'Lampe cabine')], t: L('floor 1 reached', 'présence étage 1') },
+                { n: '4', a: ['T/5s'], t: 't/5s · (I136.2 + I137.0)' }
+            ], { h: 54, title: L('Version 1: floors 1 and 3', 'Version 1 : étages 1 et 3') })
+            + T(40, 340, L('Version 2: every call, choice between three branches', 'Version 2 : tous les appels, choix entre trois branches'), 'tag', 'start')
+            + [[L('Steps 1–4', 'Étapes 1–4'), L('up to floor 3, wait 5 s', 'montée vers l’étage 3, attente 5 s')], [L('Steps 5–7', 'Étapes 5–7'), L('to floor 2, wait 5 s', 'vers l’étage 2, attente 5 s')], [L('Steps 8–11', 'Étapes 8–11'), L('down to floor 1, wait 5 s', 'descente vers l’étage 1, attente 5 s')]]
+                .map(([t, sub], i) => node(40 + i * 248, 356, 230, 64, t, sub, { r: 12 })).join('')
+            + T(40, 452, L('I136.x / I137.x: call buttons and floor sensors wired on the S7-300 inputs', 'I136.x / I137.x : boutons d’appel et capteurs d’étage câblés sur les entrées du S7-300'), 'gt', 'start'),
+            '', L('Grafcet of the elevator', 'Grafcet de l’ascenseur'))
+    };
+
+    /* Rotary-table machining station, Schneider M340 */
+    function table(L, animated, id) {
+        const cx = 230, cy = 240, r = 130;
+        const st = [[0, -1, L('loading', 'chargement')], [1, 0, L('drilling', 'perçage')], [0, 1, L('checking', 'contrôle')], [-1, 0, L('removal', 'évacuation')]];
+        let s = `<g class="${animated ? id + 'rot' : ''}"><circle cx="${cx}" cy="${cy}" r="${r}" class="tablec"/>` + [0, 1, 2, 3].map(i => { const a = i * Math.PI / 2; return `<circle cx="${(cx + 100 * Math.sin(a)).toFixed(1)}" cy="${(cy - 100 * Math.cos(a)).toFixed(1)}" r="22" class="part-c"/>`; }).join('') + `<circle cx="${cx}" cy="${cy}" r="14" class="hub"/></g>`;
+        st.forEach(([dx, dy, t]) => { s += T(cx + dx * 160, cy + dy * 170 + (dy > 0 ? 14 : 0) - (dx ? 44 : 0), t, 's2', 'middle'); });
+        // tools
+        s += `<g class="${animated ? id + 'dr' : ''}"><rect x="${cx + 88}" y="${cy - 60}" width="24" height="44" rx="5" class="m1"/><line x1="${cx + 100}" y1="${cy - 16}" x2="${cx + 100}" y2="${cy - 4}" class="shaft"/></g>`;
+        s += `<g class="${animated ? id + 'pr' : ''}"><rect x="${cx - 8}" y="${cy + 120}" width="16" height="40" rx="4" class="m2"/></g>`;
+        s += `<g class="${animated ? id + 'ej' : ''}"><rect x="${cx - 200}" y="${cy - 10}" width="50" height="20" rx="4" class="m2"/><path d="M${cx - 150} ${cy} h16" class="ln"/></g>`;
+        return s;
+    }
+    V['rotary-machining-m340'] = {
+        schema: L => {
+            let s = table(L, false);
+            s += node(450, 40, 330, 110, 'M340', [L('one Grafcet, 3 simultaneous sequences', 'un Grafcet, 3 séquences simultanées'), L('automatic or cycle-by-cycle mode', 'mode automatique ou cycle par cycle')], { dark: true });
+            const seq = [[L('Drilling', 'Perçage'), L('clamp · drill down · 2 s · up · unclamp', 'serrage · descente · 2 s · montée · desserrage')], [L('Checking', 'Contrôle'), L('probe down: good part or faulty part', 'palpeur : pièce bonne ou défectueuse')], [L('Removal', 'Évacuation'), L('ejector pushes 1 s, then back', 'éjecteur 1 s, puis retour')]];
+            s += `<path d="M450 95 H432 V${168 + 2 * 82 + 29}" class="ln noar"/>` + seq.map(([t, sub], i) => line(`M432 ${168 + i * 82 + 29} H448`) + node(450, 168 + i * 82, 330, 58, t, sub, { r: 12 })).join('');
+            return svg(s + legend([L('A faulty part stops the cycle until the operator resets. The table turns when all three sequences are done.', 'Une pièce défectueuse arrête le cycle jusqu’au réarmement. Le plateau tourne quand les trois séquences sont finies.')], 452), '', L('Rotary-table machining station', 'Poste d’usinage à plateau tournant'));
+        },
+        anim: L => {
+            const id = 'svu' + (++uid), D = 10;
+            let css = kf(id + 'rot', [[0, 'transform:rotate(0)'], [72, 'transform:rotate(0)'], [90, 'transform:rotate(90deg)'], [100, 'transform:rotate(90deg)']], D, 'transform-box:view-box;transform-origin:230px 240px;')
+                + kf(id + 'dr', [[0, tr(0, 0)], [10, tr(0, 0)], [28, tr(0, 22)], [46, tr(0, 22)], [60, tr(0, 0)], [100, tr(0, 0)]], D)
+                + kf(id + 'pr', [[0, tr(0, 0)], [12, tr(0, 0)], [26, tr(0, -24)], [44, tr(0, -24)], [54, tr(0, 0)], [100, tr(0, 0)]], D)
+                + kf(id + 'ej', [[0, tr(0, 0)], [12, tr(0, 0)], [20, tr(36, 0)], [30, tr(36, 0)], [38, tr(0, 0)], [100, tr(0, 0)]], D);
+            const lanes = [
+                [L('Drilling', 'Perçage'), [[L('1 · clamp (SEP) · turn (RPE)', '1 · serrage (SEP) · RPE'), 0, 10], [L('2 · drill down (DPE)', '2 · descente (DPE)'), 10, 28], [L('3 · 2 s at the bottom', '3 · 2 s en bas'), 28, 46], [L('4 · drill up (MPE)', '4 · montée (MPE)'), 46, 60], [L('5 · unclamp', '5 · desserrage'), 60, 72]]],
+                [L('Checking', 'Contrôle'), [[L('6 · probe down (DCO)', '6 · descente palpeur (DCO)'), 0, 26], [L('7 · 2 s', '7 · 2 s'), 26, 44], [L('8 · good part', '8 · pièce bonne'), 44, 72]]],
+                [L('Removal', 'Évacuation'), [[L('10 · eject (REJ) · 1 s', '10 · éjection (REJ) · 1 s'), 0, 30], [L('11 · ejector back', '11 · repos éjecteur'), 30, 72]]]
+            ];
+            let s = table(L, true, id);
+            lanes.forEach(([t, items], i) => {
+                const y = 40 + i * 120;
+                s += `<g transform="translate(450 ${y})"><rect width="330" height="104" rx="14" class="kpi"/>` + T(16, 28, t, 't', 'start');
+                items.forEach(([label, a, b], j) => { const n = `${id}l${i}${j}`; css += phases(n, D, [[a, b]]); s += `<g class="${n}"><rect x="12" y="44" width="306" height="44" rx="10" class="sv-step-on"/>${T(26, 72, label, 's2 on', 'start')}</g>`; });
+                s += `</g>`;
+            });
+            css += phases(id + 'turn', D, [[72, 100]]);
+            s += `<g class="${id}turn"><g transform="translate(450 400)"><rect width="330" height="44" rx="10" class="sv-step-on"/>${T(16, 28, L('All done → the table turns 90°', 'Tout est fini → le plateau tourne de 90°'), 's2 on', 'start')}</g></g>`;
+            return svg(s, css, L('Rotary table: three sequences at the same time', 'Plateau tournant : trois séquences en même temps'));
+        },
+        prog: L => {
+            const bar = (x1, x2, y) => `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" class="par"/><line x1="${x1}" y1="${y + 5}" x2="${x2}" y2="${y + 5}" class="par"/>`;
+            let s = '<g transform="translate(0 34)">' + gcol(370, 16, [{ n: '0', a: [L('Wait (initial position)', 'Attente (position initiale)')], t: 'dcy · cpe · cpp · cpc · cph · auto (/ man)' }], { h: 40, loop: false, tail: true });
+            s += `<line x1="385" y1="40" x2="385" y2="66" class="gl"/>` + bar(60, 640, 66);
+            s += `<line x1="75" y1="71" x2="75" y2="84" class="gl"/><line x1="335" y1="71" x2="335" y2="84" class="gl"/><line x1="605" y1="71" x2="605" y2="84" class="gl"/>`;
+            s += gcol(60, 84, [{ n: '1', a: ['SEP', 'RPE'], t: 'cpp' }, { n: '2', a: ['DPE', 'RPE'], t: 'cpb' }, { n: '3', a: ['T/2s', 'RPE'], t: 't/2s' }, { n: '4', a: ['MPE', 'VMA'], t: 'cph' }, { n: '5', a: ['/SEP'] }], { h: 52, init: false, loop: false });
+            s += gcol(320, 84, [{ n: '6', a: ['DCO', 'VMA'], t: 'ccb' }, { n: '7', a: ['T/2s', 'VMA'] }], { h: 52, init: false, loop: false });
+            s += `<line x1="335" y1="160" x2="335" y2="176" class="gl"/><line x1="290" y1="176" x2="420" y2="176" class="gl"/><line x1="290" y1="176" x2="290" y2="214" class="gl"/><line x1="420" y1="176" x2="420" y2="214" class="gl"/>`
+                + `<line x1="282" y1="192" x2="298" y2="192" class="trans"/>` + T(250, 188, 't/2s · ccb', 'gt', 'end') + `<line x1="412" y1="192" x2="428" y2="192" class="trans"/>` + T(436, 196, 't/2s · /ccb', 'gt', 'start')
+                + gcol(275, 214, [{ n: '8', t: 'cpc' }], { init: false, loop: false }) + gcol(405, 214, [{ n: '9', a: [L('faulty', 'défaut')], t: 'rea' }], { init: false, loop: false })
+                + `<line x1="290" y1="238" x2="290" y2="270" class="gl"/><line x1="420" y1="238" x2="420" y2="270" class="gl"/><line x1="282" y1="254" x2="298" y2="254" class="trans"/><line x1="412" y1="254" x2="428" y2="254" class="trans"/>`
+                + T(306, 258, 'cpc', 'gt', 'start') + T(436, 258, L('rea (reset)', 'rea (réarmement)'), 'gt', 'start') + `<line x1="290" y1="270" x2="420" y2="270" class="gl"/><line x1="335" y1="270" x2="335" y2="330" class="gl"/>`;
+            s += gcol(590, 84, [{ n: '10', a: ['REJ', 'VMA'], t: 't/1s' }, { n: '11', a: [L('REJ back', 'Repos REJ')] }], { h: 52, init: false, loop: false });
+            s += `<line x1="75" y1="316" x2="75" y2="330" class="gl"/><line x1="605" y1="160" x2="605" y2="330" class="gl"/>` + bar(60, 640, 330);
+            s += `<line x1="385" y1="335" x2="385" y2="360" class="gl"/><line x1="377" y1="350" x2="393" y2="350" class="trans"/>` + T(400, 354, '1', 'gt', 'start')
+                + `<path d="M385 360 V368 H24 V6 H385 V14" class="gl ln-loop" marker-end="url(#sv-ar)"/>`;
+            return svg(s + '</g>' + legend([L('SEP clamp · RPE drill turning · DPE / MPE drill down / up · DCO probe down', 'SEP serrage · RPE rotation perceuse · DPE / MPE descente / montée perceuse · DCO descente palpeur'), L('REJ ejector · VMA running light · rea operator reset', 'REJ éjecteur · VMA voyant de marche · rea réarmement par l’opérateur')], 440), '', L('Grafcet with simultaneous sequences', 'Grafcet à séquences simultanées'));
+        }
+    };
+
+    /* Arduino MKR IoT Carrier ------------------------------------------------ */
+    V['arduino-mkr-iot'] = {
+        schema: L => {
+            const ins = [[L('Pressure', 'Pression'), L('→ altitude', '→ altitude')], [L('Gestures', 'Gestes'), 'APDS-9960 · I²C'], ['LSM6DSOX', L('tilt angles', 'angles d’inclinaison')], ['PIR', L('presence', 'présence')], ['BME688', L('air quality', 'qualité de l’air')]];
+            const outs = [[L('5 RGB LEDs', '5 LEDs RGB'), L('colour code', 'code couleur')], [L('2 relays', '2 relais'), ''], [L('Screen', 'Écran'), L('P and T values', 'valeurs P et T')]];
+            let s = ins.map(([t, sub], i) => node(14, 24 + i * 56, 180, 48, t, sub, { r: 12 }) + line(`M194 ${48 + i * 56} H262`)).join('');
+            s += node(264, 24, 240, 256, 'Arduino MKR', [L('+ MKR IoT Carrier', '+ MKR IoT Carrier'), 'C/C++', L('turbocharger alert', 'alerte turbocompresseur'), L('normal / warning / alert', 'normal / attention / alerte')], { dark: true });
+            s += outs.map(([t, sub], i) => line(`M504 160 H530 V${60 + i * 78} H556`) + node(558, 32 + i * 78, 220, 56, t, sub, { r: 12 })).join('');
+            s += line('M384 280 V320') + T(394, 306, 'Wi-Fi', 's2', 'start')
+                + node(264, 322, 240, 62, 'Arduino IoT Cloud', L('temperature + humidity every second', 'température + humidité chaque seconde'))
+                + line('M504 353 H556') + node(558, 322, 220, 62, L('Dashboard', 'Tableau de bord'), L('live gauges and curves', 'jauges et courbes en direct'));
+            return svg(s + legend([L('Sensors → Arduino MKR → LEDs, relays and screen on the board, and the same data online through Arduino IoT Cloud.', 'Capteurs → Arduino MKR → LEDs, relais et écran sur la carte, et les mêmes données en ligne via Arduino IoT Cloud.')], 410), '', L('Connected embedded system', 'Système embarqué connecté'));
+        },
+        anim: L => {
+            const id = 'svi' + (++uid), D = 9;
+            const states = [['ok', L('NORMAL', 'NORMAL'), [0, 33.33]], ['warn', L('WARNING', 'ATTENTION'), [33.34, 66.66]], ['alert', L('ALERT', 'ALERTE'), [66.67, 100]]];
+            let css = states.map(([k, , [a, b]]) => phases(`${id}${k}`, D, [[a, b]])).join('')
+                + kf(id + 'p', [[0, 'transform:scaleX(.35)'], [30, 'transform:scaleX(.4)'], [40, 'transform:scaleX(.62)'], [64, 'transform:scaleX(.68)'], [74, 'transform:scaleX(.92)'], [97, 'transform:scaleX(.95)'], [100, 'transform:scaleX(.35)']], D, 'transform-box:fill-box;transform-origin:left;')
+                + kf(id + 't', [[0, 'transform:scaleX(.45)'], [30, 'transform:scaleX(.5)'], [40, 'transform:scaleX(.7)'], [64, 'transform:scaleX(.74)'], [74, 'transform:scaleX(.9)'], [97, 'transform:scaleX(.94)'], [100, 'transform:scaleX(.45)']], D, 'transform-box:fill-box;transform-origin:left;')
+                + kf(id + 'pk', [[0, 'transform:translate(0,0);opacity:0'], [10, 'opacity:1'], [90, 'transform:translate(250px,0);opacity:1'], [100, 'transform:translate(250px,0);opacity:0']], 1)
+                + `@keyframes ${id}sc{to{transform:translateX(-120px)}}.${id}sc{animation:${id}sc 6s linear infinite}`;
+            const cx = 210, cy = 215;
+            let s = `<circle cx="${cx}" cy="${cy}" r="165" class="board"/>`;
+            const leds = [0, 1, 2, 3, 4].map(i => { const a = (-90 + 36 + i * 72) * Math.PI / 180; return [cx + 120 * Math.cos(a), cy + 120 * Math.sin(a)]; });
+            states.forEach(([k]) => { s += `<g class="${id}${k}">${leds.map(([x, y]) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="26" class="glow ${k}"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" class="led ${k}"/>`).join('')}</g>`; });
+            s += `<circle cx="${cx}" cy="${cy}" r="70" class="screen"/>`;
+            states.forEach(([k, label]) => { s += `<g class="${id}${k}"><circle cx="${cx}" cy="${cy}" r="66" class="screen-on ${k}"/>${T(cx, cy - 18, label, 't scr')}</g>`; });
+            s += T(cx - 44, cy + 12, 'P', 's2 scr2', 'start') + `<rect x="${cx - 28}" y="${cy + 2}" width="70" height="10" rx="5" class="scrbar-bg"/><rect x="${cx - 28}" y="${cy + 2}" width="70" height="10" rx="5" class="scrbar ${id}p"/>`
+                + T(cx - 44, cy + 36, 'T', 's2 scr2', 'start') + `<rect x="${cx - 28}" y="${cy + 26}" width="70" height="10" rx="5" class="scrbar-bg"/><rect x="${cx - 28}" y="${cy + 26}" width="70" height="10" rx="5" class="scrbar ${id}t"/>`;
+            s += T(400, 462, L('Turbocharger alert: colour code by pressure and temperature (normal / warning / alert)', 'Alerte turbocompresseur : code couleur selon pression et température (normal / attention / alerte)'), 's2');
+            // cloud
+            s += `<path d="M380 150 H610" class="ln d noar"/><g class="${id}pk"><circle cx="380" cy="150" r="6" class="acc"/></g>` + T(495, 138, L('Wi-Fi · every 1 s', 'Wi-Fi · chaque 1 s'), 's');
+            s += `<g transform="translate(560 60)"><rect width="220" height="320" rx="14" class="kpi"/>` + T(16, 28, 'Arduino IoT Cloud', 't', 'start')
+                + T(16, 60, L('temperature', 'température'), 's', 'start') + `<path d="M40 150 A70 70 0 0 1 180 150" class="arcbg"/><path d="M40 150 A70 70 0 0 1 150 92" class="arcfg"/>`
+                + T(16, 196, L('humidity · live', 'humidité · en direct'), 's', 'start')
+                + `<svg x="16" y="206" width="188" height="96" viewBox="0 0 188 96"><g class="${id}sc"><path d="${Array.from({ length: 31 }, (_, i) => `${i ? 'L' : 'M'}${i * 10} ${(60 - 22 * Math.sin(i * 0.5) - 8 * Math.sin(i * 1.3)).toFixed(1)}`).join('')}" class="sv-curve c1 static"/></g></svg></g>`;
+            return svg(s, css, L('Alert colour code and data sent to the cloud', 'Code couleur d’alerte et données envoyées au cloud'));
+        }
+    };
+
+
+    /* ---------- 3D wiring (wiring3d.js, Three.js) for the PLC projects ---------- */
+    const WIRES = {
+        'reservoirs-s7-1200': L => ({ plc: 'Siemens S7-1200', inputs: [1, 2, 3].map(i => ({ type: 'sensor', label: L('Level ', 'Niveau ') + i })),
+            outputs: [...[1, 2, 3].map(i => ({ type: 'valve', label: L('Valve ', 'Vanne ') + i })), { type: 'motor', label: L('Pump', 'Pompe') }, { type: 'motor', label: L('Agitator', 'Agitateur') }, { type: 'lamp', label: L('Lights', 'Voyants') }] }),
+        'manipulator-arm-m340': L => ({ plc: 'Schneider M340', color: 0x3a4a3f,
+            inputs: [{ type: 'button', label: 'dcy' }, { type: 'pot', label: L('Rotation pot.', 'Pot. rotation') }, { type: 'pot', label: L('Height pot.', 'Pot. hauteur') }, { type: 'pot', label: L('Reach pot.', 'Pot. avance') }, { type: 'sensor', label: L('Gripper', 'Pince') }],
+            outputs: [{ type: 'cylinder', label: 'FER / OUV' }, { type: 'motor', label: 'MON / DES' }, { type: 'motor', label: 'TRI / HOR' }, { type: 'cylinder', label: 'REC' }, { type: 'lamp', label: 'CLI' }] }),
+        'overhead-crane-m340': L => ({ plc: 'Schneider M340', color: 0x3a4a3f,
+            inputs: [{ type: 'button', label: 'dcy' }, { type: 'sensor', label: L('Turns (Ca)', 'Tours (Ca)') }, ...[1, 2, 3, 4].map(i => ({ type: 'sensor', label: 'P' + i }))],
+            outputs: [{ type: 'motor', label: 'RD / RM' }, { type: 'motor', label: 'RDD / RDG' }, { type: 'magnet', label: 'RAI' }, { type: 'lamp', label: 'VMA' }] }),
+        'elevator-s7-300': L => ({ plc: 'Siemens S7-300',
+            inputs: [{ type: 'button', label: L('Cabin calls', 'Appels cabine') }, { type: 'button', label: L('Landing calls', 'Appels paliers') }, ...[1, 2, 3].map(i => ({ type: 'sensor', label: L('Floor ', 'Étage ') + i }))],
+            outputs: [{ type: 'motor', label: L('Up', 'Montée') }, { type: 'motor', label: L('Down', 'Descente') }, { type: 'lamp', label: L('Cabin lamp', 'Lampe cabine') }, { type: 'lamp', label: L('Floor lights', 'Témoins') }] }),
+        'rotary-machining-m340': L => ({ plc: 'Schneider M340', color: 0x3a4a3f,
+            inputs: [{ type: 'button', label: 'dcy' }, { type: 'button', label: 'auto / man' }, { type: 'sensor', label: 'cph / cpb' }, { type: 'sensor', label: 'ccb' }, { type: 'button', label: 'rea' }],
+            outputs: [{ type: 'cylinder', label: 'SEP' }, { type: 'motor', label: 'RPE' }, { type: 'motor', label: 'DPE / MPE' }, { type: 'cylinder', label: 'DCO' }, { type: 'cylinder', label: 'REJ' }, { type: 'lamp', label: 'VMA' }] }),
+        'climax-plc-robot-arm': L => ({ plc: 'Schneider TSX 3705',
+            inputs: [{ type: 'button', label: L('Start', 'Marche') }, { type: 'button', label: 'Auto' }, { type: 'button', label: L('E-stop', 'Arrêt urgence') }, { type: 'sensor', label: L('Limit switches', 'Fins de course') }],
+            outputs: [{ type: 'cylinder', label: L('3 double-acting', '3 vérins double effet') }, { type: 'cylinder', label: L('2 single-acting', '2 vérins simple effet') }, { type: 'lamp', label: L('Lights', 'Voyants') }] })
+    };
+    Object.keys(WIRES).forEach(id => {
+        V[id] = V[id] || {};
+        V[id].wire = L => {
+            const cfg = WIRES[id](L);
+            cfg.inLabel = L('Inputs', 'Entrées'); cfg.outLabel = L('Outputs', 'Sorties');
+            return `<div class="w3d" data-w3d="${esc(JSON.stringify(cfg)).replace(/"/g, '&quot;')}"></div><span class="w3d-hint">${L('Drag to turn · scroll to zoom', 'Glisser pour tourner · molette pour zoomer')}</span>`;
+        };
+    });
+
     window.systemVisuals = {
         get(id, lang) {
             const v = V[id]; if (!v) return [];
@@ -470,8 +803,14 @@
                 anim: { icon: 'bx-movie-play', label: L('Animation', 'Animation'), cap: L('The system in motion', 'Le système en mouvement') },
                 sim: { icon: 'bx-line-chart', label: L('Curve', 'Courbe'), cap: L('Simulation with the project values', 'Simulation avec les valeurs du projet') }
             };
-            return ['schema', 'anim', 'sim'].filter(k => v[k]).map(k => ({ kind: k, ...meta[k], html: v[k](L) }));
+            meta.prog = { icon: 'bx-code-block', label: 'Grafcet', cap: L('My Grafcet, redrawn from my lab notes', 'Mon Grafcet, redessiné à partir de mes notes de TP') };
+            meta.wire = { icon: 'bx-cube', label: L('3D wiring', 'Câblage 3D'), cap: L('PLC wiring in 3D: inputs (blue) and outputs (orange)', 'Câblage de l’automate en 3D : entrées (bleu) et sorties (orange)') };
+            return ['schema', 'anim', 'wire', 'prog', 'sim'].filter(k => v[k]).map(k => ({ kind: k, ...meta[k], html: v[k](L) }));
         },
-        mount(id, el) { const v = V[id]; if (v && v.mount) v.mount(el); }
+        mount(id, el) {
+            const v = V[id]; if (v && v.mount) v.mount(el);
+            const w = el && el.querySelector('[data-w3d]');
+            if (w) import('./wiring3d.js?v=2').then(m => m.mount(w, JSON.parse(w.dataset.w3d))).catch(() => { w.textContent = '3D'; });
+        }
     };
 })();
