@@ -21,7 +21,7 @@ const frenchText = {
     "Show the kinematic diagram and calculations": "Afficher le schéma cinématique et les calculs",
     "Hide the kinematic diagram": "Masquer le schéma cinématique",
     "Hands-on": "En pratique",
-    "Jog a six-axis cobot in an industrial cell: it takes cartons from a conveyor and stacks them on a pallet. Below, the live kinematic diagram with everything needed to compute and program the arm.": "Pilotez un cobot 6 axes dans une cellule industrielle : il prend des cartons sur un convoyeur et les empile sur une palette. Ouvrez dessous le schéma cinématique en direct avec tout ce qu'il faut pour calculer et programmer le bras.",
+    "Jog a six-axis cobot in an industrial cell: it takes cartons from a conveyor and stacks them on a pallet. Open the live kinematic diagram below for everything needed to compute and program the arm.": "Pilotez un cobot 6 axes dans une cellule industrielle : il prend des cartons sur un convoyeur et les empile sur une palette. Ouvrez dessous le schéma cinématique en direct avec tout ce qu'il faut pour calculer et programmer le bras.",
     "Contact": "Contact",
     "Hire me": "Me contacter",
 
@@ -172,6 +172,9 @@ const frenchText = {
     "6-axis": "6 axes",
     "Stäubli TX60 industrial robot programmed in VAL3": "robot industriel Stäubli TX60 programmé en VAL3",
     "3 yrs": "3 ans",
+    "projects shown on this site": "projets présentés sur ce site",
+    "industrial robots programmed: Stäubli, FANUC, UR, Doosan": "robots industriels programmés : Stäubli, FANUC, UR, Doosan",
+    "Robots and controllers I have programmed": "Robots et automates que j’ai programmés",
     "of professional experience in development & project management": "d'expérience professionnelle en développement et gestion de projet",
     "languages: French, English and Arabic": "langues : français, anglais et arabe",
 
