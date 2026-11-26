@@ -764,6 +764,33 @@
     };
 
 
+    V['reservoirs-s7-1200'].prog = L => {
+        const bar = (x1, x2, y) => `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" class="par"/><line x1="${x1}" y1="${y + 5}" x2="${x2}" y2="${y + 5}" class="par"/>`;
+        const sel = (x1, x2, y) => `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" class="gl"/>`;
+        const v = (x, y1, y2) => `<line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}" class="gl"/>`;
+        const tr = (x, y, t) => `<line x1="${x - 8}" y1="${y}" x2="${x + 8}" y2="${y}" class="trans"/>` + T(x + 14, y + 4, t, 'gt', 'start');
+        // filling (initialisation)
+        let s = T(24, 22, L('Filling the tanks (initialisation)', 'Remplissage des réservoirs (initialisation)'), 'tag', 'start');
+        s += gcol(80, 40, [{ n: '0', a: ['VR'], t: 'init' }, { n: '1', a: ['EE3', 'Po', 'VR'], t: 'ch3' }, { n: '2', a: ['EE1', 'EE2', 'VR'] }, { n: '3', a: ['ES1', 'ES2', 'VR'], t: 'ch' }], { h: 40, loop: false, tail: true });
+        s += bar(40, 340, 202) + v(75, 207, 214) + v(245, 207, 214);
+        s += gcol(60, 214, [{ n: '4', a: ['ES3', 'AG', 'VR'], t: 'cb3' }, { n: '5', a: ['AG', 'T/10s'], t: 't/10s' }], { h: 40, init: false, loop: false, tail: true });
+        s += gcol(230, 214, [{ n: '6', a: ['EE1', 'EE2', 'VR'], t: 'ch1 · ch2' }], { h: 40, init: false, loop: false, tail: true }) + v(245, 262, 300);
+        s += bar(40, 340, 300) + v(95, 305, 314);
+        s += gcol(80, 314, [{ n: '7', t: L('K (auto) + dcy (cycle)', 'K (auto) + dcy (cycle)') }], { h: 40, init: false, loop: false, tail: true });
+        s += `<path d="M95 362 V370 H22 V30 H95 V38" class="gl ln-loop" marker-end="url(#sv-ar)"/>`;
+        // consumption
+        s += T(440, 22, L('Consumption of the mixing tank', 'Gestion de la consommation'), 'tag', 'start');
+        s += gcol(520, 40, [{ n: '0', t: 'dcy' }, { n: '1', a: ['VMA'], t: 'conso' }, { n: '2', a: ['ESM', 'VMA'], t: 'ch' }], { h: 36, loop: false, tail: true });
+        s += sel(465, 635, 150) + v(465, 150, 172) + v(635, 150, 172) + tr(465, 161, L('turn 1', 'tour 1')) + tr(635, 161, L('turn 2', 'tour 2'));
+        s += gcol(450, 172, [{ n: '3', a: ['ES1', 'T/5s', 'VMA'], t: 't/5s · ch' }], { init: false, loop: false, tail: true });
+        s += gcol(620, 172, [{ n: '4', a: ['ES2', 'T/5s', 'VMA'], t: 't/5s · ch' }], { init: false, loop: false, tail: true });
+        s += v(465, 212, 220) + v(635, 212, 220) + sel(465, 635, 220) + v(535, 220, 232);
+        s += gcol(520, 232, [{ n: '5', a: ['ESM', 'VMA'], t: 'cm' }, { n: '6', a: ['ES1', 'ES2', 'ESM', 'VMA'], t: 'ch' }, { n: '7', a: ['ESM', 'VMA'], t: L('cb1 + cb2 (tank empty)', 'cb1 + cb2 (réservoir vide)') }], { h: 36, init: false, loop: false, tail: true });
+        s += T(535, 360, L('steps 8 to 10, then back to 0', 'étapes 8 à 10, puis retour à 0'), 'gt');
+        s += `<path d="M535 366 V374 H430 V30 H535 V38" class="gl ln-loop" marker-end="url(#sv-ar)"/>` + T(424, 330, 'K (auto) + dcy', 'gt', 'end') + T(424, 346, L('(cycle by cycle)', '(cycle par cycle)'), 'gt', 'end');
+        return svg(`<g transform="translate(0 22)">${s}</g>` + legend([L('EE / ES: inlet / outlet valves · ESM: mixing-tank outlet · Po: pump · AG: agitator · VR, VMA: indicator lights', 'EE / ES : électrovannes d’entrée / de sortie · ESM : sortie du mélangeur · Po : pompe · AG : agitateur · VR, VMA : voyants'), L('ch / cb / cm: level sensors (high / low / middle) · T/xs: timers', 'ch / cb / cm : capteurs de niveau (haut / bas / milieu) · T/xs : temporisations')], 418), '', L('Grafcets of the tank station', 'Grafcets de la station de réservoirs'));
+    };
+
     /* ---------- 3D wiring (wiring3d.js, Three.js) for the PLC projects ---------- */
     const WIRES = {
         'reservoirs-s7-1200': L => ({ plc: 'Siemens S7-1200', inputs: [1, 2, 3].map(i => ({ type: 'sensor', label: L('Level ', 'Niveau ') + i })),

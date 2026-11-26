@@ -19,21 +19,38 @@
         }
     }
 
-    const robotAvatar = '<span class="portfolio-chat-avatar" aria-hidden="true"><span class="robot-face"></span></span>'
+
+    // purple mascot, drawn in SVG so its parts can move (float, wave, blink, glowing antenna)
+    const mascot = (cls, full) => `<svg class="${cls}" viewBox="${full ? '0 0 120 150' : '14 4 92 78'}" aria-hidden="true">
+        <defs>
+            <linearGradient id="pm-shell" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f2f8"/><stop offset="1" stop-color="#c9c4d6"/></linearGradient>
+            <radialGradient id="pm-glow"><stop offset="0" stop-color="#e2c8ff"/><stop offset="1" stop-color="#9b5cf6"/></radialGradient>
+        </defs>
+        ${full ? `<g class="pm-legs"><rect x="44" y="118" width="13" height="22" rx="6" fill="url(#pm-shell)"/><rect x="63" y="118" width="13" height="22" rx="6" fill="url(#pm-shell)"/>
+            <path d="M42 138h17M61 138h17" stroke="#a678f5" stroke-width="2.5" stroke-linecap="round"/></g>
+        <g class="pm-arm-l"><rect x="25" y="88" width="12" height="28" rx="6" fill="url(#pm-shell)" transform="rotate(14 31 90)"/><circle cx="27" cy="117" r="6" fill="#5b5566"/></g>
+        <rect x="36" y="80" width="48" height="44" rx="18" fill="url(#pm-shell)"/>
+        <circle class="pm-chest" cx="60" cy="100" r="7" fill="url(#pm-glow)"/>
+        <g class="pm-arm-r"><rect x="83" y="66" width="12" height="28" rx="6" fill="url(#pm-shell)" transform="rotate(-28 89 92)"/><circle cx="99" cy="64" r="7" fill="#5b5566"/></g>` : ''}
+        <g class="pm-head">
+            <line x1="60" y1="16" x2="60" y2="8" stroke="#5b5566" stroke-width="3" stroke-linecap="round"/>
+            <circle class="pm-antenna" cx="60" cy="7" r="5" fill="url(#pm-glow)"/>
+            <rect x="24" y="16" width="72" height="60" rx="28" fill="url(#pm-shell)"/>
+            <rect x="18" y="38" width="9" height="18" rx="4.5" fill="#a678f5"/><rect x="93" y="38" width="9" height="18" rx="4.5" fill="#a678f5"/>
+            <rect x="32" y="26" width="56" height="40" rx="18" fill="#1d1830"/>
+            <g class="pm-eyes" fill="none" stroke="#c9a2ff" stroke-width="4" stroke-linecap="round">
+                <path d="M41 46q6-8 12 0"/><path d="M67 46q6-8 12 0"/>
+            </g>
+            <path class="pm-mouth" d="M53 54q7 6 14 0" fill="none" stroke="#c9a2ff" stroke-width="3.5" stroke-linecap="round"/>
+        </g>
+    </svg>`
+    const robotAvatar = `<span class="portfolio-chat-avatar" aria-hidden="true">${mascot('pm-mini', false)}</span>`
     const widget = document.createElement('div')
     widget.className = 'portfolio-chat'
     widget.innerHTML = `
         <button class="portfolio-chat-launch" type="button" aria-haspopup="dialog" aria-controls="portfolio-chat-dialog">
             <span class="portfolio-chat-prompt"></span>
-            <span class="portfolio-chat-robot" aria-hidden="true">
-                <span class="robot-antenna"></span>
-                <span class="robot-head"><span class="robot-face"></span></span>
-                <span class="robot-body"></span>
-                <span class="robot-arm robot-arm-left"></span>
-                <span class="robot-arm robot-arm-right"></span>
-                <span class="robot-wheel robot-wheel-left"></span>
-                <span class="robot-wheel robot-wheel-right"></span>
-            </span>
+            <span class="portfolio-chat-robot" aria-hidden="true">${mascot('pm-full', true)}</span>
         </button>
         <dialog class="portfolio-chat-dialog" id="portfolio-chat-dialog" aria-labelledby="portfolio-chat-title">
             <header>

@@ -381,3 +381,23 @@
     outline: 2px solid var(--signal);
     outline-offset: 2px;
 }
+
+/* ---------- Purple mascot (SVG) ---------- */
+.portfolio-chat-robot { flex: 0 0 70px; width: 70px; height: 88px; filter: drop-shadow(0 6px 10px rgba(90, 50, 160, .28)); }
+.portfolio-chat-robot .pm-full { display: block; width: 100%; height: 100%; overflow: visible; animation: pm-float 3.2s ease-in-out infinite; }
+.pm-full .pm-arm-r { transform-box: fill-box; transform-origin: 20% 90%; animation: pm-wave 2.6s ease-in-out infinite; }
+.pm-full .pm-head { transform-box: fill-box; transform-origin: 50% 90%; animation: pm-tilt 6s ease-in-out infinite; }
+.pm-eyes { transform-box: fill-box; transform-origin: center; animation: pm-blink 4.5s infinite; }
+.pm-antenna, .pm-chest { animation: pm-glow 2s ease-in-out infinite; }
+.portfolio-chat-launch:hover .pm-full { animation-duration: 1.4s; }
+.portfolio-chat-launch:hover .pm-arm-r { animation-duration: .7s; }
+.portfolio-chat-launch:hover .pm-mouth { transform: scaleY(1.4); transform-box: fill-box; transform-origin: top; }
+@keyframes pm-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes pm-wave { 0%, 55%, 100% { transform: rotate(0); } 65% { transform: rotate(-22deg); } 75% { transform: rotate(10deg); } 85% { transform: rotate(-18deg); } }
+@keyframes pm-tilt { 0%, 40%, 100% { transform: rotate(0); } 50% { transform: rotate(-6deg); } 60% { transform: rotate(4deg); } }
+@keyframes pm-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+@keyframes pm-glow { 0%, 100% { filter: drop-shadow(0 0 2px #b98cff); } 50% { filter: drop-shadow(0 0 7px #b98cff); } }
+/* avatar in the conversation: the mascot's head */
+.portfolio-chat .portfolio-chat-avatar { padding: 2px; border-color: #c4a8f5; background: linear-gradient(155deg, #f6f1ff, #ddd0f5); }
+.portfolio-chat-avatar .pm-mini { display: block; width: 100%; height: 100%; }
+@media (prefers-reduced-motion: reduce) { .pm-full, .pm-full *, .pm-eyes, .pm-antenna, .pm-chest { animation: none !important; } }

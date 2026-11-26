@@ -299,7 +299,6 @@ const projects = [
             ]
         },
         gallery: [
-            { src: 'reservoirs-grafcet.jpg', caption: { en: 'Grafcets: tank filling and consumption', fr: 'Grafcets : remplissage et consommation des réservoirs' } }
         ]
     },
     {
@@ -352,7 +351,6 @@ const projects = [
             ]
         },
         gallery: [
-            { src: 'grafcet-bras-manipulateur.jpg', caption: { en: 'My Grafcets: pick-and-place and return to initial position', fr: 'Mes Grafcets : prise et dépose, mise en position initiale' } }
         ]
     },
     {
@@ -404,7 +402,6 @@ const projects = [
             ]
         },
         gallery: [
-            { src: 'grafcet-pont-roulant.jpg', caption: { en: 'My cycle diagram and Grafcet', fr: 'Mon schéma du cycle et le Grafcet' } }
         ]
     },
     {
@@ -456,7 +453,6 @@ const projects = [
             ]
         },
         gallery: [
-            { src: 'grafcet-ascenseur.jpg', caption: { en: 'My Grafcets: simple version and version with all calls', fr: 'Mes Grafcets : version simple et version avec tous les appels' } }
         ]
     },
     {
@@ -510,7 +506,6 @@ const projects = [
             ]
         },
         gallery: [
-            { src: 'grafcet-poste-usinage.jpg', caption: { en: 'My Grafcet with simultaneous sequences', fr: 'Mon Grafcet à séquences simultanées' } }
         ]
     },
     {
