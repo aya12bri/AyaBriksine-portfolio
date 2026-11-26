@@ -340,18 +340,228 @@ const projects = [
             en: [
                 'Wired the control panel from the inputs/outputs table (level sensors, solenoid valves, pump, agitator, indicator lamps)',
                 'Designed, programmed and tested the Grafcet for the filling and initialisation sequence',
-                'Managed the mixing tank consumption, with alternating valves and 5-second minimum-opening timers',
+                'Managed the mixing tank consumption: valves opened in turn, with 5-second anti-chatter timers',
                 'Sequenced the chlorinated product pour with the agitator kept running for 10 seconds'
             ],
             fr: [
                 'Câblage de la platine de contrôle à partir du tableau des entrées/sorties (capteurs de niveau, électrovannes, pompe, agitateur, voyants)',
                 'Élaboration, programmation et test du Grafcet de remplissage et d’initialisation',
-                'Gestion de la consommation du réservoir de mélange, avec alternance des électrovannes et temporisations de 5 secondes minimum',
+                'Gestion de la consommation du réservoir de mélange : ouverture alternée des électrovannes et temporisations anti-battement de 5 secondes minimum',
                 'Séquencement du versement du produit chloré avec agitateur maintenu 10 secondes'
             ]
         },
         gallery: [
             { src: 'reservoirs-grafcet.jpg', caption: { en: 'Grafcets: tank filling and consumption', fr: 'Grafcets : remplissage et consommation des réservoirs' } }
+        ]
+    },
+    {
+        id: 'manipulator-arm-m340',
+        brief: {
+            objective: {
+                en: "Make a manipulator arm pick up a cup and put it down on the other side of an obstacle.",
+                fr: "Faire prendre un gobelet à un bras manipulateur et le déposer de l’autre côté d’un obstacle."
+            },
+            role: {
+                en: "Read the arm positions from potentiometers, wrote the comparison logic and the Grafcets on the Schneider M340.",
+                fr: "J’ai lu les positions du bras par potentiomètres, écrit les comparaisons et les Grafcets sur l’automate Schneider M340."
+            }
+        },
+        category: 'automation',
+        icon: 'bx-git-merge',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        art: 'arm',
+        tags: ['Schneider M340', 'Grafcet (SFC)', 'Entrées analogiques', 'Blocs de comparaison', 'Potentiomètres', 'Automates programmables'],
+        title: {
+            en: 'Manipulator Arm: Cup Pick-and-Place – Schneider M340 PLC',
+            fr: 'Bras manipulateur : prise et dépose d’un gobelet – automate Schneider M340'
+        },
+        context: {
+            en: 'Polytech Orléans – Industrial Automation lab work',
+            fr: 'Polytech Orléans – TP d’Automatisme industriel'
+        },
+        summary: {
+            en: "Programming a Schneider M340 PLC so that a manipulator arm picks up a cup and puts it down while avoiding an obstacle. The arm positions are read by potentiometers and checked with comparison blocks; a second Grafcet brings the arm back to its initial position.",
+            fr: "Programmation d’un automate Schneider M340 pour qu’un bras manipulateur prenne et dépose un gobelet en évitant un obstacle. Les positions du bras sont lues par des potentiomètres et vérifiées par des blocs de comparaison ; un second Grafcet ramène le bras en position initiale."
+        },
+        highlights: {
+            en: [
+                "Arm positions (high, low, A, B, back) read by potentiometers on analog inputs and turned into position bits with comparison blocks",
+                "Pick-and-place Grafcet: close the gripper (FER), go up (MON), rotate (TRI) to position B, go down (DES), open (OUV), go up and rotate back (HOR) to position A",
+                "The arm goes up before rotating, so the cup passes over the obstacle",
+                "Blinking indicator (CLI) while the arm carries the cup",
+                "Separate Grafcet to bring the arm back to its initial position: open, up, back (REC), rotate to A, down, then “initial position OK”"
+            ],
+            fr: [
+                "Positions du bras (haute, basse, A, B, recul) lues par potentiomètres sur des entrées analogiques et transformées en bits de position par des blocs de comparaison",
+                "Grafcet de prise et dépose : fermer la pince (FER), monter (MON), tourner (TRI) jusqu’à la position B, descendre (DES), ouvrir (OUV), remonter et revenir (HOR) en position A",
+                "Le bras monte avant de tourner : le gobelet passe au-dessus de l’obstacle",
+                "Voyant clignotant (CLI) pendant le transport du gobelet",
+                "Grafcet séparé de mise en position initiale : ouvrir, monter, reculer (REC), tourner jusqu’à A, descendre, puis « position initiale OK »"
+            ]
+        },
+        gallery: [
+            { src: 'grafcet-bras-manipulateur.jpg', caption: { en: 'My Grafcets: pick-and-place and return to initial position', fr: 'Mes Grafcets : prise et dépose, mise en position initiale' } }
+        ]
+    },
+    {
+        id: 'overhead-crane-m340',
+        brief: {
+            objective: {
+                en: "Run a surface-treatment cycle: an overhead crane carries a part through four stations.",
+                fr: "Réaliser un cycle de traitement de surface : un pont roulant transporte une pièce sur quatre postes."
+            },
+            role: {
+                en: "Drew the cycle, counted the hoist turns and wrote the Grafcet with timers on the Schneider M340.",
+                fr: "J’ai tracé le cycle, compté les tours du palan et écrit le Grafcet avec temporisations sur l’automate Schneider M340."
+            }
+        },
+        category: 'automation',
+        icon: 'bx-git-merge',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        art: 'gear',
+        tags: ['Schneider M340', 'Grafcet (SFC)', 'Compteurs', 'Temporisations', 'Électro-aimant', 'Automates programmables'],
+        title: {
+            en: 'Overhead Crane: Surface-Treatment Cycle – Schneider M340 PLC',
+            fr: 'Pont roulant : cycle de traitement de surface – automate Schneider M340'
+        },
+        context: {
+            en: 'Polytech Orléans – Industrial Automation lab work',
+            fr: 'Polytech Orléans – TP d’Automatisme industriel'
+        },
+        summary: {
+            en: "Automating an overhead crane with a Schneider M340 PLC: the hoist picks up a part with an electromagnet at station 1, dips it in the treatment tanks of stations 2 and 3, drops it at station 4 and comes back. Heights are measured by counting hoist turns.",
+            fr: "Automatisation d’un pont roulant avec un automate Schneider M340 : le palan prend une pièce avec un électro-aimant au poste 1, la trempe dans les bacs de traitement des postes 2 et 3, la dépose au poste 4 puis revient. Les hauteurs sont mesurées en comptant les tours du palan."
+        },
+        highlights: {
+            en: [
+                "Cycle drawn first: down 9 turns, magnet on for 2 s, up 5 turns, then move right to the next station",
+                "Stations 2 and 3: down 7 turns, 2 s treatment, up 7 turns",
+                "Station 4: down 5 turns, magnet off, up 9 turns, then move left back to station 1",
+                "Hoist turns counted with a counter (Ca) to know the height without a position sensor",
+                "17-step Grafcet with the magnet (RAI) kept on while the part is carried, and the running light (VMA) on during the cycle"
+            ],
+            fr: [
+                "Cycle tracé d’abord : descente 9 tours, aimant activé 2 s, montée 5 tours, puis déplacement à droite vers le poste suivant",
+                "Postes 2 et 3 : descente 7 tours, traitement 2 s, montée 7 tours",
+                "Poste 4 : descente 5 tours, aimant coupé, montée 9 tours, puis retour à gauche au poste 1",
+                "Comptage des tours du palan avec un compteur (Ca) pour connaître la hauteur sans capteur de position",
+                "Grafcet de 17 étapes, avec l’électro-aimant (RAI) maintenu pendant le transport et le voyant de marche (VMA) allumé pendant le cycle"
+            ]
+        },
+        gallery: [
+            { src: 'grafcet-pont-roulant.jpg', caption: { en: 'My cycle diagram and Grafcet', fr: 'Mon schéma du cycle et le Grafcet' } }
+        ]
+    },
+    {
+        id: 'elevator-s7-300',
+        brief: {
+            objective: {
+                en: "Drive a three-floor elevator that answers the calls from inside the cabin and from each landing.",
+                fr: "Piloter un ascenseur à trois étages qui répond aux appels de la cabine et des paliers."
+            },
+            role: {
+                en: "Wrote the Grafcets on the Siemens S7-300, with the timed stop and the floor and cabin lights.",
+                fr: "J’ai écrit les Grafcets sur l’automate Siemens S7-300, avec l’arrêt temporisé et les voyants d’étage et de cabine."
+            }
+        },
+        category: 'automation',
+        icon: 'bx-git-merge',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        art: 'grafcet',
+        tags: ['Siemens S7-300', 'Grafcet (SFC)', 'Sélection de séquences', 'Temporisations', 'Automates programmables'],
+        title: {
+            en: 'Elevator Control – Siemens S7-300 PLC',
+            fr: 'Commande d’un ascenseur – automate Siemens S7-300'
+        },
+        context: {
+            en: 'Polytech Orléans – Industrial Automation lab work',
+            fr: 'Polytech Orléans – TP d’Automatisme industriel'
+        },
+        summary: {
+            en: "Programming a Siemens S7-300 PLC to drive a three-floor elevator: inside and outside calls, going up and down, a timed 5 s stop at the floor, floor and cabin lights.",
+            fr: "Programmation d’un automate Siemens S7-300 pour piloter un ascenseur à trois étages : appels intérieurs et extérieurs, montée et descente, arrêt temporisé de 5 s à l’étage, voyants d’étage et de cabine."
+        },
+        highlights: {
+            en: [
+                "Inputs: calls from inside the cabin and from the landings, and a presence sensor at each floor",
+                "Outputs: up, down, cabin lamp and floor indicator lights",
+                "First Grafcet between floors 1 and 3: go up with the cabin lamp on, stop 5 s with the floor light, then go back down",
+                "Second Grafcet for every call: a choice between three branches (to floor 3, to floor 2, down to floor 1) depending on where the cabin is and where the call comes from",
+                "5 s timer at each stop before the next call is accepted"
+            ],
+            fr: [
+                "Entrées : appels depuis la cabine et depuis les paliers, et un capteur de présence à chaque étage",
+                "Sorties : montée, descente, lampe cabine et témoins d’étage",
+                "Premier Grafcet entre les étages 1 et 3 : montée avec la lampe cabine, arrêt de 5 s avec le témoin d’étage, puis descente",
+                "Second Grafcet pour tous les appels : un choix entre trois branches (vers l’étage 3, vers l’étage 2, descente vers l’étage 1) selon la position de la cabine et l’origine de l’appel",
+                "Temporisation de 5 s à chaque arrêt avant d’accepter l’appel suivant"
+            ]
+        },
+        gallery: [
+            { src: 'grafcet-ascenseur.jpg', caption: { en: 'My Grafcets: simple version and version with all calls', fr: 'Mes Grafcets : version simple et version avec tous les appels' } }
+        ]
+    },
+    {
+        id: 'rotary-machining-m340',
+        brief: {
+            objective: {
+                en: "Automate a rotary-table machining station where drilling, checking and removal happen at the same time.",
+                fr: "Automatiser un poste d’usinage à plateau tournant où perçage, contrôle et évacuation se font en même temps."
+            },
+            role: {
+                en: "Wrote the Grafcet with simultaneous sequences on the Schneider M340, the operating modes and the faulty-part handling.",
+                fr: "J’ai écrit le Grafcet à séquences simultanées sur l’automate Schneider M340, les modes de marche et la gestion des pièces défectueuses."
+            }
+        },
+        category: 'automation',
+        icon: 'bx-git-merge',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: '',
+        art: 'gear',
+        tags: ['Schneider M340', 'Grafcet (SFC)', 'Séquences simultanées', 'Modes de marche', 'Temporisations', 'Automates programmables'],
+        title: {
+            en: 'Rotary-Table Machining Station – Schneider M340 PLC',
+            fr: 'Poste d’usinage à plateau tournant – automate Schneider M340'
+        },
+        context: {
+            en: 'Polytech Orléans – Industrial Automation lab work',
+            fr: 'Polytech Orléans – TP d’Automatisme industriel'
+        },
+        summary: {
+            en: "Programming a Schneider M340 PLC for a machining station with a rotary table: one Grafcet with three simultaneous sequences (drilling, checking, removal), automatic and cycle-by-cycle modes, and faulty parts held until the operator resets.",
+            fr: "Programmation d’un automate Schneider M340 pour un poste d’usinage à plateau tournant : un Grafcet à trois séquences simultanées (perçage, contrôle, évacuation), modes automatique et cycle par cycle, et pièces défectueuses bloquées jusqu’au réarmement par l’opérateur."
+        },
+        highlights: {
+            en: [
+                "Cycle start only when every station is in its initial position, in automatic or cycle-by-cycle mode",
+                "Drilling sequence: clamp the part, drill down while turning, 2 s at the bottom, drill up, unclamp",
+                "Checking sequence: the probe goes down; if it reaches the bottom within 2 s the hole is good, otherwise the part is faulty",
+                "A faulty part stops the cycle until the operator presses reset",
+                "Removal sequence: the ejector pushes the finished part for 1 s, then goes back",
+                "The three sequences start together and must all be finished before the table turns"
+            ],
+            fr: [
+                "Départ du cycle seulement si tous les postes sont en position initiale, en mode automatique ou cycle par cycle",
+                "Séquence de perçage : serrer la pièce, descendre la perceuse en rotation, 2 s en bas, remonter, desserrer",
+                "Séquence de contrôle : le palpeur descend ; s’il atteint le bas en 2 s le trou est bon, sinon la pièce est défectueuse",
+                "Une pièce défectueuse arrête le cycle jusqu’au réarmement par l’opérateur",
+                "Séquence d’évacuation : l’éjecteur pousse la pièce finie pendant 1 s puis revient",
+                "Les trois séquences démarrent ensemble et doivent toutes être finies avant la rotation du plateau"
+            ]
+        },
+        gallery: [
+            { src: 'grafcet-poste-usinage.jpg', caption: { en: 'My Grafcet with simultaneous sequences', fr: 'Mon Grafcet à séquences simultanées' } }
         ]
     },
     {
