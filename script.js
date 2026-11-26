@@ -897,29 +897,6 @@ function addKinArm(host, opts) {
 })();
 
 
-/* ---------- Home: animated numbers ---------- */
-(function () {
-    const projectsCount = (globalThis.portfolioProjects || []).length;
-    document.querySelectorAll('.count[data-count="projects"]').forEach(el => { if (projectsCount) el.dataset.n = projectsCount; el.textContent = el.dataset.n || el.textContent; });
-
-    // numbers count up once, when the stats come into view
-    const nums = [...document.querySelectorAll('.count[data-n]')];
-    const run = el => {
-        const end = +el.dataset.n, t0 = performance.now(), dur = 1200;
-        const step = now => {
-            const u = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - u, 3);
-            el.textContent = Math.round(end * e);
-            if (u < 1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-    };
-    if (nums.length && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } }), { threshold: 0.6 });
-        nums.forEach(el => { el.textContent = '0'; io.observe(el); });
-    }
-
-})();
-
 
 /* ---------- Expertise cards: "See the projects" opens the matching filter ---------- */
 document.addEventListener('click', e => {
