@@ -904,3 +904,28 @@ function addKinArm(host, opts) {
     }
 
 })();
+
+
+/* ---------- Expertise cards: "See the projects" opens the matching filter ---------- */
+document.addEventListener('click', e => {
+    const a = e.target.closest('[data-go-filter]');
+    if (!a) return;
+    const btn = document.querySelector(`.filter[data-filter="${a.dataset.goFilter}"]`);
+    if (btn) btn.click();
+});
+
+/* ---------- Timeline: the line fills up as you scroll through it ---------- */
+(function () {
+    const lines = [...document.querySelectorAll('.timeline')];
+    if (!lines.length) return;
+    const update = () => lines.forEach(tl => {
+        const r = tl.getBoundingClientRect();
+        if (!r.height) return;
+        const p = Math.min(1, Math.max(0, (innerHeight * 0.6 - r.top) / r.height));
+        tl.style.setProperty('--fill', p.toFixed(3));
+    });
+    addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update);
+    document.addEventListener('click', e => { if (e.target.closest('.tab')) requestAnimationFrame(update); });
+    update();
+})();

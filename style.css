@@ -5154,3 +5154,45 @@ html:not(.light-mode) .back-top {
 /* numbers above their text, and the card stops before the robot arm drawn at the bottom right */
 .stats li { flex-direction: column; align-items: flex-start; gap: 10px; }
 @media (min-width: 1101px) { .hero .stats { width: calc(100% - 290px); } }
+
+/* =========================================================
+   Sections polish: timeline, expertise, skills, contact
+   ========================================================= */
+/* timeline: grey track + a blue line that fills while scrolling; the first dot pulses (current role) */
+.timeline::before { background: var(--border); }
+.timeline::after { content: ""; position: absolute; left: 9px; top: 8px; width: 2px; height: calc((100% - 16px) * var(--fill, 0)); background: linear-gradient(var(--signal), var(--accent)); border-radius: 2px; box-shadow: 0 0 10px rgba(var(--signal-rgb), 0.5); }
+.timeline-item::before { z-index: 1; transition: background 0.3s, transform 0.3s; }
+.timeline-item:hover::before { background: var(--signal); transform: scale(1.15); }
+#experience .timeline-item:first-child::before { animation: dotPulse 2.4s ease-out infinite; }
+@keyframes dotPulse { 0% { box-shadow: 0 0 0 0 rgba(var(--signal-rgb), 0.5); } 70%, 100% { box-shadow: 0 0 0 12px rgba(var(--signal-rgb), 0); } }
+.timeline-card { transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease; }
+.timeline-card:hover { border-color: rgba(var(--signal-rgb), 0.45); box-shadow: 0 14px 34px rgba(0, 0, 0, 0.1); }
+
+/* expertise cards: numbered, accent bar on hover, tools and a link to the matching projects */
+.services-grid { counter-reset: svc; }
+.service-card { position: relative; display: flex; flex-direction: column; overflow: hidden; counter-increment: svc; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+.service-card::after { content: "0" counter(svc); position: absolute; top: 18px; right: 22px; font-size: 2.6rem; font-weight: 800; line-height: 1; color: var(--heading); opacity: 0.07; transition: opacity 0.3s; }
+.service-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--signal), var(--accent)); transform: scaleX(0); transform-origin: left; transition: transform 0.45s ease; }
+.service-card:hover { transform: translateY(-6px); box-shadow: 0 22px 44px rgba(0, 0, 0, 0.12); border-color: rgba(var(--signal-rgb), 0.4); }
+.service-card:hover::before { transform: scaleX(1); }
+.service-card:hover::after { opacity: 0.14; }
+.service-card .icon-box { background: linear-gradient(135deg, rgba(var(--signal-rgb), 0.22), rgba(var(--signal-rgb), 0.06)); color: var(--signal); transition: transform 0.3s ease; }
+.service-card:hover .icon-box { transform: rotate(-6deg) scale(1.08); }
+.service-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 0; padding: 0; list-style: none; }
+.service-tags li { padding: 3px 10px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--border); font-size: 0.78rem; font-weight: 600; color: var(--muted); }
+.service-link { margin-top: auto; padding-top: 18px; align-self: flex-start; font-weight: 600; font-size: 0.92rem; color: var(--signal); }
+.service-link span { display: inline-block; transition: transform 0.25s; }
+.service-link:hover span { transform: translateX(5px); }
+
+/* skills: lift the group and the chips on hover */
+.skill-group { transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+.skill-group:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.1); border-color: rgba(var(--signal-rgb), 0.35); }
+.skill-group h3 { position: relative; padding-left: 14px; }
+.skill-group h3::before { content: ""; position: absolute; left: 0; top: 0.2em; bottom: 0.2em; width: 4px; border-radius: 4px; background: linear-gradient(var(--signal), var(--accent)); }
+.tool-list li, .chip-list li { transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+.tool-list li:hover, .chip-list li:hover { transform: translateY(-2px); border-color: rgba(var(--signal-rgb), 0.5); background: var(--surface); }
+
+/* contact: each line slides a little and its icon lights up */
+.contact-list a, .contact-list li > div { transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
+.contact-list a:hover { transform: translateX(6px); border-color: rgba(var(--signal-rgb), 0.5); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08); }
+@media (prefers-reduced-motion: reduce) { #experience .timeline-item:first-child::before { animation: none; } }
