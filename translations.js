@@ -174,7 +174,6 @@ const frenchText = {
     "3 yrs": "3 ans",
     "projects shown on this site": "projets présentés sur ce site",
     "industrial robots programmed: Stäubli, FANUC, UR, Doosan": "robots industriels programmés : Stäubli, FANUC, UR, Doosan",
-    "Robots and controllers I have programmed": "Robots et automates que j’ai programmés",
     "of professional experience in development & project management": "d'expérience professionnelle en développement et gestion de projet",
     "languages: French, English and Arabic": "langues : français, anglais et arabe",
 

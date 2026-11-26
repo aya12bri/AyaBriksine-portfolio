@@ -882,7 +882,7 @@ function addKinArm(host, opts) {
 })();
 
 
-/* ---------- Home: animated numbers and the scrolling strip of robots ---------- */
+/* ---------- Home: animated numbers ---------- */
 (function () {
     const projectsCount = (globalThis.portfolioProjects || []).length;
     document.querySelectorAll('.count[data-count="projects"]').forEach(el => { if (projectsCount) el.dataset.n = projectsCount; el.textContent = el.dataset.n || el.textContent; });
@@ -903,8 +903,4 @@ function addKinArm(host, opts) {
         nums.forEach(el => { el.textContent = '0'; io.observe(el); });
     }
 
-    // the strip is the list twice in a row, so it can loop without a jump
-    document.querySelectorAll('.marquee-track').forEach(track => {
-        [...track.children].forEach(li => { const c = li.cloneNode(true); c.setAttribute('aria-hidden', 'true'); track.appendChild(c); });
-    });
 })();
