@@ -175,8 +175,6 @@ const frenchText = {
     "See the projects": "Voir les projets",
     "FANUC teach pendant": "Pupitre FANUC",
     "Doosan teach pendant": "Pupitre Doosan",
-    "projects shown on this site": "projets présentés sur ce site",
-    "industrial robots programmed: Stäubli, FANUC, UR, Doosan": "robots industriels programmés : Stäubli, FANUC, UR, Doosan",
     "of professional experience in development & project management": "d'expérience professionnelle en développement et gestion de projet",
     "languages: French, English and Arabic": "langues : français, anglais et arabe",
 
