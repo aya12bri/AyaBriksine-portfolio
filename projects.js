@@ -181,61 +181,6 @@ const projects = [
         ]
     },
     {
-        id: 'grafcet-sequential-systems',
-        brief: {
-            objective: {
-                en: "Describe in what order four industrial systems must act and under what conditions they can move to the next step.",
-                fr: "Décrire l’ordre des actions de quatre systèmes industriels et les conditions de passage d’une étape à la suivante."
-            },
-            role: {
-                en: "Designed the Grafcets for a manipulator, a crane, an elevator and a machining station.",
-                fr: "J’ai conçu les Grafcets d’un bras manipulateur, d’un pont roulant, d’un ascenseur et d’un poste d’usinage."
-            }
-        },
-        category: 'automation',
-        icon: 'bx-sitemap',
-        year: '2026',
-        github: '',
-        demo: '',
-        image: '',
-        art: 'grafcet',
-        tags: ['Grafcet (SFC)', 'Automatismes', 'Temporisations', 'Compteurs', 'Séquences parallèles'],
-        title: {
-            en: 'Grafcet Design for Industrial Sequential Systems',
-            fr: 'Conception de Grafcets pour des systèmes séquentiels industriels'
-        },
-        context: {
-            en: 'Polytech Orléans – Industrial automation course exercises',
-            fr: 'Polytech Orléans – Exercices d’automatisme industriel'
-        },
-        summary: {
-            en: 'Designing Grafcets for four typical automated systems: a manipulator arm, an overhead crane, an elevator and a machining station.',
-            fr: 'Conception de Grafcets pour quatre systèmes automatisés typiques : un bras manipulateur, un pont roulant, un ascenseur et un poste d’usinage.'
-        },
-        highlights: {
-            en: [
-                'Manipulator arm: pick-and-place of a cup (close gripper, up, move, down, open, back) and a separate Grafcet to bring the arm to its initial position',
-                'Overhead crane: cycle across four stations with turn counters and 2 s processing timers',
-                'Elevator: calls from floors 1 to 3, going up and down with cabin lamp, 5 s waits and floor indicators; a second version handles all the possible calls with parallel branches',
-                'Machining station: parallel sequences (clamping, machining, ejection) with timers and synchronisation',
-                'Used the main Grafcet building blocks: initial step, transitions, actions, timers (T/xs), counters, parallel branches and loops'
-            ],
-            fr: [
-                'Bras manipulateur : prise et dépose d’un gobelet (fermer la pince, monter, déplacer, descendre, ouvrir, revenir) et Grafcet séparé de mise en position initiale',
-                'Pont roulant : cycle sur quatre postes avec comptage de tours et temporisations de traitement de 2 s',
-                'Ascenseur : appels aux étages 1 à 3, montée et descente avec lampe cabine, attentes de 5 s et témoins d’étage ; une seconde version gère tous les appels possibles avec des branches parallèles',
-                'Poste d’usinage : séquences parallèles (serrage, usinage, éjection) avec temporisations et synchronisation',
-                'Utilisation des éléments clés du Grafcet : étape initiale, transitions, actions, temporisations (T/xs), compteurs, branches parallèles et boucles'
-            ]
-        },
-        gallery: [
-            { src: 'grafcet-bras-manipulateur.jpg', caption: { en: 'Manipulator arm: cup pick-and-place and return to initial position', fr: 'Bras manipulateur : prise et dépose d’un gobelet, mise en position initiale' } },
-            { src: 'grafcet-pont-roulant.jpg', caption: { en: 'Overhead crane: cycle across four stations', fr: 'Pont roulant : cycle sur quatre postes' } },
-            { src: 'grafcet-ascenseur.jpg', caption: { en: 'Elevator: basic version and version with all calls', fr: 'Ascenseur : version simple et version avec tous les appels' } },
-            { src: 'grafcet-poste-usinage.jpg', caption: { en: 'Machining station: parallel sequences', fr: 'Poste d’usinage : séquences parallèles' } }
-        ]
-    },
-    {
         id: 'drone-modelling-control',
         brief: {
             objective: {

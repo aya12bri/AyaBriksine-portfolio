@@ -265,7 +265,7 @@
     };
 
     /* Grafcet ------------------------------------------------------------ */
-    V['grafcet-sequential-systems'] = {
+    V['grafcet-elevator'] = {   // elevator animation, used by the S7-300 elevator project
         schema: L => {
             const step = (x, y, n, label, init) => `<g class="sv-gstep${init ? ' init' : ''}"><rect x="${x}" y="${y}" width="44" height="40"/>${init ? `<rect x="${x + 4}" y="${y + 4}" width="36" height="32"/>` : ''}${T(x + 22, y + 26, n, 't')}</g>`
                 + (label ? `<line x1="${x + 44}" y1="${y + 20}" x2="${x + 64}" y2="${y + 20}" class="ln noar"/><rect x="${x + 64}" y="${y + 4}" width="${label.length * 8 + 20}" height="32" class="act"/>${T(x + 74, y + 25, label, 's2', 'start')}` : '');
@@ -645,7 +645,7 @@
             s += outs.map(([t], i) => line(`M508 167 H540 V${58 + i * 72} H576`) + node(578, 30 + i * 72, 200, 56, t, '', { r: 12 })).join('');
             return svg(`<g transform="translate(0 60)">${s}</g>` + legend([L('After each stop the cabin waits 5 s with the floor light on, then serves the next call.', 'À chaque arrêt la cabine attend 5 s avec le témoin d’étage allumé, puis sert l’appel suivant.')], 400), '', L('Elevator inputs and outputs on the S7-300', 'Entrées et sorties de l’ascenseur sur le S7-300'));
         },
-        anim: L => V['grafcet-sequential-systems'].anim(L),
+        anim: L => V['grafcet-elevator'].anim(L),
         prog: L => svg(
             gcol(40, 50, [
                 { n: '0', a: [L('Wait for a call (floor 1 or 3)', 'Attente appel étage 1 ou 3')], t: '(I136.2 + I137.0) · I137.2' },
