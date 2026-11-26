@@ -957,7 +957,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: '',
+        image: 'illu-moteur-cc.webp',
+        illustration: true,   // generic picture, not the actual lab equipment
         art: 'motor',
         tags: ['MATLAB', 'LabVIEW', 'NI-USB 6008', 'Identification de Broïda', 'Moindres carrés (ARX)', 'Régulateur PI', 'Placement de pôles', 'Travail en groupe'],
         title: {
@@ -1298,7 +1299,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: '',
+        image: 'illu-reporting.webp',
+        illustration: true,   // generic picture, not the actual lab equipment
         art: 'dashboard',
         tags: ['Power BI', 'Google Data Studio', 'Dashboards', 'Training'],
         title: {
@@ -1344,7 +1346,8 @@ const projects = [
         github: '',
         code: true,
         demo: '',
-        image: '',
+        image: 'illu-crm.webp',
+        illustration: true,   // generic picture, not the actual lab equipment
         art: 'network',
         tags: ['CRM / ERP', 'Specifications', 'Change management', 'SAP Ariba'],
         title: {
@@ -1452,8 +1455,9 @@ const projects = [
         year: '2026',
         github: '',
         demo: '',
-        image: 'electro-mas-schema-montage.png',
-        imageFit: 'contain',
+        image: 'illu-moteur-asynchrone.webp',
+        illustration: true,   // generic picture, not the actual lab equipment
+        imageFit: 'cover',
         tags: ['Induction motor', 'Powder brake', 'Oscilloscope', 'Efficiency', 'Électrotechnique', 'Travail en binôme'],
         title: {
             en: 'Three-Phase Induction Motor Test Bench',
