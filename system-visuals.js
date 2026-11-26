@@ -723,6 +723,76 @@
         }
     };
 
+    /* Arduino MKR IoT Carrier ------------------------------------------------ */
+    V['arduino-mkr-iot'] = {
+        schema: L => {
+            const ins = [[L('Pressure', 'Pression'), L('→ altitude', '→ altitude')], [L('Gestures', 'Gestes'), 'APDS-9960 · I²C'], ['LSM6DSOX', L('tilt angles', 'angles d’inclinaison')], ['PIR', L('presence', 'présence')], ['BME688', L('air quality', 'qualité de l’air')]];
+            const outs = [[L('5 RGB LEDs', '5 LEDs RGB'), L('colour code', 'code couleur')], [L('2 relays', '2 relais'), ''], [L('Screen', 'Écran'), L('P and T values', 'valeurs P et T')]];
+            let s = ins.map(([t, sub], i) => node(14, 24 + i * 56, 180, 48, t, sub, { r: 12 }) + line(`M194 ${48 + i * 56} H262`)).join('');
+            s += node(264, 24, 240, 256, 'Arduino MKR', [L('+ MKR IoT Carrier', '+ MKR IoT Carrier'), 'C/C++', L('turbocharger alert', 'alerte turbocompresseur'), L('normal / warning / alert', 'normal / attention / alerte')], { dark: true });
+            s += outs.map(([t, sub], i) => line(`M504 160 H530 V${60 + i * 78} H556`) + node(558, 32 + i * 78, 220, 56, t, sub, { r: 12 })).join('');
+            s += line('M384 280 V320') + T(394, 306, 'Wi-Fi', 's2', 'start')
+                + node(264, 322, 240, 62, 'Arduino IoT Cloud', L('temperature + humidity every second', 'température + humidité chaque seconde'))
+                + line('M504 353 H556') + node(558, 322, 220, 62, L('Dashboard', 'Tableau de bord'), L('live gauges and curves', 'jauges et courbes en direct'));
+            return svg(s + legend([L('Sensors → Arduino MKR → LEDs, relays and screen on the board, and the same data online through Arduino IoT Cloud.', 'Capteurs → Arduino MKR → LEDs, relais et écran sur la carte, et les mêmes données en ligne via Arduino IoT Cloud.')], 410), '', L('Connected embedded system', 'Système embarqué connecté'));
+        },
+        anim: L => {
+            const id = 'svi' + (++uid), D = 9;
+            const states = [['ok', L('NORMAL', 'NORMAL'), [0, 33.33]], ['warn', L('WARNING', 'ATTENTION'), [33.34, 66.66]], ['alert', L('ALERT', 'ALERTE'), [66.67, 100]]];
+            let css = states.map(([k, , [a, b]]) => phases(`${id}${k}`, D, [[a, b]])).join('')
+                + kf(id + 'p', [[0, 'transform:scaleX(.35)'], [30, 'transform:scaleX(.4)'], [40, 'transform:scaleX(.62)'], [64, 'transform:scaleX(.68)'], [74, 'transform:scaleX(.92)'], [97, 'transform:scaleX(.95)'], [100, 'transform:scaleX(.35)']], D, 'transform-box:fill-box;transform-origin:left;')
+                + kf(id + 't', [[0, 'transform:scaleX(.45)'], [30, 'transform:scaleX(.5)'], [40, 'transform:scaleX(.7)'], [64, 'transform:scaleX(.74)'], [74, 'transform:scaleX(.9)'], [97, 'transform:scaleX(.94)'], [100, 'transform:scaleX(.45)']], D, 'transform-box:fill-box;transform-origin:left;')
+                + kf(id + 'pk', [[0, 'transform:translate(0,0);opacity:0'], [10, 'opacity:1'], [90, 'transform:translate(250px,0);opacity:1'], [100, 'transform:translate(250px,0);opacity:0']], 1)
+                + `@keyframes ${id}sc{to{transform:translateX(-120px)}}.${id}sc{animation:${id}sc 6s linear infinite}`;
+            const cx = 210, cy = 215;
+            let s = `<circle cx="${cx}" cy="${cy}" r="165" class="board"/>`;
+            const leds = [0, 1, 2, 3, 4].map(i => { const a = (-90 + 36 + i * 72) * Math.PI / 180; return [cx + 120 * Math.cos(a), cy + 120 * Math.sin(a)]; });
+            states.forEach(([k]) => { s += `<g class="${id}${k}">${leds.map(([x, y]) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="26" class="glow ${k}"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" class="led ${k}"/>`).join('')}</g>`; });
+            s += `<circle cx="${cx}" cy="${cy}" r="70" class="screen"/>`;
+            states.forEach(([k, label]) => { s += `<g class="${id}${k}"><circle cx="${cx}" cy="${cy}" r="66" class="screen-on ${k}"/>${T(cx, cy - 18, label, 't scr')}</g>`; });
+            s += T(cx - 44, cy + 12, 'P', 's2 scr2', 'start') + `<rect x="${cx - 28}" y="${cy + 2}" width="70" height="10" rx="5" class="scrbar-bg"/><rect x="${cx - 28}" y="${cy + 2}" width="70" height="10" rx="5" class="scrbar ${id}p"/>`
+                + T(cx - 44, cy + 36, 'T', 's2 scr2', 'start') + `<rect x="${cx - 28}" y="${cy + 26}" width="70" height="10" rx="5" class="scrbar-bg"/><rect x="${cx - 28}" y="${cy + 26}" width="70" height="10" rx="5" class="scrbar ${id}t"/>`;
+            s += T(400, 462, L('Turbocharger alert: colour code by pressure and temperature (normal / warning / alert)', 'Alerte turbocompresseur : code couleur selon pression et température (normal / attention / alerte)'), 's2');
+            // cloud
+            s += `<path d="M380 150 H610" class="ln d noar"/><g class="${id}pk"><circle cx="380" cy="150" r="6" class="acc"/></g>` + T(495, 138, L('Wi-Fi · every 1 s', 'Wi-Fi · chaque 1 s'), 's');
+            s += `<g transform="translate(560 60)"><rect width="220" height="320" rx="14" class="kpi"/>` + T(16, 28, 'Arduino IoT Cloud', 't', 'start')
+                + T(16, 60, L('temperature', 'température'), 's', 'start') + `<path d="M40 150 A70 70 0 0 1 180 150" class="arcbg"/><path d="M40 150 A70 70 0 0 1 150 92" class="arcfg"/>`
+                + T(16, 196, L('humidity · live', 'humidité · en direct'), 's', 'start')
+                + `<svg x="16" y="206" width="188" height="96" viewBox="0 0 188 96"><g class="${id}sc"><path d="${Array.from({ length: 31 }, (_, i) => `${i ? 'L' : 'M'}${i * 10} ${(60 - 22 * Math.sin(i * 0.5) - 8 * Math.sin(i * 1.3)).toFixed(1)}`).join('')}" class="sv-curve c1 static"/></g></svg></g>`;
+            return svg(s, css, L('Alert colour code and data sent to the cloud', 'Code couleur d’alerte et données envoyées au cloud'));
+        }
+    };
+
+
+    /* ---------- 3D wiring (wiring3d.js, Three.js) for the PLC projects ---------- */
+    const WIRES = {
+        'reservoirs-s7-1200': L => ({ plc: 'Siemens S7-1200', inputs: [1, 2, 3].map(i => ({ type: 'sensor', label: L('Level ', 'Niveau ') + i })),
+            outputs: [...[1, 2, 3].map(i => ({ type: 'valve', label: L('Valve ', 'Vanne ') + i })), { type: 'motor', label: L('Pump', 'Pompe') }, { type: 'motor', label: L('Agitator', 'Agitateur') }, { type: 'lamp', label: L('Lights', 'Voyants') }] }),
+        'manipulator-arm-m340': L => ({ plc: 'Schneider M340', color: 0x3a4a3f,
+            inputs: [{ type: 'button', label: 'dcy' }, { type: 'pot', label: L('Rotation pot.', 'Pot. rotation') }, { type: 'pot', label: L('Height pot.', 'Pot. hauteur') }, { type: 'pot', label: L('Reach pot.', 'Pot. avance') }, { type: 'sensor', label: L('Gripper', 'Pince') }],
+            outputs: [{ type: 'cylinder', label: 'FER / OUV' }, { type: 'motor', label: 'MON / DES' }, { type: 'motor', label: 'TRI / HOR' }, { type: 'cylinder', label: 'REC' }, { type: 'lamp', label: 'CLI' }] }),
+        'overhead-crane-m340': L => ({ plc: 'Schneider M340', color: 0x3a4a3f,
+            inputs: [{ type: 'button', label: 'dcy' }, { type: 'sensor', label: L('Turns (Ca)', 'Tours (Ca)') }, ...[1, 2, 3, 4].map(i => ({ type: 'sensor', label: 'P' + i }))],
+            outputs: [{ type: 'motor', label: 'RD / RM' }, { type: 'motor', label: 'RDD / RDG' }, { type: 'magnet', label: 'RAI' }, { type: 'lamp', label: 'VMA' }] }),
+        'elevator-s7-300': L => ({ plc: 'Siemens S7-300',
+            inputs: [{ type: 'button', label: L('Cabin calls', 'Appels cabine') }, { type: 'button', label: L('Landing calls', 'Appels paliers') }, ...[1, 2, 3].map(i => ({ type: 'sensor', label: L('Floor ', 'Étage ') + i }))],
+            outputs: [{ type: 'motor', label: L('Up', 'Montée') }, { type: 'motor', label: L('Down', 'Descente') }, { type: 'lamp', label: L('Cabin lamp', 'Lampe cabine') }, { type: 'lamp', label: L('Floor lights', 'Témoins') }] }),
+        'rotary-machining-m340': L => ({ plc: 'Schneider M340', color: 0x3a4a3f,
+            inputs: [{ type: 'button', label: 'dcy' }, { type: 'button', label: 'auto / man' }, { type: 'sensor', label: 'cph / cpb' }, { type: 'sensor', label: 'ccb' }, { type: 'button', label: 'rea' }],
+            outputs: [{ type: 'cylinder', label: 'SEP' }, { type: 'motor', label: 'RPE' }, { type: 'motor', label: 'DPE / MPE' }, { type: 'cylinder', label: 'DCO' }, { type: 'cylinder', label: 'REJ' }, { type: 'lamp', label: 'VMA' }] }),
+        'climax-plc-robot-arm': L => ({ plc: 'Schneider TSX 3705',
+            inputs: [{ type: 'button', label: L('Start', 'Marche') }, { type: 'button', label: 'Auto' }, { type: 'button', label: L('E-stop', 'Arrêt urgence') }, { type: 'sensor', label: L('Limit switches', 'Fins de course') }],
+            outputs: [{ type: 'cylinder', label: L('3 double-acting', '3 vérins double effet') }, { type: 'cylinder', label: L('2 single-acting', '2 vérins simple effet') }, { type: 'lamp', label: L('Lights', 'Voyants') }] })
+    };
+    Object.keys(WIRES).forEach(id => {
+        V[id] = V[id] || {};
+        V[id].wire = L => {
+            const cfg = WIRES[id](L);
+            cfg.inLabel = L('Inputs', 'Entrées'); cfg.outLabel = L('Outputs', 'Sorties');
+            return `<div class="w3d" data-w3d="${esc(JSON.stringify(cfg)).replace(/"/g, '&quot;')}"></div><span class="w3d-hint">${L('Drag to turn · scroll to zoom', 'Glisser pour tourner · molette pour zoomer')}</span>`;
+        };
+    });
+
     window.systemVisuals = {
         get(id, lang) {
             const v = V[id]; if (!v) return [];
@@ -734,8 +804,13 @@
                 sim: { icon: 'bx-line-chart', label: L('Curve', 'Courbe'), cap: L('Simulation with the project values', 'Simulation avec les valeurs du projet') }
             };
             meta.prog = { icon: 'bx-code-block', label: 'Grafcet', cap: L('My Grafcet, redrawn from my lab notes', 'Mon Grafcet, redessiné à partir de mes notes de TP') };
-            return ['schema', 'anim', 'prog', 'sim'].filter(k => v[k]).map(k => ({ kind: k, ...meta[k], html: v[k](L) }));
+            meta.wire = { icon: 'bx-cube', label: L('3D wiring', 'Câblage 3D'), cap: L('PLC wiring in 3D: inputs (blue) and outputs (orange)', 'Câblage de l’automate en 3D : entrées (bleu) et sorties (orange)') };
+            return ['schema', 'anim', 'wire', 'prog', 'sim'].filter(k => v[k]).map(k => ({ kind: k, ...meta[k], html: v[k](L) }));
         },
-        mount(id, el) { const v = V[id]; if (v && v.mount) v.mount(el); }
+        mount(id, el) {
+            const v = V[id]; if (v && v.mount) v.mount(el);
+            const w = el && el.querySelector('[data-w3d]');
+            if (w) import('./wiring3d.js?v=2').then(m => m.mount(w, JSON.parse(w.dataset.w3d))).catch(() => { w.textContent = '3D'; });
+        }
     };
 })();

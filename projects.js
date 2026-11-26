@@ -1054,6 +1054,59 @@ const projects = [
         ]
     },
     {
+        id: 'arduino-mkr-iot',
+        brief: {
+            objective: {
+                en: "Build connected embedded systems from end to end: read sensors, drive actuators, then send the data over Wi-Fi to the cloud to follow it remotely.",
+                fr: "Concevoir des systèmes embarqués connectés de bout en bout : lire des capteurs, piloter des actionneurs, puis transmettre les données en Wi-Fi vers le cloud pour les suivre à distance."
+            },
+            role: {
+                en: "Programmed the Arduino MKR and its IoT Carrier in C/C++, built the turbocharger alert system and set up the Arduino IoT Cloud dashboard.",
+                fr: "J’ai programmé l’Arduino MKR et sa carte IoT Carrier en C/C++, réalisé le système d’alerte du turbocompresseur et configuré le tableau de bord Arduino IoT Cloud."
+            }
+        },
+        category: 'iot',
+        icon: 'bx-chip',
+        year: '2026',
+        github: '',
+        demo: '',
+        image: 'iot-mkr-leds.jpg',
+        imageFit: 'cover',
+        art: 'chip',
+        tags: ['Arduino MKR', 'MKR IoT Carrier', 'C/C++', 'I²C', 'LSM6DSOX', 'BME688', 'Wi-Fi', 'Arduino IoT Cloud'],
+        title: {
+            en: 'Connected Embedded Systems – Arduino MKR IoT Carrier and IoT Cloud',
+            fr: 'Systèmes embarqués connectés – Arduino MKR IoT Carrier et IoT Cloud'
+        },
+        context: {
+            en: 'Embedded systems and IoT lab work',
+            fr: 'TP de systèmes embarqués et IoT'
+        },
+        summary: {
+            en: "Reading sensors and driving actuators on an Arduino MKR with the MKR IoT Carrier, a simulated turbocharger alert system with a colour code, then sending the data over Wi-Fi to an Arduino IoT Cloud dashboard.",
+            fr: "Lecture de capteurs et pilotage d’actionneurs sur Arduino MKR avec la carte MKR IoT Carrier, système d’alerte simulé d’un turbocompresseur avec code couleur, puis envoi des données en Wi-Fi vers un tableau de bord Arduino IoT Cloud."
+        },
+        highlights: {
+            en: [
+                "Sensor reading in C/C++ on the Arduino MKR and the MKR IoT Carrier: pressure and altitude calculation, gestures (APDS-9960, I²C), LSM6DSOX inertial unit with tilt-angle calculation, PIR presence detector and air quality (BME688)",
+                "Actuators: 5 RGB LEDs, 2 relays and the built-in screen to show the information",
+                "Alert system: simulated monitoring of a turbocharger, with a colour code based on pressure and temperature (normal / warning / alert)",
+                "IoT deployment: a device configured on Arduino IoT Cloud, Wi-Fi connection, temperature and humidity sent every second, and a dashboard with live gauges and curves"
+            ],
+            fr: [
+                "Acquisition de capteurs en C/C++ sur Arduino MKR et carte MKR IoT Carrier : pression et calcul d’altitude, gestes (APDS-9960, I²C), centrale inertielle LSM6DSOX avec calcul des angles d’inclinaison, détecteur de présence PIR et qualité de l’air (BME688)",
+                "Pilotage d’actionneurs : 5 LEDs RGB, 2 relais et l’écran intégré pour afficher les informations",
+                "Système d’alerte : surveillance simulée d’un turbocompresseur avec code couleur selon la pression et la température (normal / attention / alerte)",
+                "Déploiement IoT : configuration d’un objet sur Arduino IoT Cloud, connexion Wi-Fi, envoi de la température et de l’humidité chaque seconde et création d’un tableau de bord (jauges et courbes en direct)"
+            ]
+        },
+        gallery: [
+            { src: 'iot-mkr-leds.jpg', caption: { en: 'Turbocharger alert: the 5 RGB LEDs change colour with the state', fr: 'Alerte turbocompresseur : les 5 LEDs RGB changent de couleur selon l’état' } },
+            { src: 'iot-mkr-ecran.jpg', caption: { en: 'Built-in screen showing pressure and temperature (1.3 bar, 81 °C)', fr: 'Écran intégré : pression et température (1,3 bar, 81 °C)' } },
+            { src: 'iot-cloud-dashboard.jpg', caption: { en: 'Arduino IoT Cloud dashboard: live humidity and temperature', fr: 'Tableau de bord Arduino IoT Cloud : humidité et température en direct' } }
+        ]
+    },
+    {
         id: 'greenhouse-monitoring',
         brief: {
             objective: {

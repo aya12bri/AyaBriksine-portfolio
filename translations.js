@@ -246,6 +246,9 @@ const frenchText = {
 /* ---------- Language switch (no need to edit below) ---------- */
 (function () {
     const langBtn = document.getElementById('lang-toggle');
+    // the button is a small EN | FR switch; the active language is highlighted
+    langBtn.classList.add('lang-switch');
+    langBtn.innerHTML = '<span class="ls-knob" aria-hidden="true"></span><span class="ls-opt" data-l="en">EN</span><span class="ls-opt" data-l="fr">FR</span>';
     // pages that build their own title (project.html) set data-own-title on <body>
     const ownTitle = document.body.hasAttribute('data-own-title');
     const titles = {
@@ -278,7 +281,8 @@ const frenchText = {
         });
         document.documentElement.lang = lang;
         if (!ownTitle) document.title = titles[lang];
-        langBtn.textContent = fr ? 'EN' : 'FR';
+        langBtn.classList.toggle('is-fr', fr);
+        langBtn.setAttribute('aria-pressed', String(fr));
         langBtn.setAttribute('aria-label', fr ? 'Switch to English' : 'Passer en français');
         try { localStorage.setItem('lang', lang); } catch (e) {}
         // tell the project cards / project page to redraw in the new language
