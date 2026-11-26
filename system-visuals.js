@@ -807,6 +807,7 @@
             meta.wire = { icon: 'bx-cube', label: L('3D wiring', 'Câblage 3D'), cap: L('PLC wiring in 3D: inputs (blue) and outputs (orange)', 'Câblage de l’automate en 3D : entrées (bleu) et sorties (orange)') };
             return ['schema', 'anim', 'wire', 'prog', 'sim'].filter(k => v[k]).map(k => ({ kind: k, ...meta[k], html: v[k](L) }));
         },
+        kinds(id) { const x = V[id]; return x ? Object.keys(x).filter(k => typeof x[k] === 'function' && k !== 'mount') : []; },
         mount(id, el) {
             const v = V[id]; if (v && v.mount) v.mount(el);
             const w = el && el.querySelector('[data-w3d]');
